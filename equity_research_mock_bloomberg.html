@@ -1,0 +1,282 @@
+
+<style>
+.rpt *{box-sizing:border-box;margin:0;padding:0}
+.rpt{font-family:var(--font-sans);font-size:11px;color:var(--color-text-primary);background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow:hidden}
+.rpt-hdr{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#1e3a5f}
+.rpt-hdr-logo{width:38px;height:38px;border-radius:6px;background:#76b900;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:white;flex-shrink:0}
+.rpt-hdr-info{flex:1}.rpt-hdr-info h2{font-size:15px;font-weight:500;color:white}
+.rpt-hdr-info p{font-size:10px;color:rgba(255,255,255,0.65);margin-top:1px}
+.rpt-hdr-price{text-align:right}.rpt-hdr-price .price{font-size:18px;font-weight:500;color:white}
+.rpt-hdr-price .meta{font-size:9.5px;color:rgba(255,255,255,0.65);margin-top:1px}
+.rpt-body{display:grid;grid-template-columns:190px minmax(0,1fr)}
+.col-l{border-right:0.5px solid var(--color-border-tertiary);padding:10px}
+.col-r{padding:10px 12px}
+.sec{margin-bottom:10px}
+.sec-hdr{font-size:9.5px;font-weight:500;text-transform:uppercase;letter-spacing:.4px;color:white;background:#1e3a5f;padding:3px 7px;border-radius:3px;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.new-badge{background:#fbbf24;color:#7c2d12;font-size:8.5px;padding:1px 5px;border-radius:2px;font-weight:500;text-transform:none;letter-spacing:0}
+.t{width:100%;border-collapse:collapse}
+.t td,.t th{padding:2px 5px}
+.t th{font-size:9.5px;font-weight:500;color:var(--color-text-secondary);text-align:right;border-bottom:0.5px solid var(--color-border-tertiary)}
+.t th:first-child{text-align:left}
+.t td{font-size:10.5px;text-align:right;border-bottom:0.5px solid var(--color-border-tertiary)}
+.t td.l{text-align:left;color:var(--color-text-secondary)}
+.t td.l2{text-align:left;color:var(--color-text-tertiary);font-size:9.5px;padding-left:14px}
+.t tr:last-child td{border-bottom:none}
+.t .sub td{background:var(--color-background-secondary);font-size:9px;font-weight:500;color:var(--color-text-secondary);padding:3px 5px}
+.t .hl td{font-weight:500}
+.pos{color:var(--color-text-success)}.neg{color:var(--color-text-danger)}
+.est{color:#6366f1}.nd{color:var(--color-text-tertiary);font-size:9.5px}
+.ind-row{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:8px}
+.ind-c{background:var(--color-background-secondary);border-radius:4px;padding:5px 7px}
+.ind-c .lbl{font-size:9px;color:var(--color-text-secondary)}
+.ind-c .val{font-size:13px;font-weight:500;margin-top:1px}
+.bar-row{display:flex;align-items:center;gap:5px;margin:2px 0}
+.bar-label{font-size:9.5px;color:var(--color-text-secondary);width:85px;flex-shrink:0}
+.bar-track{flex:1;height:5px;background:var(--color-background-secondary);border-radius:2px;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px;background:#1e3a5f}
+.bar-pct{font-size:9.5px;width:38px;text-align:right;flex-shrink:0}
+.subsec{font-size:9.5px;font-weight:500;color:var(--color-text-secondary);margin:6px 0 3px;border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:2px}
+.sup-box{background:var(--color-background-secondary);border-left:2px solid #fbbf24;border-radius:0 4px 4px 0;padding:6px 8px;margin-top:5px}
+.sup-box .sup-title{font-size:9.5px;font-weight:500;margin-bottom:4px;color:var(--color-text-secondary)}
+.sup-box .sup-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 12px}
+.sup-box .sup-item{font-size:9.5px;color:var(--color-text-secondary)}
+.sup-box .sup-item b{color:var(--color-text-primary);font-weight:500}
+.wacc-result{background:var(--color-background-secondary);border-radius:6px;padding:7px 10px;text-align:center;margin-top:6px}
+.wacc-result .formula{font-size:9.5px;color:var(--color-text-secondary);margin-bottom:3px}
+.wacc-result .val{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.wacc-result .calc{font-size:8.5px;color:var(--color-text-tertiary);margin-top:2px}
+.rpt-footer{border-top:0.5px solid var(--color-border-tertiary);padding:5px 14px;font-size:9px;color:var(--color-text-tertiary);font-style:italic}
+</style>
+
+<div class="rpt">
+
+<div class="rpt-hdr">
+  <div class="rpt-hdr-logo">NV</div>
+  <div class="rpt-hdr-info">
+    <h2>NVIDIA Corporation</h2>
+    <p>NVDA US Equity &nbsp;·&nbsp; NASDAQ &nbsp;·&nbsp; Technology — Semiconductors &amp; GPUs &nbsp;·&nbsp; NDX Index</p>
+  </div>
+  <div class="rpt-hdr-price">
+    <div class="price">$875.40</div>
+    <div class="meta">1FIN39 · Ciclo 2026-1</div>
+    <div class="meta">Equipo: García · Torres · Quispe</div>
+  </div>
+</div>
+
+<div class="rpt-body">
+<div class="col-l">
+
+  <div class="sec">
+    <div class="sec-hdr">Indicadores principales</div>
+    <div class="ind-row">
+      <div class="ind-c"><div class="lbl">Retorno LTM</div><div class="val pos">+182.5%</div></div>
+      <div class="ind-c"><div class="lbl">Retorno NTM</div><div class="val pos">+15.3%</div></div>
+      <div class="ind-c"><div class="lbl">Bolsa</div><div class="val" style="font-size:11px">NASDAQ</div></div>
+      <div class="ind-c"><div class="lbl">País</div><div class="val" style="font-size:11px">USA</div></div>
+    </div>
+    <table class="t">
+      <tr><td class="l" style="font-size:9.5px">Sector GICS</td><td style="text-align:right;font-size:9.5px">Semiconductors</td></tr>
+      <tr><td class="l" style="font-size:9.5px">Índice referencia</td><td style="text-align:right;font-size:9.5px">NDX Index</td></tr>
+      <tr><td class="l" style="font-size:9.5px">Market Cap</td><td style="text-align:right;font-size:9.5px">$2,149 B</td></tr>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr">Retorno total</div>
+    <table class="t">
+      <thead><tr><th></th><th>NVDA</th><th>NDX</th></tr></thead>
+      <tbody>
+        <tr><td class="l">7D</td><td class="pos">+4.2%</td><td class="neg">−0.3%</td></tr>
+        <tr><td class="l">30D</td><td class="pos">+12.5%</td><td class="neg">−0.8%</td></tr>
+        <tr><td class="l">90D</td><td class="pos">+38.2%</td><td class="pos">+4.1%</td></tr>
+        <tr><td class="l">180D</td><td class="pos">+65.3%</td><td class="pos">+8.7%</td></tr>
+        <tr><td class="l">1A</td><td class="pos">+182.5%</td><td class="pos">+26.3%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr">Principales accionistas</div>
+    <div class="bar-row"><span class="bar-label">Vanguard Group</span><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><span class="bar-pct">8.50%</span></div>
+    <div class="bar-row"><span class="bar-label">BlackRock</span><div class="bar-track"><div class="bar-fill" style="width:62%"></div></div><span class="bar-pct">6.20%</span></div>
+    <div class="bar-row"><span class="bar-label">Fidelity</span><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div><span class="bar-pct">4.80%</span></div>
+    <div class="bar-row"><span class="bar-label">State Street</span><div class="bar-track"><div class="bar-fill" style="width:39%"></div></div><span class="bar-pct">3.90%</span></div>
+    <div class="bar-row"><span class="bar-label">T Rowe Price</span><div class="bar-track"><div class="bar-fill" style="width:21%"></div></div><span class="bar-pct">2.10%</span></div>
+    <div class="bar-row"><span class="bar-label">Otros</span><div class="bar-track"><div class="bar-fill" style="width:74.5%;opacity:.3"></div></div><span class="bar-pct">74.50%</span></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr">Breakdown de ventas</div>
+    <div class="subsec">Por segmento</div>
+    <div class="bar-row"><span class="bar-label">Data Center</span><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div><span class="bar-pct">70.0%</span></div>
+    <div class="bar-row"><span class="bar-label">Gaming</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-pct">20.0%</span></div>
+    <div class="bar-row"><span class="bar-label">Professional</span><div class="bar-track"><div class="bar-fill" style="width:5.5%"></div></div><span class="bar-pct">5.5%</span></div>
+    <div class="bar-row"><span class="bar-label">OEM &amp; Other</span><div class="bar-track"><div class="bar-fill" style="width:4.5%"></div></div><span class="bar-pct">4.5%</span></div>
+    <div class="subsec" style="margin-top:8px">Por geografía</div>
+    <div class="bar-row"><span class="bar-label">Americas</span><div class="bar-track"><div class="bar-fill" style="width:55.2%"></div></div><span class="bar-pct">55.2%</span></div>
+    <div class="bar-row"><span class="bar-label">Asia Pacific</span><div class="bar-track"><div class="bar-fill" style="width:34.8%"></div></div><span class="bar-pct">34.8%</span></div>
+    <div class="bar-row"><span class="bar-label">Europe</span><div class="bar-track"><div class="bar-fill" style="width:10%"></div></div><span class="bar-pct">10.0%</span></div>
+  </div>
+
+</div>
+<div class="col-r">
+
+  <div class="sec">
+    <div class="sec-hdr">Descripción de la empresa</div>
+    <p style="font-size:10.5px;line-height:1.65;margin-bottom:5px">NVIDIA diseña y comercializa unidades de procesamiento gráfico y plataformas de computación acelerada. Lidera el mercado de infraestructura de IA con su arquitectura Hopper y plataforma CUDA. Para el cierre fiscal 2025 reportó ingresos de $130,497M (+113.7% YoY), impulsado por la demanda de data centers.</p>
+    <div style="display:flex;align-items:center;gap:6px;padding:4px 8px;background:var(--color-background-secondary);border-radius:4px;border-left:2px solid var(--color-text-success)">
+      <span style="font-size:10px;color:var(--color-text-secondary)">Recomendación:</span>
+      <span style="font-size:11px;font-weight:500;color:var(--color-text-success)">▲ COMPRAR</span>
+      <span style="font-size:10px;color:var(--color-text-secondary)">— Valuación exigente, justificada por el superciclo de capex en IA.</span>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr">Highlights financieros</div>
+    <table class="t">
+      <thead>
+        <tr><th style="width:28%"></th><th class="est">2026E</th><th class="est">2025E</th><th>LTM</th><th>2024A</th><th>2023A</th></tr>
+      </thead>
+      <tbody>
+        <tr class="sub"><td colspan="6" class="l">Rentabilidad</td></tr>
+        <tr><td class="l">Ventas YoY</td><td class="est pos">+34.6%</td><td class="est pos">+113.7%</td><td class="pos">+94.2%</td><td class="pos">+122.4%</td><td class="pos">+66.7%</td></tr>
+        <tr><td class="l">Mg Bruto</td><td class="est">75.0%</td><td class="est">74.2%</td><td>74.8%</td><td>72.7%</td><td>66.8%</td></tr>
+        <tr><td class="l">Mg EBITDA</td><td class="est">64.0%</td><td class="est">63.2%</td><td>62.8%</td><td>59.8%</td><td>53.6%</td></tr>
+        <tr><td class="l">Mg EBIT</td><td class="est">59.1%</td><td class="est">58.2%</td><td>57.3%</td><td>54.1%</td><td>48.3%</td></tr>
+        <tr><td class="l">Mg Neto</td><td class="est">52.0%</td><td class="est">51.8%</td><td>50.1%</td><td>48.8%</td><td>43.2%</td></tr>
+        <tr><td class="l">ROE</td><td class="est">108.4%</td><td class="est">115.2%</td><td>119.4%</td><td>87.3%</td><td>52.1%</td></tr>
+        <tr><td class="l">ROIC</td><td class="est">64.2%</td><td class="est">65.8%</td><td>68.3%</td><td>55.4%</td><td>34.7%</td></tr>
+        <tr class="sub"><td colspan="6" class="l">Solvencia y liquidez</td></tr>
+        <tr><td class="l">Current Ratio</td><td class="nd est">N/D</td><td class="nd est">N/D</td><td>4.17</td><td>4.17</td><td>3.52</td></tr>
+        <tr><td class="l">Deuda Neta MM</td><td class="nd est">N/D</td><td class="nd est">N/D</td><td class="neg">(8,462)</td><td class="neg">(10,283)</td><td class="neg">(3,891)</td></tr>
+        <tr><td class="l">DN / EBITDA</td><td class="nd est">N/D</td><td class="nd est">N/D</td><td>neg.</td><td>neg.</td><td>neg.</td></tr>
+        <tr><td class="l">Cobertura int.</td><td class="nd est">N/D</td><td class="nd est">N/D</td><td>217.4x</td><td>183.2x</td><td>62.5x</td></tr>
+        <tr class="sub"><td colspan="6" class="l">Múltiplos</td></tr>
+        <tr><td class="l">P/E</td><td class="est">28.4x</td><td class="est">34.8x</td><td>35.2x</td><td>65.3x</td><td>108.2x</td></tr>
+        <tr><td class="l">EV/EBITDA</td><td class="est">24.1x</td><td class="est">29.8x</td><td>30.4x</td><td>56.2x</td><td>92.1x</td></tr>
+        <tr><td class="l">P/S</td><td class="est">14.8x</td><td class="est">18.1x</td><td>18.5x</td><td>31.9x</td><td>46.8x</td></tr>
+        <tr><td class="l">DVD Yield</td><td class="est">0.04%</td><td class="est">0.04%</td><td>0.04%</td><td>0.03%</td><td>0.04%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr">
+      Proyecciones — Estado de resultados simplificado
+      <span class="new-badge">NUEVO</span>
+    </div>
+    <table class="t">
+      <thead>
+        <tr>
+          <th style="width:26%">MM USD</th>
+          <th>2022A</th><th>2023A</th><th>2024A</th><th>LTM</th>
+          <th class="est">2025E</th><th class="est">2026E</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td class="l">Ventas</td><td>26,914</td><td>44,870</td><td>60,922</td><td>113,274</td><td class="est">130,497</td><td class="est">175,488</td></tr>
+        <tr><td class="l2">Crecimiento</td><td class="pos">+61.4%</td><td class="pos">+66.7%</td><td class="pos">+35.8%</td><td class="pos">+94.2%</td><td class="est pos">+113.7%</td><td class="est pos">+34.6%</td></tr>
+        <tr><td class="l">Utilidad bruta</td><td>17,475</td><td>29,975</td><td>44,279</td><td>84,733</td><td class="est">96,829</td><td class="est">131,616</td></tr>
+        <tr><td class="l2">Mg Bruto</td><td>64.9%</td><td>66.8%</td><td>72.7%</td><td>74.8%</td><td class="est">74.2%</td><td class="est">75.0%</td></tr>
+        <tr><td class="l">EBITDA</td><td>12,650</td><td>24,045</td><td>36,429</td><td>71,136</td><td class="est">82,474</td><td class="est">112,312</td></tr>
+        <tr><td class="l2">Mg EBITDA</td><td>47.0%</td><td>53.6%</td><td>59.8%</td><td>62.8%</td><td class="est">63.2%</td><td class="est">64.0%</td></tr>
+        <tr><td class="l">D&amp;A</td><td>(2,440)</td><td>(2,390)</td><td>(2,210)</td><td>(2,890)</td><td class="est">(3,250)</td><td class="est">(4,100)</td></tr>
+        <tr class="hl"><td class="l">EBIT</td><td>10,210</td><td>21,655</td><td>32,972</td><td>64,876</td><td class="est">75,939</td><td class="est">103,838</td></tr>
+        <tr><td class="l2">Mg EBIT</td><td>37.9%</td><td>48.3%</td><td>54.1%</td><td>57.3%</td><td class="est">58.2%</td><td class="est">59.1%</td></tr>
+      </tbody>
+    </table>
+    <div class="sup-box">
+      <div class="sup-title">Supuestos de proyección — deben detallarse en el modelo</div>
+      <div class="sup-grid">
+        <div class="sup-item">Crec. ventas 2025E: <b>+113.7%</b> → campo <b>BEST_SALES</b></div>
+        <div class="sup-item">Crec. ventas 2026E: <b>+34.6%</b> → supuesto del analista</div>
+        <div class="sup-item">Mg Bruto 2025-26E: <b>74.2% / 75.0%</b> → tendencia histórica</div>
+        <div class="sup-item">Mg EBITDA 2025-26E: <b>63.2% / 64.0%</b> → mejora gradual</div>
+        <div class="sup-item">D&amp;A 2025E: <b>$3,250M</b> → supuesto (≈LTM +12%)</div>
+        <div class="sup-item">D&amp;A 2026E: <b>$4,100M</b> → supuesto (≈2025E +26%)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr">Evolución precio vs índice (base 100, −1Y)</div>
+    <svg width="100%" height="85" viewBox="0 0 460 85" preserveAspectRatio="none">
+      <line x1="36" y1="6" x2="36" y2="74" stroke="var(--color-border-secondary)" stroke-width="0.5"/>
+      <line x1="36" y1="74" x2="455" y2="74" stroke="var(--color-border-secondary)" stroke-width="0.5"/>
+      <text x="4" y="76" font-size="8" fill="var(--color-text-tertiary)">100</text>
+      <text x="4" y="50" font-size="8" fill="var(--color-text-tertiary)">185</text>
+      <text x="4" y="24" font-size="8" fill="var(--color-text-tertiary)">265</text>
+      <text x="36" y="82" font-size="8" fill="var(--color-text-tertiary)">Feb'25</text>
+      <text x="395" y="82" font-size="8" fill="var(--color-text-tertiary)">Feb'26</text>
+      <polyline points="36,74 100,72 160,69 220,67 280,64 340,61 400,58 455,55" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2"/>
+      <polyline points="36,74 100,65 160,54 220,43 280,30 340,18 400,12 455,7" fill="none" stroke="#76b900" stroke-width="2"/>
+      <line x1="55" y1="12" x2="72" y2="12" stroke="#76b900" stroke-width="2"/>
+      <text x="75" y="15" font-size="8.5" fill="var(--color-text-secondary)">NVDA</text>
+      <line x1="108" y1="12" x2="125" y2="12" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="128" y="15" font-size="8.5" fill="var(--color-text-secondary)">NDX</text>
+    </svg>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="sec">
+      <div class="sec-hdr">WACC</div>
+      <table class="t" style="margin-bottom:5px">
+        <tr><td class="l">Ke</td><td>12.80%</td></tr>
+        <tr><td class="l">Kd</td><td>3.90%</td></tr>
+        <tr><td class="l">We</td><td>91.50%</td></tr>
+        <tr><td class="l">Wd</td><td>8.50%</td></tr>
+        <tr><td class="l">Adj Beta</td><td>1.68</td></tr>
+        <tr><td class="l">Risk free rate</td><td>4.21%</td></tr>
+      </table>
+      <div class="wacc-result">
+        <div class="formula">We·Ke + Wd·Kd·(1−t)</div>
+        <div class="val">12.05%</div>
+        <div class="calc">0.915×12.8% + 0.085×3.9%×0.79</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hdr">Comparables y múltiplos</div>
+      <table class="t" style="margin-bottom:5px">
+        <thead><tr><th>Ticker</th><th>P/E</th><th>EV/EBI</th><th>Cap $B</th></tr></thead>
+        <tbody>
+          <tr style="background:rgba(118,185,0,0.08)"><td class="l" style="font-weight:500">NVDA</td><td style="font-weight:500">35.2x</td><td style="font-weight:500">30.4x</td><td style="font-weight:500">2,149</td></tr>
+          <tr><td class="l">AMD</td><td>20.1x</td><td>17.8x</td><td>245</td></tr>
+          <tr><td class="l">TSM</td><td>24.8x</td><td>19.3x</td><td>856</td></tr>
+          <tr><td class="l">AVGO</td><td>27.5x</td><td>21.6x</td><td>712</td></tr>
+          <tr><td class="l">INTC</td><td>8.2x</td><td>5.9x</td><td>89</td></tr>
+          <tr><td class="l">QCOM</td><td>14.9x</td><td>11.7x</td><td>168</td></tr>
+        </tbody>
+      </table>
+      <svg viewBox="0 0 175 115" style="width:100%;height:auto">
+        <line x1="22" y1="5" x2="22" y2="103" stroke="var(--color-border-secondary)" stroke-width="0.5"/>
+        <line x1="22" y1="103" x2="170" y2="103" stroke="var(--color-border-secondary)" stroke-width="0.5"/>
+        <text x="96" y="112" font-size="7" fill="var(--color-text-tertiary)" text-anchor="middle">P/E →</text>
+        <text x="9" y="55" font-size="7" fill="var(--color-text-tertiary)" transform="rotate(-90,9,55)" text-anchor="middle">EV/EBITDA</text>
+        <circle cx="94" cy="54" r="7" fill="#3b82f6" opacity=".5" stroke="#3b82f6" stroke-width=".5"/>
+        <text x="94" y="57" font-size="6" fill="#1e40af" text-anchor="middle">AMD</text>
+        <circle cx="110" cy="48" r="13" fill="#6366f1" opacity=".4" stroke="#6366f1" stroke-width=".5"/>
+        <text x="110" y="51" font-size="6" fill="#3730a3" text-anchor="middle">TSM</text>
+        <circle cx="120" cy="41" r="11" fill="#8b5cf6" opacity=".4" stroke="#8b5cf6" stroke-width=".5"/>
+        <text x="120" y="44" font-size="6" fill="#5b21b6" text-anchor="middle">AVGO</text>
+        <circle cx="50" cy="88" r="5" fill="#94a3b8" opacity=".6" stroke="#94a3b8" stroke-width=".5"/>
+        <text x="50" y="91" font-size="6" fill="#475569" text-anchor="middle">INTC</text>
+        <circle cx="74" cy="71" r="6" fill="#f59e0b" opacity=".55" stroke="#f59e0b" stroke-width=".5"/>
+        <text x="74" y="74" font-size="6" fill="#92400e" text-anchor="middle">QCOM</text>
+        <circle cx="152" cy="16" r="18" fill="#76b900" opacity=".18" stroke="#76b900" stroke-width="1.5"/>
+        <text x="152" y="19" font-size="7" fill="#365314" text-anchor="middle" font-weight="500">NVDA</text>
+        <text x="50" y="108" font-size="6" fill="var(--color-text-tertiary)" text-anchor="middle">8</text>
+        <text x="94" y="108" font-size="6" fill="var(--color-text-tertiary)" text-anchor="middle">20</text>
+        <text x="152" y="108" font-size="6" fill="var(--color-text-tertiary)" text-anchor="middle">35</text>
+      </svg>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div class="rpt-footer">
+  Valores en color <span style="color:#6366f1">E</span> corresponden a estimaciones: año inmediato vía <span style="font-family:var(--font-mono)">BEST_SALES / BEST_EBITDA / BEST_EBIT</span>; segundo año proyectado con supuestos del analista indicados en la tabla. &nbsp;|&nbsp; La información se basa en Bloomberg y Capital IQ. Este informe no corresponde a una recomendación de inversión. Elaborado para 1FIN39 · PUCP 2026-1.
+</div>
+
+</div>
