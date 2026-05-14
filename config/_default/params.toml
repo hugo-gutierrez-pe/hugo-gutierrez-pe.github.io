@@ -1,7 +1,7 @@
 # ─── Apariencia ───────────────────────────────────────────────────────────────
 [appearance]
-  theme_day   = "dark"       # dark | light | auto
-  theme_night = "dark"
+  theme_day   = "light"      # dark | light | auto
+  theme_night = "light"
   font        = "plus-jakarta-sans"
   # Opciones de fuente disponibles en HugoBlox:
   # "native" (default del sistema), "minimal" (Inter),
