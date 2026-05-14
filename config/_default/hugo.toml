@@ -8,6 +8,7 @@ enableGitInfo = false
 [pagination]
   pagerSize = 10
 
+disableKinds = ["home"]
+
 [outputs]
-  home = ["HTML", "RSS", "headers", "redirects", "backlinks"]
   section = ["HTML", "RSS"]
