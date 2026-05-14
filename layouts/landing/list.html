@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hugo Gutierrez — Especialista en finanzas privadas y públicas</title>
+  <meta name="description" content="Instructor de finanzas en la PUCP. Bloomberg Terminal, Finanzas Corporativas y Análisis Financiero. CFA Nivel 1.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Tabler Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --color-bg: #FFFFFF;
+      --color-bg-secondary: #F7F7F5;
+      --color-border: rgba(0,0,0,0.08);
+      --color-border-secondary: rgba(0,0,0,0.12);
+      --color-text-primary: #1A1A1A;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --color-accent: #185FA5;
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+    }
+    
+    body {
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      color: var(--color-text-primary);
+      background: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Navigation */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 0.5px solid var(--color-border);
+      background: var(--color-bg);
+    }
+    
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      letter-spacing: -0.01em;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+    
+    .nav-links a {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    
+    .nav-links a:hover {
+      color: var(--color-text-primary);
+    }
+    
+    /* Hero */
+    .hero {
+      padding: 64px 24px 56px;
+      text-align: center;
+      border-bottom: 0.5px solid var(--color-border);
+    }
+    
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: var(--color-bg-secondary);
+      border: 0.5px solid var(--color-border);
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+    }
+    
+    .hero-name {
+      font-size: 36px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    
+    .hero-title {
+      font-size: 18px;
+      color: var(--color-text-secondary);
+      margin-bottom: 6px;
+    }
+    
+    .hero-sub {
+      font-size: 15px;
+      color: var(--color-text-tertiary);
+      margin-bottom: 32px;
+    }
+    
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      font-size: 14px;
+      padding: 10px 22px;
+      border-radius: var(--border-radius-md);
+      border: 0.5px solid var(--color-border-secondary);
+      background: transparent;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-sans);
+    }
+    
+    .btn:hover {
+      background: var(--color-bg-secondary);
+    }
+    
+    .btn-primary {
+      background: var(--color-text-primary);
+      color: var(--color-bg);
+      border-color: var(--color-text-primary);
+    }
+    
+    .btn-primary:hover {
+      background: var(--color-text-secondary);
+      transform: scale(0.98);
+    }
+    
+    /* Section */
+    .section {
+      padding: 48px 24px;
+      border-bottom: 0.5px solid var(--color-border);
+    }
+    
+    .sec-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .sec-label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 8px;
+    }
+    
+    .sec-title {
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+    }
+    
+    /* Courses */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    
+    .course-card {
+      background: var(--color-bg);
+      border: 0.5px solid var(--color-border);
+      border-radius: var(--border-radius-lg);
+      padding: 24px 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    
+    .course-card:hover {
+      border-color: var(--color-border-secondary);
+      transform: translateY(-2px);
+    }
+    
+    .course-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--border-radius-md);
+      background: var(--color-bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 24px;
+      color: var(--color-accent);
+    }
+    
+    .course-code {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-accent);
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    
+    .course-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    
+    .course-desc {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    
+    .course-meta {
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+    
+    /* Timeline */
+    .timeline {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    
+    .tl-item {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 0.5px solid var(--color-border);
+    }
+    
+    .tl-item:last-child {
+      border-bottom: none;
+    }
+    
+    .tl-marker {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    
+    .tl-marker.past {
+      background: var(--color-border-secondary);
+    }
+    
+    .tl-content {
+      flex: 1;
+    }
+    
+    .tl-org {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+    
+    .tl-role {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      margin-bottom: 4px;
+    }
+    
+    .tl-date {
+      font-size: 13px;
+      color: var(--color-text-tertiary);
+      margin-bottom: 8px;
+    }
+    
+    .tl-desc {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+    
+    /* Tech Stack */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 12px;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    
+    .stack-item {
+      background: var(--color-bg-secondary);
+      border: 0.5px solid var(--color-border);
+      border-radius: var(--border-radius-md);
+      padding: 16px 12px;
+      text-align: center;
+      transition: border-color 0.15s;
+    }
+    
+    .stack-item:hover {
+      border-color: var(--color-border-secondary);
+    }
+    
+    .stack-item i {
+      font-size: 28px;
+      color: var(--color-accent);
+      display: block;
+      margin-bottom: 10px;
+    }
+    
+    .stack-item span {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+    
+    /* Footer */
+    .footer {
+      padding: 32px 24px;
+      text-align: center;
+      background: var(--color-bg-secondary);
+    }
+    
+    .footer-email {
+      font-size: 15px;
+      color: var(--color-text-primary);
+      margin-bottom: 16px;
+    }
+    
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    
+    .footer-links a {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+    }
+    
+    .footer-links a:hover {
+      color: var(--color-text-primary);
+    }
+    
+    .footer-copy {
+      font-size: 13px;
+      color: var(--color-text-tertiary);
+    }
+    
+    /* Responsive */
+    @media (max-width: 640px) {
+      .hero-name {
+        font-size: 28px;
+      }
+      .courses-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="logo">Hugo Gutierrez</span>
+  <div class="nav-links">
+    <a href="#cursos">Cursos</a>
+    <a href="#proyectos">Proyectos</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="avatar">HG</div>
+  <h1 class="hero-name">David Hugo Gutierrez Cueva</h1>
+  <p class="hero-title">Especialista en finanzas privadas y públicas</p>
+  <p class="hero-sub">Instructor PUCP · CFA Nivel 1 · Bachiller en Economía</p>
+  <div class="hero-btns">
+    <a href="cursos/bloomberg/" class="btn btn-primary">Ver cursos</a>
+    <a href="https://github.com/hugo-gutierrez-pe" class="btn"><i class="ti ti-brand-github"></i>GitHub</a>
+    <a href="cv/hugo-gutierrez-cv.pdf" class="btn"><i class="ti ti-download"></i>Descargar CV</a>
+  </div>
+</section>
+
+<section class="section" id="cursos">
+  <div class="sec-header">
+    <p class="sec-label">PUCP 2026-1</p>
+    <h2 class="sec-title">Cursos</h2>
+  </div>
+  <div class="courses-grid">
+    <a class="course-card" href="cursos/bloomberg/">
+      <div class="course-icon"><i class="ti ti-chart-candle"></i></div>
+      <p class="course-code">1FIN39</p>
+      <p class="course-title">Bloomberg Terminal</p>
+      <p class="course-desc">Domina la plataforma de información financiera más usada del mundo</p>
+      <p class="course-meta">13 sesiones · Lun 20:00</p>
+    </a>
+    <a class="course-card" href="cursos/finanzas-corporativas/">
+      <div class="course-icon"><i class="ti ti-building-bank"></i></div>
+      <p class="course-code">1FIN55</p>
+      <p class="course-title">Finanzas Corporativas 1</p>
+      <p class="course-desc">Valorización, WACC y decisiones de inversión</p>
+      <p class="course-meta">10 PDs · Mar 18:00</p>
+    </a>
+    <a class="course-card" href="cursos/analisis-financiero/">
+      <div class="course-icon"><i class="ti ti-file-analytics"></i></div>
+      <p class="course-code">1FIN02</p>
+      <p class="course-title">Análisis Financiero I</p>
+      <p class="course-desc">Estados financieros y análisis de ratios</p>
+      <p class="course-meta">8 PDs · Jue 18:00</p>
+    </a>
+  </div>
+</section>
+
+<section class="section" id="proyectos">
+  <div class="sec-header">
+    <p class="sec-label">Experiencia</p>
+    <h2 class="sec-title">Proyectos</h2>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-marker"></div>
+      <div class="tl-content">
+        <p class="tl-org">Ciencia Constructiva — IIRSA Norte</p>
+        <p class="tl-role">Analista de inversión</p>
+        <p class="tl-date">Ago 2025 — actualidad</p>
+        <p class="tl-desc">Estudio de inversión vial S/ 170M. Modelos de flujos VAN/TIR, matrices de riesgo y modelación HDM-4.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-marker past"></div>
+      <div class="tl-content">
+        <p class="tl-org">OHLA — Obrascon Huarte Lain</p>
+        <p class="tl-role">Especialista en inversión</p>
+        <p class="tl-date">Abr 2025 — Jul 2025</p>
+        <p class="tl-desc">Proyectos de infraestructura S/ 600M. Defensas Ribereñas, presentaciones ante PCM–ANIN.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-marker past"></div>
+      <div class="tl-content">
+        <p class="tl-org">Ciencia Constructiva — PMO Vías</p>
+        <p class="tl-role">Analista de inversión</p>
+        <p class="tl-date">Sep 2024 — Abr 2025</p>
+        <p class="tl-desc">Vía Expresa Santa Rosa PE-20I. Proyecciones de flujos, coordinación con MTC, OHLA y TYPSA.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-marker past"></div>
+      <div class="tl-content">
+        <p class="tl-org">PUCP</p>
+        <p class="tl-role">Instructor de finanzas</p>
+        <p class="tl-date">Ago 2020 — actualidad</p>
+        <p class="tl-desc">Bloomberg, Capital IQ. Director del equipo CFA Research Challenge — primera victoria nacional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-header">
+    <p class="sec-label">Stack</p>
+    <h2 class="sec-title">Herramientas</h2>
+  </div>
+  <div class="stack-grid">
+    <div class="stack-item"><i class="ti ti-chart-candle"></i><span>Bloomberg</span></div>
+    <div class="stack-item"><i class="ti ti-table"></i><span>Excel / VBA</span></div>
+    <div class="stack-item"><i class="ti ti-brand-python"></i><span>Python</span></div>
+    <div class="stack-item"><i class="ti ti-database"></i><span>Capital IQ</span></div>
+    <div class="stack-item"><i class="ti ti-road"></i><span>HDM-4</span></div>
+    <div class="stack-item"><i class="ti ti-brand-github"></i><span>GitHub</span></div>
+  </div>
+</section>
+
+<footer class="footer" id="contacto">
+  <p class="footer-email">dhgutierrezcu@gmail.com</p>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/hugo-gutierrez">LinkedIn</a>
+    <a href="https://github.com/hugo-gutierrez-pe">GitHub</a>
+    <a href="https://www.pucp.edu.pe">PUCP</a>
+  </div>
+  <p class="footer-copy">© 2026 Hugo Gutierrez · Lima, Perú</p>
+</footer>
+
+</body>
+</html>
