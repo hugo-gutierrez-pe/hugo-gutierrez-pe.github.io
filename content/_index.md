@@ -136,24 +136,14 @@ sections:
       css_class: ""
 
   # ── CONTACTO ─────────────────────────────────────────────────────────────────
-  - block: contact
+  - block: contact-info
     id: contact
     content:
       title: "Contacto"
+      text: "Disponible para consultoría en finanzas, proyectos de infraestructura y docencia."
       email: "dhgutierrezcu@gmail.com"
-      address:
-        city: "Lima"
-        country: "Perú"
-        country_code: "PE"
-      contact_links:
-        - icon: linkedin
-          icon_pack: fab
-          name: "LinkedIn"
-          link: "https://linkedin.com/in/"    # TODO: agregar usuario real
-        - icon: github
-          icon_pack: fab
-          name: "GitHub"
-          link: "https://github.com/"         # TODO: agregar usuario real
+      autolink: true
     design:
+      columns: "1"
       css_class: ""
 ---
