@@ -1,0 +1,14 @@
+baseURL = "https://hugo-gutierrez-pe.github.io/"
+languageCode = "es-PE"
+title = "Hugo Gutierrez"
+theme = ["github.com/HugoBlox/hugo-theme-developer-portfolio"]
+
+enableRobotsTXT = true
+enableGitInfo = false
+
+[pagination]
+  pagerSize = 10
+
+[outputs]
+  home = ["HTML", "RSS", "headers", "redirects", "backlinks"]
+  section = ["HTML", "RSS"]

@@ -1,1 +1,0 @@
-# hugo-gutierrez-pe.github.io

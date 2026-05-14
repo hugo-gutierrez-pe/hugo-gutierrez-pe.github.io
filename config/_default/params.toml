@@ -1,0 +1,30 @@
+# ─── Apariencia ───────────────────────────────────────────────────────────────
+[appearance]
+  theme_day   = "dark"       # dark | light | auto
+  theme_night = "dark"
+  font        = "plus-jakarta-sans"
+  # Opciones de fuente disponibles en HugoBlox:
+  # "native" (default del sistema), "minimal" (Inter),
+  # "plus-jakarta-sans", "dm-sans", "nunito", "source-sans-pro"
+  # Plus Jakarta Sans: moderna, ligeramente editorial, excelente en dark mode
+
+# ─── Identidad del sitio ──────────────────────────────────────────────────────
+[marketing]
+  [marketing.seo]
+    site_type        = "Person"
+    local_business_type = ""
+    org_name         = "PUCP"
+    description      = "Especialista en finanzas privadas y públicas. Instructor en la PUCP."
+    twitter          = ""
+
+# ─── Comentarios (desactivados por ahora) ────────────────────────────────────
+[comments]
+  provider = ""
+
+# ─── Búsqueda ─────────────────────────────────────────────────────────────────
+[search]
+  provider = "wowchemy"
+
+# ─── Íconos de redes en el footer ────────────────────────────────────────────
+[footer]
+  copyright = "© {year} Hugo Gutierrez"
