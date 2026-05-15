@@ -1,522 +1,826 @@
 <!DOCTYPE html>
-<html lang="es-PE">
+<html lang="es-PE" data-theme="white">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hugo Gutierrez — Especialista en finanzas privadas y públicas</title>
+  <title>Hugo Gutierrez — Especialista en finanzas corporativas e inversión pública</title>
   <meta name="description" content="Instructor de finanzas en la PUCP. Bloomberg Terminal, Finanzas Corporativas y Análisis Financiero. CFA Nivel 1.">
-  
-  <!-- Fonts -->
+
+  <!-- Anti-FOUC: apply saved theme before paint -->
+  <script>(function(){var t=localStorage.getItem('theme')||'white';document.documentElement.setAttribute('data-theme',t);})();</script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
-  
-  <!-- Tabler Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
-  
+
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Shared variables ─────────────────────────────── */
     :root {
       --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-      --color-bg: #FFFFFF;
-      --color-bg-secondary: #F7F7F5;
-      --color-border: rgba(0,0,0,0.08);
-      --color-border-secondary: rgba(0,0,0,0.12);
-      --color-text-primary: #1A1A1A;
-      --color-text-secondary: #666666;
-      --color-text-tertiary: #999999;
-      --color-accent: #185FA5;
-      --border-radius-md: 8px;
-      --border-radius-lg: 12px;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --blue: #185FA5;
     }
-    
+
+    /* ── Theme: White (default) ───────────────────────── */
+    html[data-theme="white"] {
+      --bg-cream: #FFFFFF;
+      --bg-cream-deep: #F1F3F5;
+      --bg-paper: #FFFFFF;
+      --bg-alt: #F7F8FA;
+      --ink: #0A0D12;
+      --ink-2: #3D4351;
+      --ink-3: #7C8597;
+      --rule: rgba(10,13,18,0.10);
+      --rule-2: rgba(10,13,18,0.20);
+      --blue-deep: #0C3E70;
+      --blue-tint: rgba(24,95,165,0.07);
+      --nav-bg: rgba(255,255,255,0.88);
+      --nav-blur: saturate(160%) blur(14px);
+      --hero-bg: var(--bg-alt);
+      --hero-pt: 100px;
+      --hero-pb: 96px;
+      --border-w: 1px;
+      --card-hover-border: var(--ink);
+      --card-shadow: rgba(10,13,18,0.22);
+      --avatar-ring: #fff;
+      --avatar-ring-border: var(--rule-2);
+      --avatar-shadow: rgba(10,13,18,0.20);
+      --stack-hover-shadow: 0 10px 22px -16px rgba(10,13,18,0.22);
+    }
+
+    /* ── Theme: Beige ─────────────────────────────────── */
+    html[data-theme="beige"] {
+      --bg-cream: #F5F1EA;
+      --bg-cream-deep: #EDE6D8;
+      --bg-paper: #FBF8F2;
+      --bg-alt: #F5F1EA;
+      --ink: #14181F;
+      --ink-2: #4A5160;
+      --ink-3: #8A8F9A;
+      --rule: rgba(20,24,31,0.10);
+      --rule-2: rgba(20,24,31,0.18);
+      --blue-deep: #0E3E6E;
+      --blue-tint: rgba(24,95,165,0.08);
+      --nav-bg: rgba(251,248,242,0.85);
+      --nav-blur: saturate(160%) blur(12px);
+      --hero-bg: var(--bg-cream);
+      --hero-pt: 92px;
+      --hero-pb: 88px;
+      --border-w: 0.5px;
+      --card-hover-border: rgba(20,24,31,0.18);
+      --card-shadow: rgba(20,24,31,0.18);
+      --avatar-ring: var(--bg-paper);
+      --avatar-ring-border: var(--rule);
+      --avatar-shadow: rgba(20,24,31,0.18);
+      --stack-hover-shadow: none;
+    }
+
+    /* ── Base ─────────────────────────────────────────── */
+    html { scroll-behavior: smooth; }
     body {
       font-family: var(--font-sans);
-      line-height: 1.7;
-      color: var(--color-text-primary);
-      background: var(--color-bg);
-      -webkit-font-smoothing: antialiased;
-    }
-    
-    /* Navigation */
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 24px;
-      border-bottom: 0.5px solid var(--color-border);
-      background: var(--color-bg);
-    }
-    
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-      letter-spacing: -0.01em;
-    }
-    
-    .nav-links {
-      display: flex;
-      gap: 24px;
-    }
-    
-    .nav-links a {
-      font-size: 14px;
-      color: var(--color-text-secondary);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    
-    .nav-links a:hover {
-      color: var(--color-text-primary);
-    }
-    
-    /* Hero */
-    .hero {
-      padding: 64px 24px 56px;
-      text-align: center;
-      border-bottom: 0.5px solid var(--color-border);
-    }
-    
-    .avatar {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
-      background: var(--color-bg-secondary);
-      border: 0.5px solid var(--color-border);
-      margin: 0 auto 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      font-weight: 500;
-      color: var(--color-text-secondary);
-    }
-    
-    .hero-name {
-      font-size: 36px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-      margin-bottom: 8px;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-    }
-    
-    .hero-title {
-      font-size: 18px;
-      color: var(--color-text-secondary);
-      margin-bottom: 6px;
-    }
-    
-    .hero-sub {
-      font-size: 15px;
-      color: var(--color-text-tertiary);
-      margin-bottom: 32px;
-    }
-    
-    .hero-btns {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    
-    .btn {
-      font-size: 14px;
-      padding: 10px 22px;
-      border-radius: var(--border-radius-md);
-      border: 0.5px solid var(--color-border-secondary);
-      background: transparent;
-      color: var(--color-text-secondary);
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.15s;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-sans);
-    }
-    
-    .btn:hover {
-      background: var(--color-bg-secondary);
-    }
-    
-    .btn-primary {
-      background: var(--color-text-primary);
-      color: var(--color-bg);
-      border-color: var(--color-text-primary);
-    }
-    
-    .btn-primary:hover {
-      background: var(--color-text-secondary);
-      transform: scale(0.98);
-    }
-    
-    /* Section */
-    .section {
-      padding: 48px 24px;
-      border-bottom: 0.5px solid var(--color-border);
-    }
-    
-    .sec-header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    
-    .sec-label {
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--color-text-tertiary);
-      margin-bottom: 8px;
-    }
-    
-    .sec-title {
-      font-size: 28px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-      line-height: 1.2;
-    }
-    
-    /* Courses */
-    .courses-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-    
-    .course-card {
-      background: var(--color-bg);
-      border: 0.5px solid var(--color-border);
-      border-radius: var(--border-radius-lg);
-      padding: 24px 20px;
-      cursor: pointer;
-      transition: all 0.15s;
-      text-decoration: none;
-      display: block;
-    }
-    
-    .course-card:hover {
-      border-color: var(--color-border-secondary);
-      transform: translateY(-2px);
-    }
-    
-    .course-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--border-radius-md);
-      background: var(--color-bg-secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-      font-size: 24px;
-      color: var(--color-accent);
-    }
-    
-    .course-code {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--color-accent);
-      letter-spacing: 0.05em;
-      margin-bottom: 8px;
-    }
-    
-    .course-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-      margin-bottom: 6px;
-      line-height: 1.3;
-    }
-    
-    .course-desc {
-      font-size: 13px;
-      color: var(--color-text-secondary);
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-    
-    .course-meta {
-      font-size: 12px;
-      color: var(--color-text-tertiary);
-    }
-    
-    /* Timeline */
-    .timeline {
-      max-width: 640px;
-      margin: 0 auto;
-    }
-    
-    .tl-item {
-      display: flex;
-      gap: 20px;
-      padding: 20px 0;
-      border-bottom: 0.5px solid var(--color-border);
-    }
-    
-    .tl-item:last-child {
-      border-bottom: none;
-    }
-    
-    .tl-marker {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--color-accent);
-      margin-top: 6px;
-      flex-shrink: 0;
-    }
-    
-    .tl-marker.past {
-      background: var(--color-border-secondary);
-    }
-    
-    .tl-content {
-      flex: 1;
-    }
-    
-    .tl-org {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-      margin-bottom: 4px;
-    }
-    
-    .tl-role {
-      font-size: 14px;
-      color: var(--color-text-secondary);
-      margin-bottom: 4px;
-    }
-    
-    .tl-date {
-      font-size: 13px;
-      color: var(--color-text-tertiary);
-      margin-bottom: 8px;
-    }
-    
-    .tl-desc {
-      font-size: 14px;
-      color: var(--color-text-secondary);
       line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg-paper);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
-    
-    /* Tech Stack */
-    .stack-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-      gap: 12px;
-      max-width: 580px;
-      margin: 0 auto;
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+    /* ── NAV ──────────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--nav-bg);
+      backdrop-filter: var(--nav-blur);
+      -webkit-backdrop-filter: var(--nav-blur);
+      border-bottom: 0.5px solid var(--rule);
     }
-    
-    .stack-item {
-      background: var(--color-bg-secondary);
-      border: 0.5px solid var(--color-border);
-      border-radius: var(--border-radius-md);
-      padding: 16px 12px;
-      text-align: center;
-      transition: border-color 0.15s;
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 0;
     }
-    
-    .stack-item:hover {
-      border-color: var(--color-border-secondary);
+    .logo {
+      font-size: 14px; font-weight: 600;
+      letter-spacing: -0.005em;
+      display: flex; align-items: center; gap: 10px;
     }
-    
-    .stack-item i {
-      font-size: 28px;
-      color: var(--color-accent);
-      display: block;
-      margin-bottom: 10px;
+    .logo-mark {
+      width: 26px; height: 26px; border-radius: 6px;
+      background: var(--ink); color: var(--bg-paper);
+      display: grid; place-items: center;
+      font-size: 11px; font-weight: 700; letter-spacing: 0;
     }
-    
-    .stack-item span {
-      font-size: 13px;
-      color: var(--color-text-secondary);
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a {
+      font-size: 13.5px; color: var(--ink-2);
+      text-decoration: none; transition: color .15s;
       font-weight: 500;
     }
-    
-    /* Footer */
-    .footer {
-      padding: 32px 24px;
-      text-align: center;
-      background: var(--color-bg-secondary);
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      font-size: 13px; padding: 8px 14px; border-radius: 8px;
+      background: var(--ink); color: var(--bg-paper) !important;
+      transition: background .15s;
     }
-    
-    .footer-email {
-      font-size: 15px;
-      color: var(--color-text-primary);
-      margin-bottom: 16px;
+    .nav-cta:hover { background: var(--blue-deep); color: #fff !important; }
+
+    /* Theme toggle button */
+    #theme-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 8px;
+      border: 0.5px solid var(--rule-2);
+      background: transparent; cursor: pointer;
+      color: var(--ink-3); transition: all .15s;
+      font-size: 17px; flex-shrink: 0;
     }
-    
-    .footer-links {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
+    #theme-toggle:hover { color: var(--ink); border-color: var(--rule-2); background: var(--bg-alt); }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    .hero {
+      position: relative; overflow: hidden;
+      background: var(--hero-bg);
+      padding: var(--hero-pt) 0 var(--hero-pb);
+      border-bottom: 0.5px solid var(--rule);
     }
-    
-    .footer-links a {
-      font-size: 14px;
-      color: var(--color-text-secondary);
+
+    /* White: grid pattern overlay */
+    html[data-theme="white"] .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(70% 80% at 50% 30%, #000 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(70% 80% at 50% 30%, #000 30%, transparent 80%);
+      pointer-events: none;
+    }
+    /* Beige: soft gradient overlay */
+    html[data-theme="beige"] .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(60% 50% at 50% 0%, rgba(24,95,165,0.06), transparent 70%),
+        linear-gradient(180deg, transparent 0%, rgba(20,24,31,0.02) 100%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid; grid-template-columns: 1fr;
+      gap: 32px; align-items: center;
+      text-align: center; justify-items: center;
+    }
+    .hero-avatar {
+      width: 124px; height: 124px; border-radius: 50%;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 6px var(--avatar-ring),
+        0 0 0 7px var(--avatar-ring-border),
+        0 24px 48px -16px var(--avatar-shadow);
+      background: var(--bg-cream-deep);
+    }
+    .hero-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11.5px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--blue);
+      padding: 6px 12px;
+      background: var(--blue-tint);
+      border: 0.5px solid rgba(24,95,165,0.18);
+      border-radius: 999px;
+    }
+    .hero-eyebrow .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 0 4px rgba(24,95,165,0.18);
+    }
+    .hero-name {
+      font-size: clamp(38px, 5.8vw, 64px);
+      font-weight: 600; line-height: 1.04;
+      letter-spacing: -0.028em; max-width: 18ch;
+      color: var(--ink);
+    }
+    .hero-name em { font-style: italic; font-weight: 500; color: var(--blue); }
+    .hero-lede {
+      font-size: clamp(16px, 1.6vw, 19px);
+      color: var(--ink-2); max-width: 50ch; line-height: 1.5;
+    }
+    .hero-lede em { font-style: italic; color: var(--blue); font-weight: 500; }
+    .hero-sub {
+      display: inline-flex; align-items: center; gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 12.5px; color: var(--ink-3);
+      letter-spacing: 0.02em;
+    }
+    .hero-sub span { display: inline-flex; align-items: center; gap: 6px; }
+    .hero-sub .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--rule-2); }
+
+    .hero-btns {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      justify-content: center; margin-top: 8px;
+    }
+    .btn {
+      font-family: var(--font-sans);
+      font-size: 14px; font-weight: 500;
+      padding: 11px 20px; border-radius: 10px;
+      border: 0.5px solid var(--rule-2);
+      background: var(--bg-paper); color: var(--ink);
+      cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all .18s ease;
+    }
+    .btn i { font-size: 16px; opacity: 0.85; }
+    .btn:hover {
+      background: #fff; border-color: rgba(20,24,31,0.28);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px -6px rgba(20,24,31,0.18);
+    }
+    .btn-primary {
+      background: var(--ink); color: var(--bg-paper); border-color: var(--ink);
+    }
+    .btn-primary:hover {
+      background: var(--blue-deep); border-color: var(--blue-deep); color: #fff;
+    }
+
+    .hero-metrics {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; width: 100%; max-width: 760px;
+      margin-top: 56px;
+      border-top: 0.5px solid var(--rule);
+      border-bottom: 0.5px solid var(--rule);
+    }
+    .metric { padding: 18px 14px; text-align: left; border-right: 0.5px solid var(--rule); }
+    .metric:last-child { border-right: none; }
+    .metric-num {
+      font-size: 22px; font-weight: 600; color: var(--ink);
+      letter-spacing: -0.02em; font-feature-settings: "tnum" 1;
+    }
+    .metric-lbl {
+      font-family: var(--font-mono);
+      font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink-3); margin-top: 4px;
+    }
+
+    /* ── SECTION CHROME ───────────────────────────────── */
+    .section { padding: 88px 0; }
+    .section--alt { background: var(--bg-alt); border-top: 0.5px solid var(--rule); border-bottom: 0.5px solid var(--rule); }
+    .section--paper { background: var(--bg-paper); }
+
+    .sec-head {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 28px; align-items: end;
+      margin-bottom: 48px; padding-bottom: 20px;
+      border-bottom: 0.5px solid var(--rule);
+    }
+    .sec-num {
+      font-family: var(--font-mono);
+      font-size: 13px; letter-spacing: 0.04em;
+      color: var(--blue); padding-bottom: 6px;
+    }
+    .sec-meta { display: flex; flex-direction: column; gap: 6px; }
+    .sec-label {
+      font-family: var(--font-mono);
+      font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-3);
+    }
+    .sec-title {
+      font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 600; letter-spacing: -0.025em; line-height: 1.05;
+      color: var(--ink); max-width: 22ch; text-wrap: balance;
+    }
+    .sec-title em { font-style: italic; font-weight: 500; color: var(--blue); }
+
+    /* ── COURSES ──────────────────────────────────────── */
+    .courses-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    .course-card {
+      position: relative;
+      background: var(--bg-paper);
+      border: var(--border-w) solid var(--rule);
+      border-radius: 14px; padding: 24px;
       text-decoration: none;
+      transition: all .22s ease;
+      overflow: hidden;
+      display: flex; flex-direction: column; min-height: 280px;
     }
-    
-    .footer-links a:hover {
-      color: var(--color-text-primary);
+    .course-card::after {
+      content: "";
+      position: absolute; inset: auto 0 0 0;
+      height: 2px; background: var(--blue);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .35s cubic-bezier(.2,.7,.2,1);
     }
-    
+    .course-card:hover {
+      border-color: var(--card-hover-border);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px -16px var(--card-shadow);
+      background: #fff;
+    }
+    .course-card:hover::after { transform: scaleX(1); }
+    .course-card:hover .course-arrow { transform: translate(2px,-2px); opacity: 1; }
+    .course-card:hover .course-icon { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+    .course-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 22px;
+    }
+    .course-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--bg-cream); border: 0.5px solid var(--rule);
+      color: var(--blue);
+      display: grid; place-items: center; font-size: 22px;
+      transition: all .22s ease;
+    }
+    .course-arrow {
+      width: 30px; height: 30px;
+      display: grid; place-items: center;
+      color: var(--ink-3); font-size: 16px;
+      opacity: 0.5; transition: all .22s ease;
+    }
+    .course-code {
+      font-family: var(--font-mono);
+      font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em;
+      color: var(--blue); margin-bottom: 6px;
+    }
+    .course-title {
+      font-size: 18px; font-weight: 600; color: var(--ink);
+      line-height: 1.22; letter-spacing: -0.015em; margin-bottom: 8px;
+    }
+    .course-title em { font-style: italic; color: var(--blue); font-weight: 500; }
+    .course-desc {
+      font-size: 13.5px; color: var(--ink-2); line-height: 1.55;
+      margin-bottom: 16px; flex: 1;
+    }
+    .course-meta {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em;
+      padding-top: 14px; border-top: 0.5px solid var(--rule);
+    }
+    .course-meta i { font-size: 13px; }
+    .course-meta .sep { width: 2px; height: 2px; border-radius: 50%; background: var(--ink-3); }
+
+    /* ── TIMELINE ─────────────────────────────────────── */
+    .timeline { display: grid; grid-template-columns: 1fr; gap: 0; max-width: 760px; }
+    .tl-item {
+      display: grid; grid-template-columns: 110px 1fr auto;
+      gap: 28px; padding: 26px 0;
+      border-bottom: 0.5px solid var(--rule); align-items: start;
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-date {
+      font-family: var(--font-mono);
+      font-size: 11.5px; color: var(--ink-3);
+      letter-spacing: 0.04em; padding-top: 5px;
+    }
+    .tl-date .now { color: var(--blue); font-weight: 500; }
+    .tl-org {
+      font-size: 18px; font-weight: 600; color: var(--ink);
+      letter-spacing: -0.015em; margin-bottom: 3px; line-height: 1.25;
+    }
+    .tl-role {
+      font-size: 13.5px; color: var(--ink-2); margin-bottom: 8px; font-weight: 500;
+    }
+    .tl-role em { font-style: italic; color: var(--blue); font-weight: 500; }
+    .tl-desc { font-size: 14px; color: var(--ink-2); line-height: 1.55; max-width: 56ch; }
+    .tl-desc em { font-style: italic; color: var(--blue); font-weight: 500; }
+    .tl-tag {
+      font-family: var(--font-mono);
+      font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 999px;
+      background: var(--bg-cream-deep); color: var(--ink-2);
+      white-space: nowrap;
+    }
+    .tl-tag.live { background: var(--blue-tint); color: var(--blue); }
+    .tl-tag.live::before {
+      content: ""; display: inline-block;
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--blue); margin-right: 6px;
+      vertical-align: middle;
+      box-shadow: 0 0 0 3px rgba(24,95,165,0.18);
+    }
+
+    /* ── STACK ────────────────────────────────────────── */
+    .stack-grid {
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px;
+    }
+    .stack-item {
+      background: var(--bg-paper);
+      border: var(--border-w) solid var(--rule);
+      border-radius: 12px; padding: 22px 14px;
+      text-align: center; transition: all .18s ease;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .stack-item:hover {
+      border-color: var(--card-hover-border);
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: var(--stack-hover-shadow, none);
+    }
+    .stack-item i { font-size: 26px; color: var(--blue); }
+    .stack-item span { font-size: 12.5px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+
+    /* ── CTA ──────────────────────────────────────────── */
+    .cta {
+      background: var(--ink); color: var(--bg-paper);
+      padding: 88px 0; position: relative; overflow: hidden;
+    }
+    .cta::before {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(60% 80% at 80% 50%, rgba(24,95,165,0.25), transparent 60%);
+      pointer-events: none;
+    }
+    .cta-inner {
+      position: relative;
+      display: grid; grid-template-columns: 1.2fr 1fr;
+      gap: 48px; align-items: center;
+    }
+    .cta-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11.5px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(255,255,255,0.55);
+      display: inline-flex; align-items: center; gap: 14px;
+      margin-bottom: 24px;
+    }
+    .cta-eyebrow .bar { width: 28px; height: 1px; background: rgba(255,255,255,0.3); }
+    .cta-eyebrow .num { color: #9CC4EE; font-weight: 500; }
+    .cta-title {
+      font-size: clamp(36px, 4.6vw, 60px);
+      font-weight: 600; letter-spacing: -0.03em; line-height: 1.0; max-width: 14ch;
+    }
+    .cta-title em { font-style: italic; color: #9CC4EE; font-weight: 500; }
+    .cta-body {
+      font-size: 17px; color: rgba(255,255,255,0.72);
+      line-height: 1.55; margin-top: 22px; max-width: 44ch;
+    }
+    .cta-actions { display: flex; flex-direction: column; gap: 10px; }
+    .cta-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 18px;
+      border: 0.5px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      text-decoration: none; color: inherit;
+      transition: all .18s;
+      background: rgba(255,255,255,0.02);
+    }
+    .cta-row:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.28); }
+    .cta-row i:first-child { font-size: 22px; color: #9CC4EE; }
+    .cta-row .label {
+      font-family: var(--font-mono); font-size: 10.5px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .cta-row .val { font-size: 15px; font-weight: 500; color: #fff; }
+    .cta-row .arrow { margin-left: auto; opacity: 0.5; font-size: 16px; transition: transform .18s; }
+    .cta-row:hover .arrow { transform: translateX(3px); opacity: 1; }
+    .cta-row .grow { flex: 1; }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    .footer {
+      padding: 28px 0;
+      background: var(--bg-cream-deep);
+      border-top: 0.5px solid var(--rule);
+    }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
     .footer-copy {
-      font-size: 13px;
-      color: var(--color-text-tertiary);
+      font-family: var(--font-mono);
+      font-size: 11.5px; color: var(--ink-3); letter-spacing: 0.04em;
     }
-    
-    /* Responsive */
-    @media (max-width: 640px) {
-      .hero-name {
-        font-size: 28px;
-      }
-      .courses-grid {
-        grid-template-columns: 1fr;
-      }
-      .nav-links {
-        gap: 16px;
-      }
+    .footer-links { display: flex; gap: 18px; }
+    .footer-links a { font-size: 12.5px; color: var(--ink-2); text-decoration: none; letter-spacing: -0.005em; }
+    .footer-links a:hover { color: var(--ink); }
+
+    /* ── FADE-IN ──────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(14px);
+      transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: .06s; }
+    .reveal.d2 { transition-delay: .12s; }
+    .reveal.d3 { transition-delay: .18s; }
+    .reveal.d4 { transition-delay: .24s; }
+    .reveal.d5 { transition-delay: .30s; }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 880px) {
+      .container { padding: 0 22px; }
+      .courses-grid { grid-template-columns: 1fr 1fr; }
+      .stack-grid { grid-template-columns: repeat(3, 1fr); }
+      .cta-inner { grid-template-columns: 1fr; }
+      .sec-head { grid-template-columns: 1fr; gap: 12px; }
+    }
+    @media (max-width: 600px) {
+      .courses-grid { grid-template-columns: 1fr; }
+      .stack-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero { padding: 64px 0 56px !important; }
+      .section { padding: 64px 0; }
+      .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+      .metric:nth-child(2) { border-right: none; }
+      .tl-item { grid-template-columns: 1fr; gap: 8px; }
+      .tl-tag { justify-self: start; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      #theme-toggle { display: none; }
     }
   </style>
 </head>
 <body>
 
 <nav class="nav">
-  <span class="logo">Hugo Gutierrez</span>
-  <div class="nav-links">
-    <a href="#cursos">Cursos</a>
-    <a href="#proyectos">Proyectos</a>
-    <a href="#contacto">Contacto</a>
+  <div class="container nav-inner">
+    <span class="logo">
+      <span class="logo-mark">HG</span>
+      Hugo Gutierrez
+    </span>
+    <div class="nav-links">
+      <a href="#cursos">Cursos</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#stack">Stack</a>
+      <button id="theme-toggle" aria-label="Cambiar tema">
+        <i class="ti ti-palette"></i>
+      </button>
+      <a href="#contacto" class="nav-cta">Contacto</a>
+    </div>
   </div>
 </nav>
 
 <section class="hero">
-  <div class="avatar">HG</div>
-  <h1 class="hero-name">David Hugo Gutierrez Cueva</h1>
-  <p class="hero-title">Especialista en finanzas privadas y públicas</p>
-  <p class="hero-sub">Instructor PUCP · CFA Nivel 1 · Bachiller en Economía</p>
-  <div class="hero-btns">
-    <a href="cursos/bloomberg/" class="btn btn-primary">Ver cursos</a>
-    <a href="https://github.com/hugo-gutierrez-pe" class="btn"><i class="ti ti-brand-github"></i>GitHub</a>
-    <a href="cv/hugo-gutierrez-cv.pdf" class="btn"><i class="ti ti-download"></i>Descargar CV</a>
-  </div>
-</section>
+  <div class="container hero-grid">
+    <div class="hero-avatar reveal">
+      <img src="/img/hugo.jpg" alt="Hugo Gutierrez" />
+    </div>
 
-<section class="section" id="cursos">
-  <div class="sec-header">
-    <p class="sec-label">PUCP 2026-1</p>
-    <h2 class="sec-title">Cursos</h2>
-  </div>
-  <div class="courses-grid">
-    <a class="course-card" href="cursos/bloomberg/">
-      <div class="course-icon"><i class="ti ti-chart-candle"></i></div>
-      <p class="course-code">1FIN39</p>
-      <p class="course-title">Bloomberg Terminal</p>
-      <p class="course-desc">Domina la plataforma de información financiera más usada del mundo</p>
-      <p class="course-meta">13 sesiones · Lun 20:00</p>
-    </a>
-    <a class="course-card" href="cursos/finanzas-corporativas/">
-      <div class="course-icon"><i class="ti ti-building-bank"></i></div>
-      <p class="course-code">1FIN55</p>
-      <p class="course-title">Finanzas Corporativas 1</p>
-      <p class="course-desc">Valorización, WACC y decisiones de inversión</p>
-      <p class="course-meta">10 PDs · Mar 18:00</p>
-    </a>
-    <a class="course-card" href="cursos/analisis-financiero/">
-      <div class="course-icon"><i class="ti ti-file-analytics"></i></div>
-      <p class="course-code">1FIN02</p>
-      <p class="course-title">Análisis Financiero I</p>
-      <p class="course-desc">Estados financieros y análisis de ratios</p>
-      <p class="course-meta">8 PDs · Jue 18:00</p>
-    </a>
-  </div>
-</section>
+    <div class="hero-eyebrow reveal d1">
+      <span class="dot"></span>
+      PUCP · Lima, Perú · 2026—1
+    </div>
 
-<section class="section" id="proyectos">
-  <div class="sec-header">
-    <p class="sec-label">Experiencia</p>
-    <h2 class="sec-title">Proyectos</h2>
-  </div>
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-marker"></div>
-      <div class="tl-content">
-        <p class="tl-org">Ciencia Constructiva — IIRSA Norte</p>
-        <p class="tl-role">Analista de inversión</p>
-        <p class="tl-date">Ago 2025 — actualidad</p>
-        <p class="tl-desc">Estudio de inversión vial S/ 170M. Modelos de flujos VAN/TIR, matrices de riesgo y modelación HDM-4.</p>
-      </div>
+    <h1 class="hero-name reveal d2">
+      David Hugo Gutierrez Cueva<br/>
+      Especialista en <em>finanzas corporativas</em><br/>
+      e <em>inversión pública</em>
+    </h1>
+
+    <p class="hero-lede reveal d3">
+      Instructor en la Pontificia Universidad Católica del Perú — <em>Facultad de Ciencias Sociales,
+      especialidad de Finanzas</em>. Modelo decisiones de inversión en infraestructura
+      por más de S/ 770 millones.
+    </p>
+
+    <div class="hero-sub reveal d4">
+      <span><i class="ti ti-certificate"></i>CFA Nivel 1 aprobado</span>
+      <span class="sep"></span>
+      <span><i class="ti ti-school"></i>Bachiller en Economía · PUCP</span>
+      <span class="sep"></span>
+      <span><i class="ti ti-award"></i>Diplomado APP</span>
     </div>
-    <div class="tl-item">
-      <div class="tl-marker past"></div>
-      <div class="tl-content">
-        <p class="tl-org">OHLA — Obrascon Huarte Lain</p>
-        <p class="tl-role">Especialista en inversión</p>
-        <p class="tl-date">Abr 2025 — Jul 2025</p>
-        <p class="tl-desc">Proyectos de infraestructura S/ 600M. Defensas Ribereñas, presentaciones ante PCM–ANIN.</p>
-      </div>
+
+    <div class="hero-btns reveal d5">
+      <a href="#cursos" class="btn btn-primary">Ver cursos<i class="ti ti-arrow-right"></i></a>
+      <a href="/cv/hugo-gutierrez-cv.pdf" class="btn"><i class="ti ti-download"></i>Descargar CV</a>
+      <a href="https://github.com/hugo-gutierrez-pe" class="btn"><i class="ti ti-brand-github"></i>GitHub</a>
     </div>
-    <div class="tl-item">
-      <div class="tl-marker past"></div>
-      <div class="tl-content">
-        <p class="tl-org">Ciencia Constructiva — PMO Vías</p>
-        <p class="tl-role">Analista de inversión</p>
-        <p class="tl-date">Sep 2024 — Abr 2025</p>
-        <p class="tl-desc">Vía Expresa Santa Rosa PE-20I. Proyecciones de flujos, coordinación con MTC, OHLA y TYPSA.</p>
+
+    <div class="hero-metrics reveal d5">
+      <div class="metric">
+        <div class="metric-num">S/ 770M+</div>
+        <div class="metric-lbl">Inversión modelada</div>
       </div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-marker past"></div>
-      <div class="tl-content">
-        <p class="tl-org">PUCP</p>
-        <p class="tl-role">Instructor de finanzas</p>
-        <p class="tl-date">Ago 2020 — actualidad</p>
-        <p class="tl-desc">Bloomberg, Capital IQ. Director del equipo CFA Research Challenge — primera victoria nacional.</p>
+      <div class="metric">
+        <div class="metric-num">5+ años</div>
+        <div class="metric-lbl">Instructor en PUCP</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">3</div>
+        <div class="metric-lbl">Cursos · semestre 2026—1</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">TOEFL 98</div>
+        <div class="metric-lbl">GMAT 730 · GRE 320</div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="sec-header">
-    <p class="sec-label">Stack</p>
-    <h2 class="sec-title">Herramientas</h2>
-  </div>
-  <div class="stack-grid">
-    <div class="stack-item"><i class="ti ti-chart-candle"></i><span>Bloomberg</span></div>
-    <div class="stack-item"><i class="ti ti-table"></i><span>Excel / VBA</span></div>
-    <div class="stack-item"><i class="ti ti-brand-python"></i><span>Python</span></div>
-    <div class="stack-item"><i class="ti ti-database"></i><span>Capital IQ</span></div>
-    <div class="stack-item"><i class="ti ti-road"></i><span>HDM-4</span></div>
-    <div class="stack-item"><i class="ti ti-brand-github"></i><span>GitHub</span></div>
+<section class="section section--paper" id="cursos">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-num">01 / Docencia</div>
+      <div class="sec-meta">
+        <div class="sec-label">PUCP · Semestre 2026—1</div>
+        <h2 class="sec-title">Cursos que <em>dicto</em> en la PUCP</h2>
+      </div>
+    </div>
+
+    <div class="courses-grid">
+      <a class="course-card reveal" href="cursos/bloomberg/">
+        <div class="course-top">
+          <div class="course-icon"><i class="ti ti-chart-candle"></i></div>
+          <div class="course-arrow"><i class="ti ti-arrow-up-right"></i></div>
+        </div>
+        <p class="course-code">1FIN39</p>
+        <p class="course-title">Bloomberg <em>Terminal</em></p>
+        <p class="course-desc">Domina la plataforma de información financiera más usada del mundo: funciones esenciales, equity, fixed income, FX y construcción de modelos en Excel.</p>
+        <p class="course-meta">
+          <i class="ti ti-calendar"></i> 13 sesiones
+          <span class="sep"></span>
+          <i class="ti ti-clock"></i> Lun 20:00
+        </p>
+      </a>
+
+      <a class="course-card reveal d1" href="cursos/finanzas-corporativas/">
+        <div class="course-top">
+          <div class="course-icon"><i class="ti ti-building-bank"></i></div>
+          <div class="course-arrow"><i class="ti ti-arrow-up-right"></i></div>
+        </div>
+        <p class="course-code">1FIN55</p>
+        <p class="course-title">Finanzas <em>Corporativas</em> I</p>
+        <p class="course-desc">Valorización por DCF, costo de capital (WACC) y decisiones de inversión bajo incertidumbre. Casos reales del mercado peruano.</p>
+        <p class="course-meta">
+          <i class="ti ti-calendar"></i> 10 PDs
+          <span class="sep"></span>
+          <i class="ti ti-clock"></i> Mar 18:00
+        </p>
+      </a>
+
+      <a class="course-card reveal d2" href="cursos/analisis-financiero/">
+        <div class="course-top">
+          <div class="course-icon"><i class="ti ti-file-analytics"></i></div>
+          <div class="course-arrow"><i class="ti ti-arrow-up-right"></i></div>
+        </div>
+        <p class="course-code">1FIN02</p>
+        <p class="course-title">Análisis <em>Financiero</em> I</p>
+        <p class="course-desc">Lectura crítica de estados financieros, análisis de ratios y construcción de diagnósticos empresariales basados en NIIF.</p>
+        <p class="course-meta">
+          <i class="ti ti-calendar"></i> 8 PDs
+          <span class="sep"></span>
+          <i class="ti ti-clock"></i> Jue 18:00
+        </p>
+      </a>
+    </div>
   </div>
 </section>
 
-<footer class="footer" id="contacto">
-  <p class="footer-email">dhgutierrezcu@gmail.com</p>
-  <div class="footer-links">
-    <a href="https://www.linkedin.com/in/hugo-gutierrez">LinkedIn</a>
-    <a href="https://github.com/hugo-gutierrez-pe">GitHub</a>
-    <a href="https://www.pucp.edu.pe">PUCP</a>
+<section class="section section--alt" id="proyectos">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-num">02 / Experiencia</div>
+      <div class="sec-meta">
+        <div class="sec-label">Práctica profesional · 2020—Hoy</div>
+        <h2 class="sec-title">Proyectos de <em>inversión</em> y consultoría</h2>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-date">
+          <div class="now">Ago 2025—Hoy</div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-org">Ciencia Constructiva — IIRSA Norte</div>
+          <div class="tl-role">Analista de inversión · S/ <em>170M</em></div>
+          <p class="tl-desc">Estudio de inversión vial. Modelos de flujo VAN/TIR, matrices de riesgo y modelación HDM-4 para evaluación técnico-económica.</p>
+        </div>
+        <span class="tl-tag live">Actual</span>
+      </div>
+
+      <div class="tl-item reveal d1">
+        <div class="tl-date">Abr—Jul 2025</div>
+        <div class="tl-body">
+          <div class="tl-org">OHLA — Obrascón Huarte Lain</div>
+          <div class="tl-role">Especialista en inversión · S/ <em>600M</em></div>
+          <p class="tl-desc">Informe de Consistencia <em>Defensas Ribereñas</em> (ríos Huaura y Cañete), aprobado por las entidades competentes. Presentaciones ejecutivas ante PCM y ANIN.</p>
+        </div>
+        <span class="tl-tag">Infraestructura</span>
+      </div>
+
+      <div class="tl-item reveal d2">
+        <div class="tl-date">Sep 2024—Abr 2025</div>
+        <div class="tl-body">
+          <div class="tl-org">Ciencia Constructiva — Vía Expresa Santa Rosa</div>
+          <div class="tl-role">Analista de inversión · PE-20I</div>
+          <p class="tl-desc">Evaluación financiera del megaproyecto. Proyecciones de flujo, VAN/TIR, escenarios y coordinación con PMO Vías, MTC, OHLA y TYPSA.</p>
+        </div>
+        <span class="tl-tag">PMO</span>
+      </div>
+
+      <div class="tl-item reveal d3">
+        <div class="tl-date">
+          <div class="now">Ago 2020—Hoy</div>
+        </div>
+        <div class="tl-body">
+          <div class="tl-org">PUCP — Facultad de Ciencias Sociales</div>
+          <div class="tl-role">Instructor de finanzas · Especialidad de Finanzas</div>
+          <p class="tl-desc">Docencia en Análisis Financiero, Finanzas Corporativas, Evaluación de Proyectos, Bloomberg y Capital IQ. Asesoría en valorización de <em>Leche Gloria, InRetail, Aceros Arequipa</em> y <em>MercadoLibre</em>.</p>
+        </div>
+        <span class="tl-tag live">Docencia</span>
+      </div>
+    </div>
   </div>
-  <p class="footer-copy">© 2026 Hugo Gutierrez · Lima, Perú</p>
+</section>
+
+<section class="section section--paper" id="stack">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-num">03 / Herramientas</div>
+      <div class="sec-meta">
+        <div class="sec-label">Stack profesional</div>
+        <h2 class="sec-title">Plataformas que <em>uso</em> a diario</h2>
+      </div>
+    </div>
+
+    <div class="stack-grid">
+      <div class="stack-item reveal"><i class="ti ti-chart-candle"></i><span>Bloomberg</span></div>
+      <div class="stack-item reveal d1"><i class="ti ti-table"></i><span>Excel / VBA</span></div>
+      <div class="stack-item reveal d2"><i class="ti ti-brand-python"></i><span>Python</span></div>
+      <div class="stack-item reveal d3"><i class="ti ti-database"></i><span>Capital IQ</span></div>
+      <div class="stack-item reveal d4"><i class="ti ti-road"></i><span>HDM-4</span></div>
+      <div class="stack-item reveal d5"><i class="ti ti-brand-github"></i><span>GitHub</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contacto">
+  <div class="container cta-inner">
+    <div>
+      <div class="cta-eyebrow reveal">
+        <span class="bar"></span>
+        <span class="num">§ 04</span>
+        <span>Contacto</span>
+      </div>
+      <h2 class="cta-title reveal">¿Hablamos sobre <em>tu próximo</em> proyecto?</h2>
+      <p class="cta-body reveal d1">Atiendo consultorías de evaluación financiera de proyectos, modelación de inversiones públicas y privadas, y mentorías para preparación CFA.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="mailto:dhgutierrezcu@gmail.com" class="cta-row reveal d1">
+        <i class="ti ti-mail"></i>
+        <div class="grow">
+          <div class="label">Correo</div>
+          <div class="val">dhgutierrezcu@gmail.com</div>
+        </div>
+        <i class="ti ti-arrow-up-right arrow"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/hugo-gutierrez" class="cta-row reveal d2">
+        <i class="ti ti-brand-linkedin"></i>
+        <div class="grow">
+          <div class="label">LinkedIn</div>
+          <div class="val">in/hugo-gutierrez</div>
+        </div>
+        <i class="ti ti-arrow-up-right arrow"></i>
+      </a>
+      <a href="https://github.com/hugo-gutierrez-pe" class="cta-row reveal d3">
+        <i class="ti ti-brand-github"></i>
+        <div class="grow">
+          <div class="label">GitHub</div>
+          <div class="val">hugo-gutierrez-pe</div>
+        </div>
+        <i class="ti ti-arrow-up-right arrow"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="footer-copy">© 2026 Hugo Gutierrez · Lima, Perú</span>
+    <div class="footer-links">
+      <a href="#cursos">Cursos</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </div>
 </footer>
+
+<script>
+  // Theme toggle
+  const toggle = document.getElementById('theme-toggle');
+  const html = document.documentElement;
+
+  toggle.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'white' ? 'beige' : 'white';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+
+  // Fade-in on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+</script>
 
 </body>
 </html>
