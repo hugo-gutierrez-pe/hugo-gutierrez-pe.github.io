@@ -1,7 +1,17 @@
 {{ define "main" }}
 <script>
-  document.documentElement.classList.remove('dark');
-  document.documentElement.setAttribute('data-wc-theme-default', 'light');
+  (function() {
+    var html = document.documentElement;
+    html.classList.remove('dark');
+    html.setAttribute('data-wc-theme-default', 'light');
+    new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        if (m.attributeName === 'class' && html.classList.contains('dark')) {
+          html.classList.remove('dark');
+        }
+      });
+    }).observe(html, { attributes: true, attributeFilter: ['class'] });
+  })();
 </script>
 <article class="course-page">
   
