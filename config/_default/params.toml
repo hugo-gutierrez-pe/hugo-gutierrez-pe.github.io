@@ -1,4 +1,8 @@
 # ─── Apariencia ───────────────────────────────────────────────────────────────
+[hugoblox]
+  [hugoblox.theme]
+    mode = "light"            # fuerza data-wc-theme-default="light" en el HTML
+
 [appearance]
   theme_day   = "light"      # dark | light | auto
   theme_night = "light"
