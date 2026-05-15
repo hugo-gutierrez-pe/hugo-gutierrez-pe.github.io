@@ -1,4 +1,8 @@
 {{ define "main" }}
+<script>
+  document.documentElement.classList.remove('dark');
+  document.documentElement.setAttribute('data-wc-theme-default', 'light');
+</script>
 <article class="course-page">
   
   <!-- Hero del curso -->
@@ -38,6 +42,16 @@
 </article>
 
 <style>
+/* Force light mode: override HugoBlox dark-mode CSS variables */
+:root, html.dark {
+  --hb-color-background: #ffffff !important;
+  --hb-color-foreground: #111827 !important;
+  --hb-color-header-bg: #f1f5f9 !important;
+  --hb-color-header-fg: #0f172a !important;
+  --hb-color-footer-bg: #f3f4f6 !important;
+  --hb-color-footer-fg: #0f172a !important;
+}
+
 .course-page {
   max-width: 820px;
   margin: 0 auto;
