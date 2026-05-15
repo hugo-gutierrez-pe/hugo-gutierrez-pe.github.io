@@ -1,5 +1,6 @@
 # ─── Apariencia ───────────────────────────────────────────────────────────────
 [appearance]
+  day_night   = false        # false = forzar siempre light, sin toggle dark/light
   theme_day   = "light"      # dark | light | auto
   theme_night = "light"
   font        = "plus-jakarta-sans"
