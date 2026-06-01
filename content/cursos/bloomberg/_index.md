@@ -56,6 +56,7 @@ featured: true
 | S08 | 25 mayo 2026 | Bonos corporativos — identificar, valorizar, DES y CSHF | `DES` `CSHF` `YAS` `SRCH` | [▶ Slides](/Bloomberg/sesiones/S08-S09-bonos-renta-fija-soberana/) |
 | S09 | 25 mayo 2026 | Renta fija soberana — fuentes y curvas | `SOVR` `FIT` `DEBT` `GC` | [▶ Slides](/Bloomberg/sesiones/S08-S09-bonos-renta-fija-soberana/) |
 | S10 | 2 jun 2026 | YAS — Yield & Spread Analysis en profundidad | `YAS` `SRCH` | [▶ Slides](/Bloomberg/sesiones/S10-YAS-renta-fija-gubernamental/) |
+| S10b | 2 jun 2026 | Mini-clase: IPOs Mega-Cap y la Paradoja de Liquidez | `VIX` `SPX` | [▶ Slides](/Bloomberg/sesiones/S10b-ipos-mega-cap-liquidez/) |
 
 ### Bloque 4 — Otros mercados
 
