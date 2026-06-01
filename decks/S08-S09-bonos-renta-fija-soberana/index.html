@@ -2033,27 +2033,31 @@ document.addEventListener('keydown', (e) => {
 <script type="text/babel" src="./tweaks-panel.jsx"></script>
 <script type="text/babel" src="./tweaks-app.jsx"></script>
 
-<!-- ── CONTROLES FLOTANTES: Tweaks (T) + Pantalla completa (F) ───── -->
+<!-- ── CONTROLES FLOTANTES: T Tweaks · R Rail · P PDF · F Fullscreen ── -->
 <style>
   .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
   .deck-controls.visible{opacity:1}
   .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
   .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(24,95,165,.85);border-color:rgba(24,95,165,.6);color:#fff}
 </style>
 <div class="deck-controls" id="deck-controls">
-  <button class="deck-btn" id="btn-tweaks" title="Tweaks — T"><i class="ti ti-adjustments-horizontal"></i></button>
-  <button class="deck-btn" id="btn-fullscreen" title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+  <button class="deck-btn" id="btn-tweaks"      title="Tweaks — T"><i class="ti ti-adjustments-horizontal"></i></button>
+  <button class="deck-btn" id="btn-rail"         title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf"          title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen"   title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
 </div>
 <script>
   (function(){
     const controls = document.getElementById('deck-controls');
     const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
     let hideTimer;
 
     function showControls(){
       controls.classList.add('visible');
       clearTimeout(hideTimer);
-      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2200);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
     }
     document.addEventListener('mousemove', showControls);
     document.addEventListener('keydown',   showControls);
@@ -2061,6 +2065,17 @@ document.addEventListener('keydown', (e) => {
     document.getElementById('btn-tweaks').addEventListener('click', ()=>{
       window.postMessage({type:'__activate_edit_mode'},'*');
     });
+
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      const hidden = stage.hasAttribute('no-rail');
+      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
+      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
+    }
+    railBtn.addEventListener('click', toggleRail);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
 
     function toggleFS(){
       if(!document.fullscreenElement) document.documentElement.requestFullscreen();
@@ -2074,6 +2089,8 @@ document.addEventListener('keydown', (e) => {
     document.addEventListener('keydown',(e)=>{
       if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
       if(e.key==='t'||e.key==='T') window.postMessage({type:'__activate_edit_mode'},'*');
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
       if(e.key==='f'||e.key==='F') toggleFS();
     });
   })();
