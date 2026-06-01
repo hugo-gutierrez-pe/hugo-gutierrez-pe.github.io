@@ -51,24 +51,25 @@ featured: true
 
 ### Bloque 3 — Renta fija
 
-| Sesión | Tema | Funciones clave | Materiales |
-|--------|------|-----------------|------------|
-| S08 | Bonos corporativos | `DES` `YAS` `CSHF` `SRCH` `WB` | [📁 Drive](#) |
-| S09 | Deuda soberana — bonos de gobierno | `WB` `SOVR` `FIT` `DEBT` `GC` | [📁 Drive](#) |
+| Sesión | Fecha | Tema | Funciones clave | Materiales |
+|--------|-------|------|-----------------|------------|
+| S08 | 25 mayo 2026 | Bonos corporativos — identificar, valorizar, DES y CSHF | `DES` `CSHF` `YAS` `SRCH` | [▶ Slides](/Bloomberg/sesiones/S08-S09-bonos-renta-fija-soberana/) |
+| S09 | 25 mayo 2026 | Renta fija soberana — fuentes y curvas | `SOVR` `FIT` `DEBT` `GC` | [▶ Slides](/Bloomberg/sesiones/S08-S09-bonos-renta-fija-soberana/) |
+| S10 | 2 jun 2026 | YAS — Yield & Spread Analysis en profundidad | `YAS` `SRCH` | [▶ Slides](/Bloomberg/sesiones/S10-YAS-renta-fija-gubernamental/) |
 
 ### Bloque 4 — Otros mercados
 
-| Sesión | Tema | Funciones clave | Materiales |
-|--------|------|-----------------|------------|
-| S10 | FX — mercado de divisas | `FXC` `ALLQ` `FXFC` `FRD` `FXFM` | [📁 Drive](#) |
-| S11 | Economía y política monetaria | `ECO` `ECST` `FED` `FOMC` `DOTS` | [📁 Drive](#) |
-| S12 | Commodities y opciones | `GLCO` `CT` `OMON` `OVL` `OVME` | [📁 Drive](#) |
+| Sesión | Fecha | Tema | Funciones clave | Materiales |
+|--------|-------|------|-----------------|------------|
+| S11 | — | FX — mercado de divisas | `FXC` `ALLQ` `FXFC` `FRD` `FXFM` | [📁 Drive](#) |
+| S12 | — | Economía y política monetaria | `ECO` `ECST` `FED` `FOMC` `DOTS` | [📁 Drive](#) |
+| S13 | — | Commodities y opciones | `GLCO` `CT` `OMON` `OVL` `OVME` | [📁 Drive](#) |
 
 ### Bloque 5 — Gestión de portafolios
 
-| Sesión | Tema | Funciones clave | Materiales |
-|--------|------|-----------------|------------|
-| S13 | Construcción y análisis de portafolios | `EQS` `PRTU` `PORT` | [📁 Drive](#) |
+| Sesión | Fecha | Tema | Funciones clave | Materiales |
+|--------|-------|------|-----------------|------------|
+| S14 | — | Construcción y análisis de portafolios | `EQS` `PRTU` `PORT` | [📁 Drive](#) |
 
 > 📝 **Examen final** — Cubre todos los bloques
 
