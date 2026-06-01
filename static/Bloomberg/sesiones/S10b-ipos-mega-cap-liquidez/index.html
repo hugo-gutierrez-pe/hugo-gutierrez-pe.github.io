@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="bloomberg">
+<head>
+<meta charset="UTF-8" />
+<title>S10b · IPOs Mega-Cap y la Paradoja de Liquidez — 1FIN39</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+<script src="./deck-stage.js" defer></script>
+
+<style>
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    --type-mega:      140px;
+    --type-title:      80px;
+    --type-h1:         64px;
+    --type-h2:         44px;
+    --type-quote:      56px;
+    --type-body:       26px;
+    --type-body-lg:    30px;
+    --type-small:      22px;
+    --type-mono-lg:    20px;
+    --type-mono:       16px;
+    --type-mono-sm:    14px;
+
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+  }
+
+  html[data-course="bloomberg"] {
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+  }
+  html[data-course="analisis"] {
+    --accent:       #1F6B5E;
+    --accent-deep:  #11463D;
+    --accent-tint:  rgba(31,107,94,0.07);
+    --accent-tint-2:rgba(31,107,94,0.18);
+  }
+  html[data-bg="beige"] {
+    --bg: #FAF8F4; --bg-alt: #F2EDE5; --bg-deep: #EAE3D8;
+    --ink-2: #5C5248; --ink-3: #8A7F74;
+    --rule: rgba(100,80,40,0.10); --rule-2: rgba(100,80,40,0.16);
+  }
+  html[data-bg="dark"] {
+    --bg: #0A0D12; --bg-alt: #131820; --bg-deep: #1B2230;
+    --ink: #F3F5F8; --ink-2: #C4CBD6; --ink-3: #7C8597;
+    --rule: rgba(255,255,255,0.10); --rule-2: rgba(255,255,255,0.18);
+  }
+  html[data-bg="dark"] body, html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide { background: var(--bg); position: relative; isolation: isolate; }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(24,95,165,0.14), transparent 65%);
+    pointer-events: none; z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink { background: #05080C; }
+  html[data-bg="dark"] em { color: #9CC4EE; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(24,95,165,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #0a0d12; }
+  deck-stage { background: #0a0d12; }
+
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+  section.slide.bg-alt  { background: var(--bg-alt); }
+  section.slide.bg-deep { background: var(--bg-deep); }
+  section.slide.bg-ink  { background: var(--ink); color: #fff; }
+
+  .slide em, em.acc { font-style: italic; color: var(--accent); font-weight: 500; }
+  .slide.bg-ink em  { color: #9CC4EE; }
+
+  /* ── CHROME ── */
+  .chrome-top {
+    position: absolute; top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono); font-size: 18px; white-space: nowrap;
+    color: var(--ink-3); letter-spacing: 0.04em; z-index: 2;
+  }
+  .chrome-top .brand { display: inline-flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans); font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag { display: inline-flex; align-items: center; gap: 8px; }
+  .chrome-top .course-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  html[data-course="bloomberg"] .bloomberg-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: #FA8C16;
+    display: inline-block; margin-left: 6px; vertical-align: middle;
+  }
+  html:not([data-course="bloomberg"]) .bloomberg-dot { display: none; }
+  .chrome-bot {
+    position: absolute; bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono); font-size: 18px; white-space: nowrap;
+    color: var(--ink-3); letter-spacing: 0.04em; z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+  .chrome-bot .num { font-feature-settings: "tnum" 1; color: var(--ink-2); }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+  .slide.no-chrome .chrome-top, .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── BUILDING BLOCKS ── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono); font-size: var(--type-mono);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #9CC4EE; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1); font-weight: 600; letter-spacing: -0.025em;
+    line-height: 1.05; color: var(--ink); max-width: 22ch; text-wrap: balance;
+  }
+  .slide-lede {
+    font-size: var(--type-body-lg); color: var(--ink-2); line-height: 1.45;
+    max-width: 50ch; margin-top: var(--gap-item);
+  }
+  .title-rule { width: 64px; height: 2px; background: var(--accent); margin-top: 28px; margin-bottom: var(--gap-title); }
+
+  /* ── 1 · PORTADA ── */
+  .portada { justify-content: space-between; background: var(--bg); position: relative; isolation: isolate; }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none; z-index: -1;
+  }
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono); font-size: var(--type-mono-lg); color: var(--ink-3); letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block { display: flex; align-items: center; gap: 14px; color: var(--ink); }
+  .portada-head .brand-block .brand-mark { width: 44px; height: 44px; border-radius: 9px; font-size: 18px; }
+  .portada-head .brand-name { font-family: var(--font-sans); font-size: 26px; font-weight: 600; letter-spacing: -0.005em; color: var(--ink); }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val   { color: var(--ink); font-size: 24px; font-weight: 500; }
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono); font-size: 24px; color: var(--accent);
+    background: var(--accent-tint); border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px; padding: 10px 22px; margin-bottom: 36px; letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title); font-weight: 600; letter-spacing: -0.03em;
+    line-height: 1.0; color: var(--ink); max-width: 18ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px; font-size: var(--type-h2); font-weight: 400;
+    color: var(--ink-2); line-height: 1.2; letter-spacing: -0.015em; max-width: 28ch;
+  }
+  .portada-foot {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border-top: 0.5px solid var(--rule); padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl { font-family: var(--font-mono); font-size: 16px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-3); margin-bottom: 10px; }
+  .portada-foot .val { font-size: 26px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+
+  /* ── 2 · SECTION HEADER ── */
+  .seccion {
+    background: var(--ink); color: #fff; justify-content: center; position: relative;
+    overflow: hidden; padding-top: 180px; padding-bottom: 160px; isolation: isolate;
+  }
+  .seccion::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(60% 80% at 80% 50%, rgba(24,95,165,0.28), transparent 60%);
+    pointer-events: none; z-index: -1;
+  }
+  .seccion .sec-mega {
+    font-family: var(--font-mono); font-size: var(--type-mega); font-weight: 500;
+    color: rgba(255,255,255,0.10); letter-spacing: -0.02em; line-height: 1; margin-bottom: 28px;
+  }
+  .seccion .sec-label {
+    font-family: var(--font-mono); font-size: var(--type-mono); letter-spacing: 0.18em;
+    text-transform: uppercase; color: #9CC4EE; margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .seccion .sec-label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .seccion h2 {
+    font-size: var(--type-title); font-weight: 600; letter-spacing: -0.03em;
+    line-height: 1.0; color: #fff; max-width: 22ch;
+  }
+  .seccion .sec-lede { font-size: var(--type-body-lg); color: rgba(255,255,255,0.7); margin-top: 32px; max-width: 50ch; line-height: 1.45; }
+
+  /* ── 3 · AGENDA ── */
+  .agenda-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 12px; }
+  .agenda-row {
+    display: grid; grid-template-columns: 64px 1fr auto; gap: 32px; align-items: center;
+    padding: 18px 0; border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num { font-family: var(--font-mono); font-size: var(--type-h2); font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
+  .agenda-row .title { font-size: 30px; font-weight: 600; color: var(--ink); letter-spacing: -0.015em; }
+  .agenda-row .desc  { font-size: 19px; color: var(--ink-3); margin-top: 4px; }
+  .agenda-row .tag   {
+    font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);
+    text-transform: uppercase; letter-spacing: 0.08em; padding: 8px 14px;
+    border: 0.5px solid var(--rule-2); border-radius: 999px; white-space: nowrap;
+  }
+
+  /* ── 7 · TABLA COMPARATIVA ── */
+  .cmp-table { width: 100%; border-collapse: collapse; margin-top: 0; font-size: var(--type-body); }
+  .cmp-table thead th {
+    font-family: var(--font-mono); font-size: var(--type-mono); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3);
+    text-align: left; padding: 16px 22px; border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 20px 22px; border-bottom: 0.5px solid var(--rule);
+    color: var(--ink-2); font-size: var(--type-body); vertical-align: top; line-height: 1.4;
+  }
+  .cmp-table tbody td.name { color: var(--ink); font-weight: 600; font-size: 28px; letter-spacing: -0.01em; }
+  .cmp-table tbody td.code { font-family: var(--font-mono); color: var(--accent); font-size: 20px; white-space: nowrap; }
+  .cmp-table tbody td.hi   { color: var(--ink); font-weight: 600; }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+
+  /* ── TWO-COL ── */
+  .two-col-text { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-col); margin-top: 0; }
+  .text-col h3 { font-size: var(--type-h2); font-weight: 600; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 20px; line-height: 1.1; }
+  .text-col .col-eyebrow {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+  }
+  .text-col p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; margin-bottom: 16px; }
+  .text-col ul { list-style: none; padding: 0; }
+  .text-col ul li {
+    font-size: var(--type-body); color: var(--ink-2); line-height: 1.5;
+    padding: 10px 0 10px 26px; position: relative; border-bottom: 0.5px solid var(--rule);
+  }
+  .text-col ul li::before { content: ""; position: absolute; left: 0; top: 22px; width: 12px; height: 1px; background: var(--accent); }
+  .text-col ul li:last-child { border-bottom: none; }
+  .text-col ul li strong { color: var(--ink); font-weight: 600; }
+  .text-col .stat-block { margin-top: 24px; padding: 20px 24px; background: var(--accent-tint); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; }
+  .text-col .stat-block .stat-num { font-family: var(--font-mono); font-size: 48px; font-weight: 600; color: var(--accent); letter-spacing: -0.02em; line-height: 1; }
+  .text-col .stat-block .stat-lbl { font-size: 20px; color: var(--ink-2); margin-top: 6px; }
+
+  /* ── IDEA CLAVE ── */
+  .idea-clave { background: var(--bg-alt); justify-content: center; padding-top: 140px; padding-bottom: 140px; }
+  .idea-clave .quote-mark { font-family: var(--font-mono); font-size: 140px; color: var(--accent); line-height: 0.6; margin-bottom: 12px; opacity: 0.7; }
+  .idea-clave blockquote { font-size: var(--type-quote); font-weight: 500; color: var(--ink); line-height: 1.15; letter-spacing: -0.025em; max-width: 28ch; text-wrap: balance; }
+  .idea-clave blockquote em { font-style: italic; color: var(--accent); font-weight: 500; }
+  .idea-clave .attrib { margin-top: 48px; display: flex; align-items: center; gap: 18px; }
+  .idea-clave .attrib .who  { font-size: 24px; font-weight: 600; color: var(--ink); letter-spacing: -0.005em; }
+  .idea-clave .attrib .role { font-family: var(--font-mono); font-size: 14px; color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 4px; }
+
+  /* ── NOTICIA ── */
+  .noticia-meta { display: flex; align-items: center; gap: 18px; margin-bottom: 14px; font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.04em; color: var(--ink-3); }
+  .noticia-meta .source { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 12px; background: var(--ink); color: var(--bg); border-radius: 999px; text-transform: uppercase; letter-spacing: 0.1em; font-size: 13px; font-weight: 600; }
+  .noticia-meta .source .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #FA8C16; }
+  .noticia-meta .stamp { display: inline-flex; align-items: center; gap: 12px; }
+  .noticia-meta .stamp .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-3); }
+  .noticia-headline { font-family: var(--font-serif); font-size: 48px; line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); font-weight: 600; max-width: 36ch; margin-bottom: 14px; }
+  .noticia-headline em { font-style: italic; color: var(--accent); font-weight: 600; }
+  .noticia-dek { font-size: 20px; line-height: 1.4; color: var(--ink-2); max-width: 80ch; margin-bottom: 20px; padding-bottom: 18px; border-bottom: 0.5px solid var(--rule); }
+  .noticia-body { display: grid; grid-template-columns: 1.1fr 1fr; gap: 36px; align-items: start; }
+  .noticia-body .bullets { display: flex; flex-direction: column; gap: 12px; }
+  .noticia-body .bullets .b { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: baseline; padding-bottom: 12px; border-bottom: 0.5px solid var(--rule); }
+  .noticia-body .bullets .b:last-child { border-bottom: none; padding-bottom: 0; }
+  .noticia-body .bullets .b .key { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.1em; min-width: 120px; }
+  .noticia-body .bullets .b .val { font-size: 18px; color: var(--ink); line-height: 1.35; font-weight: 500; letter-spacing: -0.005em; }
+  .noticia-body .bullets .b .val .big { font-family: var(--font-mono); color: var(--accent); font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .noticia-pull { margin-top: 16px; padding: 14px 22px; background: var(--accent-tint); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; display: grid; grid-template-columns: 150px 1fr; gap: 20px; align-items: start; }
+  .noticia-pull .lbl { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; line-height: 1.4; padding-top: 2px; }
+  .noticia-pull p { font-size: 15px; color: var(--ink); line-height: 1.45; margin: 0; }
+
+  /* ── CIERRE ── */
+  .cierre { background: var(--ink); color: #fff; justify-content: center; position: relative; overflow: hidden; padding-top: 160px; padding-bottom: 140px; isolation: isolate; }
+  .cierre::before { content: ""; position: absolute; inset: 0; background: radial-gradient(50% 70% at 20% 50%, rgba(24,95,165,0.30), transparent 60%); pointer-events: none; z-index: -1; }
+  .cierre .label { font-family: var(--font-mono); font-size: var(--type-mono); color: #9CC4EE; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 28px; display: inline-flex; align-items: center; gap: 14px; }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 { font-size: var(--type-title); font-weight: 600; letter-spacing: -0.03em; line-height: 1.0; max-width: 18ch; }
+  .cierre h2 em { color: #9CC4EE; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 96px; align-items: end; margin-top: 48px; }
+  .cierre .pregunta { font-size: var(--type-body-lg); color: rgba(255,255,255,0.75); line-height: 1.45; max-width: 50ch; }
+  .cierre .debate-list { display: flex; flex-direction: column; gap: 16px; }
+  .cierre .debate-item { display: flex; align-items: baseline; gap: 18px; padding: 16px 20px; border: 0.5px solid rgba(255,255,255,0.14); border-radius: 12px; background: rgba(255,255,255,0.02); }
+  .cierre .debate-item .n { font-family: var(--font-mono); font-size: 14px; color: #9CC4EE; letter-spacing: 0.08em; white-space: nowrap; }
+  .cierre .debate-item p  { font-size: 20px; color: rgba(255,255,255,0.85); line-height: 1.4; }
+
+  /* ── BIG COMMENT ── */
+  .big-comment { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: start; padding-top: 20px; border-top: 0.5px solid var(--rule); }
+  .big-comment .marker { font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; padding-top: 4px; white-space: nowrap; }
+  .big-comment p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; max-width: 90ch; }
+
+  /* ── SOURCE LINE ── */
+  .source-line { font-family: var(--font-mono); font-size: 14px; color: var(--ink-3); letter-spacing: 0.04em; margin-top: 14px; display: inline-flex; align-items: center; gap: 10px; }
+  .source-line a { color: var(--accent); text-decoration: none; }
+  .source-line a:hover { text-decoration: underline; }
+
+  /* ── STAT ROW ── */
+  .stat-row { display: flex; gap: 48px; margin-top: 28px; padding-top: 24px; border-top: 0.5px solid var(--rule); }
+  .stat-item .s-num { font-family: var(--font-mono); font-size: 44px; font-weight: 600; color: var(--accent); letter-spacing: -0.02em; line-height: 1; }
+  .stat-item .s-lbl { font-size: 18px; color: var(--ink-3); margin-top: 4px; }
+
+  /* ── ODDS TABLE (Polymarket) ── */
+  .odds-list { display: flex; flex-direction: column; gap: 0; margin-top: 16px; }
+  .odds-row { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; padding: 16px 0; border-bottom: 0.5px solid var(--rule); }
+  .odds-row:last-child { border-bottom: none; }
+  .odds-row .q { font-size: 22px; color: var(--ink); line-height: 1.3; }
+  .odds-row .pct { font-family: var(--font-mono); font-size: 32px; font-weight: 600; color: var(--accent); letter-spacing: -0.02em; white-space: nowrap; }
+</style>
+
+<script type="application/json" id="speaker-notes">
+[
+  "Portada. Esta es una mini-clase de 15 minutos al final de S10. Dejar claro que es material adicional, no evaluado en sí mismo, pero muy relevante para entender el mercado que están aprendiendo a leer.",
+  "Agenda breve. Recalcar que son 15 minutos intensos: van a ver datos reales de mercado que están ocurriendo mientras tomamos la clase.",
+  "Hook. Pausar 10 segundos después de leer la pregunta. Dejar que los alumnos piensen. Tomar 2-3 respuestas antes de avanzar. La respuesta correcta: de los portafolios existentes — alguien tiene que vender para comprar.",
+  "Los tres IPOs. Enfatizar que los timings son ESPERADOS — pueden cambiar. Destacar el total de $225B: equivale a todo el año pico de 2021 en VC. La clave es la magnitud, no la fecha exacta.",
+  "Reglas del S&P 500. Este es el punto más técnico. Explicar: si un fondo replica el índice, no puede elegir no comprar. Es mecánico. Preguntar: ¿eso es una distorsión del mercado o una eficiencia? No hay respuesta única.",
+  "BCA Research. Distinguir: burbuja de múltiplos (dot-com) vs burbuja de ingresos (hoy). La paradoja: el P/E parece razonable porque las ganancias ya subieron. Pero ¿qué pasa si el gasto de CapEx en IA no genera los retornos esperados? Mi lectura personal: S&P en máximos + recolocación masiva = doble riesgo.",
+  "Múltiplos — Nvidia vs Walmart. El dato que siempre sorprende: Nvidia más barata que el supermercado. Preguntar: ¿cómo puede ser? La respuesta: el mercado espera crecimiento de earnings mucho mayor en Nvidia. P/E refleja expectativas, no solo precio.",
+  "Intel y AMD — el efecto Trump. Intel subió 190% en 2026. El gobierno compró acciones directamente con CHIPS Act. Preguntar: ¿es correcto que un gobierno tome posiciones accionarias en empresas privadas? Debate corto.",
+  "Ranking de modelos de negocio. Aclarar: ESTE ES MI RANKING, no una verdad objetiva. El objetivo es que los alumnos lo debatan. ¿Están de acuerdo? ¿Cambiarían el orden? ¿Por qué?",
+  "Reflexión B2B vs B2C. Mi argumento central. Simplificación deliberada para provocar debate. Preguntar: ¿pueden pensar en otras industrias donde el B2B tiene márgenes mucho mejores que B2C?",
+  "Polymarket y futuros pre-IPO. Conectar con el módulo de derivados. Estos mercados hacen price discovery antes del IPO — exactamente como los futuros del S&P hacen price discovery del índice spot. La diferencia: regulación.",
+  "La paradoja final. El índice puede subir mientras el mercado interno sufre. Mostrar VIX y SPX en Bloomberg si hay tiempo. Señal: VIX sube mientras S&P se mantiene plano.",
+  "Cierre y debate. Dar 3-4 minutos para que los alumnos tomen posición sobre alguna de las tres preguntas. Recoger 2-3 opiniones antes de cerrar la sesión."
+]
+</script>
+</head>
+
+<body>
+<deck-stage width="1920" height="1080">
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 01 · PORTADA
+       ═══════════════════════════════════════════════ -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">PUCP · Lima, Perú</div>
+        <div class="val">Finanzas · 2026—1</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag">
+        <span>1FIN39</span>
+        <span class="bloomberg-dot"></span>
+        <span>Bloomberg Terminal</span>
+      </div>
+      <h1 class="course-title">IPOs Mega-Cap y la <em>Paradoja de Liquidez</em></h1>
+      <p class="course-sub">¿De dónde sale el dinero?</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item">
+        <div class="lbl">Sesión</div>
+        <div class="val">S10 · Mini-Clase</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Instructor</div>
+        <div class="val">Hugo Gutierrez</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Duración</div>
+        <div class="val">15 minutos</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Fecha</div>
+        <div class="val">Jun 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 02 · AGENDA
+       ═══════════════════════════════════════════════ -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10 · Mini-Clase</div>
+    <h1 class="slide-title">Agenda</h1>
+    <div class="title-rule"></div>
+
+    <div class="agenda-list">
+      <div class="agenda-row">
+        <span class="num">01</span>
+        <div><div class="title">La pregunta central</div><div class="desc">¿De dónde sale el dinero?</div></div>
+        <span class="tag">2 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">02</span>
+        <div><div class="title">Los tres IPOs y el problema de liquidez</div><div class="desc">SpaceX · OpenAI · Anthropic — $225B en H2 2026</div></div>
+        <span class="tag">2 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">03</span>
+        <div><div class="title">El cambio de reglas del S&P 500</div><div class="desc">Seasoning, rentabilidad y free float</div></div>
+        <span class="tag">2 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">04</span>
+        <div><div class="title">La burbuja que no se ve en los P/E</div><div class="desc">BCA Research — earnings bubble</div></div>
+        <span class="tag">2 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">05</span>
+        <div><div class="title">Múltiplos y efecto Trump</div><div class="desc">Nvidia vs Walmart · Intel +190% · AMD</div></div>
+        <span class="tag">2 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">06</span>
+        <div><div class="title">Modelos de negocio y derivados pre-IPO</div><div class="desc">Ranking · Polymarket · Futuros cripto</div></div>
+        <span class="tag">3 min</span>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">02 / 13</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 03 · HOOK
+       ═══════════════════════════════════════════════ -->
+  <section class="slide idea-clave" data-label="03 Hook">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="quote-mark">"</div>
+    <blockquote>
+      Si SpaceX, OpenAI y Anthropic necesitan <em>$225 mil millones</em> del mercado en los próximos 6 meses...
+      ¿de dónde sale ese dinero?
+    </blockquote>
+    <div class="attrib">
+      <div>
+        <div class="who">La pregunta del semestre</div>
+        <div class="role">Liquidez · Rotación · Mercado de capitales</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">03 / 13</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 04 · LOS TRES IPOs
+       ═══════════════════════════════════════════════ -->
+  <section class="slide" data-label="04 Los tres IPOs">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Liquidez · H2 2026</div>
+    <h1 class="slide-title">Los tres IPOs <em>más grandes</em> de la historia</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th>Empresa</th>
+          <th>Timing esperado *</th>
+          <th>Recaudación estimada</th>
+          <th>Valoración</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">SpaceX</td>
+          <td class="code">Jun 2026</td>
+          <td class="hi">$75B</td>
+          <td>$1.8–2.0T</td>
+          <td>S-1 público · Roadshow iniciado</td>
+        </tr>
+        <tr>
+          <td class="name">OpenAI</td>
+          <td class="code">Sep 2026</td>
+          <td class="hi">$60B</td>
+          <td>$1.0T</td>
+          <td>Filing confidencial en proceso</td>
+        </tr>
+        <tr>
+          <td class="name">Anthropic</td>
+          <td class="code">Oct–Nov 2026</td>
+          <td class="hi">—</td>
+          <td>$900B</td>
+          <td>Pre-filing · Señalado públicamente</td>
+        </tr>
+        <tr>
+          <td class="name" style="color:var(--accent);">Total H2 2026</td>
+          <td class="code">—</td>
+          <td class="hi" style="color:var(--accent); font-size:32px;">~$225B</td>
+          <td colspan="2" style="color:var(--ink-3); font-size:20px;">= Todo el año pico de IPOs VC en EE.UU. (2021)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment" style="margin-top:24px;">
+      <span class="marker">Respuesta</span>
+      <p>Los inversores tendrán que <strong>rotar capital</strong>: vender Nvidia, Apple y Microsoft para suscribir estas nuevas emisiones. MSCI Research confirma que estos tres verán los mayores outflows por el reweighting.</p>
+    </div>
+
+    <p class="source-line">* Timings son estimados — verificar al inicio del ciclo · Fuentes: <a href="https://www.bloomberg.com/graphics/2026-spacex-ipo-stock-market-nasdaq-listings/" target="_blank">Bloomberg</a> · <a href="https://www.nytimes.com/2026/05/20/technology/openai-ipo.html" target="_blank">NYT</a> · <a href="https://www.businessinsider.com/spacex-ipo-hidden-stock-market-risks-sp500-index-investing-outlook-2026-5" target="_blank">Business Insider / MSCI</a></p>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">04 / 13</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 05 · REGLAS S&P 500
+       ═══════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="05 Reglas SP500">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S&P Dow Jones Indices · Consulta cerrada 28 may 2026</div>
+    <h1 class="slide-title">El cambio de <em>reglas</em> que lo cambia todo</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th>Requisito</th>
+          <th>Regla actual</th>
+          <th>Propuesta nueva</th>
+          <th>Impacto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name" style="font-size:24px;">Seasoning period</td>
+          <td><span style="font-family:var(--font-mono);color:var(--ink-3);">12 meses</span> cotizando</td>
+          <td class="hi"><span style="font-family:var(--font-mono);color:var(--accent);">6 meses</span></td>
+          <td>SpaceX entra al índice en dic 2026, no jun 2027</td>
+        </tr>
+        <tr>
+          <td class="name" style="font-size:24px;">Rentabilidad GAAP</td>
+          <td>4 trimestres de ganancias</td>
+          <td class="hi">Waiver para mega-cap</td>
+          <td>SpaceX (pérdidas) y OpenAI califican sin ser rentables</td>
+        </tr>
+        <tr>
+          <td class="name" style="font-size:24px;">Free float mínimo</td>
+          <td><span style="font-family:var(--font-mono);color:var(--ink-3);">10%</span> del float</td>
+          <td class="hi">Waiver a <span style="font-family:var(--font-mono);">0.10 IWF</span></td>
+          <td>SpaceX con ~4–5% de float puede ingresar al índice</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment" style="margin-top:28px;">
+      <span class="marker">📌 Free float</span>
+      <p>Porcentaje de acciones que cotiza libremente — excluye fundadores, directivos y fondos de largo plazo. SpaceX tiene ~4–5%: muy pocas acciones disponibles para comprar y vender. Con waiver, los fondos indexados igual deben comprarlas al entrar al S&P.</p>
+    </div>
+
+    <p class="source-line">Fuentes: <a href="https://www.bloomberg.com/news/articles/2026-04-30/s-p-mulls-new-index-rules-to-speed-up-addition-of-mega-ipos" target="_blank">Bloomberg</a> · <a href="https://www.linkedin.com/news/story/sp-proposes-faster-ipo-entry-for-mega-cap-companies-8788106/" target="_blank">LinkedIn / S&P</a></p>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">05 / 13</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 06 · BCA RESEARCH — EARNINGS BUBBLE
+       ═══════════════════════════════════════════════ -->
+  <section class="slide" data-label="06 BCA Earnings Bubble">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="noticia-meta">
+      <span class="source"><span class="badge-dot"></span>BCA Research</span>
+      <span class="stamp">28 mayo 2026<span class="sep"></span>Análisis de mercado</span>
+    </div>
+
+    <p class="noticia-headline"><em>"Earnings Bubbles Are Still Bubbles"</em></p>
+    <p class="noticia-dek">La burbuja de IA no está en los múltiplos — está en los ingresos. El S&P 500 en máximos históricos, pero el riesgo está escondido donde nadie mira.</p>
+
+    <div class="noticia-body">
+      <div class="bullets">
+        <div class="b">
+          <span class="key">Burbuja clásica</span>
+          <span class="val">P/E altísimos, empresas sin ingresos. Se corrige ajustando expectativas de ganancias futuras. Visible en los múltiplos.</span>
+        </div>
+        <div class="b">
+          <span class="key">Burbuja de IA 2026</span>
+          <span class="val">P/E parecen <span class="big">razonables</span> porque las ganancias YA subieron. El S&P lleva <span class="big">10 trimestres</span> consecutivos de earnings growth.</span>
+        </div>
+        <div class="b">
+          <span class="key">El riesgo de BCA</span>
+          <span class="val">¿Qué pasa si el CapEx masivo en IA no genera el retorno esperado? La corrección vendría por caída de ingresos, no de múltiplos.</span>
+        </div>
+        <div class="b">
+          <span class="key">Crecimiento ingresos</span>
+          <span class="val">S&P 500 proyecta <span class="big">+7.2%</span> de ingresos en 2026 — cómodo sobre el promedio de 10 años de 5.3%.</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="noticia-pull">
+          <span class="lbl">Mi lectura</span>
+          <p>S&P en máximos históricos <em>justo antes</em> de una recolocación masiva de capital. Si hay rotación significativa hacia los IPOs, el índice puede caer no porque las empresas valgan menos, sino porque los flujos salieron. La burbuja de BCA añade una segunda capa: si los ingresos también se normalizan, la corrección podría ser doble.</p>
+        </div>
+        <p class="source-line" style="margin-top:12px;">Fuente: <a href="https://www.bcaresearch.com/reports/earnings-bubbles-are-still-bubbles-28-05-2026/219011" target="_blank">BCA Research</a> · <a href="https://tradersunion.com/news/market-voices/show/2178390-ai-bubble-earnings-warning/" target="_blank">Traders Union</a> · <a href="https://www.investing.com/analysis/sp-500-earningsdriven-ai-cycle-at-record-highs-still-not-a-blowoff-top-200671695" target="_blank">Investing.com</a></p>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">06 / 13</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 07 · MÚLTIPLOS — NVIDIA VS WALMART
+       ═══════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="07 Multiplos PE">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Múltiplos · P/E comparado</div>
+    <h1 class="slide-title">Nvidia más barata que <em>Walmart</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th>Empresa</th>
+          <th>Ticker</th>
+          <th>P/E TTM actual</th>
+          <th>vs. mediana histórica</th>
+          <th>Observación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Walmart</td>
+          <td class="code">WMT</td>
+          <td class="hi" style="font-size:32px; font-family:var(--font-mono);">~42x</td>
+          <td style="color:#C0392B;">+38% sobre mediana</td>
+          <td>Supermercado. Crecimiento lento, modelo maduro.</td>
+        </tr>
+        <tr>
+          <td class="name" style="color:var(--accent);">Nvidia</td>
+          <td class="code">NVDA</td>
+          <td class="hi" style="font-size:32px; font-family:var(--font-mono); color:var(--accent);">~32x</td>
+          <td style="color:#1F8A5B;">−39% bajo mediana 10Y</td>
+          <td>Líder mundial en chips IA. P/E forward: ~21x</td>
+        </tr>
+        <tr>
+          <td class="name">AMD</td>
+          <td class="code">AMD</td>
+          <td style="font-family:var(--font-mono); font-size:26px;">~63x forward</td>
+          <td>—</td>
+          <td>Beneficiaria de IA. Menor escala que Nvidia.</td>
+        </tr>
+        <tr>
+          <td class="name">Intel</td>
+          <td class="code">INTC</td>
+          <td style="font-family:var(--font-mono); font-size:26px; color:var(--ink-3);">N/A (pérdidas)</td>
+          <td>—</td>
+          <td>En recuperación. Rally por soporte Trump.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment" style="margin-top:20px;">
+      <span class="marker">Pregunta</span>
+      <p>¿Comprarías Nvidia hoy a P/E 32x — más barato que Walmart — sabiendo que en los próximos meses puede haber presión vendedora por los IPOs? ¿Rebalanceas comprando más, o reduces peso en tech?</p>
+    </div>
+
+    <p class="source-line">Fuentes: <a href="https://www.gurufocus.com/term/pettm/NVDA" target="_blank">GuruFocus NVDA</a> · <a href="https://www.gurufocus.com/term/pettm/WMT" target="_blank">GuruFocus WMT</a></p>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">07 / 13</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 08 · INTEL Y AMD — EFECTO TRUMP
+       ═══════════════════════════════════════════════ -->
+  <section class="slide" data-label="08 Intel AMD Trump">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Semiconductores · CHIPS Act · 2026</div>
+    <h1 class="slide-title">Intel <em>+190%</em> en 2026 — el factor político</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow">Intel · INTC</div>
+        <ul>
+          <li><strong>+190% en 2026</strong> — uno de los mejores años en la historia del stock.</li>
+          <li>El gobierno Trump convirtió parte del CHIPS Act en <strong>participación accionaria directa</strong>: ~10% del equity de Intel (~433M acciones, $8.9B).</li>
+          <li>Con Intel por encima de $117, la posición gubernamental vale <strong>+$50B</strong> — ganancia no realizada de ~$47B.</li>
+          <li>Trump lo publicitó como éxito de política industrial: <em>"I am responsible"</em>.</li>
+          <li>Apple en negociaciones con Intel para fabricar chips en EE.UU.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow">AMD · Mercado Amplio</div>
+        <ul>
+          <li>AMD subió ~25% en una sola semana tras Q1 2026 earnings.</li>
+          <li>El <strong>Philadelphia Semiconductor Index</strong> registró <span style="font-family:var(--font-mono); color:var(--accent);">17 sesiones consecutivas de ganancias</span> en abril 2026 — récord en 32 años del índice.</li>
+          <li>Trump alteró la administración del CHIPS Act: de subsidios a <strong>participación accionaria</strong> en empresas receptoras.</li>
+          <li>Acuerdo con Taiwán: $250B en nueva inversión manufacturera en EE.UU.</li>
+        </ul>
+        <div class="stat-block">
+          <div class="stat-num">17</div>
+          <div class="stat-lbl">Sesiones consecutivas al alza — Philly Semi Index · Abr 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="source-line">Fuentes: <a href="https://www.cnbc.com/2026/01/09/semiconductor-stocks-boosted-by-donald-trumps-intel-praise.html" target="_blank">CNBC</a> · <a href="https://finance.yahoo.com/markets/stocks/articles/intel-stock-190-2026-trump-131501491.html" target="_blank">Yahoo Finance</a> · <a href="https://www.thestreet.com/investing/stocks/amd-and-intel-lead-2026-gains-as-ai-guard-changes" target="_blank">TheStreet</a></p>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">08 / 13</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 09 · RANKING MODELOS DE NEGOCIO
+       ═══════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="09 Ranking Modelos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Opinión del docente — debate abierto</div>
+    <h1 class="slide-title">Ranking de <em>modelos de negocio</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Empresa</th>
+          <th>Estado financiero</th>
+          <th>Modelo</th>
+          <th>Mi veredicto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="code" style="font-size:28px;">01</td>
+          <td class="name" style="color:var(--accent);">Anthropic</td>
+          <td><strong>Rentable Q2 2026.</strong> $10.9B ingresos. Primer quarter con profit operativo. Margen bruto &gt;70%.</td>
+          <td>B2B Enterprise puro. Codificación + agentes IA. Costo entrenamiento 1/4 vs OpenAI.</td>
+          <td>El ganador financiero. Llegó tarde, llegó bien.</td>
+        </tr>
+        <tr>
+          <td class="code" style="font-size:28px;">02</td>
+          <td class="name">OpenAI</td>
+          <td><strong>Pérdidas masivas.</strong> $14B pérdida 2026. Gasta $1.69 por cada $1 de revenue. Primer profit: 2029.</td>
+          <td>B2C gigante. 85% suscriptores ChatGPT a $20/mes. Altos costos de inferencia.</td>
+          <td>Gran escala, modelo frágil. Necesita pivotar.</td>
+        </tr>
+        <tr>
+          <td class="code" style="font-size:28px;">03</td>
+          <td class="name">SpaceX</td>
+          <td><strong>Mixto.</strong> Starlink rentable ($4.4B oper. income). Grupo: −$1.94B Q1 2026. Revenue 2025: $18.67B.</td>
+          <td>Infraestructura física. Lanzamientos + satélites + IA.</td>
+          <td>El negocio más interesante, la peor inversión pública hoy.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="source-line">Fuentes: <a href="https://www.cnbc.com/2026/05/20/anthropic-revenue-explosive-growth-ipo-profitable-quarter.html" target="_blank">CNBC (Anthropic)</a> · <a href="https://fortune.com/2025/11/12/openai-cash-burn-rate-annual-losses-2028-profitable-2030-financial-documents/" target="_blank">Fortune (OpenAI)</a> · <a href="https://payloadspace.com/spacex-reveals-financial-data-ahead-of-ipo/" target="_blank">Payload Space (SpaceX S-1)</a></p>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">09 / 13</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 10 · REFLEXIÓN B2B VS B2C
+       ═══════════════════════════════════════════════ -->
+  <section class="slide idea-clave" data-label="10 B2B vs B2C">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="quote-mark">"</div>
+    <blockquote>
+      Reemplazar a un trabajador con IA es <em>más rentable</em> que cobrarle $20 al mes por una suscripción. Anthropic lo entendió sin ser first mover.
+    </blockquote>
+    <div class="attrib">
+      <div>
+        <div class="role">B2B enterprise vs B2C masivo · Simplificación deliberada para debate</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">10 / 13</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 11 · POLYMARKET Y FUTUROS PRE-IPO
+       ═══════════════════════════════════════════════ -->
+  <section class="slide" data-label="11 Polymarket Futuros">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Derivados · Price Discovery · Mercados pre-IPO</div>
+    <h1 class="slide-title">Futuros sobre acciones que <em>aún no existen</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow">Polymarket · Kalshi — Mercados de predicción</div>
+        <div class="odds-list">
+          <div class="odds-row">
+            <span class="q">¿SpaceX hace IPO antes que OpenAI?</span>
+            <span class="pct">93.9%</span>
+          </div>
+          <div class="odds-row">
+            <span class="q">¿OpenAI hace IPO antes de dic 2026?</span>
+            <span class="pct">71%</span>
+          </div>
+          <div class="odds-row">
+            <span class="q">¿OpenAI hace IPO este año? (Kalshi)</span>
+            <span class="pct">92%</span>
+          </div>
+          <div class="odds-row">
+            <span class="q">Valoración SpaceX al cierre día 1</span>
+            <span class="pct">$2.0–2.5T</span>
+          </div>
+        </div>
+        <p class="source-line"><a href="https://polymarket.com/tech/ipos" target="_blank">polymarket.com/tech/ipos</a> · <a href="https://kalshi.com/category/companies/ipos" target="_blank">kalshi.com</a></p>
+      </div>
+
+      <div class="text-col">
+        <div class="col-eyebrow">OKX · Bitget · Injective — Futuros cripto perpetuos</div>
+        <ul>
+          <li>Exchanges de crypto lanzaron <strong>perpetual futures</strong> sobre SpaceX, OpenAI y Anthropic antes del IPO.</li>
+          <li>Contrato SPCX en TradeXYZ: <span style="font-family:var(--font-mono); color:var(--accent);">$150/acción</span> → valoración implícita ~$1.78T.</li>
+          <li>No confieren derechos de accionista — exposición <strong>sintética</strong> al precio esperado.</li>
+          <li>OpenAI y Anthropic advirtieron que no autorizan estos instrumentos.</li>
+          <li>Riesgo regulatorio: SEC podría clasificarlos como valores no registrados.</li>
+        </ul>
+        <div class="big-comment" style="margin-top:20px; border-top:0.5px solid var(--rule); padding-top:16px;">
+          <span class="marker">Conexión</span>
+          <p>Estos mercados hacen <em>price discovery</em> antes del IPO — exactamente la función que cumplen los futuros del S&P sobre el índice spot. Lo veremos en el módulo de derivados.</p>
+        </div>
+        <p class="source-line"><a href="https://www.coindesk.com/markets/2026/05/06/okx-joins-crypto-s-pre-ipo-frenzy-with-openai-spacex-perpetual-futures" target="_blank">CoinDesk</a> · <a href="https://decrypt.co/367022/okx-openai-spacex-anthropic-perpetual-futures-pre-ipo" target="_blank">Decrypt</a> · <a href="https://www.gurufocus.com/news/8891532/spacex-preipo-markets-signal-23-trillion-valuation" target="_blank">GuruFocus</a></p>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">11 / 13</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 12 · LA PARADOJA FINAL
+       ═══════════════════════════════════════════════ -->
+  <section class="slide bg-deep" data-label="12 Paradoja Final">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>El mercado bajista escondido</div>
+    <h1 class="slide-title">El índice sube. <em>El mercado interno sangra.</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow">La paradoja</div>
+        <p>Los fondos que replican el S&P 500 <strong>están obligados</strong> a comprar SpaceX, OpenAI y Anthropic a cualquier precio al entrar al índice. El índice sube mecánicamente.</p>
+        <p>Pero para comprar estas nuevas posiciones, deben <strong>vender</strong> Nvidia, Apple y Microsoft. Esas acciones caen. El mercado interno sufre mientras el titular dice "S&P en máximos".</p>
+        <p>Capas de riesgo adicional: si los earnings de IA (BCA Research) también se normalizan, la corrección podría ser doble.</p>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow">Cómo verlo en Bloomberg</div>
+        <div style="background:var(--ink); color:#fff; border-radius:14px; padding:28px 32px; font-family:var(--font-mono); font-size:26px; line-height:2; margin-bottom:16px;">
+          <div><span style="color:#FA8C16;">VIX</span> <span style="color:rgba(255,255,255,0.5);">&lt;GO&gt;</span></div>
+          <div><span style="color:#9CC4EE;">SPX</span> <span style="color:rgba(255,255,255,0.5);">&lt;GO&gt;</span></div>
+          <div><span style="color:#B8E6A0;">NVDA US Equity</span> <span style="color:rgba(255,255,255,0.5);">&lt;GO&gt;</span></div>
+        </div>
+        <div class="big-comment" style="border-top:0.5px solid var(--rule); padding-top:16px;">
+          <span class="marker">Señal</span>
+          <p>Si durante el roadshow de SpaceX el <em>VIX sube</em> mientras el S&P se mantiene plano o sube levemente, es la señal clásica de estrés interno.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">12 / 13</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 13 · CIERRE Y DEBATE
+       ═══════════════════════════════════════════════ -->
+  <section class="slide cierre bg-ink" data-label="13 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span>1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="label"><span class="bar"></span>Debate</div>
+    <h2>¿Cuál <em>suscribirías</em>?</h2>
+
+    <div class="closing-grid">
+      <div class="pregunta">
+        Si pudieras invertir en solo uno de estos tres IPOs con tu propio dinero, ¿cuál elegirías y por qué? ¿Cambia tu respuesta si eres un fondo de pensiones con obligación de replicar el índice?
+      </div>
+      <div class="debate-list">
+        <div class="debate-item">
+          <span class="n">01</span>
+          <p>¿Estás de acuerdo con el ranking Anthropic → OpenAI → SpaceX? ¿Lo cambiarías?</p>
+        </div>
+        <div class="debate-item">
+          <span class="n">02</span>
+          <p>¿Es sostenible el modelo de suscripciones de OpenAI o necesita pivotar a B2B?</p>
+        </div>
+        <div class="debate-item">
+          <span class="n">03</span>
+          <p>Anthropic no fue first mover. ¿Es eso una ventaja o desventaja hoy?</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · Mini-Clase IPOs</span>
+      <span class="num">13 / 13</span>
+    </div>
+  </section>
+
+</deck-stage>
+</body>
+</html>
