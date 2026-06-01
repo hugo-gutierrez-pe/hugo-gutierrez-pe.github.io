@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="bloomberg">
+<head>
+<meta charset="UTF-8" />
+<title>S10 YAS y Renta Fija Gubernamental — 1FIN39 Hugo Gutierrez</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    /* Type scale (1920×1080 — projection sizes, not web density) */
+    --type-mega:      140px;  /* section dividers */
+    --type-title:      80px;  /* portada */
+    --type-h1:         64px;  /* slide titles */
+    --type-h2:         44px;  /* sub-titles */
+    --type-quote:      60px;  /* citas */
+    --type-body:       26px;  /* párrafos */
+    --type-body-lg:    30px;  /* énfasis en cuerpo */
+    --type-small:      22px;  /* notas */
+    --type-mono-lg:    20px;  /* eyebrows grandes */
+    --type-mono:       16px;  /* eyebrows / chrome */
+    --type-mono-sm:    14px;  /* footer */
+
+    /* Spacing */
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    /* Surface */
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    /* Accent — overridden per course below */
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+
+    /* Course meta — set by tweaks / data-course */
+    --course-code:    '1FIN39';
+    --course-name:    'Bloomberg Terminal';
+    --course-short:   'Bloomberg';
+  }
+
+  /* Course themes — change accent + meta */
+  html[data-course="bloomberg"] {
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+  }
+  html[data-course="corp"] {
+    --accent:       #2A4A6B;
+    --accent-deep:  #16314A;
+    --accent-tint:  rgba(42,74,107,0.07);
+    --accent-tint-2:rgba(42,74,107,0.18);
+  }
+  html[data-course="analisis"] {
+    --accent:       #1F6B5E;
+    --accent-deep:  #11463D;
+    --accent-tint:  rgba(31,107,94,0.07);
+    --accent-tint-2:rgba(31,107,94,0.18);
+  }
+
+  /* Background mode — white (default) vs beige (low-contrast paper).
+     Beige values matched to Hugo's website palette. */
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  /* Dark mode — inspired by the "S1 · Leer el mercado" section slide.
+     Deep neutral background + radial blue glow on every slide.
+     bg-ink slides go a notch deeper so the hierarchy survives. */
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  /* Dark-mode-only tweaks for elements with hardcoded light/dark assumptions */
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(24,95,165,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #9CC4EE; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(24,95,165,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    /* extra top/bottom padding reserves space for chrome bars */
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  /* Italic accent — the website's signature */
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .slide.bg-ink em { color: #9CC4EE; }
+
+  /* ── CHROME: shared header / footer on every slide ───── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  /* Bloomberg-only subtle orange easter egg */
+  html[data-course="bloomberg"] .bloomberg-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #FA8C16;
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  html:not([data-course="bloomberg"]) .bloomberg-dot { display: none; }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+
+  .chrome-bot .num {
+    font-feature-settings: "tnum" 1;
+    color: var(--ink-2);
+  }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  /* hide chrome on portada (slide 1) */
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #9CC4EE; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  .sec-num {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .slide-lede {
+    font-size: var(--type-body-lg);
+    color: var(--ink-2);
+    line-height: 1.45;
+    max-width: 50ch;
+    margin-top: var(--gap-item);
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── 1 · PORTADA DEL CURSO ───────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--ink);
+  }
+  .portada-head .brand-block .brand-mark {
+    width: 44px; height: 44px; border-radius: 9px;
+    font-size: 18px;
+  }
+  .portada-head .brand-name {
+    font-family: var(--font-sans);
+    font-size: 26px; font-weight: 600; letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: var(--ink);
+    max-width: 18ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    max-width: 28ch;
+  }
+
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+
+  /* ── 2 · PORTADA DE SECCIÓN ──────────────────────────── */
+  .seccion {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 180px;
+    padding-bottom: 160px;
+    isolation: isolate;
+  }
+  .seccion::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(60% 80% at 80% 50%, rgba(24,95,165,0.28), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .seccion .sec-mega {
+    font-family: var(--font-mono);
+    font-size: var(--type-mega);
+    font-weight: 500;
+    color: rgba(255,255,255,0.12);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+  .seccion .sec-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9CC4EE;
+    margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .seccion .sec-label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .seccion h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: #fff;
+    max-width: 22ch;
+  }
+  .seccion .sec-lede {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.7);
+    margin-top: 32px;
+    max-width: 50ch;
+    line-height: 1.45;
+  }
+
+  /* ── 3 · AGENDA ──────────────────────────────────────── */
+  .agenda-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 12px;
+  }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num {
+    font-family: var(--font-mono);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .agenda-row .title {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .agenda-row .desc {
+    font-size: 20px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .agenda-row .tag {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 14px;
+    border: 0.5px solid var(--rule-2);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* ── 4 · TÍTULO + 2 COLUMNAS DE TEXTO ────────────────── */
+  .two-col-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-col);
+    margin-top: 0;
+  }
+  .text-col h3 {
+    font-size: var(--type-h2);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  .text-col .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 10px;
+    white-space: nowrap;
+  }
+  .text-col .col-eyebrow .num { color: var(--ink-3); }
+  .text-col p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .text-col ul {
+    list-style: none;
+    padding: 0;
+  }
+  .text-col ul li {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    padding: 10px 0 10px 26px;
+    position: relative;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .text-col ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 22px;
+    width: 12px; height: 1px;
+    background: var(--accent);
+  }
+  .text-col ul li:last-child { border-bottom: none; }
+  .text-col ul li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── 7 · IDEA CLAVE / CITA ───────────────────────────── */
+  .idea-clave {
+    background: var(--bg-alt);
+    justify-content: center;
+    padding-top: 140px;
+    padding-bottom: 140px;
+  }
+  .idea-clave .quote-mark {
+    font-family: var(--font-mono);
+    font-size: 140px;
+    color: var(--accent);
+    line-height: 0.6;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .idea-clave blockquote {
+    font-size: var(--type-quote);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    max-width: 28ch;
+    text-wrap: balance;
+  }
+  .idea-clave blockquote em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .idea-clave .attrib {
+    margin-top: 48px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .idea-clave .attrib .avatar-ph {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--bg-deep);
+    border: 0.5px solid var(--rule-2);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .idea-clave .attrib .who {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .idea-clave .attrib .role {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── 8 · TABLA COMPARATIVA ───────────────────────────── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-size: var(--type-body);
+  }
+  .cmp-table thead th {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    text-align: left;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px;
+    border-bottom: 0.5px solid var(--rule);
+    color: var(--ink-2);
+    font-size: var(--type-body);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .cmp-table tbody td.name {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+  .cmp-table tbody td.code {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 20px;
+    white-space: nowrap;
+  }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+
+  /* ── 9 · FÓRMULA ─────────────────────────────────────── */
+  .formula-block {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    justify-content: center;
+    flex: 1;
+  }
+  .formula {
+    background: var(--bg);
+    border: 0.5px solid var(--rule);
+    border-radius: 16px;
+    padding: 56px 48px;
+    font-family: var(--font-mono);
+    font-size: 56px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    text-align: center;
+    font-weight: 400;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .formula .frac {
+    display: inline-grid;
+    vertical-align: middle;
+    margin: 0 8px;
+    justify-items: center;
+  }
+  .formula .frac .num {
+    padding: 0 18px 8px;
+    border-bottom: 2px solid currentColor;
+    white-space: nowrap;
+  }
+  .formula .frac .den {
+    padding: 8px 18px 0;
+    white-space: nowrap;
+  }
+  .formula .acc-var { color: var(--accent); font-weight: 500; }
+  .formula sub { font-size: 0.5em; vertical-align: sub; }
+  .formula sup { font-size: 0.55em; vertical-align: super; }
+  .formula-legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .legend-item .var {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .legend-item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 10 · CÓDIGO / TERMINAL ──────────────────────────────
+     For Excel formulas, Python snippets, Bloomberg commands.
+     Self-contained shell so it reads on light/beige/dark. */
+  .code-shell {
+    background: #0A0D12;
+    color: #E6EAF2;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(10,13,18,0.08);
+  }
+  .code-shell .code-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: rgba(230,234,242,0.55);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .code-shell .code-head .traffic {
+    display: inline-flex; gap: 7px;
+  }
+  .code-shell .code-head .traffic span {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: rgba(255,255,255,0.14);
+  }
+  .code-shell .code-head .file { color: rgba(230,234,242,0.85); text-transform: none; letter-spacing: 0; }
+  .code-shell .code-head .lang {
+    margin-left: auto;
+    padding: 4px 10px;
+    border: 0.5px solid rgba(255,255,255,0.16);
+    border-radius: 999px;
+    font-size: 12px;
+  }
+  .code-shell pre.code-body {
+    margin: 0;
+    padding: 28px 32px;
+    font-family: var(--font-mono);
+    font-size: 22px;
+    line-height: 1.6;
+    overflow: auto;
+    flex: 1;
+    color: #E6EAF2;
+    counter-reset: codeline;
+  }
+  .code-shell pre.code-body .ln {
+    display: block;
+    padding-left: 56px;
+    position: relative;
+    white-space: pre;
+    min-height: 1.6em;
+  }
+  .code-shell pre.code-body .ln:empty::after {
+    content: "\200B";
+  }
+  .code-shell pre.code-body .ln::before {
+    counter-increment: codeline;
+    content: counter(codeline, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    color: rgba(230,234,242,0.28);
+    font-size: 14px;
+    top: 0.45em;
+    width: 40px;
+    text-align: right;
+  }
+  .code-shell .tok-key   { color: #9CC4EE; }
+  .code-shell .tok-fn    { color: #FFB66C; }
+  .code-shell .tok-str   { color: #B8E6A0; }
+  .code-shell .tok-num   { color: #E6B0FF; }
+  .code-shell .tok-com   { color: rgba(230,234,242,0.40); font-style: italic; }
+  .code-shell .tok-op    { color: #9CC4EE; }
+
+  .code-legend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 28px;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .code-legend .item .var {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .code-legend .item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 13 · TAREA PARA CASA ────────────────────────────────
+     "Yo expliqué" + "Tu turno" formato.
+     Bottom row: deliverables / formulario / deadline. */
+  .tarea {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    flex: 1;
+    align-content: start;
+  }
+  .tarea .col {
+    border: 1px solid var(--rule-2);
+    border-radius: 18px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: var(--bg);
+  }
+  .tarea .col.mine {
+    background: var(--bg-alt);
+  }
+  .tarea .col.yours {
+    border-color: var(--accent);
+    background: var(--accent-tint);
+  }
+  .tarea .col-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .tarea .col.yours .col-head { color: var(--accent); }
+  .tarea .col-head .num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .tarea .col.yours .col-head .num { background: var(--accent); color: #fff; }
+  .tarea .col h3 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .tarea .col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tarea .col ul li {
+    font-size: 20px;
+    color: var(--ink-2);
+    line-height: 1.45;
+    padding-left: 28px;
+    position: relative;
+  }
+  .tarea .col ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+  .tarea-foot {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .tarea-foot .item {
+    padding-right: 28px;
+    border-right: 0.5px solid var(--rule);
+  }
+  .tarea-foot .item:last-child { border-right: none; }
+  .tarea-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+  .tarea-foot .val {
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .tarea-foot .val .acc { color: var(--accent); }
+
+  /* ── 16 · CIERRE / Q&A ───────────────────────────────── */
+  .cierre {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 160px;
+    padding-bottom: 140px;
+    isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(24,95,165,0.30), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: #9CC4EE;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    max-width: 18ch;
+  }
+  .cierre h2 em { color: #9CC4EE; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 96px;
+    align-items: end;
+    margin-top: 48px;
+  }
+  .cierre .pregunta {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.45;
+    max-width: 50ch;
+  }
+  .cierre .contact-card {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #9CC4EE; }
+  .cierre .contact-row .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+  }
+  .cierre .contact-row .val {
+    font-size: 18px; color: #fff; font-weight: 500;
+    margin-top: 2px;
+  }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "Sesión S10 — YAS y Renta Fija Gubernamental. Hoy profundizamos en la pantalla YAS de Bloomberg usando el bono AUNA 8.75% 2032 como caso real. La sesión anterior (S8–S9) introdujo YAS brevemente; hoy lo analizamos de principio a fin.",
+  "Agenda de hoy: 60 minutos de análisis YAS completo, 35 minutos de ejercicio en Bloomberg donde los alumnos trabajan con un bono propio, y 12 minutos de cierre con renta fija gubernamental.",
+  "Arrancamos con YAS. Objetivo de esta sección: al terminar, el alumno puede leer cualquier pantalla YAS de Bloomberg y explicar cada número — precios, yields, spreads y riesgo.",
+  "YAS = Yield & Spread Analysis. Es la pantalla que concentra todo: precio, rendimiento, comparación contra la curva libre de riesgo y sensibilidad. Reforzar: no basta con el precio — el yield dice cuánto ganas, el spread dice si ese yield es justo dado el riesgo.",
+  "Precios bid/ask/mid. El inversor compra al ask (100.536), vende al bid (100.151). El mid (100.344) es referencia para portafolios. Accrued = 0.486%: van 20 días desde el último cupón (30/360). El precio sucio es lo que realmente se paga en la liquidación.",
+  "Los cuatro yields. Nota clave: YTM, YTW y True Yield usan el precio ASK (el precio de transacción del comprador). Current Yield usa el precio MID — Bloomberg lo define así porque Current Yield es una métrica de portafolio, no de transacción. Verificación: 8.75% / 100.344% = 8.720% exacto.",
+  "Idea clave: bono premium. AUNA cotiza a 100.528, por encima de par. Al vencimiento o call recibes 100 — hay una pérdida de capital de ~0.5 puntos. YTM incluye esa pérdida; Current Yield la ignora. Por eso Current Yield (8.720%) > YTM (8.653%). Regla: precio > 100 → CY > YTM siempre.",
+  "Workout. Bloomberg no siempre muestra el yield al vencimiento final — elige el escenario más desfavorable para el inversor. Para AUNA: call a par en 2030 es el workout porque el bono cotiza cerca de par y AUNA tiene incentivo para refinanciarse. Si el bono cotizara a 85, el workout sería 2032.",
+  "Make Whole vs Call a par. La MWC da flexibilidad legal al emisor pero con un precio punitivo (VP de los flujos descontado a tasas bajas → precio muy alto). En la práctica nunca se ejerce. La call a par es el mecanismo real: precio fijo, fecha fija, alta probabilidad cuando tasas bajan. Bloomberg ignora la MWC al calcular YTW.",
+  "Cuatro spreads. G-Spread e I-Spread comparan contra un solo punto de la curva — simples pero imprecisos. Z-Spread descuenta cada flujo con la tasa spot de su plazo — más preciso. OAS elimina el efecto de la opción — es el spread puro de crédito. Para comparar bonos con y sin call, siempre usar OAS.",
+  "Z-Spread: la ecuación. Bloomberg encuentra el valor z que hace que el PV de todos los flujos (cada uno descontado con la tasa spot de su plazo + z) iguale al precio sucio de mercado. Se resuelve por iteración, no hay fórmula cerrada. La curva spot de Treasuries viene del bootstrapping de los T-bills y T-notes.",
+  "OAS: Z = OAS + valor opción. Para AUNA: 472.3 = 417.0 + 55.3 bp. Los 55 bp son lo que el emisor 'cobra' implícitamente al inversor a cambio de la opción de call. El inversor acepta un yield efectivo menor (417 bp) porque parte del spread compensa el riesgo de rescate anticipado.",
+  "Duración y DV01. Duración Modificada to worst (3.605): si el yield sube 1%, el precio cae ~3.6%. DV01 to worst (363 USD/MM face): para un portafolio de 1MM en AUNA, cada 1bp de subida en yield cuesta 363 USD. Convexidad negativa: la call limita el upside cuando el yield cae mucho.",
+  "Excel como herramienta de verificación. La función YIELD() de Excel replica el cálculo de Bloomberg con menos de 2bp de diferencia. Los alumnos pueden abrir el archivo AUNA_8.75_2032_analysis.xlsx para ver las fórmulas en detalle. La hoja Valorización tiene las 4 yields con notas explicativas.",
+  "Sección de renta fija gubernamental. Todo el análisis anterior usó spreads medidos contra Treasuries. Ahora entendemos por qué los Treasuries son la referencia universal y cómo se relaciona con los bonos soberanos peruanos.",
+  "Treasuries: el mercado más líquido del mundo (~25 trillones USD). Riesgo de crédito asumido en cero. Curva continua de 1 mes a 30 años. El benchmark de AUNA es el T 3⅞ 04/30/31 (~5Y). Perú soberano paga ~200 bp sobre Treasuries; AUNA paga ~450 bp. La diferencia (~250 bp) es el spread corporativo sobre el soberano peruano.",
+  "Ejercicio en vivo (35 minutos). Yo hice AUNA — ellos replican con un bono de su elección. Puntos críticos: ¿tiene call? ¿Bloomberg muestra workout distinto al maturity? ¿OAS < Z-Spread? ¿Cuánto vale la opción? Comparar su OAS vs el de AUNA (417 bp) — más alto = más riesgoso.",
+  "Cierre. Recordar: el OAS es el spread que importa para comparar bonos con distintas estructuras de opciones. La tarea es completar la ficha YAS con un bono distinto al de clase. Próxima sesión revisar tareas y avanzar al siguiente tema."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 01 · PORTADA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">PUCP · Lima, Perú</div>
+        <div class="val">1FIN39 · Bloomberg Terminal · 2026—1</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag">
+        <span>S10</span>
+        <span class="bloomberg-dot"></span>
+      </div>
+      <h1 class="course-title">YAS y Renta Fija <em>Gubernamental</em></h1>
+      <p class="course-sub">Yield &amp; Spread Analysis en Bloomberg — del precio al valor relativo.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item">
+        <div class="lbl">Instructor</div>
+        <div class="val">Hugo Gutierrez</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Sesión</div>
+        <div class="val">S10 · 1FIN39</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Caso</div>
+        <div class="val">AUNA 8.750% 2032</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Tema</div>
+        <div class="val">YAS · Spreads · Soberano</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 02 · AGENDA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10 · Agenda</div>
+    <h1 class="slide-title">Qué cubrimos <em>hoy</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="agenda-list">
+      <div class="agenda-row">
+        <span class="num">01</span>
+        <div>
+          <div class="title">YAS — Yield &amp; Spread Analysis en profundidad</div>
+          <div class="desc">Precios, 4 yields, workout, Make Whole, spreads, duración.</div>
+        </div>
+        <span class="tag">60 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">02</span>
+        <div>
+          <div class="title">Ejercicio Bloomberg en vivo</div>
+          <div class="desc">Busca un bono, lee su YAS completo, responde 5 preguntas.</div>
+        </div>
+        <span class="tag">35 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">03</span>
+        <div>
+          <div class="title">Renta Fija Gubernamental</div>
+          <div class="desc">Treasuries como referencia. Bonos soberanos peruanos vs. corporativos.</div>
+        </div>
+        <span class="tag">12 min</span>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">02 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 03 · SECCIÓN: YAS
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide seccion bg-ink" data-label="03 Sección YAS">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="sec-mega">S10</div>
+    <div class="sec-label">
+      <span class="bar"></span>
+      Clase 10 · Bloomberg YAS
+    </div>
+    <h2>YAS: del precio<br/>al <em>valor relativo</em></h2>
+    <p class="sec-lede">
+      Aprenderemos a leer e interpretar la pantalla YAS completa usando el bono AUNA 8.750% 11/06/2032 como caso real.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">03 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 04 · ¿QUÉ ES YAS?
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="04 Qué es YAS">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.1 · Bloomberg YAS</div>
+    <h1 class="slide-title">¿Qué es <em>YAS</em>?</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Función Bloomberg</div>
+        <h3>Yield &amp; Spread Analysis</h3>
+        <p>YAS concentra en una sola pantalla todo lo que necesitas para valorizar un bono de renta fija: precio de mercado, rendimiento bajo distintos supuestos, comparación contra la curva libre de riesgo y métricas de sensibilidad al movimiento de tasas.</p>
+        <ul>
+          <li>Bloomberg: tipea el ticker → Corp → YAS &lt;GO&gt;</li>
+          <li>Para AUNA: AUNA 8 3/4 11/06/32 Corp → YAS &lt;GO&gt;</li>
+          <li>Complementa DES (descripción) y CSHF (flujos) vistos en S8–S9</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Por qué no basta el precio</div>
+        <h3>Del precio al rendimiento</h3>
+        <p>Dos bonos pueden costar 100 y 95 y el de 100 puede ser mejor negocio. El precio dice cuánto pagas hoy; el yield dice cuánto ganas durante la vida del bono.</p>
+        <ul>
+          <li>Precio → ¿cuánto pago hoy?</li>
+          <li>Yield → ¿cuánto gano si mantengo el bono?</li>
+          <li>Spread → ¿es ese yield adecuado dado el riesgo?</li>
+          <li>YAS responde las tres preguntas simultáneamente</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">04 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 05 · PRECIOS
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="05 Precios">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.2 · Precios de mercado</div>
+    <h1 class="slide-title">Bid, ask, mid — limpio y <em>sucio</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:22%">Concepto</th>
+          <th style="width:20%">AUNA 26/05/2026</th>
+          <th>Nota</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Precio Bid</td>
+          <td class="code">100.151</td>
+          <td>El dealer compra a este precio. El inversor vende aquí.</td>
+        </tr>
+        <tr>
+          <td class="name">Precio Ask</td>
+          <td class="code">100.536</td>
+          <td>El dealer vende. El inversor compra aquí. Base para YTM/YTW.</td>
+        </tr>
+        <tr>
+          <td class="name">Precio Mid</td>
+          <td class="code">100.344</td>
+          <td>Promedio bid/ask. Bloomberg lo usa para Current Yield.</td>
+        </tr>
+        <tr>
+          <td class="name">Interés acumulado</td>
+          <td class="code">+0.486%</td>
+          <td>Cupón devengado desde último pago (20 días × 30/360). Siempre suma al precio ask.</td>
+        </tr>
+        <tr>
+          <td class="name">Precio sucio (ask)</td>
+          <td class="code">101.022%</td>
+          <td>Lo que realmente paga el comprador = ask + accrued.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">05 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 06 · LOS 4 YIELDS
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="06 Los 4 yields">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.3 · Rendimientos</div>
+    <h1 class="slide-title">Los cuatro <em>yields</em> del YAS</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:22%">Yield</th>
+          <th style="width:22%">Precio base</th>
+          <th style="width:14%">AUNA</th>
+          <th>Qué mide</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Yield to Worst</td>
+          <td class="code">Ask · 100.528</td>
+          <td class="code">8.602%</td>
+          <td>Menor yield entre todos los escenarios posibles. El más conservador — usa call date 2030.</td>
+        </tr>
+        <tr>
+          <td class="name">YTM Street Conv.</td>
+          <td class="code">Ask · 100.528</td>
+          <td class="code">8.653%</td>
+          <td>TIR to maturity con convención 30/360 semianual (basis=0). Estándar de mercado.</td>
+        </tr>
+        <tr>
+          <td class="name">True Yield</td>
+          <td class="code">Ask · 100.528</td>
+          <td class="code">8.652%</td>
+          <td>YTM ajustado por días reales de pago. Ajusta vencimientos en fines de semana.</td>
+        </tr>
+        <tr>
+          <td class="name">Current Yield</td>
+          <td class="code">Mid · 100.344</td>
+          <td class="code">8.720%</td>
+          <td>Cupón anual ÷ precio mid. Solo flujo corriente — ignora ganancia/pérdida de capital.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">06 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 07 · IDEA CLAVE: BONO PREMIUM
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide idea-clave" data-label="07 Bono premium">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.3 · Precio y yield</div>
+    <div class="quote-mark">"</div>
+    <blockquote>
+      Si el precio es <em>mayor a 100</em>, el Current Yield sobreestima el rendimiento real — ignora la pérdida de capital al vencimiento.
+    </blockquote>
+    <div class="attrib">
+      <div class="avatar-ph">CY</div>
+      <div>
+        <div class="who">AUNA: precio=100.528 → CY=8.720% &gt; YTM=8.653%</div>
+        <div class="role">Bono premium: pagas más de par, recibes par → pierdes capital</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">07 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 08 · WORKOUT
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="08 Workout">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.4 · Workout</div>
+    <h1 class="slide-title">Workout: el escenario que Bloomberg <em>elige</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Definición</div>
+        <h3>Workout date y price</h3>
+        <p>El workout es la fecha y precio donde Bloomberg estima que el bono "termina" en la práctica — no necesariamente el vencimiento contractual.</p>
+        <ul>
+          <li>Workout date AUNA: 11/06/2030 (call date)</li>
+          <li>Workout price AUNA: 100.00 (a la par)</li>
+          <li>Bloomberg elige el escenario más desfavorable para el inversor</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Por qué Bloomberg elige 2030</div>
+        <h3>Lógica de la elección</h3>
+        <p>El bono cotiza cerca de par (~100.5). A ese precio, AUNA puede refinanciarse y dejar de pagar el cupón de 8.75%. La call a par en 2030 tiene alta probabilidad de ejercicio.</p>
+        <ul>
+          <li>Si precio &gt; par: emisor ejerce call → workout = call date</li>
+          <li>Si precio &lt;&lt; par (ej. 85): call no conviene → workout = maturity</li>
+          <li>YTW = 8.602% calcula la TIR asumiendo call en 2030</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">08 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 09 · MAKE WHOLE VS CALL A PAR
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="09 Make Whole vs Call a par">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.4 · Opciones de rescate</div>
+    <h1 class="slide-title">Make Whole Call vs <em>Call a par</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:22%"></th>
+          <th style="width:39%">Make Whole Call</th>
+          <th>Call a par</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Período</td>
+          <td>Hasta 11/06/2028</td>
+          <td>A partir de 11/06/2030</td>
+        </tr>
+        <tr>
+          <td class="name">Precio de rescate</td>
+          <td class="code">VP(flujos) @ T + 50 bp</td>
+          <td class="code">100.00 (fijo)</td>
+        </tr>
+        <tr>
+          <td class="name">Nivel típico</td>
+          <td>~115–125% del face value</td>
+          <td>A la par — sin prima</td>
+        </tr>
+        <tr>
+          <td class="name">Protege a</td>
+          <td>El inversor — recibe VP de lo que pierde</td>
+          <td>El emisor — sale a precio fijo</td>
+        </tr>
+        <tr>
+          <td class="name">Prob. de ejercicio</td>
+          <td>Casi nula — diseñado para disuadir</td>
+          <td>Alta si tasas de mercado bajan</td>
+        </tr>
+        <tr>
+          <td class="name">¿Afecta YTW?</td>
+          <td>No — Bloomberg la ignora</td>
+          <td>Sí — es el workout relevante</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">09 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 10 · LOS CUATRO SPREADS
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="10 Los cuatro spreads">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.5 · Spreads</div>
+    <h1 class="slide-title">Cuatro spreads, un objetivo: medir <em>riesgo relativo</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Comparación simple</div>
+        <h3>G-Spread e I-Spread</h3>
+        <p>Comparan el yield del bono contra un único punto de la curva de referencia.</p>
+        <ul>
+          <li><strong>G-Spread (448.7 bp):</strong> yield bono − yield Treasury interpolado al mismo vencimiento. Simple pero ignora la forma de la curva.</li>
+          <li><strong>I-Spread (478.2 bp):</strong> versus curva swap (SOFR). Más usado por bancos europeos cuyo fondeo está ligado a tasas swap.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Comparación por curva spot</div>
+        <h3>Z-Spread y OAS</h3>
+        <p>Más sofisticados — cada flujo se descuenta con su propia tasa de la curva.</p>
+        <ul>
+          <li><strong>Z-Spread (472.3 bp):</strong> spread constante sobre la curva spot completa. Más preciso que el G-Spread.</li>
+          <li><strong>OAS (417.0 bp):</strong> Z-Spread ajustado por el valor de la opción call. Es el spread puro de crédito.</li>
+          <li>Diferencia Z−OAS ≈ 55 bp = valor de la opción de call para el emisor</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">10 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 11 · Z-SPREAD FÓRMULA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="11 Z-Spread fórmula">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.5 · Z-Spread</div>
+    <h1 class="slide-title">Z-Spread: cada flujo, su propia <em>tasa spot</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block">
+      <div class="formula" style="font-size:44px;">
+        <span class="acc-var">P</span><sub>sucio</sub> &nbsp;=&nbsp;
+        ∑<sub>t=1</sub><sup>n</sup>
+        <span class="frac">
+          <span class="num"><span class="acc-var">CF</span><sub>t</sub></span>
+          <span class="den">(1 + <span class="acc-var">s</span><sub>t</sub> + <span class="acc-var">z</span>)<sup>t</sup></span>
+        </span>
+      </div>
+
+      <div class="formula-legend">
+        <div class="legend-item">
+          <div class="var">P<sub>sucio</sub></div>
+          <div class="desc">Precio sucio del bono — dato observable de mercado</div>
+        </div>
+        <div class="legend-item">
+          <div class="var">CF<sub>t</sub></div>
+          <div class="desc">Flujo en el período t (cupón, o cupón + principal en el último)</div>
+        </div>
+        <div class="legend-item">
+          <div class="var">s<sub>t</sub></div>
+          <div class="desc">Tasa spot del Treasury para el plazo t — curva cupón cero, no un solo punto</div>
+        </div>
+        <div class="legend-item">
+          <div class="var">z</div>
+          <div class="desc">Z-Spread — constante para todos los períodos, se despeja por iteración</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">11 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 12 · OAS
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="12 OAS">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.5 · OAS</div>
+    <h1 class="slide-title">OAS: el spread <em>limpio</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · El problema del Z-Spread</div>
+        <h3>La opción distorsiona</h3>
+        <p>El Z-Spread asume que el bono vive hasta el workout. Pero la opción de call tiene valor — el emisor puede rescatar si las tasas bajan, limitando la apreciación del precio.</p>
+        <ul>
+          <li>Z-Spread sobreestima el spread de crédito puro</li>
+          <li>Parte del spread compensa al inversor por el riesgo de call</li>
+          <li>Bonos con call: OAS &lt; Z-Spread siempre</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Aritmética AUNA</div>
+        <h3>La ecuación</h3>
+        <ul>
+          <li><strong>Z-Spread: 472.3 bp</strong> — spread total sobre curva spot</li>
+          <li><strong>OAS: 417.0 bp</strong> — spread puro de crédito (sin opción)</li>
+          <li><strong>Opción call ≈ 55.3 bp</strong> — valor que el emisor "cobra" al inversor</li>
+          <li>Si OAS ≈ Z-Spread: bono sin opción significativa (bullet)</li>
+          <li>Para comparar bonos con y sin call: siempre usar OAS</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">12 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 13 · DURACIÓN, DV01, CONVEXIDAD
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="13 Duración DV01 Convexidad">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.6 · Sensibilidad</div>
+    <h1 class="slide-title">Duración, convexidad y <em>DV01</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:26%">Métrica</th>
+          <th style="width:18%">To Worst</th>
+          <th style="width:18%">To Maturity</th>
+          <th>Qué significa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Duración Modificada</td>
+          <td class="code">3.605</td>
+          <td class="code">4.334</td>
+          <td>Si el yield sube 1%, el precio cae ~3.6% (to worst) o ~4.3% (to maturity).</td>
+        </tr>
+        <tr>
+          <td class="name">Convexidad</td>
+          <td>—</td>
+          <td class="code">+0.161</td>
+          <td>Positiva: el precio cae menos de lo que predice la duración sola.</td>
+        </tr>
+        <tr>
+          <td class="name">OAS Convexity</td>
+          <td>—</td>
+          <td class="code">−0.071</td>
+          <td>Negativa: la call cap el upside — si yield cae mucho, AUNA rescata el bono.</td>
+        </tr>
+        <tr>
+          <td class="name">DV01 (USD × 1MM face)</td>
+          <td class="code">363</td>
+          <td class="code">437</td>
+          <td>Cambio en USD de un portafolio de 1MM face ante 1bp de caída en yield.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">13 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 14 · EXCEL
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="14 Excel yields">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.7 · Excel</div>
+    <h1 class="slide-title">Los cuatro yields en <em>Excel</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="code-shell">
+      <div class="code-head">
+        <span class="traffic"><span></span><span></span><span></span></span>
+        <span class="file">AUNA_8.75_2032_analysis.xlsx · Hoja Valorización</span>
+        <span class="lang">Excel</span>
+      </div>
+      <pre class="code-body"><span class="ln"><span class="tok-com">-- YTM to Maturity — Street Convention 30/360 (basis = 0)</span></span><span class="ln">=<span class="tok-fn">YIELD</span>( <span class="tok-str">settle</span>, <span class="tok-str">maturity</span>, <span class="tok-str">coupon</span>, <span class="tok-str">price_ask</span>, <span class="tok-num">100</span>, <span class="tok-num">2</span>, <span class="tok-num">0</span> )    <span class="tok-op">→</span> <span class="tok-num">8.6396%</span></span><span class="ln"></span><span class="ln"><span class="tok-com">-- Yield to Worst — mismo cálculo con call date</span></span><span class="ln">=<span class="tok-fn">YIELD</span>( <span class="tok-str">settle</span>, <span class="tok-str">call_date</span>, <span class="tok-str">coupon</span>, <span class="tok-str">price_ask</span>, <span class="tok-num">100</span>, <span class="tok-num">2</span>, <span class="tok-num">0</span> )   <span class="tok-op">→</span> <span class="tok-num">8.6020%</span></span><span class="ln"></span><span class="ln"><span class="tok-com">-- True Yield — Actual/Actual (basis = 1, ajusta fines de semana)</span></span><span class="ln">=<span class="tok-fn">YIELD</span>( <span class="tok-str">settle</span>, <span class="tok-str">maturity</span>, <span class="tok-str">coupon</span>, <span class="tok-str">price_ask</span>, <span class="tok-num">100</span>, <span class="tok-num">2</span>, <span class="tok-num">1</span> )    <span class="tok-op">→</span> <span class="tok-num">8.6375%</span></span><span class="ln"></span><span class="ln"><span class="tok-com">-- Current Yield — Bloomberg usa precio MID, no ASK</span></span><span class="ln">= <span class="tok-str">coupon_rate</span> / ( <span class="tok-str">price_mid</span> / <span class="tok-num">100</span> )                         <span class="tok-op">→</span> <span class="tok-num">8.7200%</span></span></pre>
+    </div>
+
+    <div class="code-legend">
+      <div class="item">
+        <div class="var">basis = 0</div>
+        <div class="desc">30/360 — convención Street estándar de mercado</div>
+      </div>
+      <div class="item">
+        <div class="var">basis = 1</div>
+        <div class="desc">Actual/Actual — True Yield, ajusta pagos en sábado/feriado</div>
+      </div>
+      <div class="item">
+        <div class="var">price_mid</div>
+        <div class="desc">Bloomberg usa 100.344 (mid) para Current Yield, no el ask</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">14 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 15 · SECCIÓN: RENTA FIJA GUBERNAMENTAL
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide seccion bg-ink" data-label="15 Sección Renta Fija Gubernamental">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="sec-mega">S10.2</div>
+    <div class="sec-label">
+      <span class="bar"></span>
+      Clase 10 · Renta Fija
+    </div>
+    <h2>Renta Fija<br/><em>Gubernamental</em></h2>
+    <p class="sec-lede">
+      Los spreads que calculamos siempre se miden contra una curva soberana. Ahora entendemos por qué los Treasuries son la referencia universal y cómo se compara con los bonos peruanos.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">15 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 16 · TREASURIES COMO REFERENCIA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="16 Treasuries referencia">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S10.8 · Renta Fija Soberana</div>
+    <h1 class="slide-title">Treasuries: la <em>referencia universal</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Por qué Treasuries</div>
+        <h3>El activo libre de riesgo</h3>
+        <p>Los Treasuries de EE.UU. son la referencia de todos los spreads de renta fija global: mercado de USD 25 trillones, curva continua de 1 mes a 30 años, riesgo de crédito asumido en cero.</p>
+        <ul>
+          <li>GT2 · GT5 · GT10 · GT30 — los puntos clave de la curva</li>
+          <li>GT10 &lt;GO&gt; — Treasury 10Y en tiempo real en Bloomberg</li>
+          <li>Benchmark de AUNA: T 3⅞ 04/30/31 (~5Y)</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Soberano Perú vs. AUNA</div>
+        <h3>La jerarquía del spread</h3>
+        <p>El spread corporativo se descompone en: riesgo país + riesgo de crédito corporativo adicional sobre el soberano.</p>
+        <ul>
+          <li><strong>Perú soberano (USD ext.):</strong> ~200 bp sobre Treasuries</li>
+          <li><strong>AUNA (high yield, B+):</strong> ~450 bp sobre Treasuries</li>
+          <li><strong>Diferencia (~250 bp):</strong> spread puro corporativo sobre el soberano</li>
+          <li>PERU &lt;GO&gt; → bonos soberanos en Bloomberg</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">16 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 17 · EJERCICIO
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="17 Ejercicio">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Ejercicio · S10 · En clase</div>
+    <h1 class="slide-title">Analiza un bono en <em>Bloomberg</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="tarea">
+      <div class="col mine">
+        <div class="col-head"><span><span class="num">YO</span> &nbsp;Caso en clase</span><span>Ejemplo</span></div>
+        <h3>AUNA 8.750% 2032</h3>
+        <ul>
+          <li>Ticker en Bloomberg: AUNA 8 3/4 11/06/32 Corp → YAS &lt;GO&gt;</li>
+          <li>Leímos: precios bid/ask/mid, los 4 yields, workout date</li>
+          <li>Spreads: G=448.7bp, Z=472.3bp, OAS=417.0bp</li>
+          <li>Duración Modificada to worst: 3.605 | DV01: 363 USD/MM</li>
+        </ul>
+      </div>
+      <div class="col yours">
+        <div class="col-head"><span><span class="num">TÚ</span> &nbsp;Ejercicio (35 min)</span><span>En clase</span></div>
+        <h3>Elige un bono en Bloomberg</h3>
+        <ul>
+          <li>Busca: SRCH &lt;GO&gt; → filtra por país, moneda USD, high yield</li>
+          <li>Completa la ficha: bid/ask/mid, 4 yields, workout, spreads, DurMod, DV01</li>
+          <li>¿Tiene opción de call? ¿OAS &lt; Z-Spread? ¿Cuánto vale la opción?</li>
+          <li>Compara el OAS de tu bono con AUNA (417 bp) — ¿más o menos riesgoso?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tarea-foot">
+      <div class="item">
+        <div class="lbl">Tarea para casa</div>
+        <div class="val">Mismo ejercicio, bono distinto — entregar próxima sesión</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Bloomberg</div>
+        <div class="val">SRCH &lt;GO&gt; → criterios libres</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Criterio</div>
+        <div class="val">Ficha YAS completa + análisis OAS vs Z-Spread</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">17 / 18</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 18 · CIERRE / Q&A
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide cierre bg-ink" data-label="18 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="label"><span class="bar"></span>Cierre · S10</div>
+    <h2>¿Preguntas?<br/>Gracias por su <em>atención</em>.</h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">
+        Para la próxima sesión: entrega la ficha YAS de tu bono elegido. Recuerda que el OAS es el spread que importa para comparar bonos con distintas estructuras de opciones. Nos vemos pronto.
+      </p>
+
+      <div class="contact-card">
+        <div class="contact-row">
+          <i class="ti ti-mail"></i>
+          <div>
+            <div class="lbl">Correo</div>
+            <div class="val">dhgutierrezcu@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <i class="ti ti-world"></i>
+          <div>
+            <div class="lbl">Web</div>
+            <div class="val">hugogutierrez.pe</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S10 · YAS y Renta Fija Gubernamental</span>
+      <span class="num">18 / 18</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+<!-- ════════════════════════════════════════════════════════════════
+     DOWNLOAD PDF — botón flotante.
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .pdf-fab {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12;
+    color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover {
+    background: #185FA5;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(24,95,165,0.35), 0 1px 0 rgba(255,255,255,0.06) inset;
+  }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot {
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: #FA8C16;
+    box-shadow: 0 0 0 3px rgba(250,140,22,0.18);
+  }
+  .pdf-fab i {
+    font-size: 16px;
+    line-height: 1;
+  }
+  .pdf-fab .hint {
+    opacity: 0.55;
+    font-size: 11px;
+    margin-left: 4px;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<!-- ════════════════════════════════════════════════════════════════
+     AUDIO POR SLIDE
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .audio-fab {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    background: #0A0D12;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18);
+  }
+  .audio-fab.active { display: inline-flex; }
+  .audio-fab .play-btn {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #185FA5;
+    color: #fff;
+    cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 14px;
+  }
+  .audio-fab .play-btn:hover { background: #2A7BC8; }
+  .audio-fab .label {
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .audio-fab .time {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.55;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+  @media print { .audio-fab { display: none !important; } }
+</style>
+
+<div class="audio-fab" id="audio-fab">
+  <button type="button" class="play-btn" id="audio-toggle" aria-label="Reproducir clase">
+    <i class="ti ti-player-play-filled"></i>
+  </button>
+  <span class="label">Clase grabada</span>
+  <span class="time" id="audio-time">0:00</span>
+  <audio id="audio-el" preload="metadata"></audio>
+</div>
+
+<script src="./deck-stage.js"></script>
+
+<script>
+/* ── QUIZ click handler ─────────────────────────────────────────────── */
+window._quizClick = function(e) {
+  const opt = e.target.closest('.quiz-opt');
+  if (!opt) return;
+  const quiz = opt.closest('.quiz');
+  if (!quiz || quiz.classList.contains('revealed')) return;
+  opt.setAttribute('data-chosen', 'true');
+  quiz.classList.add('revealed');
+};
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  document.querySelectorAll('.quiz.revealed').forEach((q) => {
+    q.classList.remove('revealed');
+    q.querySelectorAll('[data-chosen]').forEach(o => o.removeAttribute('data-chosen'));
+  });
+});
+
+/* ── AUDIO per-slide ────────────────────────────────────────────────── */
+(function () {
+  const fab = document.getElementById('audio-fab');
+  const audio = document.getElementById('audio-el');
+  const toggle = document.getElementById('audio-toggle');
+  const timeLabel = document.getElementById('audio-time');
+  const playIcon = '<i class="ti ti-player-play-filled"></i>';
+  const pauseIcon = '<i class="ti ti-player-pause-filled"></i>';
+
+  function fmt(s) {
+    if (!isFinite(s)) return '0:00';
+    s = Math.floor(s);
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  audio.addEventListener('timeupdate', () => {
+    timeLabel.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  });
+  audio.addEventListener('ended', () => { toggle.innerHTML = playIcon; });
+  toggle.addEventListener('click', () => {
+    if (audio.paused) { audio.play(); toggle.innerHTML = pauseIcon; }
+    else { audio.pause(); toggle.innerHTML = playIcon; }
+  });
+
+  const stage = document.querySelector('deck-stage');
+  if (!stage) return;
+  stage.addEventListener('slidechange', (e) => {
+    const slide = e.detail && e.detail.slide;
+    audio.pause();
+    toggle.innerHTML = playIcon;
+    const src = slide && slide.getAttribute('data-audio');
+    if (src) {
+      if (audio.getAttribute('src') !== src) audio.setAttribute('src', src);
+      fab.classList.add('active');
+      timeLabel.textContent = '0:00';
+    } else {
+      audio.removeAttribute('src');
+      audio.load();
+      fab.classList.remove('active');
+    }
+  });
+})();
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TWEAKS — switch course, color tone
+     ════════════════════════════════════════════════════════════════ -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="./tweaks-panel.jsx"></script>
+<script type="text/babel" src="./tweaks-app.jsx"></script>
+
+</body>
+</html>
