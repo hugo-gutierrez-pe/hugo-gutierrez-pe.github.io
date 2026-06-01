@@ -11,3 +11,6 @@ enableGitInfo = false
 [outputs]
   home = ["HTML"]
   section = ["HTML", "RSS"]
+
+[minify]
+  disableHTML = true
