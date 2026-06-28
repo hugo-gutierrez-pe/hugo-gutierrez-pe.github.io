@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="panasa">
+<head>
+<meta charset="UTF-8" />
+<title>PANASA · Inteligencia Artificial — Deck Ejecutivo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    --type-mega:      140px;
+    --type-title:      80px;
+    --type-h1:         64px;
+    --type-h2:         44px;
+    --type-quote:      60px;
+    --type-body:       26px;
+    --type-body-lg:    30px;
+    --type-small:      22px;
+    --type-mono-lg:    20px;
+    --type-mono:       16px;
+    --type-mono-sm:    14px;
+
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    --accent:       #2A4A6B;
+    --accent-deep:  #16314A;
+    --accent-tint:  rgba(42,74,107,0.07);
+    --accent-tint-2:rgba(42,74,107,0.18);
+  }
+
+  html[data-course="panasa"] {
+    --accent:       #2A4A6B;
+    --accent-deep:  #16314A;
+    --accent-tint:  rgba(42,74,107,0.07);
+    --accent-tint-2:rgba(42,74,107,0.18);
+  }
+
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(42,74,107,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #9CC4EE; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(42,74,107,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .slide.bg-ink em { color: #9CC4EE; }
+
+  /* ── CHROME ─────────────────────────────────────────────── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+
+  .chrome-bot .num {
+    font-feature-settings: "tnum" 1;
+    color: var(--ink-2);
+  }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #9CC4EE; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .slide-lede {
+    font-size: var(--type-body-lg);
+    color: var(--ink-2);
+    line-height: 1.45;
+    max-width: 50ch;
+    margin-top: var(--gap-item);
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── 1 · PORTADA ────────────────────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--ink);
+  }
+  .portada-head .brand-block .brand-mark {
+    width: 44px; height: 44px; border-radius: 9px;
+    font-size: 18px;
+  }
+  .portada-head .brand-name {
+    font-family: var(--font-sans);
+    font-size: 26px; font-weight: 600; letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: var(--ink);
+    max-width: 18ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    max-width: 28ch;
+  }
+
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+
+  /* ── 2 · SECCIÓN ────────────────────────────────────────── */
+  .seccion {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 180px;
+    padding-bottom: 160px;
+    isolation: isolate;
+  }
+  .seccion::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(60% 80% at 80% 50%, rgba(42,74,107,0.28), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .seccion .sec-mega {
+    font-family: var(--font-mono);
+    font-size: var(--type-mega);
+    font-weight: 500;
+    color: rgba(255,255,255,0.12);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+  .seccion .sec-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9CC4EE;
+    margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .seccion .sec-label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .seccion h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: #fff;
+    max-width: 22ch;
+  }
+  .seccion .sec-lede {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.7);
+    margin-top: 32px;
+    max-width: 50ch;
+    line-height: 1.45;
+  }
+
+  /* ── 3 · TABLA COMPARATIVA ──────────────────────────────── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-size: var(--type-body);
+  }
+  .cmp-table thead th {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    text-align: left;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px;
+    border-bottom: 0.5px solid var(--rule);
+    color: var(--ink-2);
+    font-size: var(--type-body);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .cmp-table tbody td.name {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+  .cmp-table tbody td.code {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 20px;
+    white-space: nowrap;
+  }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+
+  /* ── 4 · DOS COLUMNAS DE TEXTO ─────────────────────────── */
+  .two-col-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-col);
+    margin-top: 0;
+  }
+  .text-col h3 {
+    font-size: var(--type-h2);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  .text-col .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 10px;
+    white-space: nowrap;
+  }
+  .text-col .col-eyebrow .num { color: var(--ink-3); }
+  .text-col p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .text-col ul {
+    list-style: none;
+    padding: 0;
+  }
+  .text-col ul li {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    padding: 14px 0 14px 26px;
+    position: relative;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .text-col ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 26px;
+    width: 12px; height: 1px;
+    background: var(--accent);
+  }
+  .text-col ul li:last-child { border-bottom: none; }
+  .text-col ul li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── 5 · IMAGEN + COMENTARIO ──────────────────────────── */
+  .img-comment {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--gap-col);
+  }
+  .img-comment .img-slot {
+    background: #EEF1F5;
+    border: 1px dashed rgba(10,13,18,0.18);
+    border-radius: 14px;
+    aspect-ratio: 16 / 10;
+    position: relative;
+    overflow: hidden;
+    background-image:
+      repeating-linear-gradient(135deg,
+        transparent 0, transparent 18px,
+        rgba(10,13,18,0.05) 18px, rgba(10,13,18,0.05) 19px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--ink-3);
+    text-align: center;
+    padding: 32px;
+  }
+  .img-slot .ph-icon {
+    font-size: 64px;
+    color: var(--accent);
+    opacity: 0.6;
+    margin-bottom: 18px;
+    line-height: 1;
+  }
+  .img-slot .ph-label {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--ink-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .img-slot .ph-caption {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    margin-top: 6px;
+    white-space: nowrap;
+  }
+
+  .comment-block .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .comment-block h3 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .comment-block p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .comment-block .source {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 0.5px solid var(--rule);
+  }
+
+  /* ── 6 · IMAGEN GRANDE + COMENTARIO ────────────────────── */
+  .big-img-block {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    flex: 1;
+  }
+  .big-img-block .img-slot.big {
+    aspect-ratio: auto;
+    flex: 1;
+    min-height: 380px;
+    border-radius: 14px;
+  }
+  .big-img-block .img-slot.big .ph-icon { font-size: 72px; }
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding-top: 4px;
+    white-space: nowrap;
+  }
+  .big-comment p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    max-width: 90ch;
+  }
+
+  /* ── 7 · IDEA CLAVE / CITA ──────────────────────────────── */
+  .idea-clave {
+    background: var(--bg-alt);
+    justify-content: center;
+    padding-top: 140px;
+    padding-bottom: 140px;
+  }
+  .idea-clave .quote-mark {
+    font-family: var(--font-mono);
+    font-size: 140px;
+    color: var(--accent);
+    line-height: 0.6;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .idea-clave blockquote {
+    font-size: var(--type-quote);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    max-width: 28ch;
+    text-wrap: balance;
+  }
+  .idea-clave blockquote em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .idea-clave .attrib {
+    margin-top: 48px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .idea-clave .attrib .avatar-ph {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--bg-deep);
+    border: 0.5px solid var(--rule-2);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .idea-clave .attrib .who {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .idea-clave .attrib .role {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── 8 · SOURCE LINE ────────────────────────────────────── */
+  .source-line {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    margin-top: 48px;
+    padding-top: 18px;
+    border-top: 0.5px solid var(--rule);
+  }
+
+  /* ── 9 · IMG SLOT STANDALONE ──────────────────────────── */
+  .img-slot-standalone {
+    background: #EEF1F5;
+    border: 1px dashed rgba(10,13,18,0.18);
+    border-radius: 14px;
+    flex: 1;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-3);
+    text-align: center;
+    padding: 32px;
+    margin-top: 24px;
+    background-image:
+      repeating-linear-gradient(135deg,
+        transparent 0, transparent 18px,
+        rgba(10,13,18,0.05) 18px, rgba(10,13,18,0.05) 19px);
+  }
+  .img-slot-standalone .ph-icon { font-size: 56px; color: var(--accent); opacity: 0.6; margin-bottom: 16px; line-height: 1; }
+  .img-slot-standalone .ph-label { font-family: var(--font-mono); font-size: 20px; color: var(--ink-2); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; font-weight: 500; }
+  .img-slot-standalone .ph-caption { font-family: var(--font-mono); font-size: 16px; color: var(--ink-3); margin-top: 6px; }
+
+  /* ── 10 · PROSE SLIDE ──────────────────────────────────── */
+  .prose-block {
+    max-width: 48ch;
+  }
+  .prose-block p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+  .prose-block p:last-child { margin-bottom: 0; }
+
+  /* ── 11 · CHECKLIST ──────────────────────────────────────── */
+  .checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 0;
+  }
+  .checklist .check-item {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 20px;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 0.5px solid var(--rule);
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+  .checklist .check-item:last-child { border-bottom: none; }
+  .checklist .check-item i {
+    font-size: 26px;
+    color: var(--accent);
+    opacity: 0.7;
+  }
+  .checklist .check-item .ch-text strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+</style>
+
+<!-- Speaker notes -->
+<script type="application/json" id="speaker-notes">
+[
+  "Portada del deck ejecutivo. Presentación del tema: Inteligencia Artificial en PANASA. Propuesta de capacitación para Planeamiento Financiero. Contextualizar que este deck es la base para convocar expertos externos.",
+  "El riesgo no es gastar en IA, es no gastar. Repasar las cifras de inversión mundial: Gartner proyecta $2.59 billones en 2026. Big Tech invierte $500,000M en un solo año. El ROI de Fortune 500 es 4.7×. La propuesta de PANASA es $97/mes — tres personas. Preguntar: ¿cuál es el costo de no hacer nada?",
+  "Analogía del arquitecto para explicar qué es realmente la IA. Una cliente pide una casa amplia y ventilada para 5 personas. La IA aprende relaciones de miles de conversaciones y planos. No crea un Frank Gehry — produce una casa promedio, funcional. La IA condensa relaciones pregunta→respuesta. Mostrar el diagrama cliente→patrones→plano.",
+  "Cómo interactúa la IA con el mundo real. Los LLMs solo procesan texto. Para trabajar con Excel: lee el archivo como datos → convierte a texto → escribe código Python → ejecuta → genera nuevo archivo. No es nativo. La IA no ve celdas. Mostrar el diagrama del flujo Excel→texto→Python→nuevo Excel.",
+  "Línea de tiempo de las 4 etapas de la IA. Estamos en la etapa 3: IA Agéntica. Recorrer cada etapa: Generativa (conversar), Razonativa (pensar), Agéntica (actuar), Physical AI (robots). ChatGPT → ChatGPT o1 → Claude Code → Tesla Optimus.",
+  "Etapa 1: IA Generativa. ChatGPT alcanzó 100M de usuarios en 2 meses. Predice la siguiente palabra. No piensa, no actúa. Solo conversa. Como un loro muy culto: recita, no entiende. Esto fue revolucionario en 2022 pero ya es el piso.",
+  "Etapa 2: IA Razonativa. La IA planifica → ejecuta → revisa → ajusta. Detecta errores, se corrige. Ejemplos: ChatGPT o1, Claude con thinking extendido. Como un estudiante que hace borrador antes de entregar. Menos errores, más profundidad.",
+  "Etapa 3: IA Agéntica. La diferencia entre chat y agente. Chat: te explica cómo calcular el gasto financiero. Agente: genera el reporte de gasto financiero de mayo. Un turno vs múltiples turnos. Solo texto vs código, archivos, web, APIs. Esto es lo que usamos hoy.",
+  "Claude Code: el agente que Hugo usa a diario. Corre dentro de VS Code. Conectado vía terminal. Lee archivos, escribe código Python/R/SQL, ejecuta comandos, hace commit y push a GitHub. No ve Excel nativamente — escribe código Python. Mostrar el diagrama del flujo.",
+  "Etapa 4: Physical AI. Robots, vehículos, maquinaria. Figure AI ya está en la línea de producción de BMW. Tesla Optimus escalando. Cita del Financial Times: 'Robots, not chatbots, will realise AI's true potential.'",
+  "World Models y AGI. IA que entiende causalidad, física, intenciones. Ejemplo del auto-lavado para ilustrar la diferencia entre IA tradicional y World Model. Jensen Huang: 'I think we've achieved AGI.' Esto es lo que viene en los próximos años.",
+  "Sección: STATUS ACTUAL. Transición: de la teoría a la práctica. Una persona. $30 al mes. Esto ya funciona. Hugo ya lo usa todos los días.",
+  "Mi stack de herramientas actual. VS Code + Claude Code + GitHub + APIs. Costo total: ~$30 al mes. Repasar cada herramienta: Claude Code Pro $20, OpenCode Go $10, VS Code y GitHub gratis, APIs ~$0-5.",
+  "OpenRouter: 300+ modelos, una sola API key. El Panel Fusión envía la pregunta a 3 modelos en paralelo y un juez sintetiza. Costo: ~$0.05-0.40 por consulta. También Perplexity, Grok, Gemini Vision. Mostrar el diagrama 3 modelos → juez → respuesta.",
+  "Pipeline SAP → Dashboard HTML. Del dato crudo al dashboard en horas. Paso a paso: extracción SAP manual → TXT → Python procesa → SQLite → Python analiza → HTML interactivo. La diferencia clave: Claude Code escribe código Python. Computer Use tomaría control de SAP directamente.",
+  "Ecosistema HG de skills. 14 herramientas, versionadas, transferibles. Agrupadas por categoría: Documentos, Datos, Contenido, Audio, Búsqueda. Cada skill es un archivo de instrucciones que viaja con el agente. Son la ventaja competitiva del stack.",
+  "Limitaciones actuales. $30/mes, licencias personales, 1 persona. Claude Pro se agota tras ~5h de uso intensivo. FortiEDR bloquea apps. Sin orquestación automática. Solo Hugo tiene acceso. Estas son las barreras que la propuesta resuelve.",
+  "Sección: CÓMO SE PODRÍA TRABAJAR. Transición: de 1 a 3 personas. De $30 a $97. De manual a automático. Esta es la visión.",
+  "Computer Use: el bot que no se rompe cuando cambia la página web. Comparación side-by-side: bot tradicional con selectores CSS fijos vs agente con visión semántica. Caso real PANASA: bot BSP descarga estados de cuenta, pero requiere ~4-6h/mes de mantenimiento cuando falla. Mostrar el diagrama comparativo.",
+  "Agentes: distribuir el trabajo. La IA tiene memoria limitada (~700 páginas). Solución: partes la tarea entre agentes especializados. Ejemplo real del reporte financiero con 4 agentes. Arquitectura 5 capas: Identidad → Skills → Guardrails → Subagentes → Distribución.",
+  "RAG + n8n: documentos que se vuelven consultables, flujos que se automatizan. RAG: preguntas → IA busca en PDFs internos → responde citando fuente. n8n: orquestador que conecta servicios. Ejemplo: cada lunes 8am extraer SAP → procesar → Excel → correo. Self-hosted, ~$7/mes. Mostrar el diagrama.",
+  "Seguridad y gobernanza. Checklist de 6 puntos: cuentas corporativas, API keys bajo control de TI, zero-retention, modelo 2-out-of-3, Ley 29733, ISO 27001. La IA corporativa requiere controles distintos a la IA personal.",
+  "¿Para qué SÍ y para qué NO? Tabla de dos columnas. La IA sirve para procesar texto masivo, generar borradores, encontrar patrones, automatizar flujos, orquestar herramientas. NO sirve para aritmética exacta, eventos post-entrenamiento, reemplazar criterio humano, creatividad disruptiva, entender contexto físico. Regla de oro: Excel/SAP hacen los números. La IA orquesta. El humano valida.",
+  "Propuesta económica: $97 al mes para 3 personas. ~$32 por persona. Desglose: 3× Claude Pro $60, bolsa OpenRouter $30, n8n self-hosted $7. Carga inicial: $50-70. Menos que 1 hora de consultoría externa.",
+  "Roadmap PANASA: 4 fases. Del piloto al futuro. Fase 0: Hugo solo, $30/mes, personal (YA). Fase 1: 3 cuentas corporativas + n8n (Q3 2026). Fase 2: Dashboards HTML en la nube (Q4 2026). Fase 3: IA local con Mac Studio M4, modelos locales (2027).",
+  "Curso IA 24h + próximos pasos. Hugo dicta las primeras sesiones (4-6h): landscape IA, roadmap, herramientas. Expertos externos (18-20h): agentes, RAG, seguridad. Estos slides son la base para convocar expertos. PANASA financia certificaciones → Hugo transfiere conocimiento. El momento de empezar es ahora."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S01 · PORTADA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">Deck Ejecutivo · Jun 2026</div>
+        <div class="val">PANASA · Planeamiento Financiero</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag">
+        <span>PANASA · IA</span>
+      </div>
+      <h1 class="course-title">Inteligencia<br/>Artificial en <em>PANASA</em></h1>
+      <p class="course-sub">Del status actual al roadmap — Propuesta de capacitación para Planeamiento Financiero.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item">
+        <div class="lbl">Instructor</div>
+        <div class="val">Hugo Gutierrez</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Versión</div>
+        <div class="val">v1 · Deck Ejecutivo</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Área</div>
+        <div class="val">Planeamiento Financiero</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Duración</div>
+        <div class="val">26 slides · ~45 min</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S02 · EL RIESGO NO ES GASTAR EN IA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="02 El riesgo es no gastar">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Contexto global</div>
+    <h1 class="slide-title">La pregunta ya no es "¿usamos <em>IA</em>?".<br/>Es "¿cuánto invertimos?"</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:60%">Empresa / Métrica</th>
+          <th style="width:40%">Cifra</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Gasto mundial IA 2026</td>
+          <td class="code">$2.59 billones (Gartner, +44% vs 2025)</td>
+        </tr>
+        <tr>
+          <td class="name">Big Tech inversión IA</td>
+          <td class="code">$500,000 millones solo en 2026</td>
+        </tr>
+        <tr>
+          <td class="name">OpenAI Q1 2026</td>
+          <td class="code">$5,700M ingresos, $3,700M gastos</td>
+        </tr>
+        <tr>
+          <td class="name">Enterprise agentes IA</td>
+          <td class="code">€15,000–50,000 / mes</td>
+        </tr>
+        <tr>
+          <td class="name">ROI Fortune 500</td>
+          <td class="code">4.7× inversión</td>
+        </tr>
+        <tr>
+          <td class="name">PANASA (propuesta)</td>
+          <td class="code">$97 / mes — 3 personas</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="source-line">Fuentes: DW, Computerworld, Deloitte</div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">02 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S03 · ANALOGÍA DEL ARQUITECTO
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="03 Analogía del arquitecto">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>¿Qué es la IA?</div>
+    <h1 class="slide-title">La IA es un <em>condensador</em> de relaciones</h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p>Una cliente dice a un arquitecto: <em>"Quiero una casa amplia y ventilada para 5 personas."</em></p>
+      <p>La IA, entrenada con miles de estas conversaciones y planos, aprende relaciones:</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 8px; font-size: var(--type-body); color: var(--ink-2); line-height: 1.5;">
+      <div style="padding: 20px 24px; background: var(--bg); border-radius: 12px; border: 0.5px solid var(--rule);">
+        "Amplia" → <em>ventanas grandes</em>
+      </div>
+      <div style="padding: 20px 24px; background: var(--bg); border-radius: 12px; border: 0.5px solid var(--rule);">
+        "5 personas" → <em>5 cuartos</em>
+      </div>
+    </div>
+
+    <p style="font-size: var(--type-body); color: var(--ink-2); line-height: 1.55; margin-top: 20px;">
+      La IA condensa relaciones pregunta→respuesta. No crea un Frank Gehry — produce una casa promedio, funcional, perdiendo detalles idiosincráticos.
+    </p>
+
+    <div class="img-slot-standalone">
+      <span class="ph-icon"><i class="ti ti-arrows-split"></i></span>
+      <span class="ph-label">[INFOGRAPHIC]</span>
+      <span class="ph-caption">Diagrama: cliente → patrones → plano</span>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">03 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S04 · CÓMO INTERACTÚA LA IA CON EL MUNDO
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="04 Cómo interactúa la IA">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Interacción</div>
+    <h1 class="slide-title">Todo entra como <em>texto</em>.<br/>Todo sale como <em>texto</em>.</h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p>Los <em>LLMs</em> actuales solo procesan texto. Para trabajar con un Excel:</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px;">
+      <div style="padding: 24px 20px; background: var(--bg-alt); border-radius: 12px; text-align: center; border: 0.5px solid var(--rule);">
+        <span style="font-family: var(--font-mono); font-size: 20px; color: var(--accent); font-weight: 500;">01</span>
+        <p style="font-size: 20px; color: var(--ink-2); margin-top: 8px; line-height: 1.4;">La IA lee el archivo como datos → lo convierte a texto</p>
+      </div>
+      <div style="padding: 24px 20px; background: var(--bg-alt); border-radius: 12px; text-align: center; border: 0.5px solid var(--rule);">
+        <span style="font-family: var(--font-mono); font-size: 20px; color: var(--accent); font-weight: 500;">02</span>
+        <p style="font-size: 20px; color: var(--ink-2); margin-top: 8px; line-height: 1.4;">Escribe código Python que manipula el Excel</p>
+      </div>
+      <div style="padding: 24px 20px; background: var(--bg-alt); border-radius: 12px; text-align: center; border: 0.5px solid var(--rule);">
+        <span style="font-family: var(--font-mono); font-size: 20px; color: var(--accent); font-weight: 500;">03</span>
+        <p style="font-size: 20px; color: var(--ink-2); margin-top: 8px; line-height: 1.4;">Ejecuta el código → genera un nuevo archivo Excel</p>
+      </div>
+      <div style="padding: 24px 20px; background: var(--bg-alt); border-radius: 12px; text-align: center; border: 0.5px solid var(--rule);">
+        <span style="font-family: var(--font-mono); font-size: 20px; color: var(--accent); font-weight: 500;">04</span>
+        <p style="font-size: 20px; color: var(--ink-2); margin-top: 8px; line-height: 1.4;">Tú abres el resultado</p>
+      </div>
+    </div>
+
+    <p style="font-size: var(--type-body); color: var(--ink-2); line-height: 1.55; margin-top: 20px;">
+      No es nativo. La IA no "ve" celdas. Tiene <em>"choques"</em> con archivos complejos.
+    </p>
+
+    <div class="img-slot-standalone" style="min-height: 180px;">
+      <span class="ph-icon"><i class="ti ti-file-type-xls"></i></span>
+      <span class="ph-label">[INFOGRAPHIC]</span>
+      <span class="ph-caption">Diagrama: Excel → texto → Python → nuevo Excel</span>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">04 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S05 · LÍNEA DE TIEMPO
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="05 Línea de tiempo">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Evolución</div>
+    <h1 class="slide-title">4 etapas de la IA.<br/>Estamos en la <em>etapa 3</em>.</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:20%">2020–2023</th>
+          <th style="width:20%">2023–2025</th>
+          <th style="width:20%">2025 →</th>
+          <th style="width:20%">2026 →</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name" style="font-size:28px;">Generativa</td>
+          <td class="name" style="font-size:28px;">Razonativa</td>
+          <td class="name" style="font-size:28px;">Agéntica ← HOY</td>
+          <td class="name" style="font-size:28px;">Physical AI</td>
+        </tr>
+        <tr>
+          <td>Conversar</td>
+          <td>Pensar</td>
+          <td>Actuar</td>
+          <td>Robots</td>
+        </tr>
+        <tr>
+          <td class="code">ChatGPT</td>
+          <td class="code">ChatGPT o1</td>
+          <td class="code">Claude Code, OpenClaw</td>
+          <td class="code">Tesla Optimus</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">05 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S06 · ETAPA 1: IA GENERATIVA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="06 IA Generativa">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Etapa 1</div>
+    <h1 class="slide-title">Una IA con la que puedes <em>conversar</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p>Predice la siguiente palabra. <em>ChatGPT</em> (2022): 100M usuarios en 2 meses.</p>
+      <p>No piensa, no actúa. Solo conversa.</p>
+      <p>Como un <em>loro muy culto</em>: recita, no entiende.</p>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">06 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S07 · ETAPA 2: IA RAZONATIVA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="07 IA Razonativa">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Etapa 2</div>
+    <h1 class="slide-title">Una IA que <em>piensa</em> antes de responder</h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p>La IA <em>planifica → ejecuta → revisa → ajusta</em>.</p>
+      <p>Detecta errores, se corrige. Comete menos errores.</p>
+      <p>Ejemplo: ChatGPT con razonamiento (o1, o3). Claude con "thinking extendido".</p>
+      <p>Como un estudiante que hace <em>borrador</em> antes de entregar.</p>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">07 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S08 · ETAPA 3: IA AGÉNTICA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="08 IA Agéntica">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Etapa 3</div>
+    <h1 class="slide-title">Una IA que no solo <em>responde</em>.<br/>Actúa.</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:50%">Chat</th>
+          <th style="width:50%">Agente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"¿Cómo calculo el gasto financiero?"</td>
+          <td>"Genera el reporte de gasto financiero de mayo"</td>
+        </tr>
+        <tr>
+          <td>Te explica</td>
+          <td>Lo hace</td>
+        </tr>
+        <tr>
+          <td>Un turno</td>
+          <td>Múltiples turnos</td>
+        </tr>
+        <tr>
+          <td>Solo texto</td>
+          <td>Código, archivos, web, APIs</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">08 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S09 · CLAUDE CODE
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="09 Claude Code">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Mi día a día</div>
+    <h1 class="slide-title"><em>Claude Code</em>:<br/>el agente que uso a diario</h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p>Corre dentro de <em>VS Code</em>. Conectado vía terminal a la computadora.</p>
+      <p>Lee archivos, escribe código Python/R/SQL, ejecuta comandos, hace commit y push a GitHub, se conecta a APIs externas.</p>
+      <p>No "ve" Excel nativamente — escribe código Python que manipula el archivo.</p>
+    </div>
+
+    <div class="img-slot-standalone">
+      <span class="ph-icon"><i class="ti ti-brand-github"></i></span>
+      <span class="ph-label">[INFOGRAPHIC]</span>
+      <span class="ph-caption">Diagrama: VS Code + terminal + flujo de trabajo</span>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">09 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S10 · ETAPA 4: PHYSICAL AI
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="10 Physical AI">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Etapa 4</div>
+    <h1 class="slide-title">IA que interactúa con el <em>mundo físico</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p>Robots, vehículos, maquinaria. <em>Figure AI</em> ya opera en la línea de producción de BMW. Tesla Optimus escalando producción.</p>
+    </div>
+
+    <div class="idea-clave" style="padding: 48px; margin-top: 32px; border-radius: 16px;">
+      <blockquote style="font-size: 44px; max-width: 32ch;">
+        "Robots, not chatbots, will realise <em>AI's true potential</em>."
+      </blockquote>
+      <div class="attrib">
+        <div class="avatar-ph">FT</div>
+        <div>
+          <div class="who">Financial Times</div>
+          <div class="role">Editorial · 2025</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">10 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S11 · WORLD MODELS Y AGI
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="11 World Models y AGI">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Futuro cercano</div>
+    <h1 class="slide-title">Lo que viene: IA que <em>entiende</em> el mundo</h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p><em>World Models</em> = IA que entiende causalidad, física, intenciones.</p>
+      <p>Ejemplo del auto-lavado:</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 8px;">
+      <div style="padding: 28px 24px; background: var(--bg); border-radius: 12px; border: 0.5px solid var(--rule);">
+        <span style="font-family: var(--font-mono); font-size: var(--type-mono); color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.1em;">IA tradicional</span>
+        <p style="font-size: var(--type-body); color: var(--ink-2); margin-top: 12px; line-height: 1.5;">"Voy al auto-lavado. Está a 20m. ¿Voy en auto o caminando?"<br/><br/>→ <em>"Camina."</em></p>
+      </div>
+      <div style="padding: 28px 24px; background: var(--bg); border-radius: 12px; border: 0.5px solid var(--accent-tint-2);">
+        <span style="font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">World Model</span>
+        <p style="font-size: var(--type-body); color: var(--ink-2); margin-top: 12px; line-height: 1.5;">"Voy al auto-lavado. Está a 20m. ¿Voy en auto o caminando?"<br/><br/>→ <em>"Vas a lavar tu auto. Ve en auto."</em></p>
+      </div>
+    </div>
+
+    <p style="font-size: var(--type-body); color: var(--ink-2); line-height: 1.55; margin-top: 20px;">
+      <em>AGI</em> = IA capaz de cualquier tarea intelectual. Jensen Huang: "I think we've achieved AGI."
+    </p>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">11 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S12 · SECCIÓN: STATUS ACTUAL
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide seccion bg-ink" data-label="12 Sección Status">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="sec-mega">STATUS</div>
+    <div class="sec-label">
+      <span class="bar"></span>
+      HOY
+    </div>
+    <h2>STATUS <em>ACTUAL</em></h2>
+    <p class="sec-lede">
+      Una persona. $30 al mes. Esto ya funciona.
+    </p>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">12 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S13 · MI STACK DE HERRAMIENTAS
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="13 Stack de herramientas">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Herramientas</div>
+    <h1 class="slide-title">VS Code + Claude Code<br/>+ GitHub + <em>APIs</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:35%">Herramienta</th>
+          <th style="width:40%">Rol</th>
+          <th style="width:25%">Costo / mes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Claude Code Pro</td>
+          <td>Agente de código principal</td>
+          <td class="code">$20</td>
+        </tr>
+        <tr>
+          <td class="name">OpenCode Go</td>
+          <td>Alternativa (DeepSeek)</td>
+          <td class="code">$10</td>
+        </tr>
+        <tr>
+          <td class="name">VS Code</td>
+          <td>IDE</td>
+          <td class="code">$0</td>
+        </tr>
+        <tr>
+          <td class="name">GitHub</td>
+          <td>Control de versiones</td>
+          <td class="code">$0</td>
+        </tr>
+        <tr>
+          <td class="name">APIs (Perplexity, OpenRouter)</td>
+          <td>Búsqueda, multi-modelo</td>
+          <td class="code">~$0–5</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">13 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S14 · OPENROUTER
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="14 OpenRouter">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>APIs</div>
+    <h1 class="slide-title"><em>OpenRouter</em>: 300+ modelos,<br/>una sola API key</h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p><em>Panel Fusión:</em> tu pregunta se envía a 3 modelos en paralelo. Un juez sintetiza consenso + contradicciones. Costo: ~$0.05–0.40 / consulta.</p>
+      <p><em>Perplexity:</em> búsqueda web con citas (~$0.01).</p>
+      <p><em>Grok:</em> voz → texto avanzado. <em>Gemini Vision:</em> describir imágenes (free tier).</p>
+    </div>
+
+    <div class="img-slot-standalone">
+      <span class="ph-icon"><i class="ti ti-brain"></i></span>
+      <span class="ph-label">[INFOGRAPHIC]</span>
+      <span class="ph-caption">Diagrama: 3 modelos → juez → respuesta</span>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">14 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S15 · PIPELINE SAP → DASHBOARD
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="15 Pipeline SAP">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Automatización real</div>
+    <h1 class="slide-title">De SAP a <em>dashboard</em> interactivo en horas</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:15%">Paso</th>
+          <th style="width:85%">Herramienta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="code">1</td>
+          <td>Extracción SAP — Manual (FAGLL03, FBL1N) → TXT</td>
+        </tr>
+        <tr>
+          <td class="code">2</td>
+          <td>Procesamiento — Python (Claude Code ayuda a escribir)</td>
+        </tr>
+        <tr>
+          <td class="code">3</td>
+          <td>Base de datos — SQLite</td>
+        </tr>
+        <tr>
+          <td class="code">4</td>
+          <td>Análisis — Python (atribuir_devengos.py)</td>
+        </tr>
+        <tr>
+          <td class="code">5</td>
+          <td>Output — HTML interactivo</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; margin-top: 24px;">
+      <em>Diferencia clave:</em> Claude Code escribe código Python para procesar TXTs. Computer Use tomaría control de SAP directamente.
+    </p>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">15 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S16 · SKILLS
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="16 Skills HG">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Ecosistema</div>
+    <h1 class="slide-title"><em>14</em> herramientas.<br/>Versionadas. Transferibles.</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:20%">Categoría</th>
+          <th style="width:80%">Skills</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Documentos</td>
+          <td class="code">PDF→MD, OCR, Pandoc, JPG→PDF</td>
+        </tr>
+        <tr>
+          <td class="name">Datos</td>
+          <td class="code">DuckDB (SQL), Forms→Excel</td>
+        </tr>
+        <tr>
+          <td class="name">Contenido</td>
+          <td class="code">Slides HTML, Excel HG, Mermaid</td>
+        </tr>
+        <tr>
+          <td class="name">Audio</td>
+          <td class="code">Transcripción (Whisper), TTS (Piper)</td>
+        </tr>
+        <tr>
+          <td class="name">Búsqueda</td>
+          <td class="code">Perplexity, OpenRouter, Gemini Vision</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">16 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S17 · LIMITACIONES ACTUALES
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="17 Limitaciones actuales">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Diagnóstico</div>
+    <h1 class="slide-title"><em>$30</em>/mes. Licencias personales.<br/>1 persona.</h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p><em>Claude Pro:</em> ~5h uso intensivo (frecuentemente agotado).</p>
+      <p><em>Licencias personales</em> → deben ser corporativas.</p>
+      <p><em>FortiEDR</em> bloquea apps.</p>
+      <p><em>Sin orquestación automática.</em></p>
+      <p><em>Solo 1 persona</em> con acceso.</p>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">17 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S18 · SECCIÓN: LA VISIÓN
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide seccion bg-ink" data-label="18 Sección Visión">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="sec-mega">VISIÓN</div>
+    <div class="sec-label">
+      <span class="bar"></span>
+      FUTURO CERCANO
+    </div>
+    <h2>CÓMO SE <em>PODRÍA</em><br/>TRABAJAR</h2>
+    <p class="sec-lede">
+      De 1 a 3 personas. De $30 a $97. De manual a automático.
+    </p>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">18 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S19 · COMPUTER USE
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="19 Computer Use">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Automatización robusta</div>
+    <h1 class="slide-title">¿Tu bot <em>falla</em> cuando cambia la página web?</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:25%"></th>
+          <th style="width:37.5%">Bot tradicional</th>
+          <th style="width:37.5%">Computer Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Método</td>
+          <td>Selectores CSS fijos</td>
+          <td>Visión semántica</td>
+        </tr>
+        <tr>
+          <td class="name">Si cambia la web</td>
+          <td>Se rompe</td>
+          <td>Se adapta</td>
+        </tr>
+        <tr>
+          <td class="name">Mantenimiento</td>
+          <td>Constante</td>
+          <td>Mínimo</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; margin-top: 24px;">
+      <em>Caso real PANASA:</em> bot BSP descarga estados de cuenta. ~4–6h / mes de mantenimiento cuando falla.
+    </p>
+
+    <div class="img-slot-standalone" style="min-height: 160px;">
+      <span class="ph-icon"><i class="ti ti-robot"></i></span>
+      <span class="ph-label">[INFOGRAPHIC]</span>
+      <span class="ph-caption">Side-by-side: bot roto vs agente adaptándose</span>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">19 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S20 · AGENTES
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="20 Agentes">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Arquitectura</div>
+    <h1 class="slide-title">Un agente principal.<br/>Varios <em>sub-agentes</em>.</h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p><em>Problema:</em> la IA tiene memoria limitada (~700 páginas).</p>
+      <p><em>Solución:</em> partes la tarea entre agentes especializados.</p>
+      <p>Ejemplo real — reporte financiero:</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px;">
+      <div style="padding: 20px; background: var(--bg); border-radius: 12px; text-align: center; border: 0.5px solid var(--rule);">
+        <span style="font-family: var(--font-mono); font-size: 18px; color: var(--accent); font-weight: 500;">Agente 1</span>
+        <p style="font-size: 18px; color: var(--ink-2); margin-top: 8px; line-height: 1.4;">Extrae SAP</p>
+      </div>
+      <div style="padding: 20px; background: var(--bg); border-radius: 12px; text-align: center; border: 0.5px solid var(--rule);">
+        <span style="font-family: var(--font-mono); font-size: 18px; color: var(--accent); font-weight: 500;">Agente 2</span>
+        <p style="font-size: 18px; color: var(--ink-2); margin-top: 8px; line-height: 1.4;">Analiza variaciones</p>
+      </div>
+      <div style="padding: 20px; background: var(--bg); border-radius: 12px; text-align: center; border: 0.5px solid var(--rule);">
+        <span style="font-family: var(--font-mono); font-size: 18px; color: var(--accent); font-weight: 500;">Agente 3</span>
+        <p style="font-size: 18px; color: var(--ink-2); margin-top: 8px; line-height: 1.4;">Genera Excel</p>
+      </div>
+      <div style="padding: 20px; background: var(--bg); border-radius: 12px; text-align: center; border: 0.5px solid var(--rule);">
+        <span style="font-family: var(--font-mono); font-size: 18px; color: var(--accent); font-weight: 500;">Agente 4</span>
+        <p style="font-size: 18px; color: var(--ink-2); margin-top: 8px; line-height: 1.4;">Redacta resumen</p>
+      </div>
+    </div>
+
+    <p style="font-size: var(--type-body); color: var(--ink-2); line-height: 1.55; margin-top: 20px;">
+      Arquitectura 5 capas: <em>Identidad → Skills → Guardrails → Subagentes → Distribución.</em>
+    </p>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">20 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S21 · RAG + N8N
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="21 RAG y n8n">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Infraestructura</div>
+    <h1 class="slide-title">Documentos que se vuelven <em>consultables</em>.<br/>Flujos que se <em>automatizan</em>.</h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p><em>RAG:</em> preguntas → IA busca en tus PDFs internos → responde citando fuente.</p>
+      <p><em>n8n:</em> orquestador que conecta servicios.</p>
+      <p>"Cada lunes 8am: extraer SAP → procesar → Excel → correo a Christian."</p>
+      <p>Self-hosted, <em>~$7 / mes</em>.</p>
+    </div>
+
+    <div class="img-slot-standalone">
+      <span class="ph-icon"><i class="ti ti-arrows-transfer-up"></i></span>
+      <span class="ph-label">[INFOGRAPHIC]</span>
+      <span class="ph-caption">Diagrama: RAG + flujo n8n</span>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">21 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S22 · SEGURIDAD Y GOBERNANZA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="22 Seguridad y gobernanza">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Gobernanza</div>
+    <h1 class="slide-title">Cuentas corporativas.<br/><em>Zero-retention</em>. Control de TI.</h1>
+    <div class="title-rule"></div>
+
+    <div class="checklist">
+      <div class="check-item">
+        <i class="ti ti-shield-check"></i>
+        <div class="ch-text"><strong>Cuentas corporativas</strong> — transferibles, auditables.</div>
+      </div>
+      <div class="check-item">
+        <i class="ti ti-key"></i>
+        <div class="ch-text"><strong>API keys bajo control de TI</strong> — rotación periódica.</div>
+      </div>
+      <div class="check-item">
+        <i class="ti ti-eye-off"></i>
+        <div class="ch-text"><strong>Zero-retention:</strong> proveedores NO usan datos para entrenar.</div>
+      </div>
+      <div class="check-item">
+        <i class="ti ti-lock"></i>
+        <div class="ch-text"><strong>Modelo 2-out-of-3:</strong> nunca acceso total sin control.</div>
+      </div>
+      <div class="check-item">
+        <i class="ti ti-file-text"></i>
+        <div class="ch-text"><strong>Ley N° 29733:</strong> Protección de Datos Personales (Perú).</div>
+      </div>
+      <div class="check-item">
+        <i class="ti ti-certificate"></i>
+        <div class="ch-text"><strong>ISO 27001:</strong> lineamientos de ciberseguridad.</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">22 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S23 · ¿PARA QUÉ SÍ Y PARA QUÉ NO?
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="23 Para qué SÍ y NO">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Alcance</div>
+    <h1 class="slide-title">Saber esto es <em>poder</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><i class="ti ti-check" style="font-size: 20px;"></i> SÍ</div>
+        <ul>
+          <li>Procesar / resumir texto masivo</li>
+          <li>Generar borradores, reportes</li>
+          <li>Encontrar patrones en datos</li>
+          <li>Automatizar flujos repetitivos</li>
+          <li>Orquestar herramientas</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><i class="ti ti-x" style="font-size: 20px;"></i> NO</div>
+        <ul>
+          <li>Aritmética exacta</li>
+          <li>Eventos post-entrenamiento</li>
+          <li>Reemplazar criterio humano</li>
+          <li>Creatividad disruptiva</li>
+          <li>Entender contexto físico</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; margin-top: 36px; padding-top: 24px; border-top: 0.5px solid var(--rule);">
+      <em>Regla de oro:</em> Excel / SAP hacen los números. La IA orquesta. El humano valida.
+    </p>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">23 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S24 · PROPUESTA ECONÓMICA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="24 Propuesta económica">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Inversión</div>
+    <h1 class="slide-title"><em>$97</em> al mes. 3 personas.<br/>~$32 por persona.</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:55%">Componente</th>
+          <th style="width:45%">Costo / mes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">3× Claude Pro</td>
+          <td class="code">$60</td>
+        </tr>
+        <tr>
+          <td class="name">Bolsa OpenRouter (APIs)</td>
+          <td class="code">$30</td>
+        </tr>
+        <tr>
+          <td class="name">n8n self-hosted</td>
+          <td class="code">$7</td>
+        </tr>
+        <tr>
+          <td class="name">Total</td>
+          <td class="code">~$97</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; margin-top: 24px;">
+      Carga inicial: $50–70. <em>Menos que 1 hora</em> de consultoría externa.
+    </p>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">24 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S25 · ROADMAP PANASA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="25 Roadmap PANASA">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Plan</div>
+    <h1 class="slide-title"><em>4</em> fases.<br/>Del piloto al futuro.</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:22%">Fase</th>
+          <th style="width:48%">Qué</th>
+          <th style="width:30%">Cuándo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">0 — HOY</td>
+          <td>Hugo solo, $30/mes, personal</td>
+          <td class="code">✅</td>
+        </tr>
+        <tr>
+          <td class="name">1 — Equipo</td>
+          <td>3 cuentas corporativas + n8n</td>
+          <td class="code">Q3 2026</td>
+        </tr>
+        <tr>
+          <td class="name">2 — Intranet</td>
+          <td>Dashboards HTML en la nube</td>
+          <td class="code">Q4 2026</td>
+        </tr>
+        <tr>
+          <td class="name">3 — IA local</td>
+          <td>Mac Studio M4, modelos locales</td>
+          <td class="code">2027</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">25 / 26</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       S26 · CURSO IA + PRÓXIMOS PASOS
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="26 Curso IA y próximos pasos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> PANASA · IA</span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Próximos pasos</div>
+    <h1 class="slide-title">Empezamos sobre una <em>base sólida</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="prose-block">
+      <p><em>Hugo dicta</em> primeras sesiones (4–6h): landscape IA, roadmap, herramientas.</p>
+      <p><em>Expertos externos</em> (18–20h): agentes, RAG, seguridad.</p>
+      <p>Estos <em>slides</em> = base para convocar expertos.</p>
+      <p><em>PANASA financia</em> certificaciones → Hugo transfiere conocimiento.</p>
+    </div>
+
+    <div style="margin-top: 48px; padding: 36px 40px; background: var(--accent-tint); border-radius: 14px; border-left: 4px solid var(--accent);">
+      <p style="font-size: var(--type-body-lg); color: var(--ink); font-weight: 500; line-height: 1.4;">
+        El momento de empezar es <em>ahora</em>.
+      </p>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Curso IA</span>
+      <span class="counter">26 / 26</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+</body>
+</html>
