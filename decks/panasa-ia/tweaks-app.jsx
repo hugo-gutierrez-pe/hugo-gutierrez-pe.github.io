@@ -1,13 +1,18 @@
 // Course/theme switcher for the deck template
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "course": "bloomberg",
+  "course": "panasa",
   "background": "white",
   "showChrome": true,
   "accentIntensity": "subtle"
 }/*EDITMODE-END*/;
 
 const COURSE_META = {
+  panasa: {
+    code: 'PANASA',
+    name: 'Planeamiento Financiero',
+    short: 'IA',
+  },
   bloomberg: {
     code: '1FIN39',
     name: 'Bloomberg Terminal',
@@ -52,6 +57,7 @@ function TweaksApp() {
     }
     const ct = document.querySelector('.portada h1.course-title');
     const TITLES = {
+      panasa:   'IA en <em>PANASA</em>',
       bloomberg: 'Bloomberg <em>Terminal</em>',
       corp:      'Finanzas <em>Corporativas</em> I',
       analisis:  'Análisis <em>Financiero</em> I',
@@ -79,6 +85,7 @@ function TweaksApp() {
           label="Curso activo"
           value={t.course}
           options={[
+            { value: 'panasa',    label: 'PANASA' },
             { value: 'bloomberg', label: 'Bloomberg' },
             { value: 'corp', label: 'Corp.' },
             { value: 'analisis', label: 'Análisis' },
