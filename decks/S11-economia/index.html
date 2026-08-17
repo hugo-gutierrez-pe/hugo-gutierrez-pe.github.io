@@ -2,7 +2,7 @@
 <html lang="es-PE" data-course="bloomberg">
 <head>
 <meta charset="UTF-8" />
-<title>S8–S9 Bonos y Renta Fija Soberana — 1FIN39 Hugo Gutierrez</title>
+<title>S11 · Economía — 1FIN39 Hugo Gutierrez</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- Fonts -->
@@ -979,24 +979,17 @@
 <!-- Speaker notes (per-slide) -->
 <script type="application/json" id="speaker-notes">
 [
-  "Portada doble sesión: Bonos y Renta Fija Soberana. Contextualizamos que cubriremos dos clases en un solo deck. Clase 8 se enfoca en el instrumento bono — cómo se identifica, clasifica y valoriza. Clase 9 amplía a fuentes de información para renta fija soberana peruana.",
-  "Agenda de las dos sesiones. Repasar los 5 bloques: identificadores y lectura de bonos, ratings y medidas de rendimiento, Bloomberg workflow, fuentes de renta fija soberana (MEF/SBS/SMV) y cierre con tarea.",
-  "Arranca la Clase 8 sobre Bonos. Objetivo: al terminar esta parte el alumno puede identificar un bono por su ticker Bloomberg, entender sus flujos y calcular su yield. Conectar con la sesión anterior sobre renta variable.",
-  "Dos sistemas de identificación: ISIN y CUSIP/CINS. ISIN es el código global de 12 caracteres emitido por la agencia nacional, usado en clearinghouses internacionales. CUSIP/CINS se usa principalmente en Norteamérica. En Bloomberg ambos aparecen en DES. Preguntar: ¿alguien vio un ISIN en el estado de cuenta de algún fondo?",
-  "Lectura de un bono real: Alicorp 6.875-2027. Descomponer el shorthand: Alicorp (emisor), 6.875 (tasa cupón anual en %), 2027 (año de vencimiento). RS = Registered Security. En Bloomberg el ticker sería algo como ALICP 6.875 01/27. Este formato es estándar en la pantalla de búsqueda SRCH.",
-  "Tabla de calificaciones crediticias de las tres grandes agencias. Investment grade comienza en BBB- (S&P/Fitch) o Baa3 (Moody's). Debajo = high yield o speculative grade. Perú soberano está actualmente en BBB con perspectiva negativa en S&P. El rating afecta directamente el yield exigido — menor rating, mayor spread.",
-  "Estructura de flujos de un bono. Izquierda: cupón (fijo vs flotante) y amortización (bullet paga todo al vencimiento, serial paga cuotas, sinking fund va recomprando en mercado). Derecha: fechas clave (emisión, cupón, vencimiento) y la relación precio-par: precio > par = prima (yield < cupón), precio < par = descuento (yield > cupón).",
-  "Fórmula del precio del bono. P es el valor presente de todos los flujos: cupones periódicos C descontados a la yield y, más el valor facial FV al vencimiento. YTM es la tasa interna de retorno si se mantiene hasta vencer. YTC es la yield si se ejerce la opción de call anticipado. YTW es la menor de YTM/YTC/cualquier call — es la yield más conservadora. Spread es el diferencial sobre la curva libre de riesgo.",
-  "Duración y convexidad. Duración de Macaulay: promedio ponderado del tiempo de los flujos. Duración Modificada: sensibilidad del precio ante cambios en yield — un bono con DurMod 5 pierde ~5% de precio si el yield sube 100pb. Convexidad corrige el error de la aproximación lineal — a mayor convexidad, el precio cae menos de lo que predice DurMod cuando yield sube, y sube más cuando yield baja.",
-  "Bloomberg workflow para analizar un bono. DES: descripción completa del instrumento — emisor, covenants, rating, monto emitido. CSHF: cash flow schedule — tabla completa de fechas y montos de cada cupón y amortización. YAS: yield and spread analysis — calcula YTM, YTC, YTW, duración, convexidad y spread sobre distintas curvas. SRCH/SRSH: buscador de bonos por criterios (emisor, moneda, madurez, rating).",
-  "Arranca la Clase 9 sobre Renta Fija Soberana. Objetivo: conocer las principales fuentes de información para bonos soberanos peruanos — Bloomberg, MEF, SBS y SMV — y entender qué ofrece cada una. Al final podrán construir una curva cupón cero básica.",
-  "Cuatro fuentes clave. Bloomberg: datos de precio y yield en tiempo real, curvas, comparativos internacionales. MEF: reporte diario con precios oficiales de bonos soberanos, globales y VAC. SBS: vector de precios para valorización de carteras de AFP y aseguradoras. SMV: prospectos de emisión, información de colocaciones primarias de empresas inscritas.",
-  "MEF Peru Daily Report: publicado cada día hábil con precios bid/ask, yields, duración y convexidad de bonos soberanos (en soles y VAC) y bonos globales (en dólares). Es la fuente oficial para valorización de portafolios regulados. Se descarga en PDF desde la página del MEF.",
-  "SBS Vector de precios: publicado diariamente, cubre instrumentos de renta fija mantenidos por AFP, compañías de seguros y fondos mutuos. Incluye precio limpio, precio sucio, yield y duración. La Información histórica en la SBS permite reconstruir series de precios para análisis cuantitativo.",
-  "Curvas cupón cero: método bootstrapping y modelo Svensson. Bootstrapping: se parte de los bonos soberanos con vencimientos conocidos y se extrae la tasa spot para cada plazo eliminando el efecto cupón. Svensson parametriza la curva completa con 6 parámetros — permite interpolar yields para cualquier plazo, no solo los plazos con bonos emitidos.",
-  "SMV — Superintendencia del Mercado de Valores: repositorio de prospectos de emisión de renta fija corporativa peruana. Permite revisar los covenants, garantías y condiciones de emisión de bonos de empresas inscritas. También tiene información de colocaciones primarias (montos, spreads de emisión) y reportes periódicos de los emisores.",
-  "Tarea S8–S9. Yo expliqué con el caso Alicorp: leímos el bono en Bloomberg (DES + CSHF + YAS) e identificamos su rating y spread. Ustedes replican con un bono de su elección del mercado peruano. Deben encontrar el bono en Bloomberg, registrar DES, calcular YTM y comparar con la curva soberana.",
-  "Cierre. Preguntas. Para la próxima sesión preparar lectura sobre derivados: futuros y forwards sobre tasas de interés. Recordar que la tarea vence antes de la siguiente clase."
+  "Sesión S11 — Economía y Política Monetaria. Los bancos centrales mueven los mercados; hoy aprendemos a leer sus decisiones antes de que ocurran con Bloomberg: proyecciones de consenso, dot plots, reglas de Taylor y datos duros de actividad económica.",
+  "Agenda de hoy: cinco funciones de economía (50 min) y ejercicio en Bloomberg (35 min).",
+  "Los bancos centrales mueven los mercados. Con Bloomberg leemos sus decisiones antes de que ocurran: proyecciones de consenso, dot plots, reglas de Taylor y datos duros de actividad económica.",
+  "ECFC: Bloomberg Economic Forecast. Comparar proyecciones de crecimiento PBI real 2026 para Perú, Chile, Colombia, México. La brecha entre fuente oficial y privada mide credibilidad. Mostrar el rango completo — no solo la mediana.",
+  "TAYLOR: regla de Taylor automatizada en Bloomberg. Comparar tasa sugerida por Taylor vs tasa efectiva de la Fed. Si Taylor > tasa efectiva: política expansiva con riesgo inflacionario. Si Taylor < tasa efectiva: política contractiva. ¿Dónde está la Fed hoy?",
+  "FOMC: el comité que decide las tasas en EE.UU. Dot Plot: cada miembro pone un punto donde cree que estarán las tasas. La mediana es la señal. Comparar Dot Plot vs futuros de fed funds (función WIRP). ¿El mercado cree lo mismo que el FOMC?",
+  "ECST: datos históricos de actividad. PBI real trimestral Perú (últimos 5 años, YoY%). Identificar peaks y valles del ciclo. Non-Farm Payrolls como leading indicator para Perú — EE.UU. es nuestro segundo socio comercial.",
+  "ECTR: flujos comerciales. Exportaciones peruanas: China (~35%) concentrada en cobre y harina de pescado. Importaciones: China, EE.UU., Brasil. Alta dependencia de insumos importados. ¿Qué pasa con la inflación local si el sol se deprecia 10%? ECTR muestra la matriz completa.",
+  "Adelanto. Todo esto que vemos hoy en economía se traduce directamente en el tipo de cambio: cuando la Fed habla, el dólar se mueve; cuando el BCRP interviene, el sol reacciona. En la sesión de Monedas (S14), dentro de tres semanas, cerramos el círculo viendo FX.",
+  "Ejercicio en Bloomberg. Yo hice Perú completo (ECFC, TAYLOR vs FED, FOMC/DOTS, ECST, ECTR). Ellos eligen otro país de la región (Chile, Colombia o México) y replican el análisis completo.",
+  "Cierre. Tarea: completar ficha de economía para otro país de la región. Próxima sesión: Derivados. Gracias por la atención."
 ]
 </script>
 </head>
@@ -1016,17 +1009,17 @@
       </div>
       <div class="meta">
         <div class="label">PUCP · Lima, Perú</div>
-        <div class="val">1FIN39 · Bloomberg Terminal · 2026—1</div>
+        <div class="val">1FIN39 · Bloomberg Terminal · 2026—2</div>
       </div>
     </div>
 
     <div class="portada-body">
       <div class="course-code-tag">
-        <span>S8 · S9</span>
+        <span>S11</span>
         <span class="bloomberg-dot"></span>
       </div>
-      <h1 class="course-title">Bonos y <em>Renta Fija</em> Soberana</h1>
-      <p class="course-sub">Identificar, valorizar y analizar instrumentos de deuda en Bloomberg.</p>
+      <h1 class="course-title">Economía <em>y Política Monetaria</em></h1>
+      <p class="course-sub">Cómo leer las decisiones de los bancos centrales antes de que ocurran.</p>
     </div>
 
     <div class="portada-foot">
@@ -1035,16 +1028,16 @@
         <div class="val">Hugo Gutierrez</div>
       </div>
       <div class="item">
-        <div class="lbl">Sesiones</div>
-        <div class="val">S8 y S9 · 1FIN39</div>
+        <div class="lbl">Sesión</div>
+        <div class="val">S11 · 1FIN39</div>
       </div>
       <div class="item">
-        <div class="lbl">Tema S8</div>
-        <div class="val">Bonos</div>
+        <div class="lbl">Tema</div>
+        <div class="val">Economía</div>
       </div>
       <div class="item">
-        <div class="lbl">Tema S9</div>
-        <div class="val">Renta Fija Soberana</div>
+        <div class="lbl">Funciones</div>
+        <div class="val">ECFC TAYLOR FOMC ECST</div>
       </div>
     </div>
   </section>
@@ -1058,763 +1051,376 @@
       <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
     </div>
 
-    <div class="eyebrow"><span class="bar"></span>S8–S9 · Agenda</div>
-    <h1 class="slide-title">Qué cubrimos <em>hoy</em></h1>
+    <div class="eyebrow"><span class="bar"></span>S11 · Agenda</div>
+    <h1 class="slide-title">Hoy: economía y <em>política monetaria</em></h1>
     <div class="title-rule"></div>
 
     <div class="agenda-list">
       <div class="agenda-row">
         <span class="num">01</span>
         <div>
-          <div class="title">Identificadores y lectura de bonos</div>
-          <div class="desc">ISIN, CUSIP/CINS · cómo leer un ticker Bloomberg de renta fija.</div>
+          <div class="title">Economía y Política Monetaria</div>
+          <div class="desc">ECFC, TAYLOR, FED, FOMC, ECST, ECTR — crecimiento, reglas, dot plots y comercio.</div>
         </div>
-        <span class="tag">S8 · 25 min</span>
+        <span class="tag">50 min</span>
       </div>
       <div class="agenda-row">
         <span class="num">02</span>
         <div>
-          <div class="title">Ratings, flujos y medidas de rendimiento</div>
-          <div class="desc">Calificaciones crediticias · cupón · YTM / YTC / YTW · duración y convexidad.</div>
+          <div class="title">Ejercicio Bloomberg en vivo</div>
+          <div class="desc">Analiza otro país de la región con todas las funciones vistas.</div>
         </div>
-        <span class="tag">S8 · 40 min</span>
-      </div>
-      <div class="agenda-row">
-        <span class="num">03</span>
-        <div>
-          <div class="title">Bloomberg workflow para bonos</div>
-          <div class="desc">DES → CSHF → YAS → SRCH / SRSH.</div>
-        </div>
-        <span class="tag">S8 · 20 min</span>
-      </div>
-      <div class="agenda-row">
-        <span class="num">04</span>
-        <div>
-          <div class="title">Fuentes de renta fija soberana</div>
-          <div class="desc">MEF Peru Daily Report · SBS Vector de precios · SMV · Bloomberg.</div>
-        </div>
-        <span class="tag">S9 · 35 min</span>
-      </div>
-      <div class="agenda-row">
-        <span class="num">05</span>
-        <div>
-          <div class="title">Curvas cupón cero y tarea</div>
-          <div class="desc">Bootstrapping · Modelo Svensson · Tarea S8–S9.</div>
-        </div>
-        <span class="tag">S9 · 20 min</span>
+        <span class="tag">35 min</span>
       </div>
     </div>
 
     <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">02 / 18</span>
+      <span>S11 · Economía</span>
+      <span class="num">02 / 11</span>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 03 · SECCIÓN: CLASE 8 — BONOS
+       SLIDE 03 · SECCIÓN: ECONOMÍA
        ════════════════════════════════════════════════════════════════ -->
-  <section class="slide seccion bg-ink" data-label="03 Sección Clase 8">
+  <section class="slide seccion bg-ink" data-label="03 Sección Economía">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
     </div>
 
-    <div class="sec-mega">S8</div>
+    <div class="sec-mega">S11</div>
     <div class="sec-label">
       <span class="bar"></span>
-      Clase 8 · Renta Fija
+      Clase 11 · Economía y Política Monetaria
     </div>
-    <h2>Bonos: identificar,<br/>clasificar y <em>valorizar</em></h2>
+    <h2>Economía<br/><em>y Política Monetaria</em></h2>
     <p class="sec-lede">
-      Aprenderemos a leer un bono desde su ticker, entender sus flujos,
-      calcular su yield y usar Bloomberg para el análisis completo.
+      Los bancos centrales mueven los mercados. Con Bloomberg leemos sus decisiones antes de que ocurran — proyecciones, dot plots, reglas de Taylor y datos duros.
     </p>
 
     <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">03 / 18</span>
+      <span>S11 · Economía</span>
+      <span class="num">03 / 11</span>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 04 · IDENTIFICADORES: ISIN vs CUSIP/CINS
+       SLIDE 04 · ECFC
        ════════════════════════════════════════════════════════════════ -->
-  <section class="slide bg-alt" data-label="04 ISIN vs CUSIP">
+  <section class="slide" data-label="04 ECFC">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
     </div>
 
-    <div class="eyebrow"><span class="bar"></span>S8.1 · Identificadores</div>
-    <h1 class="slide-title">¿Cómo se <em>identifica</em> un bono?</h1>
+    <div class="eyebrow"><span class="bar"></span>S11.1 · ECFC</div>
+    <h1 class="slide-title">¿Quién <em>crece</em> más en la región?</h1>
     <div class="title-rule"></div>
 
     <div class="two-col-text">
       <div class="text-col">
-        <div class="col-eyebrow"><span class="num">01</span> · Global</div>
-        <h3>ISIN</h3>
-        <p>
-          International Securities Identification Number. Código de <em>12 caracteres</em>
-          emitido por la agencia nacional de cada país (en Perú: CAVALI).
-          Formato: 2 letras de país + 9 dígitos + dígito verificador.
-        </p>
+        <div class="col-eyebrow"><span class="num">01</span> · Proyecciones</div>
+        <h3>Bloomberg Economic Forecast</h3>
+        <p>ECFC consolida proyecciones de crecimiento PBI real para cualquier país. Compara Perú, Chile, Colombia, México en 2026. La brecha entre fuente pública y privada revela credibilidad institucional.</p>
         <ul>
-          <li><strong>PE0ABC123456</strong> — ejemplo de ISIN peruano.</li>
-          <li>Usado en clearing internacional (Euroclear, DTC).</li>
-          <li>Aparece en la función <strong>DES</strong> de Bloomberg.</li>
-          <li>Estándar obligatorio en mercados regulados de la Unión Europea.</li>
+          <li>ECFC &lt;GO&gt; → filtrar por país → PBI real YoY%</li>
+          <li>Comparar mediana del consenso vs proyección oficial (BCRP, MEF)</li>
+          <li>¿Quién proyecta mejor? Historial de aciertos importa</li>
         </ul>
       </div>
       <div class="text-col">
-        <div class="col-eyebrow"><span class="num">02</span> · Norteamérica</div>
-        <h3>CUSIP / CINS</h3>
-        <p>
-          Committee on Uniform Securities Identification Procedures. <em>9 caracteres</em>
-          para valores de EE.UU. y Canadá. CINS es la versión para valores
-          internacionales que usan la infraestructura CUSIP.
-        </p>
+        <div class="col-eyebrow"><span class="num">02</span> · Interpretación</div>
+        <h3>Más allá del número</h3>
+        <p>No basta con el número puntual. ¿Las proyecciones privadas son más optimistas o pesimistas que las oficiales? ¿Qué dice eso sobre la credibilidad de los bancos centrales?</p>
         <ul>
-          <li><strong>037833100</strong> — Apple Inc. (AAPL).</li>
-          <li>Primeros 6 dígitos identifican al emisor.</li>
-          <li>Usado en sistemas de custodia y liquidación de EE.UU.</li>
-          <li>Los bonos globales del Perú tienen CUSIP asignado.</li>
+          <li>Consenso privado > proyección oficial: el mercado confía más</li>
+          <li>Consenso privado < proyección oficial: desconfianza en el banco central</li>
+          <li>ECFC muestra el rango completo — no solo la mediana</li>
+          <li>Ancho del rango mide incertidumbre macro</li>
         </ul>
       </div>
     </div>
 
     <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">04 / 18</span>
+      <span>S11 · Economía</span>
+      <span class="num">04 / 11</span>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 05 · IDEA CLAVE: LEER UN BONO
+       SLIDE 05 · TAYLOR + FED
        ════════════════════════════════════════════════════════════════ -->
-  <section class="slide idea-clave" data-label="05 Leer un bono">
+  <section class="slide bg-alt" data-label="05 TAYLOR FED">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
     </div>
 
-    <div class="eyebrow"><span class="bar"></span>S8.1 · Lectura de ticker</div>
+    <div class="eyebrow"><span class="bar"></span>S11.2 · TAYLOR · FED</div>
+    <h1 class="slide-title">¿La Fed está atrás o delante de la <em>curva</em>?</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Regla de Taylor</div>
+        <h3>La fórmula que guía a la Fed</h3>
+        <p>La regla de Taylor sugiere la tasa de interés que equilibra inflación y actividad. Bloomberg la calcula automáticamente en la función TAYLOR.</p>
+        <ul>
+          <li>Tasa sugerida = tasa neutral + inflación + 0.5×(brecha PBI) + 0.5×(inflación − meta)</li>
+          <li>TAYLOR &lt;GO&gt; → compara tasa sugerida vs tasa efectiva</li>
+          <li>Parámetros ajustables: peso a inflación vs brecha</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Lectura</div>
+        <h3>¿Qué nos dice hoy?</h3>
+        <p>La comparación entre Taylor y la tasa efectiva revela la postura de la política monetaria:</p>
+        <ul>
+          <li>Taylor > tasa efectiva: política expansiva (riesgo inflacionario)</li>
+          <li>Taylor < tasa efectiva: política contractiva (enfriamiento)</li>
+          <li>¿Qué dice hoy para EE.UU.? ¿Qué implica para el USD?</li>
+          <li>Si Taylor sugiere recortes: USD tiende a debilitarse</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Economía</span>
+      <span class="num">05 / 11</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 06 · FOMC + DOTS
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="06 FOMC DOTS">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.3 · FOMC · DOTS</div>
+    <h1 class="slide-title">El <em>Dot Plot</em>: lo que la Fed realmente piensa</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · FOMC</div>
+        <h3>Federal Open Market Committee</h3>
+        <p>El FOMC es el comité que decide la tasa de interés en EE.UU. Se reúne 8 veces al año y publica minutas, proyecciones económicas y conferencia de prensa.</p>
+        <ul>
+          <li>FOMC &lt;GO&gt; → calendario, minutas, proyecciones</li>
+          <li>8 reuniones al año (aproximadamente cada 6 semanas)</li>
+          <li>Decisiones: subir, mantener o bajar la fed funds rate</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · DOTS</div>
+        <h3>El gráfico de puntos</h3>
+        <p>Cada miembro del FOMC coloca un punto anónimo donde cree que estarán las tasas en cada año. La mediana es la señal oficial del comité.</p>
+        <ul>
+          <li>Dot Plot: proyección individual de cada miembro votante</li>
+          <li>Mediana = "SEP median dot": la señal del FOMC</li>
+          <li>Comparar Dot Plot vs futuros de fed funds (WIRP)</li>
+          <li>¿El mercado cree lo mismo que el FOMC? Si no, hay trade</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Economía</span>
+      <span class="num">06 / 11</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 07 · ECST
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="07 ECST">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.4 · ECST</div>
+    <h1 class="slide-title">El <em>ciclo</em> económico peruano</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Datos históricos</div>
+        <h3>PBI real trimestral</h3>
+        <p>ECST = Economic Statistics. Extrae series de tiempo de PBI real trimestral para Perú (últimos 5 años, variación YoY%). Identifica peaks y valles del ciclo económico peruano.</p>
+        <ul>
+          <li>ECST &lt;GO&gt; → Perú → PBI real trimestral YoY%</li>
+          <li>Identificar: ¿cuánto duró la recuperación post-COVID?</li>
+          <li>Comparar trayectoria vs pares regionales (Chile, Colombia)</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Indicadores clave</div>
+        <h3>¿Leading, coincident o lagging?</h3>
+        <p>Clasificar los indicadores económicos según su relación temporal con el ciclo. ¿Por qué importan para Perú si son datos de EE.UU.?</p>
+        <ul>
+          <li>Non-Farm Payrolls: coincident (empleo se mueve con el ciclo)</li>
+          <li>Initial Jobless Claims: leading (anticipa giros en el empleo)</li>
+          <li>EE.UU. es el segundo socio comercial — su ciclo nos afecta</li>
+          <li>ECST cruza Perú + EE.UU. en una misma pantalla</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Economía</span>
+      <span class="num">07 / 11</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 08 · ECTR
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="08 ECTR">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.5 · ECTR</div>
+    <h1 class="slide-title">¿Con quién <em>comercia</em> Perú?</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Exportaciones</div>
+        <h3>Destinos de exportación peruana</h3>
+        <p>ECTR = Trade Flows. Muestra la matriz de comercio exterior: principales destinos de exportación, productos y participación porcentual.</p>
+        <ul>
+          <li>China: ~35% del total — cobre, harina de pescado</li>
+          <li>EE.UU.: ~12% — agroexportación, textiles, minerales</li>
+          <li>Canadá / Japón / Corea: minerales y concentrados</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Importaciones</div>
+        <h3>Orígenes de importación</h3>
+        <p>Perú depende de insumos importados para su industria. Una depreciación del sol encarece estos insumos y genera presión inflacionaria.</p>
+        <ul>
+          <li>China: ~27% — bienes de capital, insumos industriales</li>
+          <li>EE.UU.: ~20% — maquinaria, tecnología</li>
+          <li>Brasil: ~6% — vehículos, insumos</li>
+          <li>¿Qué pasa si el sol se deprecia 10%? Inflación importada</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Economía</span>
+      <span class="num">08 / 11</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 09 · ADELANTO: ECONOMÍA → FX
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide idea-clave bg-alt" data-label="09 Adelanto Economia a FX">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Adelanto · Economía → FX</div>
     <div class="quote-mark">"</div>
     <blockquote>
-      <em>Alicorp</em> 6.875–2027–RS:<br/>
-      emisor · cupón · vencimiento · tipo
+      Todo esto se traduce en el <em>tipo de cambio</em>.
     </blockquote>
     <div class="attrib">
-      <div class="avatar-ph">RF</div>
+      <div class="avatar-ph">⟳</div>
       <div>
-        <div class="who">Renta Fija · Bloomberg Terminal</div>
-        <div class="role">ALICP 6.875 01/27 Corp &lt;GO&gt; → DES</div>
+        <div class="who">Fed recorta 100bp → USD se debilita → PEN se aprecia → exportadores reciben menos soles → BCRP ajusta tasa → estímulo a economía local.</div>
+        <div class="role">En la sesión de Monedas (S14), dentro de tres semanas, cerramos el círculo viendo cómo Bloomberg conecta cada eslabón en tiempo real.</div>
       </div>
     </div>
 
     <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">05 / 18</span>
+      <span>S11 · Economía</span>
+      <span class="num">09 / 11</span>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 06 · TABLA: RATINGS CREDITICIOS
+       SLIDE 10 · EJERCICIO
        ════════════════════════════════════════════════════════════════ -->
-  <section class="slide" data-label="06 Ratings crediticios">
+  <section class="slide bg-alt" data-label="10 Ejercicio">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
     </div>
 
-    <div class="eyebrow"><span class="bar"></span>S8.2 · Riesgo crediticio</div>
-    <h1 class="slide-title">Escala de <em>ratings</em> crediticios</h1>
-    <div class="title-rule"></div>
-
-    <table class="cmp-table">
-      <thead>
-        <tr>
-          <th style="width:18%">Categoría</th>
-          <th style="width:20%">Moody's</th>
-          <th style="width:20%">S&amp;P / Fitch</th>
-          <th>Significado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="name">Investment Grade</td>
-          <td class="code">Aaa → Baa3</td>
-          <td class="code">AAA → BBB−</td>
-          <td>Capacidad de pago sólida. Elegible para carteras de AFP y seguros.</td>
-        </tr>
-        <tr>
-          <td class="name">High Yield</td>
-          <td class="code">Ba1 → Caa3</td>
-          <td class="code">BB+ → CCC</td>
-          <td>Mayor riesgo, mayor yield. Limitado en carteras reguladas peruanas.</td>
-        </tr>
-        <tr>
-          <td class="name">Default</td>
-          <td class="code">Ca / C</td>
-          <td class="code">CC / C / D</td>
-          <td>En default o incumplimiento inminente. Recuperación incierta.</td>
-        </tr>
-        <tr>
-          <td class="name">Perú Soberano</td>
-          <td class="code">Baa1</td>
-          <td class="code">BBB</td>
-          <td>Investment grade con perspectiva negativa en S&amp;P (2024). Spread ~100pb sobre UST 10Y.</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">06 / 18</span>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 07 · DOS COLUMNAS: FLUJOS DEL BONO
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="slide bg-alt" data-label="07 Flujos del bono">
-    <div class="chrome-top">
-      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
-      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
-    </div>
-
-    <div class="eyebrow"><span class="bar"></span>S8.3 · Estructura de flujos</div>
-    <h1 class="slide-title">Cupón, amortización y <em>precio</em></h1>
-    <div class="title-rule"></div>
-
-    <div class="two-col-text">
-      <div class="text-col">
-        <div class="col-eyebrow"><span class="num">01</span> · Pagos periódicos</div>
-        <h3>Cupón y amortización</h3>
-        <p>El cupón es el interés periódico que paga el emisor. Puede ser fijo o flotante (ej. LIBOR/SOFR + spread).</p>
-        <ul>
-          <li><strong>Bullet:</strong> paga todos los flujos al vencimiento en un solo pago.</li>
-          <li><strong>Serial:</strong> amortiza principal en cuotas periódicas iguales.</li>
-          <li><strong>Sinking fund:</strong> el emisor recompra en mercado según calendario.</li>
-          <li><strong>Cupón cero:</strong> no paga cupones — se emite con descuento.</li>
-        </ul>
-      </div>
-      <div class="text-col">
-        <div class="col-eyebrow"><span class="num">02</span> · Precio vs. par</div>
-        <h3>Fechas y precio</h3>
-        <p>El precio de mercado puede diferir del valor par (100) según las condiciones del mercado y el crédito del emisor.</p>
-        <ul>
-          <li><strong>Precio &gt; 100 (prima):</strong> yield de mercado &lt; cupón.</li>
-          <li><strong>Precio &lt; 100 (descuento):</strong> yield de mercado &gt; cupón.</li>
-          <li><strong>Precio sucio:</strong> precio limpio + interés corrido acumulado.</li>
-          <li><strong>Fecha de liquidación:</strong> T+2 en el mercado secundario peruano.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">07 / 18</span>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 08 · FÓRMULA: PRECIO Y MEDIDAS DE RENDIMIENTO
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="slide bg-alt" data-label="08 Fórmula precio y yield">
-    <div class="chrome-top">
-      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
-      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
-    </div>
-
-    <div class="eyebrow"><span class="bar"></span>S8.4 · Valorización</div>
-    <h1 class="slide-title">Precio, YTM y <em>spreads</em></h1>
-    <div class="title-rule"></div>
-
-    <div class="formula-block">
-      <div class="formula">
-        <span class="acc-var">P</span> &nbsp;=&nbsp;
-        ∑<sub>t=1</sub><sup>n</sup>
-        <span class="frac">
-          <span class="num"><span class="acc-var">C</span></span>
-          <span class="den">(1 + <span class="acc-var">y</span>)<sup>t</sup></span>
-        </span>
-        &nbsp;+&nbsp;
-        <span class="frac">
-          <span class="num"><span class="acc-var">FV</span></span>
-          <span class="den">(1 + <span class="acc-var">y</span>)<sup>n</sup></span>
-        </span>
-      </div>
-
-      <div class="formula-legend">
-        <div class="legend-item">
-          <div class="var">P</div>
-          <div class="desc">Precio de mercado del bono (limpio)</div>
-        </div>
-        <div class="legend-item">
-          <div class="var">C</div>
-          <div class="desc">Cupón periódico: tasa cupón × FV / frecuencia</div>
-        </div>
-        <div class="legend-item">
-          <div class="var">y · YTM</div>
-          <div class="desc">Yield to Maturity — tasa de descuento si se mantiene al vencimiento</div>
-        </div>
-        <div class="legend-item">
-          <div class="var">YTC / YTW</div>
-          <div class="desc">Yield to Call / Worst — considera opciones de rescate anticipado</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">08 / 18</span>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 09 · FÓRMULA: DURACIÓN Y CONVEXIDAD
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="slide bg-alt" data-label="09 Duración y convexidad">
-    <div class="chrome-top">
-      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
-      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
-    </div>
-
-    <div class="eyebrow"><span class="bar"></span>S8.5 · Sensibilidad al yield</div>
-    <h1 class="slide-title">Duración y <em>convexidad</em></h1>
-    <div class="title-rule"></div>
-
-    <div class="formula-block">
-      <div class="formula" style="font-size:44px;">
-        <span class="acc-var">DurMod</span> &nbsp;=&nbsp;
-        <span class="frac">
-          <span class="num"><span class="acc-var">DurMac</span></span>
-          <span class="den">1 + <span class="acc-var">y</span></span>
-        </span>
-        &nbsp;&nbsp;·&nbsp;&nbsp;
-        <span style="color:var(--ink-3); font-size:0.7em;">→</span>
-        &nbsp;&nbsp;
-        <span class="frac">
-          <span class="num">Δ<span class="acc-var">P</span></span>
-          <span class="den"><span class="acc-var">P</span></span>
-        </span>
-        &nbsp;≈&nbsp; −<span class="acc-var">DurMod</span> · Δ<span class="acc-var">y</span>
-        &nbsp;+&nbsp;
-        <span class="frac">
-          <span class="num">1</span>
-          <span class="den">2</span>
-        </span>
-        · <span class="acc-var">Conv</span> · (Δ<span class="acc-var">y</span>)<sup>2</sup>
-      </div>
-
-      <div class="formula-legend">
-        <div class="legend-item">
-          <div class="var">DurMac</div>
-          <div class="desc">Duración de Macaulay — promedio ponderado del tiempo de los flujos (en años)</div>
-        </div>
-        <div class="legend-item">
-          <div class="var">DurMod</div>
-          <div class="desc">Duración Modificada — sensibilidad del precio ante cambios de 1pp en yield</div>
-        </div>
-        <div class="legend-item">
-          <div class="var">Conv</div>
-          <div class="desc">Convexidad — corrige el error de la aproximación lineal (curvatura precio-yield)</div>
-        </div>
-        <div class="legend-item">
-          <div class="var">Δy</div>
-          <div class="desc">Cambio en yield en puntos porcentuales (ej. 0.01 = +100pb)</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">09 / 18</span>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 10 · TERMINAL: BLOOMBERG WORKFLOW BONOS
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="slide" data-label="10 Bloomberg workflow bonos">
-    <div class="chrome-top">
-      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
-      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
-    </div>
-
-    <div class="eyebrow"><span class="bar"></span>S8.6 · Bloomberg Terminal</div>
-    <h1 class="slide-title">Workflow: <em>DES → CSHF → YAS → SRCH</em></h1>
-    <div class="title-rule"></div>
-
-    <div class="code-shell">
-      <div class="code-head">
-        <span class="traffic"><span></span><span></span><span></span></span>
-        <span class="file">Bloomberg Terminal · Renta Fija · Flujo de análisis</span>
-        <span class="lang">Bloomberg</span>
-      </div>
-      <pre class="code-body"><span class="ln"><span class="tok-com">-- 1. Buscar el bono y ver su descripción</span></span><span class="ln"><span class="tok-fn">ALICP</span> <span class="tok-num">6.875</span> <span class="tok-str">01/27</span> <span class="tok-key">Corp</span> <span class="tok-op">&lt;GO&gt;</span>  <span class="tok-op">→</span>  <span class="tok-fn">DES</span> <span class="tok-op">&lt;GO&gt;</span>    <span class="tok-com">-- emisor, rating, covenants, ISIN/CUSIP</span></span><span class="ln"></span><span class="ln"><span class="tok-com">-- 2. Ver el calendario completo de flujos</span></span><span class="ln"><span class="tok-fn">CSHF</span> <span class="tok-op">&lt;GO&gt;</span>    <span class="tok-com">-- tabla de cupones y amortizaciones con fechas exactas</span></span><span class="ln"></span><span class="ln"><span class="tok-com">-- 3. Calcular yield, duración y spreads</span></span><span class="ln"><span class="tok-fn">YAS</span> <span class="tok-op">&lt;GO&gt;</span>     <span class="tok-com">-- YTM, YTC, YTW, DurMod, Convexidad, Spread vs. curva</span></span><span class="ln"></span><span class="ln"><span class="tok-com">-- 4. Buscar bonos por criterio (screener)</span></span><span class="ln"><span class="tok-fn">SRCH</span> <span class="tok-op">&lt;GO&gt;</span>    <span class="tok-com">-- bonos corporativos  |  SRSH &lt;GO&gt; para soberanos</span></span></pre>
-    </div>
-
-    <div class="code-legend">
-      <div class="item">
-        <div class="var">DES · Description</div>
-        <div class="desc">Perfil completo del bono: emisor, rating, ISIN, covenants y condiciones de emisión.</div>
-      </div>
-      <div class="item">
-        <div class="var">CSHF · Cash Flow</div>
-        <div class="desc">Tabla de todos los flujos futuros — útil para construir el modelo de precio manualmente.</div>
-      </div>
-      <div class="item">
-        <div class="var">YAS · Yield &amp; Spread</div>
-        <div class="desc">YTM, YTC, YTW, duración, convexidad y spread sobre distintas curvas (UST, SOFR, swap).</div>
-      </div>
-    </div>
-
-    <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">10 / 18</span>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 11 · SECCIÓN: CLASE 9 — RENTA FIJA SOBERANA
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="slide seccion bg-ink" data-label="11 Sección Clase 9">
-    <div class="chrome-top">
-      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
-      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
-    </div>
-
-    <div class="sec-mega">S9</div>
-    <div class="sec-label">
-      <span class="bar"></span>
-      Clase 9 · Mercado Peruano
-    </div>
-    <h2>Renta Fija Soberana:<br/><em>fuentes</em> y curvas</h2>
-    <p class="sec-lede">
-      Bloomberg, MEF, SBS y SMV: qué ofrece cada fuente y cómo
-      construir la curva cupón cero soberana del Perú.
-    </p>
-
-    <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">11 / 18</span>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 12 · DOS COLUMNAS: FUENTES DE INFORMACIÓN
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="slide" data-label="12 Fuentes de información">
-    <div class="chrome-top">
-      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
-      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
-    </div>
-
-    <div class="eyebrow"><span class="bar"></span>S9.1 · Ecosistema de datos</div>
-    <h1 class="slide-title">¿Dónde encontrar <em>datos soberanos</em>?</h1>
-    <div class="title-rule"></div>
-
-    <div class="two-col-text">
-      <div class="text-col">
-        <div class="col-eyebrow"><span class="num">01</span> · Tiempo real</div>
-        <h3>Bloomberg y MEF</h3>
-        <ul>
-          <li><strong>Bloomberg Terminal:</strong> precios bid/ask en tiempo real, curvas soberanas, comparativos internacionales. Función <strong>SRSH</strong> para bonos soberanos.</li>
-          <li><strong>MEF Peru Daily Report:</strong> publicado cada día hábil. Precios oficiales de bonos soberanos (PEN y VAC) y globales (USD). Incluye yield, duración y convexidad.</li>
-          <li><strong>BCRP:</strong> estadísticas macro, curvas de rendimiento históricas y operaciones de mercado abierto.</li>
-        </ul>
-      </div>
-      <div class="text-col">
-        <div class="col-eyebrow"><span class="num">02</span> · Reguladores</div>
-        <h3>SBS y SMV</h3>
-        <ul>
-          <li><strong>SBS Vector de precios:</strong> valorización oficial de instrumentos en carteras de AFP, seguros y fondos mutuos. Publicado diariamente.</li>
-          <li><strong>SMV:</strong> prospectos de emisión, colocaciones primarias y reportes periódicos de emisores. Útil para renta fija corporativa.</li>
-          <li><strong>CAVALI:</strong> custodia y liquidación — registro de tenencias de valores peruanos.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">12 / 18</span>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 13 · DOS COLUMNAS: MEF PERU DAILY REPORT
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="slide bg-alt" data-label="13 MEF Peru Daily Report">
-    <div class="chrome-top">
-      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
-      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
-    </div>
-
-    <div class="eyebrow"><span class="bar"></span>S9.2 · MEF · Fuente oficial</div>
-    <h1 class="slide-title">MEF <em>Peru Daily Report</em></h1>
-    <div class="title-rule"></div>
-
-    <div class="two-col-text">
-      <div class="text-col">
-        <div class="col-eyebrow"><span class="num">01</span> · Tipos de deuda</div>
-        <h3>Instrumentos cubiertos</h3>
-        <ul>
-          <li><strong>Bonos soberanos en soles:</strong> emitidos localmente, liquidados en CAVALI.</li>
-          <li><strong>Bonos VAC:</strong> indexados a la inflación (Valor Adquisitivo Constante) — tasa real fija + inflación INEI.</li>
-          <li><strong>Bonos globales en USD:</strong> emitidos en mercado internacional, listados en NYSE o Londres.</li>
-          <li><strong>Letras del Tesoro:</strong> instrumentos de corto plazo (hasta 1 año).</li>
-        </ul>
-      </div>
-      <div class="text-col">
-        <div class="col-eyebrow"><span class="num">02</span> · Variables reportadas</div>
-        <h3>Campos del reporte</h3>
-        <ul>
-          <li><strong>Precio bid / ask:</strong> cotizaciones de mercado secundario.</li>
-          <li><strong>Yield bid / ask:</strong> rendimiento implícito en cada precio.</li>
-          <li><strong>Duración Modificada:</strong> sensibilidad del precio al yield.</li>
-          <li><strong>Convexidad:</strong> corrección de segundo orden.</li>
-          <li><strong>Interés corrido:</strong> cupón devengado hasta la fecha de valorización.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">13 / 18</span>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 14 · DOS COLUMNAS: SBS VECTOR DE PRECIOS
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="slide" data-label="14 SBS Vector de precios">
-    <div class="chrome-top">
-      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
-      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
-    </div>
-
-    <div class="eyebrow"><span class="bar"></span>S9.3 · SBS · Valorización regulada</div>
-    <h1 class="slide-title">SBS: <em>Vector de precios</em></h1>
-    <div class="title-rule"></div>
-
-    <div class="two-col-text">
-      <div class="text-col">
-        <div class="col-eyebrow"><span class="num">01</span> · Publicación diaria</div>
-        <h3>Vector de precios (AFP)</h3>
-        <p>
-          La SBS publica diariamente el vector de precios para los instrumentos que
-          forman parte de las carteras de los fondos de pensiones (AFP) y compañías de seguros.
-          Es la referencia oficial para la valorización de mark-to-market.
-        </p>
-        <ul>
-          <li>Precio limpio y precio sucio por instrumento.</li>
-          <li>Yield implícito y spread sobre la curva soberana.</li>
-          <li>Disponible en el portal de la SBS sin registro.</li>
-        </ul>
-      </div>
-      <div class="text-col">
-        <div class="col-eyebrow"><span class="num">02</span> · Serie histórica</div>
-        <h3>Información histórica</h3>
-        <p>
-          La SBS mantiene un archivo histórico de vectores de precios que permite
-          construir series de tiempo para análisis cuantitativo y back-testing.
-        </p>
-        <ul>
-          <li>Histórico disponible desde 2004 para instrumentos locales.</li>
-          <li>Útil para calibrar modelos de riesgo (VaR, CVaR).</li>
-          <li>Base para el cálculo de rentabilidad de fondos de pensiones.</li>
-          <li>Se puede descargar en Excel directamente desde el portal.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">14 / 18</span>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 15 · FÓRMULA: BOOTSTRAPPING Y SVENSSON
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="slide bg-alt" data-label="15 Curvas cupón cero">
-    <div class="chrome-top">
-      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
-      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
-    </div>
-
-    <div class="eyebrow"><span class="bar"></span>S9.4 · Curvas de rendimiento</div>
-    <h1 class="slide-title">Curva cupón cero: <em>Bootstrapping</em> y Svensson</h1>
-    <div class="title-rule"></div>
-
-    <div class="formula-block">
-      <div class="formula" style="font-size:40px; padding: 36px 48px;">
-        <span style="color:var(--ink-3); font-size:0.65em; margin-right:24px;">Bootstrapping:</span>
-        <span class="acc-var">P</span><sub>n</sub> &nbsp;=&nbsp;
-        ∑<sub>t=1</sub><sup>n−1</sup>
-        <span class="frac">
-          <span class="num"><span class="acc-var">C</span></span>
-          <span class="den">(1 + <span class="acc-var">z</span><sub>t</sub>)<sup>t</sup></span>
-        </span>
-        &nbsp;+&nbsp;
-        <span class="frac">
-          <span class="num"><span class="acc-var">C</span> + <span class="acc-var">FV</span></span>
-          <span class="den">(1 + <span class="acc-var">z</span><sub>n</sub>)<sup>n</sup></span>
-        </span>
-        &nbsp;&nbsp;&nbsp;
-        <span style="color:var(--ink-3); font-size:0.65em; margin: 0 24px;">Svensson:</span>
-        <span class="acc-var">z</span>(τ) <span style="font-family:var(--font-sans);">&nbsp;=&nbsp;función de 6 parámetros</span>
-      </div>
-
-      <div class="formula-legend">
-        <div class="legend-item">
-          <div class="var">z<sub>t</sub></div>
-          <div class="desc">Tasa spot (cupón cero) para el plazo t — la incógnita del bootstrapping</div>
-        </div>
-        <div class="legend-item">
-          <div class="var">P<sub>n</sub></div>
-          <div class="desc">Precio observable del bono n — el dato de mercado que usamos como input</div>
-        </div>
-        <div class="legend-item">
-          <div class="var">Bootstrapping</div>
-          <div class="desc">Extrae z<sub>t</sub> plazo a plazo usando los precios de bonos soberanos con distintos vencimientos</div>
-        </div>
-        <div class="legend-item">
-          <div class="var">Svensson (6 param.)</div>
-          <div class="desc">Parametriza la curva completa para interpolar yields en plazos sin bonos emitidos</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">15 / 18</span>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 16 · TEXTO: SMV
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="slide" data-label="16 SMV">
-    <div class="chrome-top">
-      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
-      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
-    </div>
-
-    <div class="eyebrow"><span class="bar"></span>S9.5 · SMV · Mercado de capitales</div>
-    <h1 class="slide-title">SMV: prospectos y <em>colocaciones primarias</em></h1>
-    <div class="title-rule"></div>
-
-    <div class="two-col-text">
-      <div class="text-col">
-        <div class="col-eyebrow"><span class="num">01</span> · Información primaria</div>
-        <h3>Emisiones y prospectos</h3>
-        <p>
-          La SMV (Superintendencia del Mercado de Valores) publica todos los prospectos
-          de emisión de renta fija corporativa peruana. Son el documento legal que describe
-          las condiciones del bono al momento de su colocación primaria.
-        </p>
-        <ul>
-          <li><strong>Covenants:</strong> restricciones financieras del emisor (leverage, dividend, etc.).</li>
-          <li><strong>Garantías:</strong> colateral o aval que respalda la emisión.</li>
-          <li><strong>Monto emitido y spread de emisión</strong> respecto a la curva soberana.</li>
-        </ul>
-      </div>
-      <div class="text-col">
-        <div class="col-eyebrow"><span class="num">02</span> · Monitoreo continuo</div>
-        <h3>Reportes periódicos</h3>
-        <ul>
-          <li>Los emisores inscritos en SMV presentan reportes de hechos de importancia en tiempo real.</li>
-          <li>Memorias anuales y estados financieros auditados disponibles en el portal.</li>
-          <li>Información de calificadoras locales (Apoyo &amp; Asociados, Class &amp; Asociados).</li>
-          <li>Registro público de valores — buscar por emisor o ISIN.</li>
-          <li>Las <strong>colocaciones primarias</strong> muestran el precio de corte y los postores ganadores en subastas.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">16 / 18</span>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 17 · TAREA S8–S9
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="slide bg-alt" data-label="17 Tarea">
-    <div class="chrome-top">
-      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
-      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
-    </div>
-
-    <div class="eyebrow"><span class="bar"></span>Tarea · S8–S9 · Para casa</div>
-    <h1 class="slide-title">Analiza un bono <em>peruano</em></h1>
+    <div class="eyebrow"><span class="bar"></span>Ejercicio · S11 · En clase</div>
+    <h1 class="slide-title">Analiza la macro <em>en Bloomberg</em></h1>
     <div class="title-rule"></div>
 
     <div class="tarea">
       <div class="col mine">
-        <div class="col-head"><span><span class="num">YO</span> &nbsp;Lo expliqué con</span><span>Ejemplo</span></div>
-        <h3>Alicorp 6.875-2027</h3>
+        <div class="col-head"><span><span class="num">YO</span> &nbsp;Caso guiado</span><span>Ejemplo</span></div>
+        <h3>Perú completo</h3>
         <ul>
-          <li>Búsqueda en Bloomberg: <span style="font-family:var(--font-mono);color:var(--accent)">DES</span> — emisor, ISIN, rating, covenants.</li>
-          <li>Flujos: <span style="font-family:var(--font-mono);color:var(--accent)">CSHF</span> — tabla de cupones y amortización.</li>
-          <li>Rendimiento: <span style="font-family:var(--font-mono);color:var(--accent)">YAS</span> — YTM, YTC, DurMod, spread.</li>
-          <li>Comparación del spread contra la curva soberana peruana.</li>
+          <li>ECFC: proyección de crecimiento PBI</li>
+          <li>TAYLOR vs FED: postura de política monetaria</li>
+          <li>FOMC / DOTS: qué espera la Fed</li>
+          <li>ECST: ciclo económico peruano</li>
+          <li>ECTR: matriz de comercio exterior</li>
         </ul>
       </div>
       <div class="col yours">
-        <div class="col-head"><span><span class="num">TÚ</span> &nbsp;Replica para</span><span>Entrega</span></div>
-        <h3>Un bono peruano de tu elección</h3>
+        <div class="col-head"><span><span class="num">TÚ</span> &nbsp;Ejercicio (35 min)</span><span>En clase</span></div>
+        <h3>Elige otro país de la región</h3>
         <ul>
-          <li>Busca un bono corporativo peruano en Bloomberg con <span style="font-family:var(--font-mono);color:var(--accent)">SRCH</span>.</li>
-          <li>Aplica el workflow completo: DES → CSHF → YAS.</li>
-          <li>Registra el rating, YTM y spread versus el bono soberano equivalente.</li>
-          <li>Explica en 2 párrafos por qué existe ese spread (riesgo crediticio del emisor).</li>
+          <li>Chile, Colombia o México — abre ECFC y ECST</li>
+          <li>Compara su Dot Plot / tasa de política con la Fed</li>
+          <li>Revisa su matriz de comercio (ECTR)</li>
+          <li>¿Qué país tiene mayor credibilidad institucional? ¿Por qué?</li>
         </ul>
       </div>
     </div>
 
     <div class="tarea-foot">
       <div class="item">
-        <div class="lbl">Formulario</div>
-        <div class="val"><a href="https://docs.google.com/forms/d/e/1FAIpQLSfbapgSQZNxh77UvhdOUNIiiPUM9vYuzQWL9HsnNFcwM_Bpgg/viewform?usp=header" style="color:var(--accent); text-decoration:none;">Google Form S8–S9</a></div>
+        <div class="lbl">Entrega</div>
+        <div class="val">Formulario Google — plazo próxima sesión</div>
       </div>
       <div class="item">
-        <div class="lbl">Deadline</div>
-        <div class="val">Antes de la S10 · 23:59</div>
+        <div class="lbl">Bloomberg</div>
+        <div class="val">ECFC TAYLOR FOMC ECST ECTR</div>
       </div>
       <div class="item">
         <div class="lbl">Criterio</div>
-        <div class="val">DES + YAS + análisis del spread</div>
+        <div class="val">Completitud del análisis macro</div>
       </div>
     </div>
 
     <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">17 / 18</span>
+      <span>S11 · Economía</span>
+      <span class="num">10 / 11</span>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════════
-       SLIDE 18 · CIERRE / Q&A
+       SLIDE 11 · CIERRE / Q&A
        ════════════════════════════════════════════════════════════════ -->
-  <section class="slide cierre bg-ink" data-label="18 Cierre">
+  <section class="slide cierre bg-ink" data-label="11 Cierre">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
     </div>
 
-    <div class="label"><span class="bar"></span>Cierre · S8–S9</div>
+    <div class="label"><span class="bar"></span>Cierre · S11</div>
     <h2>¿Preguntas?<br/>Gracias por su <em>atención</em>.</h2>
 
     <div class="closing-grid">
       <p class="pregunta">
-        Para la próxima sesión: leer sobre derivados de tasas de interés —
-        <em>futuros y forwards sobre bonos</em>. Traigan un bono del mercado
-        peruano que les interese analizar en clase.
+        Para la próxima sesión: Derivados. La semana siguiente a esa es Commodities — repasen forward y tasas, los vamos a necesitar de nuevo.
       </p>
 
       <div class="contact-card">
@@ -1836,8 +1442,8 @@
     </div>
 
     <div class="chrome-bot">
-      <span>S8–S9 · Bonos y Renta Fija Soberana</span>
-      <span class="num">18 / 18</span>
+      <span>S11 · Economía</span>
+      <span class="num">11 / 11</span>
     </div>
   </section>
 
@@ -2032,69 +1638,6 @@ document.addEventListener('keydown', (e) => {
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script type="text/babel" src="./tweaks-panel.jsx"></script>
 <script type="text/babel" src="./tweaks-app.jsx"></script>
-
-<!-- ── CONTROLES FLOTANTES: T Tweaks · R Rail · P PDF · F Fullscreen ── -->
-<style>
-  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
-  .deck-controls.visible{opacity:1}
-  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
-  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
-  .deck-btn.active{background:rgba(24,95,165,.85);border-color:rgba(24,95,165,.6);color:#fff}
-</style>
-<div class="deck-controls" id="deck-controls">
-  <button class="deck-btn" id="btn-tweaks"      title="Tweaks — T"><i class="ti ti-adjustments-horizontal"></i></button>
-  <button class="deck-btn" id="btn-rail"         title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
-  <button class="deck-btn" id="btn-pdf"          title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
-  <button class="deck-btn" id="btn-fullscreen"   title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
-</div>
-<script>
-  (function(){
-    const controls = document.getElementById('deck-controls');
-    const fsIcon   = document.getElementById('fs-icon');
-    const railBtn  = document.getElementById('btn-rail');
-    let hideTimer;
-
-    function showControls(){
-      controls.classList.add('visible');
-      clearTimeout(hideTimer);
-      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
-    }
-    document.addEventListener('mousemove', showControls);
-    document.addEventListener('keydown',   showControls);
-
-    document.getElementById('btn-tweaks').addEventListener('click', ()=>{
-      window.postMessage({type:'__activate_edit_mode'},'*');
-    });
-
-    function toggleRail(){
-      const stage = document.querySelector('deck-stage');
-      if(!stage) return;
-      const hidden = stage.hasAttribute('no-rail');
-      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
-      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
-    }
-    railBtn.addEventListener('click', toggleRail);
-
-    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
-
-    function toggleFS(){
-      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
-      else document.exitFullscreen();
-    }
-    document.addEventListener('fullscreenchange',()=>{
-      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
-    });
-    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
-
-    document.addEventListener('keydown',(e)=>{
-      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
-      if(e.key==='t'||e.key==='T') window.postMessage({type:'__activate_edit_mode'},'*');
-      if(e.key==='r'||e.key==='R') toggleRail();
-      if(e.key==='p'||e.key==='P') window.print();
-      if(e.key==='f'||e.key==='F') toggleFS();
-    });
-  })();
-</script>
 
 </body>
 </html>
