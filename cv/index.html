@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV — Hugo Gutierrez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #0A0D12; --muted: #5F6878; --blue: #185FA5; --rule: #DDE2E8; --paper: #fff; --alt: #F7F8FA; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--alt); font: 15px/1.65 'Plus Jakarta Sans', system-ui, sans-serif; }
+    .page { max-width: 920px; margin: 40px auto; padding: 56px 68px 72px; background: var(--paper); box-shadow: 0 10px 40px rgba(10,13,18,.08); }
+    header { border-bottom: 2px solid var(--ink); padding-bottom: 22px; }
+    h1 { margin: 0; font-size: 38px; letter-spacing: -.04em; }
+    .headline { margin: 6px 0 12px; color: var(--blue); font-size: 17px; font-weight: 600; }
+    .contact { color: var(--muted); font-size: 13px; }
+    section { margin-top: 34px; }
+    h2 { margin: 0 0 18px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); font-size: 14px; letter-spacing: .12em; text-transform: uppercase; }
+    .entry { margin: 0 0 24px; }
+    .entry-head { display: flex; justify-content: space-between; gap: 20px; font-weight: 700; }
+    .date { color: var(--muted); white-space: nowrap; font-size: 13px; font-weight: 500; }
+    .role { margin-top: 2px; color: var(--blue); font-weight: 600; }
+    ul { margin: 8px 0 0; padding-left: 20px; }
+    li { margin: 4px 0; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+    @media (max-width: 700px) { .page { margin: 0; padding: 32px 24px 48px; } .entry-head { display: block; } .date { display: block; margin-top: 3px; } .grid { grid-template-columns: 1fr; } h1 { font-size: 32px; } }
+    @media print { body { background: #fff; } .page { margin: 0; padding: 20px; box-shadow: none; max-width: none; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>David Hugo Gutierrez Cueva</h1>
+      <p class="headline">Especialista en Planeamiento Financiero Corporativo y Análisis de Datos</p>
+      <div class="contact">Lima, Perú · dhgutierrezcu@gmail.com · (51) 9933-60600</div>
+    </header>
+
+    <section>
+      <h2>Experiencia</h2>
+      <article class="entry">
+        <div class="entry-head"><span>PANASA</span><span class="date">Abr 2026 — Actualidad</span></div>
+        <div class="role">Coordinador de Planeamiento Financiero</div>
+        <ul>
+          <li>Mejora del modelo financiero mensual, integrando proyección de estados financieros y estructura de deuda.</li>
+          <li>Desarrollo de extractor en Python para generar una versión ejecutiva simplificada del modelo financiero.</li>
+          <li>Análisis de riesgo cambiario y escenarios de tipo de cambio considerando la posición USD y opciones de cobertura.</li>
+          <li>Soporte técnico al directorio en decisiones de financiamiento.</li>
+          <li>Desarrollo de script en Python para trazabilidad del gasto financiero por fuente de deuda, con consultas SAP mediante SQL.</li>
+        </ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><span>INITIO ADVISORS</span><span class="date">Feb 2026 — Abr 2026</span></div>
+        <div class="role">Consultor</div>
+        <ul>
+          <li>Modelos financieros proyectados, análisis de estados financieros y capacidad de endeudamiento.</li>
+          <li>Escenarios financieros y análisis de sensibilidad para decisiones de inversión.</li>
+        </ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><span>CIENCIA CONSTRUCTIVA — CONCESIONARIA IIRSA NORTE</span><span class="date">Ago 2025 — Feb 2026</span></div>
+        <div class="role">Analista de Inversión</div>
+        <ul>
+          <li>Estudio de inversión vial por más de S/ 170 millones, con modelos de flujo y evaluación económica integral.</li>
+          <li>Análisis VAN/TIR, escenarios, matrices de riesgo y modelación HDM-4.</li>
+        </ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><span>OBRASCON HUARTE LAIN (OHLA)</span><span class="date">Abr 2025 — Jul 2025</span></div>
+        <div class="role">Especialista en Inversión — Proyecto</div>
+        <ul><li>Análisis financiero y económico de proyectos de infraestructura por más de S/ 600 millones, incluyendo valorización y evaluación de riesgos.</li></ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><span>CIENCIA CONSTRUCTIVA — CONSORCIO VÍA EXPRESA SANTA ROSA</span><span class="date">Sep 2024 — Abr 2025</span></div>
+        <div class="role">Analista de Inversión</div>
+        <ul><li>Evaluación financiera y económica del megaproyecto Vía Expresa Santa Rosa, con proyecciones, VAN/TIR y análisis de escenarios.</li></ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><span>PONTIFICIA UNIVERSIDAD CATÓLICA DEL PERÚ</span><span class="date">Ago 2020 — Actualidad</span></div>
+        <div class="role">Instructor de Finanzas</div>
+        <ul>
+          <li>Docencia en Análisis Financiero, Finanzas Corporativas, Evaluación de Proyectos, Bloomberg y Capital IQ.</li>
+          <li>Asesoría en valorización de empresas y dirección del equipo CFA Research Challenge, primera victoria nacional.</li>
+        </ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><span>ARZOBISPADO DE LIMA</span><span class="date">Ene 2018 — Mar 2018</span></div>
+        <div class="role">Asistente de finanzas — Proyecto</div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><span>SEGUROS SURA</span><span class="date">Feb 2017 — Ago 2017</span></div>
+        <div class="role">Practicante de inversiones de renta fija</div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><span>INTERBANK — MERCADO DE CAPITALES</span><span class="date">May 2016 — Dic 2016</span></div>
+        <div class="role">Practicante de Análisis</div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <div>
+        <h2>Educación</h2>
+        <p><strong>Pontificia Universidad Católica del Perú</strong><br>Bachiller en Economía · Junio 2021</p>
+        <p><strong>CFA Nivel 1</strong><br>Aprobado 2017</p>
+        <p><strong>Proinversión — SERVIR</strong><br>Diplomado en APP y Proyectos en Activos · 2025</p>
+      </div>
+      <div>
+        <h2>Herramientas</h2>
+        <p><span class="label">Avanzado</span><br>Excel, VBA, Access, Capital IQ, Bloomberg</p>
+        <p><span class="label">Intermedio</span><br>Python, Power BI, SQL, R, HDM-4, Project</p>
+        <p><span class="label">Otros</span><br>SAP · Inglés avanzado · TOEFL 98</p>
+        <p><strong>GMAT 730 · GRE 320</strong></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
