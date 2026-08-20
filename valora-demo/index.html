@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Valora AI — demo</title>
+<style>
+:root{--navy:#1b2a4a;--accent:#2f5d8a;--bg:#f7f8fa;--line:#d9dee6;--muted:#5b6577}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:#222}
+header{background:var(--navy);color:#dde4f0;padding:36px 24px}
+header .wrap{max-width:900px;margin:0 auto}
+header h1{margin:0 0 8px;font-size:26px}
+header p{margin:0;color:#b7c4dc;font-size:14.5px;line-height:1.6;max-width:680px}
+main{max-width:900px;margin:0 auto;padding:28px 24px 60px}
+.note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:14px 18px;margin-bottom:26px;font-size:13.5px;line-height:1.6;color:#3a4252}
+.note b{color:var(--navy)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+a.card{display:block;background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px 18px;text-decoration:none;color:inherit;transition:box-shadow .15s,transform .15s}
+a.card:hover{box-shadow:0 4px 14px rgba(27,42,74,.1);transform:translateY(-1px)}
+a.card .empresa{font-weight:600;color:var(--navy);font-size:15px}
+a.card .meta{color:var(--muted);font-size:12.5px;margin-top:4px}
+footer{max-width:900px;margin:0 auto;padding:0 24px 50px;color:var(--muted);font-size:12px}
+footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Valora AI — demo del pipeline EEFF</h1>
+    <p>Prototipo de un extractor que convierte estados financieros auditados (PDF, SMV Perú) en HTML navegable con notas, cuadres de consistencia y doble ruta de D&amp;A. Selecciona una empresa (2024, consolidado).</p>
+  </div>
+</header>
+<main>
+  <div class="note">
+    <b>Nota:</b> esto es una prueba en curso, no un producto terminado. Los datos provienen de los estados financieros auditados 2024 que cada empresa publica en la SMV (información pública); el procesamiento es automático y puede tener errores — no usar como fuente única para decisiones de inversión. Proyecto personal de <a href="/">Hugo Gutierrez</a>.
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer>Generado con <a href="https://github.com/hugo-gutierrez-pe" target="_blank" rel="noopener">valora-ai</a> · datos: SMV Perú (información pública)</footer>
+<script>
+const empresas = [
+  {slug:"alicorp", nombre:"Alicorp S.A.A. y Subsidiarias"},
+  {slug:"unacem", nombre:"UNACEM Corp S.A.A. y Subsidiarias"},
+  {slug:"volcan", nombre:"Volcan Compañía Minera S.A.A. y Subsidiarias"},
+  {slug:"ifs", nombre:"Intercorp Financial Services Inc. y Subsidiarias"},
+  {slug:"inretail", nombre:"InRetail Perú Corp. y Subsidiarias"},
+  {slug:"bbva", nombre:"Banco BBVA Perú y Subsidiarias"},
+  {slug:"pacasmayo", nombre:"Cementos Pacasmayo S.A.A. y Subsidiarias"},
+  {slug:"credicorp", nombre:"Credicorp Ltd. y Subsidiarias"},
+  {slug:"buenaventura", nombre:"Compañía de Minas Buenaventura S.A.A. y Subsidiarias"},
+];
+const grid = document.getElementById("grid");
+for (const e of empresas) {
+  const a = document.createElement("a");
+  a.className = "card";
+  a.href = `${e.slug}-2024.html`;
+  a.innerHTML = `<div class="empresa">${e.nombre}</div><div class="meta">EEFF consolidados auditados · 2024</div>`;
+  grid.appendChild(a);
+}
+</script>
+</body>
+</html>
