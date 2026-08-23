@@ -1,0 +1,24 @@
+# Hugo Gutierrez
+
+> Profesional de finanzas e inversiones en Lima, Perú. Jefe de Planeamiento Financiero en PANASA e instructor de Finanzas en la Pontificia Universidad Católica del Perú (PUCP), donde dicta Bloomberg Terminal, Finanzas Corporativas y Análisis Financiero. Ofrece mentorías de preparación CFA.
+
+Hugo Gutierrez trabaja en modelamiento financiero corporativo, valorización de empresas (DCF, FCFF/FCFE, múltiplos), análisis de estados financieros y evaluación de proyectos de inversión, con experiencia en infraestructura (OHLA, Ciencia Constructiva) y consumo masivo (PANASA). Es docente universitario de Bloomberg Terminal, Capital IQ, análisis financiero y finanzas corporativas.
+
+## Perfil y experiencia
+
+- [Landing / CV resumido](https://hgfincorp.com/): trayectoria profesional, docencia y stack de herramientas.
+- [CV completo](https://hgfincorp.com/cv/): experiencia detallada en PANASA, Ciencia Constructiva, OHLA e Interbank.
+
+## Cursos que dicta (PUCP)
+
+- [1FIN39 — Bloomberg Terminal](https://hgfincorp.com/cursos/bloomberg/): uso de la plataforma Bloomberg — equity, renta fija, FX, construcción de modelos en Excel. Prepara para la certificación Bloomberg Market Concepts (BMC).
+- [1FIN55 — Finanzas Corporativas I](https://hgfincorp.com/cursos/finanzas-corporativas/): valorización por DCF, costo de capital (WACC), estructura de capital, decisiones de inversión con casos del mercado peruano.
+- [1FIN02 — Análisis Financiero I](https://hgfincorp.com/cursos/analisis-financiero/): lectura de estados financieros, análisis de ratios, matemática financiera, evaluación de proyectos.
+
+## Proyectos y demos
+
+- [Valora — demo de análisis de estados financieros SMV](https://hgfincorp.com/valora-demo/): tearsheets financieros de 5 empresas peruanas (Alicorp, InRetail, Credicorp, BBVA, Volcán) con serie histórica multi-año, ratios, análisis vertical y modelo de valorización en Excel (FCFF/FCFE/DDM).
+
+## Contacto
+
+Correo: dhgutierrezcu@gmail.com · LinkedIn: in/hugo-gutierrez · GitHub: hugo-gutierrez-pe
