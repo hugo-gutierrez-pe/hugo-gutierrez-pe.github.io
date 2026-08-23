@@ -61,56 +61,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://hgfincorp.com/Bloomberg/sesiones/S01-leer-el-mercado-con-bloomberg/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://hgfincorp.com/Bloomberg/sesiones/S02-bolsas-e-indices/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://hgfincorp.com/Bloomberg/sesiones/S08-S09-bonos-renta-fija-soberana/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://hgfincorp.com/Bloomberg/sesiones/S10-YAS-renta-fija-gubernamental/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://hgfincorp.com/Bloomberg/sesiones/S10b-ipos-mega-cap-liquidez/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://hgfincorp.com/decks/S05b-ipos-mega-cap-liquidez/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://hgfincorp.com/decks/S10-bonos-renta-fija-soberana/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://hgfincorp.com/decks/S10-YAS-renta-fija-gubernamental/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://hgfincorp.com/decks/S11-economia/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://hgfincorp.com/decks/S14-monedas/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
     <loc>https://hgfincorp.com/guias/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
