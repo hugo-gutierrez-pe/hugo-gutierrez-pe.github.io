@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="bloomberg">
+<head>
+<meta charset="UTF-8" />
+<title>S1 Leer el mercado con Bloomberg — 1FIN39 Hugo Gutierrez</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    /* Type scale (1920×1080 — projection sizes, not web density) */
+    --type-mega:      140px;  /* section dividers */
+    --type-title:      80px;  /* portada */
+    --type-h1:         64px;  /* slide titles */
+    --type-h2:         44px;  /* sub-titles */
+    --type-quote:      60px;  /* citas */
+    --type-body:       26px;  /* párrafos */
+    --type-body-lg:    30px;  /* énfasis en cuerpo */
+    --type-small:      22px;  /* notas */
+    --type-mono-lg:    20px;  /* eyebrows grandes */
+    --type-mono:       16px;  /* eyebrows / chrome */
+    --type-mono-sm:    14px;  /* footer */
+
+    /* Spacing */
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    /* Surface */
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    /* Accent — overridden per course below */
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+
+    /* Course meta — set by tweaks / data-course */
+    --course-code:    '1FIN39';
+    --course-name:    'Bloomberg Terminal';
+    --course-short:   'Bloomberg';
+  }
+
+  /* Course themes — change accent + meta */
+  html[data-course="bloomberg"] {
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+  }
+  html[data-course="corp"] {
+    --accent:       #2A4A6B;
+    --accent-deep:  #16314A;
+    --accent-tint:  rgba(42,74,107,0.07);
+    --accent-tint-2:rgba(42,74,107,0.18);
+  }
+  html[data-course="analisis"] {
+    --accent:       #1F6B5E;
+    --accent-deep:  #11463D;
+    --accent-tint:  rgba(31,107,94,0.07);
+    --accent-tint-2:rgba(31,107,94,0.18);
+  }
+
+  /* Background mode — white (default) vs beige (low-contrast paper).
+     Beige values matched to Hugo's website palette. */
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  /* Dark mode — inspired by the "S1 · Leer el mercado" section slide.
+     Deep neutral background + radial blue glow on every slide.
+     bg-ink slides go a notch deeper so the hierarchy survives. */
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  /* Dark-mode-only tweaks for elements with hardcoded light/dark assumptions */
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(24,95,165,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #9CC4EE; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(24,95,165,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    /* extra top/bottom padding reserves space for chrome bars */
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  /* Italic accent — the website's signature */
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .slide.bg-ink em { color: #9CC4EE; }
+
+  /* ── CHROME: shared header / footer on every slide ───── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  /* Bloomberg-only subtle orange easter egg */
+  html[data-course="bloomberg"] .bloomberg-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #FA8C16;
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  html:not([data-course="bloomberg"]) .bloomberg-dot { display: none; }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+
+  .chrome-bot .num {
+    font-feature-settings: "tnum" 1;
+    color: var(--ink-2);
+  }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  /* hide chrome on portada (slide 1) */
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #9CC4EE; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  .sec-num {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .slide-lede {
+    font-size: var(--type-body-lg);
+    color: var(--ink-2);
+    line-height: 1.45;
+    max-width: 50ch;
+    margin-top: var(--gap-item);
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── 1 · PORTADA DEL CURSO ───────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--ink);
+  }
+  .portada-head .brand-block .brand-mark {
+    width: 44px; height: 44px; border-radius: 9px;
+    font-size: 18px;
+  }
+  .portada-head .brand-name {
+    font-family: var(--font-sans);
+    font-size: 26px; font-weight: 600; letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: var(--ink);
+    max-width: 18ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    max-width: 28ch;
+  }
+
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+
+  /* ── 2 · PORTADA DE SECCIÓN ──────────────────────────── */
+  .seccion {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 180px;
+    padding-bottom: 160px;
+    isolation: isolate;
+  }
+  .seccion::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(60% 80% at 80% 50%, rgba(24,95,165,0.28), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .seccion .sec-mega {
+    font-family: var(--font-mono);
+    font-size: var(--type-mega);
+    font-weight: 500;
+    color: rgba(255,255,255,0.12);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+  .seccion .sec-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9CC4EE;
+    margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .seccion .sec-label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .seccion h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: #fff;
+    max-width: 22ch;
+  }
+  .seccion .sec-lede {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.7);
+    margin-top: 32px;
+    max-width: 50ch;
+    line-height: 1.45;
+  }
+
+  /* ── 3 · AGENDA ──────────────────────────────────────── */
+  .agenda-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 12px;
+  }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num {
+    font-family: var(--font-mono);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .agenda-row .title {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .agenda-row .desc {
+    font-size: 20px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .agenda-row .tag {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 14px;
+    border: 0.5px solid var(--rule-2);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* ── 4 · TÍTULO + 2 COLUMNAS DE TEXTO ────────────────── */
+  .two-col-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-col);
+    margin-top: 0;
+  }
+  .text-col h3 {
+    font-size: var(--type-h2);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  .text-col .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 10px;
+    white-space: nowrap;
+  }
+  .text-col .col-eyebrow .num { color: var(--ink-3); }
+  .text-col p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .text-col ul {
+    list-style: none;
+    padding: 0;
+  }
+  .text-col ul li {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    padding: 10px 0 10px 26px;
+    position: relative;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .text-col ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 22px;
+    width: 12px; height: 1px;
+    background: var(--accent);
+  }
+  .text-col ul li:last-child { border-bottom: none; }
+  .text-col ul li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── 7 · IDEA CLAVE / CITA ───────────────────────────── */
+  .idea-clave {
+    background: var(--bg-alt);
+    justify-content: center;
+    padding-top: 140px;
+    padding-bottom: 140px;
+  }
+  .idea-clave .quote-mark {
+    font-family: var(--font-mono);
+    font-size: 140px;
+    color: var(--accent);
+    line-height: 0.6;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .idea-clave blockquote {
+    font-size: var(--type-quote);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    max-width: 28ch;
+    text-wrap: balance;
+  }
+  .idea-clave blockquote em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .idea-clave .attrib {
+    margin-top: 48px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .idea-clave .attrib .avatar-ph {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--bg-deep);
+    border: 0.5px solid var(--rule-2);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .idea-clave .attrib .who {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .idea-clave .attrib .role {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── 8 · TABLA COMPARATIVA ───────────────────────────── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-size: var(--type-body);
+  }
+  .cmp-table thead th {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    text-align: left;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px;
+    border-bottom: 0.5px solid var(--rule);
+    color: var(--ink-2);
+    font-size: var(--type-body);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .cmp-table tbody td.name {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+  .cmp-table tbody td.code {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 20px;
+    white-space: nowrap;
+  }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+
+  /* ── 9 · FÓRMULA ─────────────────────────────────────── */
+  .formula-block {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    justify-content: center;
+    flex: 1;
+  }
+  .formula {
+    background: var(--bg);
+    border: 0.5px solid var(--rule);
+    border-radius: 16px;
+    padding: 56px 48px;
+    font-family: var(--font-mono);
+    font-size: 56px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    text-align: center;
+    font-weight: 400;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .formula .frac {
+    display: inline-grid;
+    vertical-align: middle;
+    margin: 0 8px;
+    justify-items: center;
+  }
+  .formula .frac .num {
+    padding: 0 18px 8px;
+    border-bottom: 2px solid currentColor;
+    white-space: nowrap;
+  }
+  .formula .frac .den {
+    padding: 8px 18px 0;
+    white-space: nowrap;
+  }
+  .formula .acc-var { color: var(--accent); font-weight: 500; }
+  .formula sub { font-size: 0.5em; vertical-align: sub; }
+  .formula sup { font-size: 0.55em; vertical-align: super; }
+  .formula-legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .legend-item .var {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .legend-item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 10 · CÓDIGO / TERMINAL ──────────────────────────────
+     For Excel formulas, Python snippets, Bloomberg commands.
+     Self-contained shell so it reads on light/beige/dark. */
+  .code-shell {
+    background: #0A0D12;
+    color: #E6EAF2;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(10,13,18,0.08);
+  }
+  .code-shell .code-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: rgba(230,234,242,0.55);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .code-shell .code-head .traffic {
+    display: inline-flex; gap: 7px;
+  }
+  .code-shell .code-head .traffic span {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: rgba(255,255,255,0.14);
+  }
+  .code-shell .code-head .file { color: rgba(230,234,242,0.85); text-transform: none; letter-spacing: 0; }
+  .code-shell .code-head .lang {
+    margin-left: auto;
+    padding: 4px 10px;
+    border: 0.5px solid rgba(255,255,255,0.16);
+    border-radius: 999px;
+    font-size: 12px;
+  }
+  .code-shell pre.code-body {
+    margin: 0;
+    padding: 28px 32px;
+    font-family: var(--font-mono);
+    font-size: 22px;
+    line-height: 1.6;
+    overflow: auto;
+    flex: 1;
+    color: #E6EAF2;
+    counter-reset: codeline;
+  }
+  .code-shell pre.code-body .ln {
+    display: block;
+    padding-left: 56px;
+    position: relative;
+    white-space: pre;
+    min-height: 1.6em;
+  }
+  .code-shell pre.code-body .ln:empty::after {
+    content: "\200B";
+  }
+  .code-shell pre.code-body .ln::before {
+    counter-increment: codeline;
+    content: counter(codeline, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    color: rgba(230,234,242,0.28);
+    font-size: 14px;
+    top: 0.45em;
+    width: 40px;
+    text-align: right;
+  }
+  .code-shell .tok-key   { color: #9CC4EE; }
+  .code-shell .tok-fn    { color: #FFB66C; }
+  .code-shell .tok-str   { color: #B8E6A0; }
+  .code-shell .tok-num   { color: #E6B0FF; }
+  .code-shell .tok-com   { color: rgba(230,234,242,0.40); font-style: italic; }
+  .code-shell .tok-op    { color: #9CC4EE; }
+
+  .code-legend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 28px;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .code-legend .item .var {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .code-legend .item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 13 · TAREA PARA CASA ────────────────────────────────
+     "Yo expliqué" + "Tu turno" formato.
+     Bottom row: deliverables / formulario / deadline. */
+  .tarea {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    flex: 1;
+    align-content: start;
+  }
+  .tarea .col {
+    border: 1px solid var(--rule-2);
+    border-radius: 18px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: var(--bg);
+  }
+  .tarea .col.mine {
+    background: var(--bg-alt);
+  }
+  .tarea .col.yours {
+    border-color: var(--accent);
+    background: var(--accent-tint);
+  }
+  .tarea .col-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .tarea .col.yours .col-head { color: var(--accent); }
+  .tarea .col-head .num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .tarea .col.yours .col-head .num { background: var(--accent); color: #fff; }
+  .tarea .col h3 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .tarea .col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tarea .col ul li {
+    font-size: 20px;
+    color: var(--ink-2);
+    line-height: 1.45;
+    padding-left: 28px;
+    position: relative;
+  }
+  .tarea .col ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+  .tarea-foot {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .tarea-foot .item {
+    padding-right: 28px;
+    border-right: 0.5px solid var(--rule);
+  }
+  .tarea-foot .item:last-child { border-right: none; }
+  .tarea-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+  .tarea-foot .val {
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .tarea-foot .val .acc { color: var(--accent); }
+
+  /* ── 16 · CIERRE / Q&A ───────────────────────────────── */
+  .cierre {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 160px;
+    padding-bottom: 140px;
+    isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(24,95,165,0.30), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: #9CC4EE;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    max-width: 18ch;
+  }
+  .cierre h2 em { color: #9CC4EE; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 96px;
+    align-items: end;
+    margin-top: 48px;
+  }
+  .cierre .pregunta {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.45;
+    max-width: 50ch;
+  }
+  .cierre .contact-card {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #9CC4EE; }
+  .cierre .contact-row .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+  }
+  .cierre .contact-row .val {
+    font-size: 18px; color: #fff; font-weight: 500;
+    margin-top: 2px;
+  }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "Portada S1. Primera sesión del ciclo. Bienvenida general, contextualizar que el curso es Taller Bloomberg — la mitad teoría / mitad práctica en el Terminal. Mencionar el horario (jueves 19:00-21:00, Sala Bloomberg) y el examen parcial (15 oct, exposiciones).",
+  "Agenda de S1. Cinco bloques: la dinámica del curso, qué es Bloomberg, sus límites y competidores, cómo navegar el Terminal, y un primer contacto con acciones que cierra con la Tarea 1.",
+  "Presentación del instructor. Conectar la docencia (Análisis Financiero, Finanzas Corporativas 1 y 2, Bloomberg) con la trayectoria profesional: control de gestión en el Arzobispado de Lima, prácticas en Sura (renta fija) e Interbank (tipo de cambio), y hoy inversión pública en infraestructura (OHLA, IRSA, ANIN, MTC, MEF, PMO Vías). Sirve para dar contexto de por qué el curso mezcla teoría de mercados con uso real de Bloomberg.",
+  "Explicar la dinámica de las Prácticas Dirigidas (PD): 50 min de explicación por parte de los JPs, 50 min de trabajo en equipos (calificado) y 15 min de reflexiones finales. Esta estructura se repite en varias sesiones del curso.",
+  "Arranca el bloque S1: Leer el mercado con Bloomberg. Objetivo de la sesión: que el alumno entienda qué es el Terminal, dónde se usa en la industria, qué tipos de activos cubre y dé sus primeros pasos navegándolo.",
+  "¿Qué es Bloomberg? Dos maneras de pensarlo: como base de datos (precios, financieros, noticias y estimados de miles de compañías, bonos e índices en tiempo real) y como caja de herramientas (funciones para valorizar, comparar, graficar y hacer seguimiento sin salir del Terminal). Bloomberg es la suma de ambas cosas.",
+  "Dónde se usa Bloomberg en la industria. Recorrer la tabla: bancos grandes (tesorería y riesgos), AFPs y aseguradoras (inversiones y riesgos), SABs (brokers, traders y research), fondos mutuos (traders y research), y otros — Big 4, banca de inversión, family offices, fintech. Sirve para que el alumno ubique dónde podría usar esto profesionalmente.",
+  "Síntesis: Bloomberg es costoso, amplio y automatizado — y nadie lo conoce al 100%. El resultado: permite simplificar lo operativo y hacer en minutos un análisis que de otro modo tomaría días. Por eso lo tienen pocas empresas — es como contratar a un analista más.",
+  "Tipos de activos que se pueden analizar en Bloomberg, con su código de mercado: Acciones (Equity), Renta Fija (Corp/Govt), Money Market, Commodities (Comdty), Índices (Index), Monedas (Crrncy) y otros como portafolios, MBS y preferentes. Estos códigos aparecen siempre después del ticker en el Terminal.",
+  "Límites de Bloomberg y su competencia. Limitaciones: menos información en mercados emergentes, trade-off entre amplitud y profundidad, no se puede analizar lo que no cotiza en bolsa, y siempre conviene un 'double check' de la info financiera. Competidores: Capital IQ (estados financieros), Datatec (subastas de renta fija soberana), Eikon/LSEG ('como Bloomberg pero más barato') y Morningstar (la mejor información de fondos).",
+  "Primeros pasos navegando el Terminal. Distinguir 'valores' (securities, los activos — ej. AAPL US Equity) de 'funciones': las que se aplican SOBRE un valor (DES describe, GP grafica el precio) y las que NO requieren un valor (TOP muestra noticias del día). Hacer la demo en vivo: buscar Apple, abrir DES, luego GP, y cambiar el horizonte temporal de corto a largo plazo.",
+  "Transición a acciones. Definición base: una acción es una porción alícuota del patrimonio de una empresa — representa propiedad. Fuente: Investopedia. Es la base conceptual antes de ver cómo se forma su precio.",
+  "Cómo se forma el precio de una acción: como con cualquier activo, mediante oferta y demanda. El order book o 'pizarra' es la herramienta que muestra las posturas de compra y venta vigentes para un activo — mostrar el layout en Bloomberg si hay tiempo. Recursos adicionales para profundizar: Medium, FXSSI, DeepLizard.",
+  "Cómo leer un gráfico de barras y velas: cada punto tiene apertura (primer precio del periodo), máximo, mínimo y cierre (último precio). Es la base para leer cualquier gráfico de precio en GP.",
+  "Tarea 1. En clase vimos AAPL US Equity con DES y GP, incluyendo cambio de horizonte temporal. Los alumnos replicaron el mismo flujo de forma individual con TSLA y NVDA: abrir DES de cada una, revisar el gráfico de precio con GP, y anotar 2 datos que les llamen la atención de cada empresa. El formulario ya se tomó en la propia clase del 20 de agosto.",
+  "Cierre S1. Preguntas abiertas. Para la próxima sesión (S02): traer los resultados de DES/GP de TSLA y NVDA. Empezamos a ver índices de renta variable y ETFs."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 01 · PORTADA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">PUCP · Lima, Perú</div>
+        <div class="val">1FIN39 · Bloomberg Terminal · 2026—2</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag">
+        <span>S1</span>
+        <span class="bloomberg-dot"></span>
+      </div>
+      <h1 class="course-title">Leer el mercado con <em>Bloomberg</em></h1>
+      <p class="course-sub">Qué es el Terminal, dónde se usa y cómo dar los primeros pasos navegándolo.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item">
+        <div class="lbl">Instructor</div>
+        <div class="val">Hugo Gutierrez</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Sesión</div>
+        <div class="val">S1 · 1FIN39</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Fecha</div>
+        <div class="val">Jue 20 ago 2026</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Modalidad</div>
+        <div class="val">Sala Bloomberg · PUCP</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 02 · AGENDA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1 · Agenda</div>
+    <h1 class="slide-title">Qué cubrimos <em>hoy</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="agenda-list">
+      <div class="agenda-row">
+        <span class="num">01</span>
+        <div>
+          <div class="title">Curso y dinámica</div>
+          <div class="desc">Sílabo · prácticas dirigidas · presentaciones personales.</div>
+        </div>
+        <span class="tag">15 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">02</span>
+        <div>
+          <div class="title">Qué es Bloomberg</div>
+          <div class="desc">Base de datos + caja de herramientas · dónde se usa · tipos de activos.</div>
+        </div>
+        <span class="tag">25 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">03</span>
+        <div>
+          <div class="title">Límites y competencia</div>
+          <div class="desc">Qué no resuelve Bloomberg · Capital IQ, Datatec, Eikon, Morningstar.</div>
+        </div>
+        <span class="tag">15 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">04</span>
+        <div>
+          <div class="title">Navegando el Terminal</div>
+          <div class="desc">Valores vs. funciones · DES · GP.</div>
+        </div>
+        <span class="tag">30 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">05</span>
+        <div>
+          <div class="title">Acciones: primeros conceptos</div>
+          <div class="desc">Formación de precio · order book · velas · Tarea 1.</div>
+        </div>
+        <span class="tag">35 min</span>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">02 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 03 · DOS COLUMNAS: QUIÉN DICTA EL CURSO
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="03 Quién dicta el curso">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1.0 · Presentación</div>
+    <h1 class="slide-title">Quién dicta el <em>curso</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Docencia</div>
+        <h3>Hugo Gutierrez</h3>
+        <p>Instructor PUCP en Análisis Financiero, Finanzas Corporativas 1 y 2, y Taller Bloomberg.</p>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Trayectoria</div>
+        <h3>De la banca a la inversión pública</h3>
+        <ul>
+          <li>Control de gestión, <strong>Arzobispado de Lima</strong>.</li>
+          <li>Practicante de inversiones, <strong>Seguros Sura</strong> (Renta Fija).</li>
+          <li>Practicante de análisis, tesorería <strong>Interbank</strong> (Tipo de cambio).</li>
+          <li>Hoy: inversión pública — OHLA, IRSA, ANIN, MTC, MEF, PMO Vías.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">03 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 04 · TABLA: DINÁMICA DE LA CLASE
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="04 Dinámica de la clase">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1.0 · Cómo trabajamos</div>
+    <h1 class="slide-title">Dinámica de las <em>PD</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:28%">Bloque</th>
+          <th style="width:18%">Duración</th>
+          <th>Detalle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Explicación (JPs)</td>
+          <td class="code">50 min</td>
+          <td>Conceptos y demo en vivo en el Terminal Bloomberg.</td>
+        </tr>
+        <tr>
+          <td class="name">Trabajo en equipos</td>
+          <td class="code">50 min</td>
+          <td>Aplicación práctica guiada — <strong>calificado</strong>.</td>
+        </tr>
+        <tr>
+          <td class="name">Reflexiones finales</td>
+          <td class="code">15 min</td>
+          <td>Cierre de la sesión y espacio de dudas.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">04 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 05 · SECCIÓN: S1 — LEER EL MERCADO CON BLOOMBERG
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide seccion bg-ink" data-label="05 Sección S1">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="sec-mega">S1</div>
+    <div class="sec-label">
+      <span class="bar"></span>
+      Sesión 1 · Jue 20 ago
+    </div>
+    <h2>Leer el mercado<br/>con <em>Bloomberg</em></h2>
+    <p class="sec-lede">
+      Qué es el Terminal, dónde se usa, qué tipos de activos cubre
+      y cómo empezar a navegarlo.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">05 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 06 · DOS COLUMNAS: QUÉ ES BLOOMBERG
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="06 Qué es Bloomberg">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1.1 · Qué es Bloomberg</div>
+    <h1 class="slide-title">Base de datos + <em>caja de herramientas</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Base de datos</div>
+        <h3>Toda la información en un solo lugar</h3>
+        <p>Precios, estados financieros, noticias y estimados de miles de compañías, bonos e índices, actualizados en tiempo real.</p>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Caja de herramientas</div>
+        <h3>Funciones para analizar esa data</h3>
+        <p>Sobre esa base de datos, funciones para valorizar, comparar, graficar y hacer seguimiento — sin salir del Terminal.</p>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">06 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 07 · TABLA: DÓNDE SE USA BLOOMBERG
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="07 Dónde se usa Bloomberg">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1.1 · Industria</div>
+    <h1 class="slide-title">¿Dónde se usa <em>Bloomberg</em>?</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:32%">Sector</th>
+          <th>Uso principal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Bancos</td>
+          <td>Los grandes, en tesorería y riesgos.</td>
+        </tr>
+        <tr>
+          <td class="name">AFPs</td>
+          <td>Inversiones y riesgos.</td>
+        </tr>
+        <tr>
+          <td class="name">Cías. de seguros</td>
+          <td>Inversiones y riesgos.</td>
+        </tr>
+        <tr>
+          <td class="name">SABs</td>
+          <td>Brokers, traders y research.</td>
+        </tr>
+        <tr>
+          <td class="name">Fondos mutuos</td>
+          <td>Traders y research.</td>
+        </tr>
+        <tr>
+          <td class="name">Otras</td>
+          <td>Big 4, banca de inversión, family offices, fintech.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">07 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 08 · IDEA CLAVE: BLOOMBERG ES
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide idea-clave" data-label="08 Bloomberg es">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1.1 · En síntesis</div>
+    <div class="quote-mark">"</div>
+    <blockquote>
+      Costoso, amplio y <em>automatizado</em>.<br/>Nadie lo conoce al 100%.
+    </blockquote>
+    <div class="attrib">
+      <div class="avatar-ph">BB</div>
+      <div>
+        <div class="who">Resultado: simplifica lo operativo</div>
+        <div class="role">Acelera análisis que de otro modo toman días</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">08 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 09 · TABLA: TIPOS DE ACTIVOS
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="09 Tipos de activos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1.1 · Universo de activos</div>
+    <h1 class="slide-title">Tipos de <em>activos</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:26%">Clase</th>
+          <th style="width:22%">Código Bloomberg</th>
+          <th>Ejemplos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Acciones</td>
+          <td class="code">Equity</td>
+          <td>AAPL US Equity</td>
+        </tr>
+        <tr>
+          <td class="name">Renta Fija</td>
+          <td class="code">Corp / Govt</td>
+          <td>Bonos corporativos y soberanos</td>
+        </tr>
+        <tr>
+          <td class="name">Money Market</td>
+          <td class="code">—</td>
+          <td>Instrumentos de corto plazo</td>
+        </tr>
+        <tr>
+          <td class="name">Commodities</td>
+          <td class="code">Comdty</td>
+          <td>Oro, petróleo, productos agrícolas</td>
+        </tr>
+        <tr>
+          <td class="name">Índices</td>
+          <td class="code">Index</td>
+          <td>S&amp;P 500, BVL</td>
+        </tr>
+        <tr>
+          <td class="name">Monedas</td>
+          <td class="code">Crrncy</td>
+          <td>USD/PEN</td>
+        </tr>
+        <tr>
+          <td class="name">Otros</td>
+          <td class="code">PORT, etc.</td>
+          <td>Portafolios, mortgage-backed assets, preferentes</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">09 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 10 · DOS COLUMNAS: LÍMITES Y COMPETENCIA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="10 Límites y competencia">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1.1 · Límites y alternativas</div>
+    <h1 class="slide-title">Lo que Bloomberg <em>no</em> resuelve</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Limitaciones</div>
+        <h3>Cuatro límites a tener en cuenta</h3>
+        <ul>
+          <li><strong>Emergentes:</strong> menos información que en mercados desarrollados.</li>
+          <li><strong>Trade-off:</strong> entre amplitud y profundidad.</li>
+          <li><strong>Empresas privadas:</strong> no se analiza lo que no cotiza en bolsa.</li>
+          <li><strong>Info financiera:</strong> siempre conviene un "double check".</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Competidores</div>
+        <h3>Alternativas en el mercado</h3>
+        <ul>
+          <li><strong>Capital IQ:</strong> información de estados financieros.</li>
+          <li><strong>Datatec:</strong> subastas de renta fija soberana.</li>
+          <li><strong>Eikon (LSEG):</strong> "como Bloomberg pero más barato".</li>
+          <li><strong>Morningstar:</strong> la mejor información de fondos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">10 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 11 · TERMINAL: NAVEGANDO EN BLOOMBERG
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="11 Navegando en Bloomberg">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1.1 · Bloomberg Terminal</div>
+    <h1 class="slide-title">Navegando en <em>Bloomberg</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="code-shell">
+      <div class="code-head">
+        <span class="traffic"><span></span><span></span><span></span></span>
+        <span class="file">Bloomberg Terminal · Primeros pasos</span>
+        <span class="lang">Bloomberg</span>
+      </div>
+      <pre class="code-body"><span class="ln"><span class="tok-com">-- 1. Los "valores" (securities) son los activos</span></span><span class="ln"><span class="tok-fn">AAPL</span> <span class="tok-key">US</span> <span class="tok-key">Equity</span> <span class="tok-op">&lt;GO&gt;</span>   <span class="tok-com">-- acción de Apple</span></span><span class="ln"></span><span class="ln"><span class="tok-com">-- 2. Funciones que se aplican SOBRE un valor</span></span><span class="ln"><span class="tok-fn">DES</span> <span class="tok-op">&lt;GO&gt;</span>   <span class="tok-com">-- describe el valor seleccionado</span></span><span class="ln"><span class="tok-fn">GP</span> <span class="tok-op">&lt;GO&gt;</span>    <span class="tok-com">-- gráfico de precio (línea)</span></span><span class="ln"></span><span class="ln"><span class="tok-com">-- 3. En GP, cambiar el horizonte temporal</span></span><span class="ln"><span class="tok-str">1D · 1M · 1Y · 5Y</span>   <span class="tok-com">-- más corto o más largo</span></span><span class="ln"></span><span class="ln"><span class="tok-com">-- 4. Funciones que NO requieren un valor</span></span><span class="ln"><span class="tok-fn">TOP</span> <span class="tok-op">&lt;GO&gt;</span>   <span class="tok-com">-- noticias del día</span></span></pre>
+    </div>
+
+    <div class="code-legend">
+      <div class="item">
+        <div class="var">Valores</div>
+        <div class="desc">Los activos: acción de Apple, bono de Tesla, índice de la BVL.</div>
+      </div>
+      <div class="item">
+        <div class="var">Funciones sobre valores</div>
+        <div class="desc">DES describe, GP grafica el precio del valor seleccionado.</div>
+      </div>
+      <div class="item">
+        <div class="var">Funciones sin valor</div>
+        <div class="desc">No requieren un activo — por ejemplo, TOP para noticias.</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">11 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 12 · IDEA CLAVE: QUÉ ES UNA ACCIÓN
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide idea-clave" data-label="12 Qué es una acción">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1.2 · Acciones</div>
+    <div class="quote-mark">"</div>
+    <blockquote>
+      Una porción <em>alícuota</em> del patrimonio de una empresa. Representa propiedad.
+    </blockquote>
+    <div class="attrib">
+      <div class="avatar-ph">EQ</div>
+      <div>
+        <div class="who">Acción · Equity</div>
+        <div class="role">Fuente: Investopedia</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">12 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 13 · DOS COLUMNAS: PRECIO Y ORDER BOOK
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="13 Precio y order book">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1.2 · Formación de precios</div>
+    <h1 class="slide-title">¿Cómo se forma el <em>precio</em>?</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Oferta y demanda</div>
+        <h3>Como con cualquier activo</h3>
+        <p>El precio de una acción se forma mediante oferta y demanda. Fuente: Investopedia.</p>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Order book</div>
+        <h3>El order book o "pizarra"</h3>
+        <p>Herramienta que muestra las posturas de compra y venta vigentes para un activo financiero.</p>
+        <ul>
+          <li>Más info: <strong>Medium</strong>.</li>
+          <li>Más info: <strong>FXSSI</strong>.</li>
+          <li>Más info: <strong>DeepLizard</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">13 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 14 · TABLA: GRÁFICO DE BARRAS Y VELAS
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide" data-label="14 Barras y velas">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S1.2 · Lectura de gráficos</div>
+    <h1 class="slide-title">Gráfico de barras y <em>velas</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:26%">Punto</th>
+          <th>Qué representa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Apertura</td>
+          <td>Primer precio negociado en el periodo.</td>
+        </tr>
+        <tr>
+          <td class="name">Máximo</td>
+          <td>Precio más alto negociado en el periodo.</td>
+        </tr>
+        <tr>
+          <td class="name">Mínimo</td>
+          <td>Precio más bajo negociado en el periodo.</td>
+        </tr>
+        <tr>
+          <td class="name">Cierre</td>
+          <td>Último precio negociado en el periodo.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">14 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 15 · TAREA 1
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide bg-alt" data-label="15 Tarea">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Tarea 1 · Para casa</div>
+    <h1 class="slide-title">DES y GP de <em>tus propias acciones</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="tarea">
+      <div class="col mine">
+        <div class="col-head"><span><span class="num">YO</span> &nbsp;Lo vimos con</span><span>Ejemplo</span></div>
+        <h3>AAPL US Equity</h3>
+        <ul>
+          <li>Buscamos Apple y abrimos <span style="font-family:var(--font-mono);color:var(--accent)">DES</span>.</li>
+          <li>Revisamos el gráfico de precio con <span style="font-family:var(--font-mono);color:var(--accent)">GP</span>.</li>
+          <li>Cambiamos el horizonte temporal — corto y largo plazo.</li>
+        </ul>
+      </div>
+      <div class="col yours">
+        <div class="col-head"><span><span class="num">TÚ</span> &nbsp;Replica para</span><span>Entrega</span></div>
+        <h3>TSLA y NVDA, de forma individual</h3>
+        <ul>
+          <li>Busca cada ticker y abre <span style="font-family:var(--font-mono);color:var(--accent)">DES</span>.</li>
+          <li>Revisa el gráfico de precio con <span style="font-family:var(--font-mono);color:var(--accent)">GP</span>.</li>
+          <li>Anota 2 datos que te llamen la atención de cada empresa.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tarea-foot">
+      <div class="item">
+        <div class="lbl">Formulario</div>
+        <div class="val"><a href="https://forms.gle/jVzhGB5anaVR8sbK8" style="color:var(--accent); text-decoration:none;">Google Form S1</a></div>
+      </div>
+      <div class="item">
+        <div class="lbl">Deadline</div>
+        <div class="val">Tomada en clase · jue 20 ago 2026</div>
+      </div>
+      <div class="item">
+        <div class="lbl">Criterio</div>
+        <div class="val">DES + GP de TSLA y NVDA</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">15 / 16</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SLIDE 16 · CIERRE / Q&A
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="slide cierre bg-ink" data-label="16 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN39 · Bloomberg<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="label"><span class="bar"></span>Cierre · S1</div>
+    <h2>¿Preguntas?<br/>Nos vemos en la <em>S02</em>.</h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">
+        Para la próxima sesión: traigan sus resultados de DES/GP de TSLA y NVDA.
+        Empezamos a ver <em>índices de renta variable y ETFs</em>.
+      </p>
+
+      <div class="contact-card">
+        <div class="contact-row">
+          <i class="ti ti-mail"></i>
+          <div>
+            <div class="lbl">Correo</div>
+            <div class="val">dhgutierrezcu@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <i class="ti ti-world"></i>
+          <div>
+            <div class="lbl">Web</div>
+            <div class="val">hugogutierrez.pe</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S1 · Leer el mercado con Bloomberg</span>
+      <span class="num">16 / 16</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+<!-- ════════════════════════════════════════════════════════════════
+     DOWNLOAD PDF — botón flotante.
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .pdf-fab {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12;
+    color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover {
+    background: #185FA5;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(24,95,165,0.35), 0 1px 0 rgba(255,255,255,0.06) inset;
+  }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot {
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: #FA8C16;
+    box-shadow: 0 0 0 3px rgba(250,140,22,0.18);
+  }
+  .pdf-fab i {
+    font-size: 16px;
+    line-height: 1;
+  }
+  .pdf-fab .hint {
+    opacity: 0.55;
+    font-size: 11px;
+    margin-left: 4px;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<!-- ════════════════════════════════════════════════════════════════
+     AUDIO POR SLIDE
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .audio-fab {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    background: #0A0D12;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18);
+  }
+  .audio-fab.active { display: inline-flex; }
+  .audio-fab .play-btn {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #185FA5;
+    color: #fff;
+    cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 14px;
+  }
+  .audio-fab .play-btn:hover { background: #2A7BC8; }
+  .audio-fab .label {
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .audio-fab .time {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.55;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+  @media print { .audio-fab { display: none !important; } }
+</style>
+
+<div class="audio-fab" id="audio-fab">
+  <button type="button" class="play-btn" id="audio-toggle" aria-label="Reproducir clase">
+    <i class="ti ti-player-play-filled"></i>
+  </button>
+  <span class="label">Clase grabada</span>
+  <span class="time" id="audio-time">0:00</span>
+  <audio id="audio-el" preload="metadata"></audio>
+</div>
+
+<script src="./deck-stage.js"></script>
+
+<script>
+/* ── QUIZ click handler ─────────────────────────────────────────────── */
+window._quizClick = function(e) {
+  const opt = e.target.closest('.quiz-opt');
+  if (!opt) return;
+  const quiz = opt.closest('.quiz');
+  if (!quiz || quiz.classList.contains('revealed')) return;
+  opt.setAttribute('data-chosen', 'true');
+  quiz.classList.add('revealed');
+};
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  document.querySelectorAll('.quiz.revealed').forEach((q) => {
+    q.classList.remove('revealed');
+    q.querySelectorAll('[data-chosen]').forEach(o => o.removeAttribute('data-chosen'));
+  });
+});
+
+/* ── AUDIO per-slide ────────────────────────────────────────────────── */
+(function () {
+  const fab = document.getElementById('audio-fab');
+  const audio = document.getElementById('audio-el');
+  const toggle = document.getElementById('audio-toggle');
+  const timeLabel = document.getElementById('audio-time');
+  const playIcon = '<i class="ti ti-player-play-filled"></i>';
+  const pauseIcon = '<i class="ti ti-player-pause-filled"></i>';
+
+  function fmt(s) {
+    if (!isFinite(s)) return '0:00';
+    s = Math.floor(s);
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  audio.addEventListener('timeupdate', () => {
+    timeLabel.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  });
+  audio.addEventListener('ended', () => { toggle.innerHTML = playIcon; });
+  toggle.addEventListener('click', () => {
+    if (audio.paused) { audio.play(); toggle.innerHTML = pauseIcon; }
+    else { audio.pause(); toggle.innerHTML = playIcon; }
+  });
+
+  const stage = document.querySelector('deck-stage');
+  if (!stage) return;
+  stage.addEventListener('slidechange', (e) => {
+    const slide = e.detail && e.detail.slide;
+    audio.pause();
+    toggle.innerHTML = playIcon;
+    const src = slide && slide.getAttribute('data-audio');
+    if (src) {
+      if (audio.getAttribute('src') !== src) audio.setAttribute('src', src);
+      fab.classList.add('active');
+      timeLabel.textContent = '0:00';
+    } else {
+      audio.removeAttribute('src');
+      audio.load();
+      fab.classList.remove('active');
+    }
+  });
+})();
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TWEAKS — switch course, color tone
+     ════════════════════════════════════════════════════════════════ -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="./tweaks-panel.jsx"></script>
+<script type="text/babel" src="./tweaks-app.jsx"></script>
+
+</body>
+</html>
