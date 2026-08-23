@@ -31,6 +31,8 @@ body[data-theme="dark"]{
 a{color:var(--accent);text-decoration:none}
 a:hover{color:var(--ink)}
 .mono{font-family:'IBM Plex Mono',monospace}
+tbody tr[onclick]:hover{background:var(--sunk)}
+tbody tr[onclick]:hover td{color:var(--ink)}
 table{border-collapse:collapse;font-size:12px}
 </style>
 </head>
@@ -60,7 +62,7 @@ table{border-collapse:collapse;font-size:12px}
       <thead><tr>
         <th style="text-align:left;padding:9px 8px 7px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line)">Emisor</th><th style="text-align:left;padding:9px 8px 7px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line)">Sector</th><th style="text-align:right;padding:9px 8px 7px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:44px">CCY</th><th style="text-align:right;padding:9px 8px 7px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:102px">Ingresos</th><th style="text-align:right;padding:9px 8px 7px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:92px">Ut. neta</th><th style="text-align:right;padding:9px 8px 7px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:110px">Activos</th><th style="text-align:right;padding:9px 8px 7px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:100px">Patrimonio</th><th style="text-align:right;padding:9px 8px 7px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:62px">ROE</th><th style="text-align:left;padding:9px 8px 7px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:186px">Dictamen</th>
       </tr></thead>
-      <tbody><tr style="background:var(--accent-soft)">
+      <tbody><tr style="background:var(--accent-soft);cursor:pointer" onclick="location.href='alicorp-2024.html'">
           <td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line);border-left:2px solid var(--accent)"><div style="font-weight:600">Alicorp S.A.A.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">141 pp.</div></td>
           <td style="padding:13px 10px;border-bottom:1px solid var(--line);color:var(--ink2);font-size:12px">Consumo masivo · alimentos</td>
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line);" class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
@@ -70,7 +72,7 @@ table{border-collapse:collapse;font-size:12px}
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line);color:var(--ink2)" class="mono">2,252,388</td>
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line)" class="mono">13.69 %</td>
           <td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(14,122,82,.10);color:var(--pos);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">OPINIÓN LIMPIA</span> <span style="font-size:11px;color:var(--ink3)">Tanaka</span></td>
-        </tr><tr style="">
+        </tr><tr style="cursor:pointer" onclick="location.href='inretail-2024.html'">
           <td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">InRetail Perú Corp.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">124 pp.</div></td>
           <td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Retail y farmacia</td>
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);" class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
@@ -80,7 +82,7 @@ table{border-collapse:collapse;font-size:12px}
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)" class="mono">6,049,117</td>
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)" class="mono">16.93 %</td>
           <td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(14,122,82,.10);color:var(--pos);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">OPINIÓN LIMPIA</span> <span style="font-size:11px;color:var(--ink3)">Tanaka</span></td>
-        </tr><tr style="">
+        </tr><tr style="cursor:pointer" onclick="location.href='credicorp-2024.html'">
           <td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Credicorp Ltd.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">180 pp. · serie 2022–2024</div></td>
           <td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Banca y seguros</td>
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);" class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
@@ -90,7 +92,7 @@ table{border-collapse:collapse;font-size:12px}
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)" class="mono">34,977,234</td>
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)" class="mono">16.52 %</td>
           <td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(14,122,82,.10);color:var(--pos);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">OPINIÓN LIMPIA</span> <span style="font-size:11px;color:var(--ink3)">Tanaka</span></td>
-        </tr><tr style="">
+        </tr><tr style="cursor:pointer" onclick="location.href='bbva-2024.html'">
           <td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Banco BBVA Perú</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">130 pp.</div></td>
           <td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Banca múltiple</td>
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);" class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
@@ -100,7 +102,7 @@ table{border-collapse:collapse;font-size:12px}
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)" class="mono">13,300,346</td>
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)" class="mono">14.67 %</td>
           <td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(138,100,16,.11);color:var(--warn);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">NO CLASIFICADA</span> <span style="font-size:11px;color:var(--ink3)">No especificada en el PDF</span></td>
-        </tr><tr style="">
+        </tr><tr style="cursor:pointer" onclick="location.href='volcan-2024.html'">
           <td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Volcan Cía. Minera S.A.A.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">107 pp.</div></td>
           <td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Minería polimetálica</td>
           <td style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);" class="mono" style="font-size:10.5px;color:var(--ink3)">USD</td>
