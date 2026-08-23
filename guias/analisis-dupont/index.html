@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1FIN39 Bloomberg Terminal — Hugo Gutierrez</title>
-  <meta name="description" content="Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.">
+  <title>Análisis Dupont explicado con ejemplo — Hugo Gutierrez</title>
+  <meta name="description" content="Cómo descomponer el ROE en margen neto, rotación de activos y apalancamiento con el análisis Dupont — fórmula y ejemplo numérico resuelto.">
 
   <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 
-  <meta property="og:title" content="1FIN39 Bloomberg Terminal — Hugo Gutierrez">
-  <meta property="og:description" content="Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.">
+  <meta property="og:title" content="Análisis Dupont explicado con ejemplo — Hugo Gutierrez">
+  <meta property="og:description" content="Cómo descomponer el ROE en margen neto, rotación de activos y apalancamiento con el análisis Dupont — fórmula y ejemplo numérico resuelto.">
   <meta property="og:image" content="https://hgfincorp.com/img/og-image.png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -360,7 +360,6 @@
     </a>
     <div class="nav-links">
       <a href="/#cursos">Cursos</a>
-      <a href="/guias/">Guías</a>
       <a href="/#proyectos">Proyectos</a>
       <button id="theme-toggle" aria-label="Cambiar tema">
         <i class="ti ti-palette"></i>
@@ -374,7 +373,6 @@
   <div class="mobile-menu" id="mobile-menu">
     <div class="container">
       <a href="/#cursos">Cursos</a>
-      <a href="/guias/">Guías</a>
       <a href="/#proyectos">Proyectos</a>
       <a href="/#contacto" class="nav-cta">Contacto</a>
     </div>
@@ -385,217 +383,82 @@
   <div class="container">
     <div class="hero-eyebrow">
       <span class="dot"></span>
-      1FIN39 · PUCP · Semestre 2026—2
+      GUÍA · ANÁLISIS DE ESTADOS FINANCIEROS
     </div>
-    <h1 class="course-title">Domina Bloomberg Terminal <em>desde cero</em></h1>
-    <p class="course-lede">Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.</p>
+    <h1 class="course-title">Análisis <em>Dupont</em> explicado con ejemplo</h1>
+    <p class="course-lede">Cómo descomponer el ROE en sus 3 palancas — margen, rotación y apalancamiento — para entender de dónde viene realmente la rentabilidad de una empresa.</p>
     <div class="course-stats">
-      <span><i class="ti ti-stack"></i>17 sesiones</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-clock"></i>2 h por sesión</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-chart-candle"></i>Bloomberg · Excel · Capital IQ</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-certificate"></i>Prepara para el BMC</span>
+      <span><i class="ti ti-calculator"></i>Fórmula + ejemplo resuelto</span><span class="sep"></span><span><i class="ti ti-school"></i>Material de clase — Análisis Financiero</span>
     </div>
   </div>
 </section>
-
 <article class="course-content">
   <div class="container-narrow">
 
-    <p><strong>17 sesiones · 2 h por sesión · Bloomberg + Excel + Capital IQ · Prepara para el BMC</strong></p>
 
-    <h2>Qué vas a aprender</h2>
-    <ul>
-      <li>Navegar el terminal y buscar cualquier activo financiero</li>
-      <li>Analizar acciones, índices y ETFs con funciones reales</li>
-      <li>Extraer datos a Excel con <code>BDP</code>, <code>BDH</code> y <code>BDS</code></li>
-      <li>Valorizar bonos corporativos y soberanos</li>
-      <li>Analizar tipo de cambio, commodities y derivados</li>
-      <li>Construir y monitorear portafolios con <code>PRTU</code> y <code>PORT</code></li>
-    </ul>
+<div style="background:var(--blue-tint);border-left:3px solid var(--blue);border-radius:8px;padding:16px 20px;margin-bottom:28px">
+<p style="margin:0;font-size:14.5px;color:var(--ink);font-weight:500">
+<strong>Respuesta directa:</strong> el análisis Dupont descompone el ROE en 3 factores:
+</p>
+<p style="margin:10px 0 0;font-family:var(--font-mono);font-size:13.5px;color:var(--ink)">
+ROE = Margen neto × Rotación de activos × Multiplicador de apalancamiento
+</p>
+<p style="margin:8px 0 0;font-size:13px;color:var(--ink-2)">
+= (Utilidad neta / Ventas) × (Ventas / Activos) × (Activos / Patrimonio)
+</p>
+</div>
 
-    <h2>Módulos del curso</h2>
+<p>El ROE (retorno sobre el patrimonio) responde "¿cuánto gana la empresa por cada sol de patrimonio invertido?", pero por sí solo no dice <em>de dónde</em> viene ese retorno. El análisis Dupont lo separa en 3 palancas distintas, cada una con una historia de negocio diferente:</p>
 
-    <h3>Bloque 1 — El mercado global</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S01</td>
-          <td>20 ago</td>
-          <td>"Leer" el mercado con Bloomberg</td>
-          <td><a href="/Bloomberg/sesiones/S01-leer-el-mercado-con-bloomberg/">▶ Slides: Leer el mercado con Bloomberg</a></td>
-          <td><a href="https://forms.gle/jVzhGB5anaVR8sbK8">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S02</td>
-          <td>27 ago</td>
-          <td>Índices de renta variable y ETFs</td>
-          <td><a href="/Bloomberg/sesiones/S02-bolsas-e-indices/">▶ Slides: Bolsas e Índices</a></td>
-          <td><a href="https://forms.gle/6zkSnTeMqQi8ZLpa8">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S03</td>
-          <td>3 sep</td>
-          <td>Análisis de ETFs</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Los 3 componentes</h2>
+<table>
+<thead><tr><th>Componente</th><th>Fórmula</th><th>Qué mide</th></tr></thead>
+<tbody>
+<tr><td><strong>Margen neto</strong></td><td>Utilidad neta / Ventas</td><td>Eficiencia operativa y de costos — cuánto de cada sol vendido se convierte en utilidad</td></tr>
+<tr><td><strong>Rotación de activos</strong></td><td>Ventas / Activos totales</td><td>Eficiencia en el uso de activos — cuántas veces al año los activos "se convierten" en ventas</td></tr>
+<tr><td><strong>Multiplicador de apalancamiento</strong></td><td>Activos totales / Patrimonio</td><td>Qué tanto la empresa usa deuda para financiar sus activos (a mayor apalancamiento, mayor multiplicador)</td></tr>
+</tbody>
+</table>
 
-    <h3>Bloque 2 — Renta variable y Capital IQ</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S04</td>
-          <td>10 sep</td>
-          <td>Análisis de acciones 1 — información financiera</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S05</td>
-          <td>17 sep</td>
-          <td>Análisis de acciones 2 — información financiera en Capital IQ</td>
-          <td><a href="/decks/S05b-ipos-mega-cap-liquidez/">▶ Mini-clase: IPOs Mega-Cap</a></td>
-          <td><a href="https://forms.gle/tnRp3nA5HPWA2Kfg6">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S06</td>
-          <td>24 sep</td>
-          <td>Análisis de acciones 3 — proyecciones</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S07</td>
-          <td>1 oct</td>
-          <td>Excel para Bloomberg — campos y tickers para acciones</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S08</td>
-          <td>8 oct</td>
-          <td><em>Feriado — Combate de Angamos, no hay clase</em></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-      </tbody>
-    </table>
+<p>Multiplicando los 3: (UN/Ventas) × (Ventas/Activos) × (Activos/Patrimonio) — las Ventas y los Activos se cancelan algebraicamente, dejando UN/Patrimonio, que es exactamente la definición de ROE. Por eso la descomposición es matemáticamente exacta, no una aproximación.</p>
 
-    <blockquote><p><strong>📝 Examen parcial (exposiciones)</strong> — jueves 15 oct · Informe Financiero, 1ra entrega: jueves 17 sep</p></blockquote>
+<h2>Ejemplo numérico</h2>
+<table>
+<thead><tr><th>Dato</th><th>Valor (S/ miles)</th></tr></thead>
+<tbody>
+<tr><td>Ventas</td><td>10,000,000</td></tr>
+<tr><td>Utilidad neta</td><td>500,000</td></tr>
+<tr><td>Activos totales</td><td>8,000,000</td></tr>
+<tr><td>Patrimonio</td><td>3,000,000</td></tr>
+</tbody>
+</table>
+<p>Margen neto = 500,000 / 10,000,000 = <strong>5.0%</strong></p>
+<p>Rotación de activos = 10,000,000 / 8,000,000 = <strong>1.25x</strong></p>
+<p>Multiplicador de apalancamiento = 8,000,000 / 3,000,000 = <strong>2.67x</strong></p>
+<p style="font-size:15px;font-weight:600;background:var(--bg-alt);padding:12px 16px;border-radius:8px">ROE = 5.0% × 1.25 × 2.67 = <strong>16.7%</strong></p>
+<p style="font-size:12.5px;color:var(--ink-3)">Verificación directa: 500,000 / 3,000,000 = 16.7% ✓</p>
 
-    <h3>Bloque 3 — Renta fija</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S10</td>
-          <td>22 oct</td>
-          <td>Renta fija corporativa y soberana</td>
-          <td>
-            <a href="/decks/S10-bonos-renta-fija-soberana/">▶ Slides: Bonos y Renta Fija Soberana</a><br>
-            <a href="/decks/S10-YAS-renta-fija-gubernamental/">▶ Slides: YAS en profundidad</a>
-          </td>
-          <td><a href="https://forms.gle/GjibpwpiSmBhbmoL9">📝 Formulario</a></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Por qué esto importa para el análisis</h2>
+<p>Dos empresas pueden tener el mismo ROE de 16.7% por razones completamente distintas:</p>
+<ul>
+<li>Una empresa de <strong>retail</strong> puede lograrlo con margen bajo pero rotación muy alta (vende rápido, gana poco por unidad).</li>
+<li>Una empresa de <strong>servicios financieros</strong> puede lograrlo con margen alto, rotación baja, y un multiplicador de apalancamiento elevado (típico en bancos).</li>
+</ul>
+<p>Comparar solo el ROE sin descomponerlo esconde estas diferencias — y el apalancamiento en particular es la palanca "más fácil" de mover pero también la que más riesgo agrega, porque no depende de mejorar el negocio sino de tomar más deuda.</p>
 
-    <h3>Bloque 4 — Economía, derivados y commodities</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S11</td>
-          <td>29 oct</td>
-          <td>Economía y política monetaria</td>
-          <td><a href="/decks/S11-economia/">▶ Slides: Economía</a></td>
-          <td><a href="https://docs.google.com/forms/d/1k3aK4awIjNoHobsgsnAOgzMiDCUEFOkfq-KdB1p5ruk/viewform">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S12</td>
-          <td>5 nov</td>
-          <td>Derivados</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S13</td>
-          <td>12 nov</td>
-          <td>Commodities</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Errores comunes</h2>
+<ul>
+<li>Usar el patrimonio o los activos de <em>fin de período</em> en vez del <strong>promedio</strong> del período (inicio + fin, dividido entre 2) — sobre todo si hubo cambios grandes durante el año.</li>
+<li>Comparar el ROE entre empresas de sectores distintos sin descomponerlo — un banco y una minera tienen estructuras de apalancamiento totalmente distintas por naturaleza del negocio.</li>
+<li>Confundir "mayor apalancamiento = mejor ROE" con "mejor empresa" — un ROE alto impulsado solo por deuda es más frágil ante un shock de tasas o de ingresos.</li>
+</ul>
 
-    <h3>Bloque 5 — Monedas y portafolios</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S14</td>
-          <td>19 nov</td>
-          <td>Monedas — mercado de divisas</td>
-          <td><a href="/decks/S14-monedas/">▶ Slides: Monedas</a></td>
-          <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSdcoj6qU2pB-RcQ9J1M_HvgE2B4e7GgkWM1u9NOGEjXD519FA/viewform">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S15</td>
-          <td>26 nov</td>
-          <td>Portafolio y educación financiera</td>
-          <td>—</td>
-          <td><a href="https://docs.google.com/forms/d/1BdK0PUbu8BHjYMFw2SgdLdrLYdOlK1Ii8bVdpV0D0o8/viewform">📝 Formulario</a></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Ver también</h2>
+<ul>
+<li><a href="/guias/ratios-financieros-guia-completa/">Ratios financieros — guía completa</a></li>
+<li><a href="/guias/wacc-paso-a-paso/">Cómo calcular el WACC paso a paso</a></li>
+</ul>
 
-    <blockquote><p><strong>📝 Examen final (2 sesiones)</strong> — jueves 3 dic y jueves 10 dic · Informe Financiero, 2da entrega: jueves 19 nov</p></blockquote>
-
-    <h2>Cómo acceder a Bloomberg</h2>
-
-    <h3>PUCP — Biblioteca de Ciencias Sociales</h3>
-    <p>Bloomberg Professional está disponible para alumnos matriculados, docentes y administrativos PUCP.</p>
-    <ul>
-      <li>Reserva de terminales dentro del horario de atención de la Biblioteca de Ciencias Sociales</li>
-      <li>Máximo <strong>2 horas diarias</strong> y <strong>8 horas semanales</strong></li>
-      <li><a href="https://guiastematicas.biblioteca.pucp.edu.pe/bloomberg/acceso">Cómo realizar la reserva →</a></li>
-      <li>Consultas: <a href="mailto:bibsociales@pucp.edu.pe">bibsociales@pucp.edu.pe</a></li>
-    </ul>
-
-    <h2>Certificación asociada — Bloomberg Market Concepts (BMC)</h2>
-    <p>El BMC es la certificación oficial de Bloomberg. Cubre 4 módulos:</p>
-    <ul>
-      <li>Indicadores económicos</li>
-      <li>Divisas</li>
-      <li>Renta fija</li>
-      <li>Renta variable</li>
-    </ul>
-    <p>Se completa en ~8 horas a ritmo propio directamente desde el terminal usando <code>BCER</code>. <strong>Es requisito del curso para estudiantes PUCP.</strong></p>
-
-    <h2>Recursos externos</h2>
-    <ul>
-      <li><a href="https://guiastematicas.biblioteca.pucp.edu.pe/bloomberg/inicio">Guía Bloomberg PUCP</a></li>
-      <li><a href="https://www.bloomberg.com/professional/product/bloomberg-terminal/">Bloomberg Terminal Quick Start</a></li>
-      <li><a href="https://guides.nyu.edu/bloombergguide">NYU Bloomberg Guide</a></li>
-      <li><a href="https://guides.library.columbia.edu/bloomberg">Columbia Bloomberg Help</a></li>
-    </ul>
 
   </div>
 </article>

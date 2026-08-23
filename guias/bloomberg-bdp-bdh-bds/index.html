@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1FIN39 Bloomberg Terminal — Hugo Gutierrez</title>
-  <meta name="description" content="Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.">
+  <title>BDP, BDH y BDS en Bloomberg: cuándo usar cada uno — Hugo Gutierrez</title>
+  <meta name="description" content="Diferencia entre las funciones BDP, BDH y BDS de la API de Excel de Bloomberg, con ejemplos de fórmula y cuándo usar cada una.">
 
   <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 
-  <meta property="og:title" content="1FIN39 Bloomberg Terminal — Hugo Gutierrez">
-  <meta property="og:description" content="Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.">
+  <meta property="og:title" content="BDP, BDH y BDS en Bloomberg: cuándo usar cada uno — Hugo Gutierrez">
+  <meta property="og:description" content="Diferencia entre las funciones BDP, BDH y BDS de la API de Excel de Bloomberg, con ejemplos de fórmula y cuándo usar cada una.">
   <meta property="og:image" content="https://hgfincorp.com/img/og-image.png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -360,7 +360,6 @@
     </a>
     <div class="nav-links">
       <a href="/#cursos">Cursos</a>
-      <a href="/guias/">Guías</a>
       <a href="/#proyectos">Proyectos</a>
       <button id="theme-toggle" aria-label="Cambiar tema">
         <i class="ti ti-palette"></i>
@@ -374,7 +373,6 @@
   <div class="mobile-menu" id="mobile-menu">
     <div class="container">
       <a href="/#cursos">Cursos</a>
-      <a href="/guias/">Guías</a>
       <a href="/#proyectos">Proyectos</a>
       <a href="/#contacto" class="nav-cta">Contacto</a>
     </div>
@@ -385,217 +383,70 @@
   <div class="container">
     <div class="hero-eyebrow">
       <span class="dot"></span>
-      1FIN39 · PUCP · Semestre 2026—2
+      GUÍA · BLOOMBERG TERMINAL
     </div>
-    <h1 class="course-title">Domina Bloomberg Terminal <em>desde cero</em></h1>
-    <p class="course-lede">Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.</p>
+    <h1 class="course-title"><em>BDP, BDH y BDS</em> en Bloomberg: cuándo usar cada uno</h1>
+    <p class="course-lede">Las 3 funciones de la API de Excel de Bloomberg para traer datos — un dato puntual, una serie histórica, o un conjunto de datos — con ejemplos de fórmula.</p>
     <div class="course-stats">
-      <span><i class="ti ti-stack"></i>17 sesiones</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-clock"></i>2 h por sesión</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-chart-candle"></i>Bloomberg · Excel · Capital IQ</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-certificate"></i>Prepara para el BMC</span>
+      <span><i class="ti ti-chart-candle"></i>Ejemplos de fórmula</span><span class="sep"></span><span><i class="ti ti-school"></i>Material de clase — Bloomberg Terminal</span>
     </div>
   </div>
 </section>
-
 <article class="course-content">
   <div class="container-narrow">
 
-    <p><strong>17 sesiones · 2 h por sesión · Bloomberg + Excel + Capital IQ · Prepara para el BMC</strong></p>
 
-    <h2>Qué vas a aprender</h2>
-    <ul>
-      <li>Navegar el terminal y buscar cualquier activo financiero</li>
-      <li>Analizar acciones, índices y ETFs con funciones reales</li>
-      <li>Extraer datos a Excel con <code>BDP</code>, <code>BDH</code> y <code>BDS</code></li>
-      <li>Valorizar bonos corporativos y soberanos</li>
-      <li>Analizar tipo de cambio, commodities y derivados</li>
-      <li>Construir y monitorear portafolios con <code>PRTU</code> y <code>PORT</code></li>
-    </ul>
+<div style="background:var(--blue-tint);border-left:3px solid var(--blue);border-radius:8px;padding:16px 20px;margin-bottom:28px">
+<p style="margin:0;font-size:14.5px;color:var(--ink);font-weight:500">
+<strong>Respuesta directa:</strong> son las 3 funciones de Excel API de Bloomberg para traer datos al Excel — cada una trae un tipo distinto de dato.
+</p>
+</div>
 
-    <h2>Módulos del curso</h2>
+<table style="margin-top:0">
+<thead><tr><th>Función</th><th>Qué trae</th><th>Forma del resultado</th></tr></thead>
+<tbody>
+<tr><td class="mono"><code>BDP</code></td><td>Un dato puntual (Bloomberg Data Point) — un único valor, "de ahora"</td><td>Una sola celda</td></tr>
+<tr><td class="mono"><code>BDH</code></td><td>Serie histórica (Bloomberg Data History) — un dato a lo largo del tiempo</td><td>Una columna (o rango) de fechas + valores</td></tr>
+<tr><td class="mono"><code>BDS</code></td><td>Un conjunto de datos (Bloomberg Data Set) — listas o tablas, no un solo número</td><td>Una tabla de varias filas/columnas</td></tr>
+</tbody>
+</table>
 
-    <h3>Bloque 1 — El mercado global</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S01</td>
-          <td>20 ago</td>
-          <td>"Leer" el mercado con Bloomberg</td>
-          <td><a href="/Bloomberg/sesiones/S01-leer-el-mercado-con-bloomberg/">▶ Slides: Leer el mercado con Bloomberg</a></td>
-          <td><a href="https://forms.gle/jVzhGB5anaVR8sbK8">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S02</td>
-          <td>27 ago</td>
-          <td>Índices de renta variable y ETFs</td>
-          <td><a href="/Bloomberg/sesiones/S02-bolsas-e-indices/">▶ Slides: Bolsas e Índices</a></td>
-          <td><a href="https://forms.gle/6zkSnTeMqQi8ZLpa8">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S03</td>
-          <td>3 sep</td>
-          <td>Análisis de ETFs</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>BDP — un dato puntual</h2>
+<p>Se usa cuando necesitas <strong>un solo valor actual</strong> de un campo: el precio de cierre de hoy, el P/E actual, la calificación crediticia vigente, etc.</p>
+<p class="mono" style="background:var(--bg-alt);padding:10px 14px;border-radius:6px;font-size:13px">=BDP("AAPL US Equity", "PX_LAST")</p>
+<p style="font-size:13px;color:var(--ink-2)">Devuelve el último precio de cierre de Apple, en una sola celda.</p>
 
-    <h3>Bloque 2 — Renta variable y Capital IQ</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S04</td>
-          <td>10 sep</td>
-          <td>Análisis de acciones 1 — información financiera</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S05</td>
-          <td>17 sep</td>
-          <td>Análisis de acciones 2 — información financiera en Capital IQ</td>
-          <td><a href="/decks/S05b-ipos-mega-cap-liquidez/">▶ Mini-clase: IPOs Mega-Cap</a></td>
-          <td><a href="https://forms.gle/tnRp3nA5HPWA2Kfg6">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S06</td>
-          <td>24 sep</td>
-          <td>Análisis de acciones 3 — proyecciones</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S07</td>
-          <td>1 oct</td>
-          <td>Excel para Bloomberg — campos y tickers para acciones</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S08</td>
-          <td>8 oct</td>
-          <td><em>Feriado — Combate de Angamos, no hay clase</em></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-      </tbody>
-    </table>
+<h2>BDH — serie histórica</h2>
+<p>Se usa cuando necesitas <strong>ver la evolución de un dato en el tiempo</strong>: precios diarios de los últimos 5 años, ingresos trimestrales históricos, etc.</p>
+<p class="mono" style="background:var(--bg-alt);padding:10px 14px;border-radius:6px;font-size:13px">=BDH("AAPL US Equity", "PX_LAST", "1/1/2024", "12/31/2024")</p>
+<p style="font-size:13px;color:var(--ink-2)">Devuelve una columna con fecha y precio de cierre para cada día del rango — se expande automáticamente en varias filas.</p>
 
-    <blockquote><p><strong>📝 Examen parcial (exposiciones)</strong> — jueves 15 oct · Informe Financiero, 1ra entrega: jueves 17 sep</p></blockquote>
+<h2>BDS — conjunto de datos</h2>
+<p>Se usa para campos que <strong>por naturaleza son una lista o tabla</strong>, no un solo número: la composición de accionistas, el equipo directivo, los bonos emitidos por una empresa, los componentes de un índice.</p>
+<p class="mono" style="background:var(--bg-alt);padding:10px 14px;border-radius:6px;font-size:13px">=BDS("AAPL US Equity", "TOP_20_HOLDERS_PUBLIC_FILINGS")</p>
+<p style="font-size:13px;color:var(--ink-2)">Devuelve una tabla con los principales accionistas de Apple — nombre, % de participación, etc.</p>
 
-    <h3>Bloque 3 — Renta fija</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S10</td>
-          <td>22 oct</td>
-          <td>Renta fija corporativa y soberana</td>
-          <td>
-            <a href="/decks/S10-bonos-renta-fija-soberana/">▶ Slides: Bonos y Renta Fija Soberana</a><br>
-            <a href="/decks/S10-YAS-renta-fija-gubernamental/">▶ Slides: YAS en profundidad</a>
-          </td>
-          <td><a href="https://forms.gle/GjibpwpiSmBhbmoL9">📝 Formulario</a></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Cómo decidir cuál usar</h2>
+<p>La pregunta clave es: <strong>¿el dato que necesito es un número, una serie en el tiempo, o una lista/tabla?</strong></p>
+<ul>
+<li>"¿Cuál es el precio de la acción <em>hoy</em>?" → <code>BDP</code></li>
+<li>"¿Cómo se movió el precio en los últimos 2 años?" → <code>BDH</code></li>
+<li>"¿Quiénes son los principales accionistas / directores / bonos emitidos?" → <code>BDS</code></li>
+</ul>
 
-    <h3>Bloque 4 — Economía, derivados y commodities</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S11</td>
-          <td>29 oct</td>
-          <td>Economía y política monetaria</td>
-          <td><a href="/decks/S11-economia/">▶ Slides: Economía</a></td>
-          <td><a href="https://docs.google.com/forms/d/1k3aK4awIjNoHobsgsnAOgzMiDCUEFOkfq-KdB1p5ruk/viewform">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S12</td>
-          <td>5 nov</td>
-          <td>Derivados</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S13</td>
-          <td>12 nov</td>
-          <td>Commodities</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Errores comunes</h2>
+<ul>
+<li>Usar <code>BDP</code> para traer una serie de tiempo — solo devuelve el dato más reciente, no el histórico.</li>
+<li>Escribir mal el ticker (falta el sufijo de mercado, ej. "US Equity", "PE Equity") o el nombre del campo (los campos de Bloomberg tienen nombres exactos como <code>PX_LAST</code>, no "precio").</li>
+<li>Con <code>BDH</code>, olvidar que el resultado se expande en varias filas — si hay datos debajo, Excel puede sobrescribirlos o dar error de "spill".</li>
+<li>Con <code>BDS</code>, no dejar suficiente espacio en la hoja — el tamaño de la tabla resultante varía según cuántos registros existan.</li>
+</ul>
 
-    <h3>Bloque 5 — Monedas y portafolios</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S14</td>
-          <td>19 nov</td>
-          <td>Monedas — mercado de divisas</td>
-          <td><a href="/decks/S14-monedas/">▶ Slides: Monedas</a></td>
-          <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSdcoj6qU2pB-RcQ9J1M_HvgE2B4e7GgkWM1u9NOGEjXD519FA/viewform">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S15</td>
-          <td>26 nov</td>
-          <td>Portafolio y educación financiera</td>
-          <td>—</td>
-          <td><a href="https://docs.google.com/forms/d/1BdK0PUbu8BHjYMFw2SgdLdrLYdOlK1Ii8bVdpV0D0o8/viewform">📝 Formulario</a></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Ver también</h2>
+<ul>
+<li><a href="/cursos/bloomberg/">Curso 1FIN39 — Bloomberg Terminal</a></li>
+</ul>
 
-    <blockquote><p><strong>📝 Examen final (2 sesiones)</strong> — jueves 3 dic y jueves 10 dic · Informe Financiero, 2da entrega: jueves 19 nov</p></blockquote>
-
-    <h2>Cómo acceder a Bloomberg</h2>
-
-    <h3>PUCP — Biblioteca de Ciencias Sociales</h3>
-    <p>Bloomberg Professional está disponible para alumnos matriculados, docentes y administrativos PUCP.</p>
-    <ul>
-      <li>Reserva de terminales dentro del horario de atención de la Biblioteca de Ciencias Sociales</li>
-      <li>Máximo <strong>2 horas diarias</strong> y <strong>8 horas semanales</strong></li>
-      <li><a href="https://guiastematicas.biblioteca.pucp.edu.pe/bloomberg/acceso">Cómo realizar la reserva →</a></li>
-      <li>Consultas: <a href="mailto:bibsociales@pucp.edu.pe">bibsociales@pucp.edu.pe</a></li>
-    </ul>
-
-    <h2>Certificación asociada — Bloomberg Market Concepts (BMC)</h2>
-    <p>El BMC es la certificación oficial de Bloomberg. Cubre 4 módulos:</p>
-    <ul>
-      <li>Indicadores económicos</li>
-      <li>Divisas</li>
-      <li>Renta fija</li>
-      <li>Renta variable</li>
-    </ul>
-    <p>Se completa en ~8 horas a ritmo propio directamente desde el terminal usando <code>BCER</code>. <strong>Es requisito del curso para estudiantes PUCP.</strong></p>
-
-    <h2>Recursos externos</h2>
-    <ul>
-      <li><a href="https://guiastematicas.biblioteca.pucp.edu.pe/bloomberg/inicio">Guía Bloomberg PUCP</a></li>
-      <li><a href="https://www.bloomberg.com/professional/product/bloomberg-terminal/">Bloomberg Terminal Quick Start</a></li>
-      <li><a href="https://guides.nyu.edu/bloombergguide">NYU Bloomberg Guide</a></li>
-      <li><a href="https://guides.library.columbia.edu/bloomberg">Columbia Bloomberg Help</a></li>
-    </ul>
 
   </div>
 </article>

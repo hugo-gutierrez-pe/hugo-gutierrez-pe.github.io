@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1FIN39 Bloomberg Terminal — Hugo Gutierrez</title>
-  <meta name="description" content="Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.">
+  <title>Cómo armar un FCFF y FCFE desde cero — Hugo Gutierrez</title>
+  <meta name="description" content="Guía práctica para construir el FCFF (flujo de caja libre para la firma) y el FCFE (flujo de caja libre para el accionista), con fórmulas, línea por línea y un ejemplo numérico resuelto.">
 
   <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 
-  <meta property="og:title" content="1FIN39 Bloomberg Terminal — Hugo Gutierrez">
-  <meta property="og:description" content="Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.">
+  <meta property="og:title" content="Cómo armar un FCFF y FCFE desde cero — Hugo Gutierrez">
+  <meta property="og:description" content="Guía práctica para construir el FCFF (flujo de caja libre para la firma) y el FCFE (flujo de caja libre para el accionista), con fórmulas, línea por línea y un ejemplo numérico resuelto.">
   <meta property="og:image" content="https://hgfincorp.com/img/og-image.png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -360,7 +360,6 @@
     </a>
     <div class="nav-links">
       <a href="/#cursos">Cursos</a>
-      <a href="/guias/">Guías</a>
       <a href="/#proyectos">Proyectos</a>
       <button id="theme-toggle" aria-label="Cambiar tema">
         <i class="ti ti-palette"></i>
@@ -374,7 +373,6 @@
   <div class="mobile-menu" id="mobile-menu">
     <div class="container">
       <a href="/#cursos">Cursos</a>
-      <a href="/guias/">Guías</a>
       <a href="/#proyectos">Proyectos</a>
       <a href="/#contacto" class="nav-cta">Contacto</a>
     </div>
@@ -385,217 +383,93 @@
   <div class="container">
     <div class="hero-eyebrow">
       <span class="dot"></span>
-      1FIN39 · PUCP · Semestre 2026—2
+      GUÍA · VALORIZACIÓN Y COSTO DE CAPITAL
     </div>
-    <h1 class="course-title">Domina Bloomberg Terminal <em>desde cero</em></h1>
-    <p class="course-lede">Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.</p>
+    <h1 class="course-title">Cómo armar un <em>FCFF y FCFE</em> desde cero</h1>
+    <p class="course-lede">Flujo de caja libre para la firma y para el accionista: fórmulas, construcción línea por línea desde el estado de resultados, y un ejemplo numérico resuelto.</p>
     <div class="course-stats">
-      <span><i class="ti ti-stack"></i>17 sesiones</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-clock"></i>2 h por sesión</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-chart-candle"></i>Bloomberg · Excel · Capital IQ</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-certificate"></i>Prepara para el BMC</span>
+      <span><i class="ti ti-calculator"></i>Fórmula + ejemplo resuelto</span><span class="sep"></span><span><i class="ti ti-school"></i>Material de clase — Finanzas Corporativas</span>
     </div>
   </div>
 </section>
-
 <article class="course-content">
   <div class="container-narrow">
 
-    <p><strong>17 sesiones · 2 h por sesión · Bloomberg + Excel + Capital IQ · Prepara para el BMC</strong></p>
 
-    <h2>Qué vas a aprender</h2>
-    <ul>
-      <li>Navegar el terminal y buscar cualquier activo financiero</li>
-      <li>Analizar acciones, índices y ETFs con funciones reales</li>
-      <li>Extraer datos a Excel con <code>BDP</code>, <code>BDH</code> y <code>BDS</code></li>
-      <li>Valorizar bonos corporativos y soberanos</li>
-      <li>Analizar tipo de cambio, commodities y derivados</li>
-      <li>Construir y monitorear portafolios con <code>PRTU</code> y <code>PORT</code></li>
-    </ul>
+<div style="background:var(--blue-tint);border-left:3px solid var(--blue);border-radius:8px;padding:16px 20px;margin-bottom:28px">
+<p style="margin:0;font-size:14.5px;color:var(--ink);font-weight:500">
+<strong>Respuesta directa:</strong>
+</p>
+<p style="margin:10px 0 0;font-family:var(--font-mono);font-size:13.5px;color:var(--ink)">
+FCFF = EBIT × (1 − T) + Depreciación y Amortización − CAPEX − Δ Capital de Trabajo
+</p>
+<p style="margin:6px 0 0;font-family:var(--font-mono);font-size:13.5px;color:var(--ink)">
+FCFE = FCFF − Intereses × (1 − T) + Nueva deuda neta
+</p>
+</div>
 
-    <h2>Módulos del curso</h2>
+<p>El <strong>FCFF</strong> (Free Cash Flow to the Firm) es el efectivo disponible para <em>todos</em> los proveedores de capital (accionistas y acreedores) después de cubrir inversión en activos fijos y capital de trabajo, pero antes de pagar deuda. Se descuenta con el <a href="/guias/wacc-paso-a-paso/">WACC</a> para obtener el valor de la empresa (EV).</p>
+<p>El <strong>FCFE</strong> (Free Cash Flow to Equity) es lo que queda disponible solo para los accionistas, después de atender también a los acreedores. Se descuenta con el Ke (costo del patrimonio) para obtener directamente el valor del patrimonio.</p>
 
-    <h3>Bloque 1 — El mercado global</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S01</td>
-          <td>20 ago</td>
-          <td>"Leer" el mercado con Bloomberg</td>
-          <td><a href="/Bloomberg/sesiones/S01-leer-el-mercado-con-bloomberg/">▶ Slides: Leer el mercado con Bloomberg</a></td>
-          <td><a href="https://forms.gle/jVzhGB5anaVR8sbK8">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S02</td>
-          <td>27 ago</td>
-          <td>Índices de renta variable y ETFs</td>
-          <td><a href="/Bloomberg/sesiones/S02-bolsas-e-indices/">▶ Slides: Bolsas e Índices</a></td>
-          <td><a href="https://forms.gle/6zkSnTeMqQi8ZLpa8">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S03</td>
-          <td>3 sep</td>
-          <td>Análisis de ETFs</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Construcción del FCFF, línea por línea</h2>
+<table>
+<thead><tr><th>Línea</th><th>De dónde sale</th></tr></thead>
+<tbody>
+<tr><td>EBIT (utilidad operativa)</td><td>Estado de resultados — ingresos menos costos y gastos operativos, antes de intereses e impuestos</td></tr>
+<tr><td>× (1 − T)</td><td>Se aplica la tasa de impuesto a la renta para obtener el NOPAT (utilidad operativa neta de impuestos)</td></tr>
+<tr><td>+ D&A</td><td>Depreciación y amortización del período — se suma porque es un gasto contable, no una salida de caja</td></tr>
+<tr><td>− CAPEX</td><td>Inversión en propiedad, planta y equipo (del estado de flujo de efectivo o del cambio en el activo fijo bruto)</td></tr>
+<tr><td>− Δ Capital de trabajo</td><td>Cambio en (cuentas por cobrar + inventarios − cuentas por pagar) entre un período y otro</td></tr>
+</tbody>
+</table>
 
-    <h3>Bloque 2 — Renta variable y Capital IQ</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S04</td>
-          <td>10 sep</td>
-          <td>Análisis de acciones 1 — información financiera</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S05</td>
-          <td>17 sep</td>
-          <td>Análisis de acciones 2 — información financiera en Capital IQ</td>
-          <td><a href="/decks/S05b-ipos-mega-cap-liquidez/">▶ Mini-clase: IPOs Mega-Cap</a></td>
-          <td><a href="https://forms.gle/tnRp3nA5HPWA2Kfg6">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S06</td>
-          <td>24 sep</td>
-          <td>Análisis de acciones 3 — proyecciones</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S07</td>
-          <td>1 oct</td>
-          <td>Excel para Bloomberg — campos y tickers para acciones</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S08</td>
-          <td>8 oct</td>
-          <td><em>Feriado — Combate de Angamos, no hay clase</em></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Del FCFF al FCFE</h2>
+<p>Para pasar del flujo de la firma al flujo del accionista, se resta lo que se paga a los acreedores (después del escudo fiscal) y se suma la deuda neta nueva que se toma en el período:</p>
+<table>
+<thead><tr><th>Línea</th><th>Detalle</th></tr></thead>
+<tbody>
+<tr><td>− Intereses × (1 − T)</td><td>Gasto financiero neto del escudo fiscal (mismo ajuste que en el <a href="/guias/wacc-paso-a-paso/">WACC</a>)</td></tr>
+<tr><td>+ Deuda nueva − Amortización de deuda</td><td>Deuda neta tomada en el período (si la empresa se desapalanca, este término es negativo)</td></tr>
+</tbody>
+</table>
 
-    <blockquote><p><strong>📝 Examen parcial (exposiciones)</strong> — jueves 15 oct · Informe Financiero, 1ra entrega: jueves 17 sep</p></blockquote>
+<h2>Ejemplo numérico (cifras en S/ miles)</h2>
+<table>
+<thead><tr><th>Concepto</th><th>Valor</th></tr></thead>
+<tbody>
+<tr><td>EBIT</td><td>1,200,000</td></tr>
+<tr><td>Tasa de impuesto</td><td>29.5%</td></tr>
+<tr><td>Depreciación y amortización</td><td>180,000</td></tr>
+<tr><td>CAPEX</td><td>250,000</td></tr>
+<tr><td>Δ Capital de trabajo</td><td>60,000</td></tr>
+<tr><td>Gastos financieros</td><td>90,000</td></tr>
+<tr><td>Deuda neta nueva</td><td>40,000</td></tr>
+</tbody>
+</table>
+<p>NOPAT = 1,200,000 × (1 − 0.295) = <strong>846,000</strong></p>
+<p style="font-size:15px;font-weight:600;background:var(--bg-alt);padding:12px 16px;border-radius:8px">FCFF = 846,000 + 180,000 − 250,000 − 60,000 = <strong>S/ 716,000</strong></p>
+<p>Intereses después de impuestos = 90,000 × (1 − 0.295) = 63,450</p>
+<p style="font-size:15px;font-weight:600;background:var(--bg-alt);padding:12px 16px;border-radius:8px">FCFE = 716,000 − 63,450 + 40,000 = <strong>S/ 692,550</strong></p>
 
-    <h3>Bloque 3 — Renta fija</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S10</td>
-          <td>22 oct</td>
-          <td>Renta fija corporativa y soberana</td>
-          <td>
-            <a href="/decks/S10-bonos-renta-fija-soberana/">▶ Slides: Bonos y Renta Fija Soberana</a><br>
-            <a href="/decks/S10-YAS-renta-fija-gubernamental/">▶ Slides: YAS en profundidad</a>
-          </td>
-          <td><a href="https://forms.gle/GjibpwpiSmBhbmoL9">📝 Formulario</a></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>¿Cuándo usar cada uno?</h2>
+<ul>
+<li><strong>FCFF + WACC</strong> — cuando la estructura de capital de la empresa es estable o se quiere valorizar sin verse afectado por decisiones de financiamiento específicas. Da el valor de la empresa (EV); para llegar al valor del patrimonio hay que restar la deuda neta.</li>
+<li><strong>FCFE + Ke</strong> — cuando se quiere el valor del patrimonio directamente, o cuando la estructura de capital es muy inestable/está cambiando (bancos, empresas muy apalancadas) y modelar el FCFF sería menos preciso.</li>
+</ul>
 
-    <h3>Bloque 4 — Economía, derivados y commodities</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S11</td>
-          <td>29 oct</td>
-          <td>Economía y política monetaria</td>
-          <td><a href="/decks/S11-economia/">▶ Slides: Economía</a></td>
-          <td><a href="https://docs.google.com/forms/d/1k3aK4awIjNoHobsgsnAOgzMiDCUEFOkfq-KdB1p5ruk/viewform">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S12</td>
-          <td>5 nov</td>
-          <td>Derivados</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S13</td>
-          <td>12 nov</td>
-          <td>Commodities</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Errores comunes</h2>
+<ul>
+<li>Descontar el FCFE con el WACC (o el FCFF con el Ke) — cada flujo va con su tasa correspondiente.</li>
+<li>Olvidar el signo del Δ Capital de trabajo: un aumento en capital de trabajo <em>consume</em> caja (se resta), una disminución la libera (se suma).</li>
+<li>No ajustar los intereses por el escudo fiscal al pasar de FCFF a FCFE.</li>
+</ul>
 
-    <h3>Bloque 5 — Monedas y portafolios</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S14</td>
-          <td>19 nov</td>
-          <td>Monedas — mercado de divisas</td>
-          <td><a href="/decks/S14-monedas/">▶ Slides: Monedas</a></td>
-          <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSdcoj6qU2pB-RcQ9J1M_HvgE2B4e7GgkWM1u9NOGEjXD519FA/viewform">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S15</td>
-          <td>26 nov</td>
-          <td>Portafolio y educación financiera</td>
-          <td>—</td>
-          <td><a href="https://docs.google.com/forms/d/1BdK0PUbu8BHjYMFw2SgdLdrLYdOlK1Ii8bVdpV0D0o8/viewform">📝 Formulario</a></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Ver también</h2>
+<ul>
+<li><a href="/guias/wacc-paso-a-paso/">Cómo calcular el WACC paso a paso</a></li>
+<li><a href="/guias/ratios-financieros-guia-completa/">Ratios financieros — guía completa</a></li>
+</ul>
 
-    <blockquote><p><strong>📝 Examen final (2 sesiones)</strong> — jueves 3 dic y jueves 10 dic · Informe Financiero, 2da entrega: jueves 19 nov</p></blockquote>
-
-    <h2>Cómo acceder a Bloomberg</h2>
-
-    <h3>PUCP — Biblioteca de Ciencias Sociales</h3>
-    <p>Bloomberg Professional está disponible para alumnos matriculados, docentes y administrativos PUCP.</p>
-    <ul>
-      <li>Reserva de terminales dentro del horario de atención de la Biblioteca de Ciencias Sociales</li>
-      <li>Máximo <strong>2 horas diarias</strong> y <strong>8 horas semanales</strong></li>
-      <li><a href="https://guiastematicas.biblioteca.pucp.edu.pe/bloomberg/acceso">Cómo realizar la reserva →</a></li>
-      <li>Consultas: <a href="mailto:bibsociales@pucp.edu.pe">bibsociales@pucp.edu.pe</a></li>
-    </ul>
-
-    <h2>Certificación asociada — Bloomberg Market Concepts (BMC)</h2>
-    <p>El BMC es la certificación oficial de Bloomberg. Cubre 4 módulos:</p>
-    <ul>
-      <li>Indicadores económicos</li>
-      <li>Divisas</li>
-      <li>Renta fija</li>
-      <li>Renta variable</li>
-    </ul>
-    <p>Se completa en ~8 horas a ritmo propio directamente desde el terminal usando <code>BCER</code>. <strong>Es requisito del curso para estudiantes PUCP.</strong></p>
-
-    <h2>Recursos externos</h2>
-    <ul>
-      <li><a href="https://guiastematicas.biblioteca.pucp.edu.pe/bloomberg/inicio">Guía Bloomberg PUCP</a></li>
-      <li><a href="https://www.bloomberg.com/professional/product/bloomberg-terminal/">Bloomberg Terminal Quick Start</a></li>
-      <li><a href="https://guides.nyu.edu/bloombergguide">NYU Bloomberg Guide</a></li>
-      <li><a href="https://guides.library.columbia.edu/bloomberg">Columbia Bloomberg Help</a></li>
-    </ul>
 
   </div>
 </article>

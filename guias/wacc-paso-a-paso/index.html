@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1FIN39 Bloomberg Terminal — Hugo Gutierrez</title>
-  <meta name="description" content="Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.">
+  <title>Cómo calcular el WACC paso a paso — Hugo Gutierrez</title>
+  <meta name="description" content="Guía práctica para calcular el WACC (costo promedio ponderado de capital): fórmula, CAPM, costo de la deuda después de impuestos y un ejemplo numérico resuelto.">
 
   <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 
-  <meta property="og:title" content="1FIN39 Bloomberg Terminal — Hugo Gutierrez">
-  <meta property="og:description" content="Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.">
+  <meta property="og:title" content="Cómo calcular el WACC paso a paso — Hugo Gutierrez">
+  <meta property="og:description" content="Guía práctica para calcular el WACC (costo promedio ponderado de capital): fórmula, CAPM, costo de la deuda después de impuestos y un ejemplo numérico resuelto.">
   <meta property="og:image" content="https://hgfincorp.com/img/og-image.png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -360,7 +360,6 @@
     </a>
     <div class="nav-links">
       <a href="/#cursos">Cursos</a>
-      <a href="/guias/">Guías</a>
       <a href="/#proyectos">Proyectos</a>
       <button id="theme-toggle" aria-label="Cambiar tema">
         <i class="ti ti-palette"></i>
@@ -374,7 +373,6 @@
   <div class="mobile-menu" id="mobile-menu">
     <div class="container">
       <a href="/#cursos">Cursos</a>
-      <a href="/guias/">Guías</a>
       <a href="/#proyectos">Proyectos</a>
       <a href="/#contacto" class="nav-cta">Contacto</a>
     </div>
@@ -385,217 +383,90 @@
   <div class="container">
     <div class="hero-eyebrow">
       <span class="dot"></span>
-      1FIN39 · PUCP · Semestre 2026—2
+      GUÍA · VALORIZACIÓN Y COSTO DE CAPITAL
     </div>
-    <h1 class="course-title">Domina Bloomberg Terminal <em>desde cero</em></h1>
-    <p class="course-lede">Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.</p>
+    <h1 class="course-title">Cómo calcular el <em>WACC</em> paso a paso</h1>
+    <p class="course-lede">El costo promedio ponderado de capital (WACC), con la fórmula completa, el CAPM para el costo del patrimonio, y un ejemplo numérico resuelto.</p>
     <div class="course-stats">
-      <span><i class="ti ti-stack"></i>17 sesiones</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-clock"></i>2 h por sesión</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-chart-candle"></i>Bloomberg · Excel · Capital IQ</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-certificate"></i>Prepara para el BMC</span>
+      <span><i class="ti ti-calculator"></i>Fórmula + ejemplo resuelto</span><span class="sep"></span><span><i class="ti ti-school"></i>Material de clase — Finanzas Corporativas y Análisis Financiero</span>
     </div>
   </div>
 </section>
-
 <article class="course-content">
   <div class="container-narrow">
 
-    <p><strong>17 sesiones · 2 h por sesión · Bloomberg + Excel + Capital IQ · Prepara para el BMC</strong></p>
 
-    <h2>Qué vas a aprender</h2>
-    <ul>
-      <li>Navegar el terminal y buscar cualquier activo financiero</li>
-      <li>Analizar acciones, índices y ETFs con funciones reales</li>
-      <li>Extraer datos a Excel con <code>BDP</code>, <code>BDH</code> y <code>BDS</code></li>
-      <li>Valorizar bonos corporativos y soberanos</li>
-      <li>Analizar tipo de cambio, commodities y derivados</li>
-      <li>Construir y monitorear portafolios con <code>PRTU</code> y <code>PORT</code></li>
-    </ul>
+<div style="background:var(--blue-tint);border-left:3px solid var(--blue);border-radius:8px;padding:16px 20px;margin-bottom:28px">
+<p style="margin:0;font-size:14.5px;color:var(--ink);font-weight:500">
+<strong>Respuesta directa:</strong> el WACC (costo promedio ponderado de capital) se calcula así:
+</p>
+<p style="margin:10px 0 0;font-family:var(--font-mono);font-size:14px;color:var(--ink)">
+WACC = (E/V) × Ke + (D/V) × Kd × (1 − T)
+</p>
+<p style="margin:8px 0 0;font-size:13px;color:var(--ink-2)">
+Donde E = valor de mercado del patrimonio, D = valor de mercado de la deuda, V = D + E, Ke = costo del patrimonio (vía CAPM), Kd = costo de la deuda antes de impuestos, T = tasa de impuesto a la renta.
+</p>
+</div>
 
-    <h2>Módulos del curso</h2>
+<p>El WACC representa el retorno mínimo que una empresa debe generar sobre sus activos para satisfacer tanto a sus acreedores como a sus accionistas. Se usa como tasa de descuento en la valorización por flujos de caja descontados (DCF) — específicamente para descontar el FCFF (flujo de caja libre para la firma).</p>
 
-    <h3>Bloque 1 — El mercado global</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S01</td>
-          <td>20 ago</td>
-          <td>"Leer" el mercado con Bloomberg</td>
-          <td><a href="/Bloomberg/sesiones/S01-leer-el-mercado-con-bloomberg/">▶ Slides: Leer el mercado con Bloomberg</a></td>
-          <td><a href="https://forms.gle/jVzhGB5anaVR8sbK8">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S02</td>
-          <td>27 ago</td>
-          <td>Índices de renta variable y ETFs</td>
-          <td><a href="/Bloomberg/sesiones/S02-bolsas-e-indices/">▶ Slides: Bolsas e Índices</a></td>
-          <td><a href="https://forms.gle/6zkSnTeMqQi8ZLpa8">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S03</td>
-          <td>3 sep</td>
-          <td>Análisis de ETFs</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Paso 1 — Estructura de capital (E/V y D/V)</h2>
+<p>Usa <strong>valores de mercado</strong>, no valores en libros. Para el patrimonio (E): capitalización bursátil (precio de la acción × número de acciones). Para la deuda (D): si la deuda cotiza, su valor de mercado; si no, el valor en libros es una aproximación razonable.</p>
+<table>
+<thead><tr><th>Componente</th><th>Cómo obtenerlo</th></tr></thead>
+<tbody>
+<tr><td>E (patrimonio)</td><td>Precio de la acción × acciones en circulación (capitalización bursátil)</td></tr>
+<tr><td>D (deuda)</td><td>Deuda financiera total (corriente + no corriente), a valor de mercado o en libros como proxy</td></tr>
+<tr><td>V</td><td>D + E</td></tr>
+</tbody>
+</table>
 
-    <h3>Bloque 2 — Renta variable y Capital IQ</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S04</td>
-          <td>10 sep</td>
-          <td>Análisis de acciones 1 — información financiera</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S05</td>
-          <td>17 sep</td>
-          <td>Análisis de acciones 2 — información financiera en Capital IQ</td>
-          <td><a href="/decks/S05b-ipos-mega-cap-liquidez/">▶ Mini-clase: IPOs Mega-Cap</a></td>
-          <td><a href="https://forms.gle/tnRp3nA5HPWA2Kfg6">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S06</td>
-          <td>24 sep</td>
-          <td>Análisis de acciones 3 — proyecciones</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S07</td>
-          <td>1 oct</td>
-          <td>Excel para Bloomberg — campos y tickers para acciones</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S08</td>
-          <td>8 oct</td>
-          <td><em>Feriado — Combate de Angamos, no hay clase</em></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Paso 2 — Costo del patrimonio (Ke) con CAPM</h2>
+<p style="font-family:var(--font-mono);font-size:14px">Ke = Rf + β × (Rm − Rf) + Riesgo país</p>
+<ul>
+<li><strong>Rf (tasa libre de riesgo):</strong> rendimiento de un bono soberano de largo plazo (ej. T-Bond 10 años de EE.UU. si se trabaja en USD).</li>
+<li><strong>β (beta):</strong> sensibilidad de la acción frente al mercado. Para empresas peruanas poco líquidas, es común usar el beta desapalancado de un sector comparable (ej. de mercados desarrollados) y volver a apalancarlo con la estructura de capital de la empresa objetivo.</li>
+<li><strong>Rm − Rf (prima por riesgo de mercado):</strong> prima histórica del mercado de acciones sobre el activo libre de riesgo.</li>
+<li><strong>Riesgo país:</strong> spread de los bonos soberanos peruanos sobre el Rf (EMBI Perú), para ajustar el CAPM a un contexto emergente.</li>
+</ul>
 
-    <blockquote><p><strong>📝 Examen parcial (exposiciones)</strong> — jueves 15 oct · Informe Financiero, 1ra entrega: jueves 17 sep</p></blockquote>
+<h2>Paso 3 — Costo de la deuda (Kd) después de impuestos</h2>
+<p>Kd antes de impuestos es la tasa a la que la empresa se financia hoy (tasa cupón de sus bonos, o tasa promedio ponderada de sus préstamos). Como los intereses son deducibles de impuestos, se ajusta por el escudo fiscal:</p>
+<p style="font-family:var(--font-mono);font-size:14px">Kd después de impuestos = Kd × (1 − T)</p>
 
-    <h3>Bloque 3 — Renta fija</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S10</td>
-          <td>22 oct</td>
-          <td>Renta fija corporativa y soberana</td>
-          <td>
-            <a href="/decks/S10-bonos-renta-fija-soberana/">▶ Slides: Bonos y Renta Fija Soberana</a><br>
-            <a href="/decks/S10-YAS-renta-fija-gubernamental/">▶ Slides: YAS en profundidad</a>
-          </td>
-          <td><a href="https://forms.gle/GjibpwpiSmBhbmoL9">📝 Formulario</a></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Ejemplo numérico</h2>
+<table>
+<thead><tr><th>Dato</th><th>Valor</th></tr></thead>
+<tbody>
+<tr><td>Capitalización bursátil (E)</td><td>S/ 8,000 millones</td></tr>
+<tr><td>Deuda financiera (D)</td><td>S/ 2,000 millones</td></tr>
+<tr><td>Rf</td><td>4.5%</td></tr>
+<tr><td>Beta</td><td>0.9</td></tr>
+<tr><td>Prima de mercado (Rm−Rf)</td><td>5.5%</td></tr>
+<tr><td>Riesgo país Perú</td><td>1.5%</td></tr>
+<tr><td>Kd (antes de impuestos)</td><td>6.0%</td></tr>
+<tr><td>Tasa de impuesto a la renta</td><td>29.5%</td></tr>
+</tbody>
+</table>
+<p><strong>Ke</strong> = 4.5% + 0.9 × 5.5% + 1.5% = <strong>10.95%</strong></p>
+<p><strong>Kd después de impuestos</strong> = 6.0% × (1 − 0.295) = <strong>4.23%</strong></p>
+<p>E/V = 8,000/10,000 = 80% · D/V = 2,000/10,000 = 20%</p>
+<p style="font-size:15px;font-weight:600;background:var(--bg-alt);padding:12px 16px;border-radius:8px">WACC = 80% × 10.95% + 20% × 4.23% = <strong>9.61%</strong></p>
 
-    <h3>Bloque 4 — Economía, derivados y commodities</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S11</td>
-          <td>29 oct</td>
-          <td>Economía y política monetaria</td>
-          <td><a href="/decks/S11-economia/">▶ Slides: Economía</a></td>
-          <td><a href="https://docs.google.com/forms/d/1k3aK4awIjNoHobsgsnAOgzMiDCUEFOkfq-KdB1p5ruk/viewform">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S12</td>
-          <td>5 nov</td>
-          <td>Derivados</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S13</td>
-          <td>12 nov</td>
-          <td>Commodities</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Errores comunes</h2>
+<ul>
+<li>Usar valores en libros del patrimonio en vez de valor de mercado — subestima o sobreestima el peso real de cada fuente de financiamiento.</li>
+<li>Olvidar el escudo fiscal en el costo de la deuda (usar Kd sin el ajuste × (1−T)).</li>
+<li>Mezclar monedas: si el Rf es en USD (T-Bond), todo el resto del CAPM y el flujo que se descuenta deben estar en la misma moneda, o convertir con la paridad de tasas de interés.</li>
+<li>Usar un beta apalancado de otra empresa sin desapalancar y re-apalancar según la estructura de capital propia.</li>
+</ul>
 
-    <h3>Bloque 5 — Monedas y portafolios</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S14</td>
-          <td>19 nov</td>
-          <td>Monedas — mercado de divisas</td>
-          <td><a href="/decks/S14-monedas/">▶ Slides: Monedas</a></td>
-          <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSdcoj6qU2pB-RcQ9J1M_HvgE2B4e7GgkWM1u9NOGEjXD519FA/viewform">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S15</td>
-          <td>26 nov</td>
-          <td>Portafolio y educación financiera</td>
-          <td>—</td>
-          <td><a href="https://docs.google.com/forms/d/1BdK0PUbu8BHjYMFw2SgdLdrLYdOlK1Ii8bVdpV0D0o8/viewform">📝 Formulario</a></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Ver también</h2>
+<ul>
+<li><a href="/guias/fcff-fcfe-desde-cero/">Cómo armar un FCFF y FCFE desde cero</a> — el WACC es la tasa que se usa para descontar el FCFF.</li>
+<li><a href="/guias/ratios-financieros-guia-completa/">Ratios financieros — guía completa</a></li>
+</ul>
 
-    <blockquote><p><strong>📝 Examen final (2 sesiones)</strong> — jueves 3 dic y jueves 10 dic · Informe Financiero, 2da entrega: jueves 19 nov</p></blockquote>
-
-    <h2>Cómo acceder a Bloomberg</h2>
-
-    <h3>PUCP — Biblioteca de Ciencias Sociales</h3>
-    <p>Bloomberg Professional está disponible para alumnos matriculados, docentes y administrativos PUCP.</p>
-    <ul>
-      <li>Reserva de terminales dentro del horario de atención de la Biblioteca de Ciencias Sociales</li>
-      <li>Máximo <strong>2 horas diarias</strong> y <strong>8 horas semanales</strong></li>
-      <li><a href="https://guiastematicas.biblioteca.pucp.edu.pe/bloomberg/acceso">Cómo realizar la reserva →</a></li>
-      <li>Consultas: <a href="mailto:bibsociales@pucp.edu.pe">bibsociales@pucp.edu.pe</a></li>
-    </ul>
-
-    <h2>Certificación asociada — Bloomberg Market Concepts (BMC)</h2>
-    <p>El BMC es la certificación oficial de Bloomberg. Cubre 4 módulos:</p>
-    <ul>
-      <li>Indicadores económicos</li>
-      <li>Divisas</li>
-      <li>Renta fija</li>
-      <li>Renta variable</li>
-    </ul>
-    <p>Se completa en ~8 horas a ritmo propio directamente desde el terminal usando <code>BCER</code>. <strong>Es requisito del curso para estudiantes PUCP.</strong></p>
-
-    <h2>Recursos externos</h2>
-    <ul>
-      <li><a href="https://guiastematicas.biblioteca.pucp.edu.pe/bloomberg/inicio">Guía Bloomberg PUCP</a></li>
-      <li><a href="https://www.bloomberg.com/professional/product/bloomberg-terminal/">Bloomberg Terminal Quick Start</a></li>
-      <li><a href="https://guides.nyu.edu/bloombergguide">NYU Bloomberg Guide</a></li>
-      <li><a href="https://guides.library.columbia.edu/bloomberg">Columbia Bloomberg Help</a></li>
-    </ul>
 
   </div>
 </article>

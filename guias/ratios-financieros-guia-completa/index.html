@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1FIN39 Bloomberg Terminal — Hugo Gutierrez</title>
-  <meta name="description" content="Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.">
+  <title>Ratios financieros — guía completa — Hugo Gutierrez</title>
+  <meta name="description" content="Guía completa de ratios financieros: liquidez, gestión/actividad, endeudamiento y rentabilidad, con fórmulas y cómo interpretarlos.">
 
   <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 
-  <meta property="og:title" content="1FIN39 Bloomberg Terminal — Hugo Gutierrez">
-  <meta property="og:description" content="Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.">
+  <meta property="og:title" content="Ratios financieros — guía completa — Hugo Gutierrez">
+  <meta property="og:description" content="Guía completa de ratios financieros: liquidez, gestión/actividad, endeudamiento y rentabilidad, con fórmulas y cómo interpretarlos.">
   <meta property="og:image" content="https://hgfincorp.com/img/og-image.png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -360,7 +360,6 @@
     </a>
     <div class="nav-links">
       <a href="/#cursos">Cursos</a>
-      <a href="/guias/">Guías</a>
       <a href="/#proyectos">Proyectos</a>
       <button id="theme-toggle" aria-label="Cambiar tema">
         <i class="ti ti-palette"></i>
@@ -374,7 +373,6 @@
   <div class="mobile-menu" id="mobile-menu">
     <div class="container">
       <a href="/#cursos">Cursos</a>
-      <a href="/guias/">Guías</a>
       <a href="/#proyectos">Proyectos</a>
       <a href="/#contacto" class="nav-cta">Contacto</a>
     </div>
@@ -385,217 +383,88 @@
   <div class="container">
     <div class="hero-eyebrow">
       <span class="dot"></span>
-      1FIN39 · PUCP · Semestre 2026—2
+      GUÍA · ANÁLISIS DE ESTADOS FINANCIEROS
     </div>
-    <h1 class="course-title">Domina Bloomberg Terminal <em>desde cero</em></h1>
-    <p class="course-lede">Aprende a usar la herramienta de análisis financiero más poderosa del mundo. Desde leer el mercado hasta construir portafolios — con casos reales en cada sesión.</p>
+    <h1 class="course-title">Ratios financieros — <em>guía completa</em></h1>
+    <p class="course-lede">Los 4 grupos de ratios financieros — liquidez, gestión, endeudamiento y rentabilidad — con fórmula y cómo interpretar cada uno.</p>
     <div class="course-stats">
-      <span><i class="ti ti-stack"></i>17 sesiones</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-clock"></i>2 h por sesión</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-chart-candle"></i>Bloomberg · Excel · Capital IQ</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-certificate"></i>Prepara para el BMC</span>
+      <span><i class="ti ti-list-details"></i>13 ratios explicados</span><span class="sep"></span><span><i class="ti ti-school"></i>Material de clase — Análisis Financiero</span>
     </div>
   </div>
 </section>
-
 <article class="course-content">
   <div class="container-narrow">
 
-    <p><strong>17 sesiones · 2 h por sesión · Bloomberg + Excel + Capital IQ · Prepara para el BMC</strong></p>
 
-    <h2>Qué vas a aprender</h2>
-    <ul>
-      <li>Navegar el terminal y buscar cualquier activo financiero</li>
-      <li>Analizar acciones, índices y ETFs con funciones reales</li>
-      <li>Extraer datos a Excel con <code>BDP</code>, <code>BDH</code> y <code>BDS</code></li>
-      <li>Valorizar bonos corporativos y soberanos</li>
-      <li>Analizar tipo de cambio, commodities y derivados</li>
-      <li>Construir y monitorear portafolios con <code>PRTU</code> y <code>PORT</code></li>
-    </ul>
+<div style="background:var(--blue-tint);border-left:3px solid var(--blue);border-radius:8px;padding:16px 20px;margin-bottom:28px">
+<p style="margin:0;font-size:14.5px;color:var(--ink);font-weight:500">
+<strong>Respuesta directa:</strong> los ratios financieros se agrupan en 4 categorías — liquidez, gestión/actividad, endeudamiento y rentabilidad. Cada categoría responde una pregunta distinta sobre la salud financiera de una empresa.
+</p>
+</div>
 
-    <h2>Módulos del curso</h2>
+<h2>1. Ratios de liquidez</h2>
+<p>Responden: <em>¿la empresa puede pagar sus obligaciones de corto plazo?</em></p>
+<table>
+<thead><tr><th>Ratio</th><th>Fórmula</th><th>Lectura</th></tr></thead>
+<tbody>
+<tr><td>Razón corriente</td><td>Activo corriente / Pasivo corriente</td><td>Por cada S/1 de deuda de corto plazo, cuánto activo corriente tiene la empresa para cubrirla. &gt;1 es lo deseable, aunque el nivel "sano" varía por industria.</td></tr>
+<tr><td>Prueba ácida</td><td>(Activo corriente − Inventarios) / Pasivo corriente</td><td>Igual que la razón corriente, pero excluye inventarios (el activo corriente menos líquido) — más estricta.</td></tr>
+<tr><td>Capital de trabajo</td><td>Activo corriente − Pasivo corriente</td><td>En soles/dólares, no en veces. Un capital de trabajo negativo no siempre es malo (ej. retail con alta rotación), pero hay que investigarlo.</td></tr>
+</tbody>
+</table>
 
-    <h3>Bloque 1 — El mercado global</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S01</td>
-          <td>20 ago</td>
-          <td>"Leer" el mercado con Bloomberg</td>
-          <td><a href="/Bloomberg/sesiones/S01-leer-el-mercado-con-bloomberg/">▶ Slides: Leer el mercado con Bloomberg</a></td>
-          <td><a href="https://forms.gle/jVzhGB5anaVR8sbK8">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S02</td>
-          <td>27 ago</td>
-          <td>Índices de renta variable y ETFs</td>
-          <td><a href="/Bloomberg/sesiones/S02-bolsas-e-indices/">▶ Slides: Bolsas e Índices</a></td>
-          <td><a href="https://forms.gle/6zkSnTeMqQi8ZLpa8">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S03</td>
-          <td>3 sep</td>
-          <td>Análisis de ETFs</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>2. Ratios de gestión / actividad</h2>
+<p>Responden: <em>¿qué tan eficiente es la empresa usando sus activos y gestionando su ciclo operativo?</em></p>
+<table>
+<thead><tr><th>Ratio</th><th>Fórmula</th><th>Lectura</th></tr></thead>
+<tbody>
+<tr><td>Rotación de inventarios</td><td>Costo de ventas / Inventario promedio</td><td>Cuántas veces al año se renueva el inventario. Más alto = más eficiente (con matices por industria).</td></tr>
+<tr><td>Días de inventario</td><td>365 / Rotación de inventarios</td><td>Días promedio que el inventario permanece en almacén antes de venderse.</td></tr>
+<tr><td>Días de cuentas por cobrar (DSO)</td><td>(Cuentas por cobrar / Ventas) × 365</td><td>Días promedio que tarda la empresa en cobrar a sus clientes.</td></tr>
+<tr><td>Días de cuentas por pagar (DPO)</td><td>(Cuentas por pagar / Costo de ventas) × 365</td><td>Días promedio que la empresa tarda en pagar a sus proveedores.</td></tr>
+<tr><td>Ciclo de conversión de efectivo (CCE)</td><td>Días inventario + Días CxC − Días CxP</td><td>Días que el efectivo de la empresa queda "atrapado" en el ciclo operativo antes de volver como caja. Más bajo (o negativo) es mejor.</td></tr>
+</tbody>
+</table>
 
-    <h3>Bloque 2 — Renta variable y Capital IQ</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S04</td>
-          <td>10 sep</td>
-          <td>Análisis de acciones 1 — información financiera</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S05</td>
-          <td>17 sep</td>
-          <td>Análisis de acciones 2 — información financiera en Capital IQ</td>
-          <td><a href="/decks/S05b-ipos-mega-cap-liquidez/">▶ Mini-clase: IPOs Mega-Cap</a></td>
-          <td><a href="https://forms.gle/tnRp3nA5HPWA2Kfg6">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S06</td>
-          <td>24 sep</td>
-          <td>Análisis de acciones 3 — proyecciones</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S07</td>
-          <td>1 oct</td>
-          <td>Excel para Bloomberg — campos y tickers para acciones</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S08</td>
-          <td>8 oct</td>
-          <td><em>Feriado — Combate de Angamos, no hay clase</em></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-      </tbody>
-    </table>
+<h2>3. Ratios de endeudamiento / solvencia</h2>
+<p>Responden: <em>¿qué tan apalancada está la empresa y qué tan bien puede cubrir sus obligaciones financieras?</em></p>
+<table>
+<thead><tr><th>Ratio</th><th>Fórmula</th><th>Lectura</th></tr></thead>
+<tbody>
+<tr><td>Pasivo / Patrimonio</td><td>Pasivo total / Patrimonio</td><td>Por cada S/1 de patrimonio, cuánta deuda tiene la empresa. Más alto = más apalancada, más riesgo financiero.</td></tr>
+<tr><td>Deuda / Activo</td><td>Pasivo total / Activo total</td><td>Qué porcentaje de los activos está financiado con deuda (el resto, con patrimonio).</td></tr>
+<tr><td>Cobertura de intereses</td><td>EBIT / Gastos financieros</td><td>Cuántas veces la utilidad operativa cubre el gasto por intereses. &lt;1.5x-2x suele ser señal de alerta.</td></tr>
+</tbody>
+</table>
 
-    <blockquote><p><strong>📝 Examen parcial (exposiciones)</strong> — jueves 15 oct · Informe Financiero, 1ra entrega: jueves 17 sep</p></blockquote>
+<h2>4. Ratios de rentabilidad</h2>
+<p>Responden: <em>¿cuánto gana la empresa en relación a sus ventas, activos o patrimonio?</em></p>
+<table>
+<thead><tr><th>Ratio</th><th>Fórmula</th><th>Lectura</th></tr></thead>
+<tbody>
+<tr><td>Margen bruto</td><td>Utilidad bruta / Ventas</td><td>Cuánto queda después del costo de ventas directo.</td></tr>
+<tr><td>Margen operativo</td><td>Utilidad operativa (EBIT) / Ventas</td><td>Rentabilidad del negocio principal, antes de intereses e impuestos.</td></tr>
+<tr><td>Margen neto</td><td>Utilidad neta / Ventas</td><td>Lo que efectivamente le queda a los accionistas por cada sol vendido.</td></tr>
+<tr><td>ROA</td><td>Utilidad neta / Activo promedio</td><td>Retorno generado sobre el total de activos, sin importar cómo se financiaron.</td></tr>
+<tr><td>ROE</td><td>Utilidad neta / Patrimonio promedio</td><td>Retorno generado específicamente para los accionistas. Ver <a href="/guias/analisis-dupont/">análisis Dupont</a> para descomponerlo.</td></tr>
+</tbody>
+</table>
+<p style="font-size:12.5px;color:var(--ink-3)">Nota: ROA y ROE se calculan con frecuencia sobre el <strong>promedio</strong> de activo/patrimonio del período (inicio + fin, entre 2), no solo el saldo final — más preciso cuando hubo cambios grandes durante el año.</p>
 
-    <h3>Bloque 3 — Renta fija</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S10</td>
-          <td>22 oct</td>
-          <td>Renta fija corporativa y soberana</td>
-          <td>
-            <a href="/decks/S10-bonos-renta-fija-soberana/">▶ Slides: Bonos y Renta Fija Soberana</a><br>
-            <a href="/decks/S10-YAS-renta-fija-gubernamental/">▶ Slides: YAS en profundidad</a>
-          </td>
-          <td><a href="https://forms.gle/GjibpwpiSmBhbmoL9">📝 Formulario</a></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Errores comunes</h2>
+<ul>
+<li>Comparar ratios de empresas de sectores muy distintos sin ajustar (un banco y una minera tienen estructuras de balance completamente distintas por naturaleza).</li>
+<li>Usar el saldo final en vez del promedio para ratios que involucran flujos vs. saldos (ej. ROE, rotación de inventarios) — mezcla una variable de "un momento" con una de "todo el período".</li>
+<li>Mirar un solo ratio de forma aislada — la razón corriente puede verse "bien" mientras el CCE se está deteriorando; siempre conviene ver el set completo, no un ratio suelto.</li>
+</ul>
 
-    <h3>Bloque 4 — Economía, derivados y commodities</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S11</td>
-          <td>29 oct</td>
-          <td>Economía y política monetaria</td>
-          <td><a href="/decks/S11-economia/">▶ Slides: Economía</a></td>
-          <td><a href="https://docs.google.com/forms/d/1k3aK4awIjNoHobsgsnAOgzMiDCUEFOkfq-KdB1p5ruk/viewform">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S12</td>
-          <td>5 nov</td>
-          <td>Derivados</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-        <tr>
-          <td>S13</td>
-          <td>12 nov</td>
-          <td>Commodities</td>
-          <td>—</td>
-          <td><em>Pendiente</em></td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Ver también</h2>
+<ul>
+<li><a href="/guias/analisis-dupont/">Análisis Dupont explicado con ejemplo</a></li>
+<li><a href="/guias/wacc-paso-a-paso/">Cómo calcular el WACC paso a paso</a></li>
+<li><a href="/guias/fcff-fcfe-desde-cero/">Cómo armar un FCFF y FCFE desde cero</a></li>
+</ul>
 
-    <h3>Bloque 5 — Monedas y portafolios</h3>
-    <table>
-      <thead>
-        <tr><th>Sesión</th><th>Fecha</th><th>Tema</th><th>Materiales</th><th>Tarea (Forms)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>S14</td>
-          <td>19 nov</td>
-          <td>Monedas — mercado de divisas</td>
-          <td><a href="/decks/S14-monedas/">▶ Slides: Monedas</a></td>
-          <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSdcoj6qU2pB-RcQ9J1M_HvgE2B4e7GgkWM1u9NOGEjXD519FA/viewform">📝 Formulario</a></td>
-        </tr>
-        <tr>
-          <td>S15</td>
-          <td>26 nov</td>
-          <td>Portafolio y educación financiera</td>
-          <td>—</td>
-          <td><a href="https://docs.google.com/forms/d/1BdK0PUbu8BHjYMFw2SgdLdrLYdOlK1Ii8bVdpV0D0o8/viewform">📝 Formulario</a></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <blockquote><p><strong>📝 Examen final (2 sesiones)</strong> — jueves 3 dic y jueves 10 dic · Informe Financiero, 2da entrega: jueves 19 nov</p></blockquote>
-
-    <h2>Cómo acceder a Bloomberg</h2>
-
-    <h3>PUCP — Biblioteca de Ciencias Sociales</h3>
-    <p>Bloomberg Professional está disponible para alumnos matriculados, docentes y administrativos PUCP.</p>
-    <ul>
-      <li>Reserva de terminales dentro del horario de atención de la Biblioteca de Ciencias Sociales</li>
-      <li>Máximo <strong>2 horas diarias</strong> y <strong>8 horas semanales</strong></li>
-      <li><a href="https://guiastematicas.biblioteca.pucp.edu.pe/bloomberg/acceso">Cómo realizar la reserva →</a></li>
-      <li>Consultas: <a href="mailto:bibsociales@pucp.edu.pe">bibsociales@pucp.edu.pe</a></li>
-    </ul>
-
-    <h2>Certificación asociada — Bloomberg Market Concepts (BMC)</h2>
-    <p>El BMC es la certificación oficial de Bloomberg. Cubre 4 módulos:</p>
-    <ul>
-      <li>Indicadores económicos</li>
-      <li>Divisas</li>
-      <li>Renta fija</li>
-      <li>Renta variable</li>
-    </ul>
-    <p>Se completa en ~8 horas a ritmo propio directamente desde el terminal usando <code>BCER</code>. <strong>Es requisito del curso para estudiantes PUCP.</strong></p>
-
-    <h2>Recursos externos</h2>
-    <ul>
-      <li><a href="https://guiastematicas.biblioteca.pucp.edu.pe/bloomberg/inicio">Guía Bloomberg PUCP</a></li>
-      <li><a href="https://www.bloomberg.com/professional/product/bloomberg-terminal/">Bloomberg Terminal Quick Start</a></li>
-      <li><a href="https://guides.nyu.edu/bloombergguide">NYU Bloomberg Guide</a></li>
-      <li><a href="https://guides.library.columbia.edu/bloomberg">Columbia Bloomberg Help</a></li>
-    </ul>
 
   </div>
 </article>

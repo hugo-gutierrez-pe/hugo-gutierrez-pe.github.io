@@ -15,6 +15,15 @@ Hugo Gutierrez trabaja en modelamiento financiero corporativo, valorización de 
 - [1FIN55 — Finanzas Corporativas I](https://hgfincorp.com/cursos/finanzas-corporativas/): valorización por DCF, costo de capital (WACC), estructura de capital, decisiones de inversión con casos del mercado peruano.
 - [1FIN02 — Análisis Financiero I](https://hgfincorp.com/cursos/analisis-financiero/): lectura de estados financieros, análisis de ratios, matemática financiera, evaluación de proyectos.
 
+## Guías de referencia
+
+- [Índice de guías](https://hgfincorp.com/guias/): respuestas directas con ejemplo numérico resuelto sobre valorización, análisis financiero y Bloomberg Terminal.
+- [Cómo calcular el WACC paso a paso](https://hgfincorp.com/guias/wacc-paso-a-paso/)
+- [Cómo armar un FCFF y FCFE desde cero](https://hgfincorp.com/guias/fcff-fcfe-desde-cero/)
+- [Análisis Dupont explicado con ejemplo](https://hgfincorp.com/guias/analisis-dupont/)
+- [Ratios financieros — guía completa](https://hgfincorp.com/guias/ratios-financieros-guia-completa/)
+- [BDP, BDH y BDS en Bloomberg](https://hgfincorp.com/guias/bloomberg-bdp-bdh-bds/)
+
 ## Proyectos y demos
 
 - [Valora — demo de análisis de estados financieros SMV](https://hgfincorp.com/valora-demo/): tearsheets financieros de 5 empresas peruanas (Alicorp, InRetail, Credicorp, BBVA, Volcán) con serie histórica multi-año, ratios, análisis vertical y modelo de valorización en Excel (FCFF/FCFE/DDM).
