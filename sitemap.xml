@@ -56,6 +56,66 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://hgfincorp.com/valora-demo/ferreycorp-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://hgfincorp.com/valora-demo/bcp-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://hgfincorp.com/valora-demo/buenaventura-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://hgfincorp.com/valora-demo/unacem-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://hgfincorp.com/valora-demo/southern-copper-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://hgfincorp.com/valora-demo/minsur-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://hgfincorp.com/valora-demo/orygen-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://hgfincorp.com/valora-demo/nexa-resources-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://hgfincorp.com/valora-demo/cementos-pacasmayo-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://hgfincorp.com/valora-demo/intercorp-financial-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://hgfincorp.com/valora-demo/cerro-verde-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://hgfincorp.com/valora-demo/engie-energia-2024.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://hgfincorp.com/Bloomberg/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

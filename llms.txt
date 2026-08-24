@@ -26,7 +26,7 @@ Hugo Gutierrez trabaja en modelamiento financiero corporativo, valorización de 
 
 ## Proyectos y demos
 
-- [Valora — demo de análisis de estados financieros SMV](https://hgfincorp.com/valora-demo/): tearsheets financieros de 5 empresas peruanas (Alicorp, InRetail, Credicorp, BBVA, Volcán) con serie histórica multi-año, ratios, análisis vertical y modelo de valorización en Excel (FCFF/FCFE/DDM).
+- [Valora — plataforma de análisis de estados financieros SMV](https://hgfincorp.com/valora-demo/): tearsheets financieros de las 17 empresas del índice MSCI nuam Peru Select (Alicorp, InRetail, Credicorp, BBVA, Volcán, Ferreycorp, Banco de Crédito, Buenaventura, Unacem, Southern Copper, Minsur, Orygen, Nexa Resources, Cementos Pacasmayo, Intercorp Financial, Cerro Verde, Engie Energía) con serie histórica multi-año, ratios, análisis vertical y modelo de valorización en Excel (FCFF/FCFE/DDM).
 
 ## Contacto
 
