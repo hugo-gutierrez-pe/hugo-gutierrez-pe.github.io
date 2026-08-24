@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Valora — Terminal EEFF · Índice de emisores</title>
-<meta content="Índice de 17 emisores peruanos (SMV) con tearsheet financiero de 7 años — mock de demostración de Valora AI." name="description"/>
+<title>Valora — Terminal EEFF</title>
+<meta content="Escribe el nombre de un emisor peruano (SMV) y entra directo a su tearsheet financiero de 7 años — mock de demostración de Valora AI." name="description"/>
 <link href="/img/favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="/img/favicon.ico" rel="icon" type="image/x-icon"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -19,8 +19,8 @@ body{
   --line:rgba(21,23,27,.115);--line2:rgba(21,23,27,.06);--rule:rgba(21,23,27,.55);
   --accent:#1C4E86;--accent-soft:rgba(28,78,134,.075);
   --pos:#0E7A52;--neg:#A93226;--warn:#8A6410;
-  --row-py:6.5px;
   background:var(--bg);color:var(--ink);
+  min-height:100vh;
 }
 body[data-theme="dark"]{
   --bg:#0A0B0D;--paper:#121417;--sunk:#171A1E;--sunk2:#1C1F24;
@@ -32,252 +32,216 @@ body[data-theme="dark"]{
 a{color:var(--accent);text-decoration:none}
 a:hover{color:var(--ink)}
 .mono{font-family:'IBM Plex Mono',monospace}
-table{border-collapse:collapse;font-size:11.5px}
-.tabbtn{border:none;border-radius:5px;padding:6px 12px;font-size:12px;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;background:transparent;color:var(--ink3)}
-.tabbtn.active{background:var(--sunk);color:var(--ink);font-weight:600;border:1px solid var(--line)}
-.tabpanel{display:none}
-.tabpanel.active{display:block}
-tbody tr[onclick]:hover{background:var(--sunk)}
 
-tbody tr[onclick]:hover{background:var(--sunk)}
-tbody tr[onclick]:hover td{color:var(--ink)}
+/* header */
+.hdr{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px}
+.hdr-left{display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:baseline;gap:7px;text-decoration:none}
+.brand-name{font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.brand-sub{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.hdr-sep{width:1px;height:20px;background:var(--line)}
+.navlink{height:28px;padding:0 11px;border-radius:5px;display:flex;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink3);text-decoration:none}
+.navlink:hover{color:var(--ink);background:var(--sunk)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--ink3)}
+#themeBtn{display:flex;align-items:center;gap:6px;height:28px;padding:0 10px;background:var(--sunk);border:1px solid var(--line);border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--ink2);cursor:pointer}
+
+/* console */
+.stage{max-width:720px;margin:0 auto;padding:min(16vh,150px) 28px 60px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
+.headline{font-family:'Source Serif 4',Georgia,serif;font-size:clamp(26px,4.4vw,38px);line-height:1.14;font-weight:600;letter-spacing:-.02em;margin:0 0 34px;color:var(--ink)}
+.headline em{font-style:italic;color:var(--accent)}
+
+.cmdwrap{width:100%;position:relative}
+.cmdbar{display:flex;align-items:center;gap:10px;width:100%;background:var(--paper);border:1px solid var(--line);border-bottom:2px solid var(--accent);border-radius:8px;padding:0 8px 0 18px;height:56px;box-shadow:0 1px 2px rgba(21,23,27,.04)}
+.cmdbar.focused{border-color:var(--accent)}
+.cmd-prompt{font-family:'IBM Plex Mono',monospace;font-size:19px;color:var(--accent);font-weight:600;flex-shrink:0}
+#q{flex:1;border:none;outline:none;background:transparent;font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:.01em;color:var(--ink);height:100%;min-width:0;text-transform:uppercase}
+#q::placeholder{color:var(--ink3);text-transform:none;font-family:'IBM Plex Sans',sans-serif;font-size:15px;letter-spacing:0}
+.cmd-go{flex-shrink:0;height:36px;padding:0 14px;border-radius:5px;border:1px solid var(--line);background:var(--sunk);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--ink2);cursor:pointer}
+.cmd-go:hover{color:var(--ink)}
+
+.hint{margin-top:12px;font-size:11.5px;color:var(--ink3);display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.hint kbd{font-family:'IBM Plex Mono',monospace;font-size:9.5px;padding:1px 5px;border:1px solid var(--line);border-radius:3px;background:var(--sunk);color:var(--ink2)}
+
+.dropdown{position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:0 12px 28px rgba(21,23,27,.14);overflow:hidden;z-index:40;text-align:left;display:none;max-height:340px;overflow-y:auto}
+.dropdown.open{display:block}
+.opt{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 16px;cursor:pointer;border-bottom:1px solid var(--line2)}
+.opt:last-child{border-bottom:none}
+.opt:hover,.opt.active{background:var(--sunk)}
+.opt-name{font-weight:600;font-size:13.5px;color:var(--ink)}
+.opt-sector{font-size:11.5px;color:var(--ink3);margin-top:1px}
+.opt-go{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.08em;color:var(--ink3);flex-shrink:0}
+.opt.active .opt-go{color:var(--accent)}
+.opt-empty{padding:16px;font-size:12.5px;color:var(--ink3);text-align:center}
+
+.quick{margin-top:26px;display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.03em;padding:5px 10px;border-radius:20px;border:1px solid var(--line);color:var(--ink2);background:var(--paper);cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+
+.stats{margin-top:56px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--rule);width:100%;max-width:520px}
+.stat{padding:14px 10px;border-right:1px solid var(--line2);text-align:center}
+.stat:last-child{border-right:none}
+.stat-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.stat-val{font-family:'IBM Plex Mono',monospace;font-size:17px;margin-top:5px;color:var(--ink)}
+
+.foot{margin-top:22px;font-size:11px;color:var(--ink3);max-width:60ch;line-height:1.6}
 </style>
 </head>
 <body>
-<div style="min-height:100vh">
-<div style="position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px">
-<div style="display:flex;align-items:center;gap:18px">
-<a href="index.html" style="display:flex;align-items:baseline;gap:7px;text-decoration:none">
-<span style="font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;letter-spacing:-.01em;color:var(--ink)">Valora</span>
-<span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)">Terminal EEFF</span>
-</a>
-<div style="width:1px;height:20px;background:var(--line)"></div>
-<a href="index.html" style="height:28px;padding:0 11px;border-radius:5px;display:flex;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink3);text-decoration:none">Índice · 17 emisores</a>
+<div class="hdr">
+  <div class="hdr-left">
+    <a class="brand" href="index.html">
+      <span class="brand-name">Valora</span>
+      <span class="brand-sub">Terminal EEFF</span>
+    </a>
+    <div class="hdr-sep"></div>
+    <a class="navlink" href="indice.html">Índice · 17 emisores</a>
+  </div>
+  <div class="hdr-right">
+    <span class="tag">SMV PERÚ · 2018,2020–2025 · AUDITADO</span>
+    <button id="themeBtn" onclick="toggleTheme()">OSCURO</button>
+  </div>
 </div>
-<div style="display:flex;align-items:center;gap:14px">
-<span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--ink3)">SMV PERÚ · 2018,2020–2025 · AUDITADO</span>
-<button id="themeBtn" onclick="toggleTheme()" style="display:flex;align-items:center;gap:6px;height:28px;padding:0 10px;background:var(--sunk);border:1px solid var(--line);border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--ink2);cursor:pointer">OSCURO</button>
-</div>
-</div>
-<div style="max-width:1260px;margin:0 auto;padding:38px 32px 80px">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:9px">Índice de emisores · SMV Perú</div>
-<h1 style="font-family:'Source Serif 4',Georgia,serif;font-size:31px;line-height:1.1;font-weight:600;letter-spacing:-.02em;margin:0 0 10px">Diecisiete emisores — índice MSCI nuam Peru Select, serie histórica 2018–2025</h1>
-<p style="font-size:13.5px;line-height:1.6;color:var(--ink2);max-width:74ch;margin:0 0 8px">Cobertura completa del índice MSCI nuam Peru Select (17 constituyentes, rebalanceo jun-2026). Cada fila abre el tearsheet del emisor con 4 vistas: EEFF (histórico + CAGR), análisis vertical (common size), ratios financieros por año y memoria anual (solo Alicorp por ahora). Cifras de la tabla: último año disponible por emisor.</p>
-<p style="font-size:12px;line-height:1.6;color:var(--ink3);max-width:74ch;margin:0 0 26px">No se homogeneizan rubros entre sectores ni se convierte moneda. Serie histórica según disponibilidad por emisor en la caché SMV. Ratios y análisis vertical no disponibles aún para 2 emisores con formato bancario (BCP, Intercorp Financial) — pendiente adaptar el mapeo de cuentas.</p>
-<div style="overflow-x:auto"><table style="width:100%;font-size:12.5px">
-<thead><tr>
-<th style="text-align:left;padding:8px 6px 6px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line)">Emisor</th><th style="text-align:left;padding:8px 6px 6px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line)">Sector</th><th style="text-align:right;padding:8px 6px 6px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:44px">CCY</th><th style="text-align:right;padding:8px 6px 6px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:100px">Ingresos 25</th><th style="text-align:right;padding:8px 6px 6px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:92px">Ut. neta 25</th><th style="text-align:right;padding:8px 6px 6px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:108px">Activos 25</th><th style="text-align:right;padding:8px 6px 6px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:100px">Patrimonio 25</th><th style="text-align:right;padding:8px 6px 6px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:62px">ROE 25</th><th style="text-align:left;padding:8px 6px 6px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--line);width:186px">Dictamen</th>
-</tr></thead>
-<tbody><tr onclick="location.href='alicorp-2024.html'" style="background:var(--accent-soft);cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line);border-left:2px solid var(--accent)"><div style="font-weight:600">Alicorp S.A.A.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">141 pp.</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line);color:var(--ink2);font-size:12px">Consumo masivo · alimentos</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line);font-weight:500">11,763,822</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line);font-weight:500">459,239</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line);color:var(--ink2)">10,668,796</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line);color:var(--ink2)">1,388,866</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line)">25.22 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(14,122,82,.10);color:var(--pos);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">OPINIÓN LIMPIA</span> <span style="font-size:11px;color:var(--ink3)">Tanaka</span></td>
-</tr><tr onclick="location.href='inretail-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">InRetail Perú Corp.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">124 pp.</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Retail y farmacia</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">22,819,679</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">989,947</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">23,298,482</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">6,787,547</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">15.42 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(14,122,82,.10);color:var(--pos);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">OPINIÓN LIMPIA</span> <span style="font-size:11px;color:var(--ink3)">Tanaka</span></td>
-</tr><tr onclick="location.href='credicorp-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Credicorp Ltd.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">180 pp.</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Banca y seguros</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">26,139,448</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">7,082,654</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">267,362,533</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">39,096,109</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">19.12 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(14,122,82,.10);color:var(--pos);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">OPINIÓN LIMPIA</span> <span style="font-size:11px;color:var(--ink3)">Tanaka</span></td>
-</tr><tr onclick="location.href='bbva-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Banco BBVA Perú</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">130 pp.</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Banca múltiple</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">7,967,004</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">2,390,911</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">112,336,347</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">14,991,629</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">16.90 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(138,100,16,.11);color:var(--warn);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">NO CLASIFICADA</span> <span style="font-size:11px;color:var(--ink3)">No especificada en el PDF</span></td>
-</tr><tr onclick="location.href='volcan-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Volcan Cía. Minera S.A.A.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">107 pp.</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Minería polimetálica</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">USD</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">1,180,687</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">205,421</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">2,200,244</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">530,471</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">41.92 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(14,122,82,.10);color:var(--pos);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">OPINIÓN LIMPIA</span> <span style="font-size:11px;color:var(--ink3)">Deloitte</span></td>
-<tr onclick="location.href='ferreycorp-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Ferreycorp S.A.A.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2025</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Industrial · bienes de capital</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">7,792,426</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">480,503</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">6,826,497</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">2,988,588</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">16.08 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
-<tr onclick="location.href='bcp-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Banco de Crédito del Perú</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2025</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Banca múltiple</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">—</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">—</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">—</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">—</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">—</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
-<tr onclick="location.href='buenaventura-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Cía. de Minas Buenaventura</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2025</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Minería polimetálica</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">USD</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">1,731,639</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">830,188</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">6,022,836</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">4,267,465</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">19.45 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
-<tr onclick="location.href='unacem-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Unacem Corp S.A.A.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2025</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Cemento</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">7,035,540</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">481,131</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">14,008,873</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">6,145,652</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">7.83 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
-<tr onclick="location.href='southern-copper-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Southern Peru Copper Corp.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2025</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Minería · cobre</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">USD</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">5,247,623</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">2,029,245</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">8,770,128</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">7,005,058</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">28.97 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
-<tr onclick="location.href='minsur-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Minsur S.A.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2025</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Minería · estaño</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">USD</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">2,748,580</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">878,922</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">4,692,339</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">2,487,437</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">35.33 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
-<tr onclick="location.href='orygen-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Orygen Perú S.A.A.</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2025</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Generación eléctrica</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">2,593,194</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">815,923</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">6,497,101</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">3,827,722</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">21.32 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
-<tr onclick="location.href='nexa-resources-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Nexa Resources Perú</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2023</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Minería · zinc</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">USD</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">735,337</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">46,443</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">1,221,303</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">708,185</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">6.56 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
-<tr onclick="location.href='cementos-pacasmayo-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Cementos Pacasmayo</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2025</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Cemento</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">2,116,883</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">154,205</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">3,103,366</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">1,191,365</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">12.94 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
-<tr onclick="location.href='intercorp-financial-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Intercorp Financial Services</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2025</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Holding banca y seguros</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">PEN</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">—</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">—</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">—</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">—</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">—</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
-<tr onclick="location.href='cerro-verde-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Soc. Minera Cerro Verde</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2025</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Minería · cobre</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">USD</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">4,728,340</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">1,367,129</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">9,224,620</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">7,601,005</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">17.99 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
-<tr onclick="location.href='engie-energia-2024.html'" style=";cursor:pointer">
-<td style="padding:13px 10px 13px 10px;border-bottom:1px solid var(--line2);"><div style="font-weight:400">Engie Energía Perú</div><div class="mono" style="font-size:10px;color:var(--ink3);margin-top:2px">SMV 2025</div></td>
-<td style="padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2);font-size:12px">Generación eléctrica</td>
-<td class="mono" style="font-size:10.5px;color:var(--ink3)">USD</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">653,020</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);font-weight:500">76,636</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">2,413,872</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2);color:var(--ink2)">1,213,785</td>
-<td class="mono" style="text-align:right;padding:13px 10px;border-bottom:1px solid var(--line2)">6.31 %</td>
-<td style="padding:13px 0 13px 10px;border-bottom:1px solid var(--line2)"><span style="display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:3px;background:rgba(139,145,153,.14);color:var(--ink3);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em">SMV — sin dictamen cargado</span></td>
-</tr>
 
-</tr></tbody>
-</table></div>
-<div style="margin-top:22px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule);border-bottom:1px solid var(--line)">
-<div style="padding:13px 14px 13px 0;border-right:1px solid var(--line2)"><div class="mono" style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)">Emisores</div><div class="mono" style="font-size:18px;margin-top:5px">17</div></div>
-<div style="padding:13px 14px;border-right:1px solid var(--line2)"><div class="mono" style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)">Años por emisor</div><div class="mono" style="font-size:18px;margin-top:5px">hasta 9</div></div>
-<div style="padding:13px 14px;border-right:1px solid var(--line2)"><div class="mono" style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)">Tearsheets construidos</div><div class="mono" style="font-size:18px;margin-top:5px;color:var(--pos)">17 / 17</div></div>
-<div style="padding:13px 0 13px 14px"><div class="mono" style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)">Memorias procesadas</div><div class="mono" style="font-size:18px;margin-top:5px">1 / 17</div></div>
+<div class="stage">
+  <div class="eyebrow">Terminal EEFF · Valora AI</div>
+  <h1 class="headline">Escribe una empresa,<br/><em>entra directo</em> a su tearsheet</h1>
+
+  <div class="cmdwrap">
+    <div class="cmdbar" id="cmdbar">
+      <span class="cmd-prompt">&gt;</span>
+      <input id="q" type="text" placeholder="ALICORP, BCP, VOLCAN..." autocomplete="off" spellcheck="false"/>
+      <button class="cmd-go" onclick="goActive()">IR&nbsp;&nbsp;⏎</button>
+    </div>
+    <div class="dropdown" id="dropdown"></div>
+  </div>
+
+  <div class="hint"><kbd>↑</kbd><kbd>↓</kbd> para navegar · <kbd>Enter</kbd> para entrar · <kbd>Esc</kbd> para limpiar</div>
+
+  <div class="quick" id="quick"></div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Emisores</div><div class="stat-val mono">17</div></div>
+    <div class="stat"><div class="stat-label">Serie histórica</div><div class="stat-val mono">hasta 9 años</div></div>
+    <div class="stat"><div class="stat-label">Cobertura</div><div class="stat-val mono">MSCI nuam Peru Select</div></div>
+  </div>
+
+  <div class="foot">Mock estático de demostración, construido sobre la caché de EEFF auditados que <code class="mono">valora-ai</code> extrae de la SMV. <a href="indice.html">Ver el índice completo con cifras clave →</a></div>
 </div>
-<div style="margin-top:12px;font-size:11px;color:var(--ink3);line-height:1.6;max-width:78ch">Mock estático de demostración. ROE sobre patrimonio promedio del año y el inmediato anterior disponible en la serie.</div>
-</div>
-</div>
+
 <script>
-(function(){var t=localStorage.getItem('valora-theme')||'light';if(t==='dark')document.body.setAttribute('data-theme','dark');})();
+var EMPRESAS = [
+  {nombre:"Alicorp S.A.A.", sector:"Consumo masivo · alimentos", slug:"alicorp-2024.html"},
+  {nombre:"InRetail Perú Corp.", sector:"Retail y farmacia", slug:"inretail-2024.html"},
+  {nombre:"Credicorp Ltd.", sector:"Banca y seguros", slug:"credicorp-2024.html"},
+  {nombre:"Banco BBVA Perú", sector:"Banca múltiple", slug:"bbva-2024.html"},
+  {nombre:"Volcan Cía. Minera S.A.A.", sector:"Minería polimetálica", slug:"volcan-2024.html"},
+  {nombre:"Ferreycorp S.A.A.", sector:"Industrial · bienes de capital", slug:"ferreycorp-2024.html"},
+  {nombre:"Banco de Crédito del Perú", sector:"Banca múltiple", slug:"bcp-2024.html"},
+  {nombre:"Cía. de Minas Buenaventura", sector:"Minería polimetálica", slug:"buenaventura-2024.html"},
+  {nombre:"Unacem Corp S.A.A.", sector:"Cemento", slug:"unacem-2024.html"},
+  {nombre:"Southern Peru Copper Corp.", sector:"Minería · cobre", slug:"southern-copper-2024.html"},
+  {nombre:"Minsur S.A.", sector:"Minería · estaño", slug:"minsur-2024.html"},
+  {nombre:"Orygen Perú S.A.A.", sector:"Generación eléctrica", slug:"orygen-2024.html"},
+  {nombre:"Nexa Resources Perú", sector:"Minería · zinc", slug:"nexa-resources-2024.html"},
+  {nombre:"Cementos Pacasmayo", sector:"Cemento", slug:"cementos-pacasmayo-2024.html"},
+  {nombre:"Intercorp Financial Services", sector:"Holding banca y seguros", slug:"intercorp-financial-2024.html"},
+  {nombre:"Soc. Minera Cerro Verde", sector:"Minería · cobre", slug:"cerro-verde-2024.html"},
+  {nombre:"Engie Energía Perú", sector:"Generación eléctrica", slug:"engie-energia-2024.html"}
+];
+
+function norm(s){
+  return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+}
+
+var input = document.getElementById('q');
+var dropdown = document.getElementById('dropdown');
+var cmdbar = document.getElementById('cmdbar');
+var activeIdx = -1;
+var currentList = [];
+
+function renderList(list){
+  currentList = list;
+  activeIdx = list.length ? 0 : -1;
+  if(!list.length){
+    dropdown.innerHTML = '<div class="opt-empty">Sin resultados. Prueba con otro nombre o sector.</div>';
+    dropdown.classList.add('open');
+    return;
+  }
+  dropdown.innerHTML = list.map(function(e, i){
+    return '<div class="opt'+(i===0?' active':'')+'" data-idx="'+i+'" onmousedown="location.href=\''+e.slug+'\'">'
+      + '<div><div class="opt-name">'+e.nombre+'</div><div class="opt-sector">'+e.sector+'</div></div>'
+      + '<div class="opt-go">IR ⏎</div></div>';
+  }).join('');
+  dropdown.classList.add('open');
+}
+
+function filter(term){
+  var t = norm(term);
+  if(!t) return EMPRESAS;
+  return EMPRESAS
+    .map(function(e){
+      var n = norm(e.nombre), s = norm(e.sector);
+      var rank = n.indexOf(t) === 0 ? 0        // nombre empieza con el término
+        : n.indexOf(t) !== -1 ? 1              // nombre lo contiene
+        : s.indexOf(t) !== -1 ? 2              // solo el sector lo contiene
+        : -1;
+      return {e: e, rank: rank};
+    })
+    .filter(function(r){ return r.rank !== -1; })
+    .sort(function(a, b){ return a.rank - b.rank; })
+    .map(function(r){ return r.e; });
+}
+
+function updateActive(){
+  var opts = dropdown.querySelectorAll('.opt');
+  opts.forEach(function(o,i){ o.classList.toggle('active', i===activeIdx); });
+  if(opts[activeIdx]) opts[activeIdx].scrollIntoView({block:'nearest'});
+}
+
+function goActive(){
+  if(activeIdx >= 0 && currentList[activeIdx]) location.href = currentList[activeIdx].slug;
+}
+
+input.addEventListener('focus', function(){
+  cmdbar.classList.add('focused');
+  renderList(filter(input.value));
+});
+input.addEventListener('input', function(){
+  renderList(filter(input.value));
+});
+input.addEventListener('blur', function(){
+  cmdbar.classList.remove('focused');
+  setTimeout(function(){ dropdown.classList.remove('open'); }, 120);
+});
+input.addEventListener('keydown', function(e){
+  if(e.key === 'ArrowDown'){ e.preventDefault(); if(activeIdx < currentList.length-1){ activeIdx++; updateActive(); } }
+  else if(e.key === 'ArrowUp'){ e.preventDefault(); if(activeIdx > 0){ activeIdx--; updateActive(); } }
+  else if(e.key === 'Enter'){ e.preventDefault(); goActive(); }
+  else if(e.key === 'Escape'){ input.value=''; dropdown.classList.remove('open'); input.blur(); }
+});
+
+// chips de acceso rápido — muestra 6 al azar en cada carga
+(function(){
+  var quick = document.getElementById('quick');
+  var pool = EMPRESAS.slice().sort(function(){ return Math.random()-0.5; }).slice(0,6);
+  quick.innerHTML = pool.map(function(e){
+    return '<span class="chip" onclick="location.href=\''+e.slug+'\'">'+e.nombre.split(' ')[0].replace(/[.,]/g,'')+'</span>';
+  }).join('');
+})();
+
+(function(){try{var t=localStorage.getItem('valora-theme')||'light';if(t==='dark')document.body.setAttribute('data-theme','dark');}catch(e){}})();
 function toggleTheme(){
   var isDark = document.body.getAttribute('data-theme')==='dark';
   document.body.setAttribute('data-theme', isDark ? 'light':'dark');
-  localStorage.setItem('valora-theme', isDark ? 'light':'dark');
+  try{ localStorage.setItem('valora-theme', isDark ? 'light':'dark'); }catch(e){}
   var btn=document.getElementById('themeBtn'); if(btn) btn.textContent = isDark ? 'OSCURO':'CLARO';
-}
-function showTab(name){
-  document.querySelectorAll('.tabpanel').forEach(function(p){p.classList.toggle('active', p.id==='tab-'+name)});
-  document.querySelectorAll('.tabbtn').forEach(function(b){b.classList.toggle('active', b.dataset.tab===name)});
 }
 document.addEventListener('DOMContentLoaded', function(){
   var btn=document.getElementById('themeBtn');
   if(btn && document.body.getAttribute('data-theme')==='dark') btn.textContent='CLARO';
-  showTab('eeff');
+  input.focus();
 });
 </script>
 </body>
