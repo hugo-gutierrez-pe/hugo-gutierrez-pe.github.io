@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html lang="es-PE">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Valora — Rentabilidad ROE · ROA</title>
+<meta content="Ranking interactivo de 54 emisores peruanos por ROE y ROA promedio 2021–2025 — mock de demostración de Valora AI." name="description"/>
+<link href="/img/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/img/favicon.ico" rel="icon" type="image/x-icon"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;-webkit-font-smoothing:antialiased;font-family:'IBM Plex Sans',system-ui,sans-serif;
+  --bg:#EFEFEC;--paper:#FFFFFF;--sunk:#F7F7F4;--sunk2:#F1F1ED;
+  --ink:#15171B;--ink2:#4B5158;--ink3:#8B9199;
+  --line:rgba(21,23,27,.115);--line2:rgba(21,23,27,.06);--rule:rgba(21,23,27,.55);
+  --accent:#1C4E86;--accent-soft:rgba(28,78,134,.075);
+  --pos:#0E7A52;--pos-soft:rgba(14,122,82,.09);
+  --neg:#A93226;--neg-soft:rgba(169,50,38,.08);
+  --warn:#8A6410;
+  background:var(--bg);color:var(--ink);
+}
+body[data-theme="dark"]{
+  --bg:#0A0B0D;--paper:#121417;--sunk:#171A1E;--sunk2:#1C1F24;
+  --ink:#E9EAEC;--ink2:#A2A8B0;--ink3:#6C737C;
+  --line:rgba(255,255,255,.115);--line2:rgba(255,255,255,.055);--rule:rgba(255,255,255,.45);
+  --accent:#6FA6DF;--accent-soft:rgba(111,166,223,.10);
+  --pos:#3FB07C;--pos-soft:rgba(63,176,124,.12);
+  --neg:#E0705F;--neg-soft:rgba(224,112,95,.12);
+  --warn:#C99A3C;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--ink)}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+
+/* header */
+.hdr{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px}
+.hdr-left{display:flex;align-items:center;gap:18px;min-width:0;overflow-x:auto}
+.brand{display:flex;align-items:baseline;gap:7px;text-decoration:none;flex-shrink:0}
+.brand-name{font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.brand-sub{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.hdr-sep{width:1px;height:20px;background:var(--line);flex-shrink:0}
+.navlink{height:28px;padding:0 11px;border-radius:5px;display:flex;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink3);text-decoration:none;white-space:nowrap;flex-shrink:0}
+.navlink:hover{color:var(--ink);background:var(--sunk)}
+.navlink.active{color:var(--ink);background:var(--sunk);border:1px solid var(--line)}
+.hdr-right{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--ink3)}
+#themeBtn{display:flex;align-items:center;gap:6px;height:28px;padding:0 10px;background:var(--sunk);border:1px solid var(--line);border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--ink2);cursor:pointer}
+
+.page{max-width:1120px;margin:0 auto;padding:38px 32px 90px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:9px}
+h1{font-family:'Source Serif 4',Georgia,serif;font-size:29px;line-height:1.12;font-weight:600;letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance}
+.dek{font-size:13.5px;line-height:1.65;color:var(--ink2);max-width:76ch;margin:0 0 22px}
+.dek b{color:var(--ink);font-weight:600}
+
+/* methodology disclosure */
+details.method{margin-bottom:24px;border:1px solid var(--line);border-radius:8px;background:var(--paper);overflow:hidden}
+details.method summary{list-style:none;cursor:pointer;padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:var(--ink2);display:flex;align-items:center;gap:8px;user-select:none}
+details.method summary::-webkit-details-marker{display:none}
+details.method summary::before{content:"▸";color:var(--ink3);transition:transform .15s}
+details.method[open] summary::before{transform:rotate(90deg)}
+details.method summary:hover{color:var(--ink)}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line2)}
+.method-col{padding:16px 18px}
+.method-col+.method-col{border-left:1px solid var(--line2)}
+.method-col h3{font-size:12.5px;font-weight:600;margin:0 0 3px;color:var(--ink)}
+.method-col p{font-size:12px;line-height:1.6;color:var(--ink2);margin:0}
+.formula{font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink);background:var(--sunk);border:1px solid var(--line2);border-radius:6px;padding:9px 12px;margin:8px 0 0}
+.formula .op{color:var(--ink3)}
+.formula .roe{color:var(--pos)}.formula .roa{color:var(--accent)}
+.method-note{grid-column:1/-1;padding:12px 18px;border-top:1px solid var(--line2);font-size:11.5px;color:var(--ink3);line-height:1.6}
+
+/* controls */
+.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.search{position:relative;flex:1;min-width:200px;max-width:320px}
+.search input{width:100%;height:34px;border:1px solid var(--line);border-radius:6px;background:var(--paper);padding:0 12px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:var(--ink);outline:none}
+.search input:focus{border-color:var(--accent)}
+.search input::placeholder{color:var(--ink3)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.02em;padding:6px 11px;border-radius:20px;border:1px solid var(--line);color:var(--ink2);background:var(--paper);cursor:pointer;white-space:nowrap}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.count{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink3);white-space:nowrap}
+
+/* table */
+.table-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 1px 2px rgba(21,23,27,.04)}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:640px}
+thead th{position:sticky;top:52px;background:var(--paper);text-align:left;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule);white-space:nowrap}
+thead th.sortable{cursor:pointer;user-select:none}
+thead th.sortable:hover{color:var(--ink)}
+thead th.num{text-align:right}
+thead th .arrow{margin-left:4px;opacity:.4;font-size:9px}
+thead th.sorted .arrow{opacity:1;color:var(--accent)}
+tbody td{padding:9px 14px;border-bottom:1px solid var(--line2);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--sunk)}
+td.rank{color:var(--ink3);width:30px;font-family:'IBM Plex Mono',monospace;font-size:11.5px}
+td.empresa{font-size:13px;color:var(--ink);font-weight:500}
+td.empresa .sector{display:block;font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:9.5px;letter-spacing:.03em;color:var(--ink3);margin-top:2px}
+.flag{color:var(--warn);cursor:help;font-size:10px}
+td.num{text-align:right;white-space:nowrap;width:150px}
+.cell-bar{display:inline-block;width:56px;height:6px;background:var(--sunk2);border-radius:3px;overflow:hidden;vertical-align:middle;margin-right:9px;position:relative;top:-1px}
+.bar{height:100%;border-radius:3px}
+.bar.pos{background:var(--pos)}
+.bar.neg{width:0!important}
+.num .mono{display:inline-block;width:56px;text-align:right;font-size:12.5px}
+.num .mono.pos{color:var(--pos)}
+.num .mono.neg{color:var(--neg)}
+.empty-row td{padding:30px;text-align:center;color:var(--ink3);font-size:13px}
+
+.foot{margin-top:20px;display:grid;gap:8px;font-size:11.5px;line-height:1.6;color:var(--ink3);max-width:80ch}
+.foot b{color:var(--ink2);font-weight:600}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-left">
+    <a class="brand" href="index.html">
+      <span class="brand-name">Valora</span>
+      <span class="brand-sub">Terminal EEFF</span>
+    </a>
+    <div class="hdr-sep"></div>
+    <a class="navlink" href="indice.html">Índice · 17 emisores</a>
+    <a class="navlink active" href="rentabilidad.html">Rentabilidad · 54 emisores</a>
+  </div>
+  <div class="hdr-right">
+    <span class="tag">SMV PERÚ · 2021–2025 · CACHE</span>
+    <button id="themeBtn" onclick="toggleTheme()">OSCURO</button>
+  </div>
+</div>
+
+<div class="page">
+  <div class="eyebrow">Ranking · rentabilidad promedio 5 años</div>
+  <h1>ROE y ROA promedio 2021–2025, 54 emisores</h1>
+  <p class="dek">Cada ratio promedia el numerador y el denominador por separado a lo largo de 5 ejercicios — no promedia el ratio anual — para que un solo año atípico no distorsione la cifra. Ordena por columna, busca un emisor o filtra por sector.</p>
+
+  <details class="method">
+    <summary>¿Cómo se calcula?</summary>
+    <div class="method-grid">
+      <div class="method-col">
+        <h3>ROE</h3>
+        <p>Utilidad neta promedio ÷ patrimonio promedio, ambos de los 5 años.</p>
+        <div class="formula"><span class="roe">ROE</span> <span class="op">=</span> Σ Ut. Neta (21–25)/5 <span class="op">÷</span> Σ Patrimonio (21–25)/5</div>
+      </div>
+      <div class="method-col">
+        <h3>ROA</h3>
+        <p>Utilidad operativa (EBIT) promedio ÷ activo total promedio, ambos de los 5 años.</p>
+        <div class="formula"><span class="roa">ROA</span> <span class="op">=</span> Σ EBIT (21–25)/5 <span class="op">÷</span> Σ Activo Total (21–25)/5</div>
+      </div>
+      <p class="method-note">Universo: emisores del cache SMV (consolidado si está disponible, individual si no) con los 4 insumos completos en 2021–2025. Quedan fuera bancos y aseguradoras — plan de cuentas distinto, aún sin mapear en <span class="mono">valora-ai</span> — y cualquier emisor con un año faltante en la serie.</p>
+    </div>
+  </details>
+
+  <div class="controls">
+    <div class="search"><input id="q" type="text" placeholder="Buscar empresa..." autocomplete="off"/></div>
+    <div class="chips" id="chips"></div>
+    <div class="count" id="count"></div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30px"></th>
+            <th id="th-e" class="sortable">Empresa <span class="arrow">↕</span></th>
+            <th id="th-roe" class="sortable num sorted">ROE <span class="arrow">↓</span></th>
+            <th id="th-roa" class="sortable num">ROA <span class="arrow">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div><span class="flag" style="cursor:default">*</span> <b>Ratio sensible</b> — patrimonio, activo o resultado promedio muy pequeño frente al de sus pares; el ROE/ROA queda amplificado. No es un error de cálculo.</div>
+    <div><b>Fuente:</b> cache SQLite de <span class="mono">valora-ai</span> (SOAP API SMV Perú, actualizado 2026-07-29) · EEFF Consolidado o Individual según disponibilidad · cifras en miles, en la moneda de reporte de cada emisor.</div>
+  </div>
+</div>
+
+<script>
+var EMPRESAS = [{"e":"Minera Andina De Exploraciones S.A.A.","s":"Mineras (CM)","t":"Consolidado","roe":87.37,"roa":53.21,"flag":true},{"e":"Cerveceria San Juan S.A.","s":"Industriales (CI)","t":"Consolidado","roe":76.46,"roa":46.36,"flag":true},{"e":"Dunas Energia S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":38.05,"roa":13.94,"flag":false},{"e":"Union De Cervecerias Peruanas Backus Y Johnston S.A.A.","s":"Industriales (CI)","t":"Consolidado","roe":33.11,"roa":24.6,"flag":false},{"e":"Minsur S.A.","s":"Mineras (CM)","t":"Consolidado","roe":30.26,"roa":24.91,"flag":false},{"e":"Pandero S.A. Eafc","s":null,"t":"Consolidado","roe":29.42,"roa":16.28,"flag":false},{"e":"Compañia Minera Poderosa S.A.","s":"Mineras (CM)","t":"Consolidado","roe":27.01,"roa":29.25,"flag":false},{"e":"Indeco S.A.","s":"Industriales (CI)","t":"Consolidado","roe":26.55,"roa":13.67,"flag":false},{"e":"Orygen Peru S.A.A.","s":"Servicios Públicos (CP)","t":"Consolidado","roe":24.16,"roa":18.61,"flag":false},{"e":"Saga Falabella S.A.","s":"Diversas (CD)","t":"Consolidado","roe":22.28,"roa":10.45,"flag":false},{"e":"Factotal Peru S.A.","s":"Diversas (CD)","t":"Consolidado","roe":19.56,"roa":11.89,"flag":false},{"e":"Ferreycorp S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":16.38,"roa":11.14,"flag":false},{"e":"Luz Del Sur S.A.A.","s":"Servicios Públicos (CP)","t":"Consolidado","roe":16.11,"roa":11.79,"flag":false},{"e":"Gr Holding S.A.","s":"Diversas (CD)","t":"Consolidado","roe":15.4,"roa":11.32,"flag":false},{"e":"Leche Gloria S.A.","s":"Industriales (CI)","t":"Consolidado","roe":14.7,"roa":9.21,"flag":false},{"e":"Inretail Peru Corp.","s":"Diversas (CD)","t":"Consolidado","roe":14.62,"roa":8.92,"flag":false},{"e":"Grupo Bvl S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":14.41,"roa":10.97,"flag":false},{"e":"Cementos Pacasmayo S.A.A.","s":"Industriales (CI)","t":"Consolidado","roe":14.23,"roa":10.93,"flag":false},{"e":"Los Portales S.A.","s":"Diversas (CD)","t":"Consolidado","roe":13.84,"roa":10.46,"flag":false},{"e":"Volcan Compañia Minera S.A.A.","s":"Mineras (CM)","t":"Consolidado","roe":13.37,"roa":8.03,"flag":false},{"e":"Credicorp Capital Peru S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":12.31,"roa":7.98,"flag":false},{"e":"Activo Inmobiliario Peruano S.A.A. (Antes Falabella Peru S.A.A.)","s":"Diversas (CD)","t":"Consolidado","roe":12.25,"roa":12.03,"flag":false},{"e":"Alicorp S.A.A.","s":"Industriales (CI)","t":"Consolidado","roe":11.84,"roa":7.94,"flag":false},{"e":"Agroindustrias San Jacinto S.A.A.","s":"Agrario (CG)","t":"Consolidado","roe":11.65,"roa":11.19,"flag":false},{"e":"Hermes Transportes Blindados S.A.","s":"Diversas (CD)","t":"Consolidado","roe":11.49,"roa":10.85,"flag":false},{"e":"Popular S.A. Sociedad Administradora De Fondos De Inversion","s":"Otras Instituciones (OI)","t":"Consolidado","roe":11.21,"roa":11.45,"flag":false},{"e":"Peruana De Energia S.A.A.","s":"Servicios Públicos (CP)","t":"Consolidado","roe":11.07,"roa":10.69,"flag":false},{"e":"Corporacion Aceros Arequipa S.A.","s":"Industriales (CI)","t":"Consolidado","roe":10.83,"roa":8.71,"flag":false},{"e":"Azzaro Trading S.A.","s":"Diversas (CD)","t":"Consolidado","roe":9.89,"roa":10.04,"flag":false},{"e":"Compañia De Minas Buenaventura S.A.A.","s":"Mineras (CM)","t":"Consolidado","roe":9.7,"roa":4.03,"flag":false},{"e":"Unacem Corp Sociedad Anonima Abierta - Unacem Corp S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":9.28,"roa":8.21,"flag":false},{"e":"Quimpac S.A.","s":"Industriales (CI)","t":"Consolidado","roe":8.92,"roa":8.16,"flag":false},{"e":"Casa Grande Sociedad Anonima Abierta","s":"Agrario (CG)","t":"Consolidado","roe":7.96,"roa":7.9,"flag":false},{"e":"Yura S.A.","s":"Industriales (CI)","t":"Consolidado","roe":7.31,"roa":6.95,"flag":false},{"e":"Inverfal Peru S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":7.02,"roa":4.92,"flag":false},{"e":"Agroindustrial Laredo S.A.A.","s":"Agrario (CG)","t":"Consolidado","roe":7.02,"roa":7.31,"flag":false},{"e":"Consorcio Cementero Del Sur S.A.","s":"Diversas (CD)","t":"Consolidado","roe":6.12,"roa":6.46,"flag":false},{"e":"Corporacion Cervesur S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":5.63,"roa":5.42,"flag":false},{"e":"Refineria La Pampilla S.A.A.","s":null,"t":"Consolidado","roe":5.32,"roa":4.47,"flag":false},{"e":"Inversiones En Turismo S.A. Invertur","s":"Diversas (CD)","t":"Consolidado","roe":3.9,"roa":4.63,"flag":false},{"e":"Expertia Travel S.A.","s":"Diversas (CD)","t":"Consolidado","roe":3.64,"roa":3.32,"flag":false},{"e":"Creditex S.A.A.","s":"Industriales (CI)","t":"Consolidado","roe":3.42,"roa":3.48,"flag":false},{"e":"Administradora Jockey Plaza Shopping Center S.A.","s":"Diversas (CD)","t":"Consolidado","roe":3.4,"roa":9.69,"flag":false},{"e":"Empresa Editora El Comercio S.A.","s":"Industriales (CI)","t":"Consolidado","roe":2.17,"roa":0.4,"flag":false},{"e":"Agricola Cayalti Sociedad Anonima Abierta","s":"Agrario (CG)","t":"Consolidado","roe":0.82,"roa":1.08,"flag":false},{"e":"Inversiones Centenario S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":-1.16,"roa":1.06,"flag":false},{"e":"Andino Investment Holding S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":-2.08,"roa":0.78,"flag":false},{"e":"Promoinvest Sociedad Administradora De Fondos S.A.A.","s":"Otras Instituciones (OI)","t":"Consolidado","roe":-3.29,"roa":-6.15,"flag":false},{"e":"Central Azucarera Chucarapi-Pampa Blanca S.A.","s":"Agrario (CG)","t":"Consolidado","roe":-4.02,"roa":-2.21,"flag":false},{"e":"Ai Inversiones Palo Alto S.A.","s":"Diversas (CD)","t":"Consolidado","roe":-4.33,"roa":0.54,"flag":false},{"e":"Peru Holding De Turismo S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":-10.55,"roa":-9.01,"flag":false},{"e":"Aenza S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":-10.66,"roa":4.94,"flag":false},{"e":"Compañia Minera San Ignacio De Morococha S.A.A.","s":"Mineras (CM)","t":"Consolidado","roe":-149.63,"roa":-12.03,"flag":true},{"e":"Fossal S.A.A.","s":"Diversas (CD)","t":"Consolidado","roe":-242.44,"roa":-118.87,"flag":true}];
+</script>
+<script>
+var ROE_MAX = Math.max.apply(null, EMPRESAS.map(function(e){return e.roe})) || 1;
+var ROA_MAX = Math.max.apply(null, EMPRESAS.map(function(e){return e.roa})) || 1;
+var SECTORS = Array.from(new Set(EMPRESAS.map(function(e){return e.s}).filter(Boolean))).sort();
+
+var state = { q: "", sector: null, sortKey: "roe", sortDir: -1 };
+
+function norm(s){ return (s||"").toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+
+function barWidth(v, max){
+  if(v <= 0) return "0%";
+  return Math.min(v/max, 1) * 100 + "%";
+}
+
+function render(){
+  var list = EMPRESAS.filter(function(e){
+    if(state.sector && e.s !== state.sector) return false;
+    if(state.q && norm(e.e).indexOf(norm(state.q)) === -1) return false;
+    return true;
+  });
+  list.sort(function(a,b){
+    var av = state.sortKey === "e" ? norm(a.e) : a[state.sortKey];
+    var bv = state.sortKey === "e" ? norm(b.e) : b[state.sortKey];
+    if(av < bv) return -1 * state.sortDir;
+    if(av > bv) return 1 * state.sortDir;
+    return 0;
+  });
+
+  document.getElementById('count').textContent = list.length + ' de ' + EMPRESAS.length + ' empresas';
+
+  var tbody = document.getElementById('tbody');
+  if(!list.length){
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Sin resultados. Prueba con otro nombre o sector.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(function(e, i){
+    var flag = e.flag ? ' <sup class="flag" title="Base patrimonial u operativa reducida frente al resultado promedio — ratio sensible, interpretar con cautela">*</sup>' : '';
+    var sec = e.s ? e.s : '—';
+    function cell(v, max){
+      var cls = v >= 0 ? 'pos' : 'neg';
+      return '<div class="cell-bar"><div class="bar '+cls+'" style="width:'+barWidth(v,max)+'"></div></div>'
+        + '<span class="mono '+cls+'">'+(v>=0?'+':'')+v.toFixed(1)+'%</span>';
+    }
+    return '<tr>'
+      + '<td class="rank">'+(i+1)+'</td>'
+      + '<td class="empresa">'+e.e+flag+'<span class="sector">'+sec+'</span></td>'
+      + '<td class="num">'+cell(e.roe, ROE_MAX)+'</td>'
+      + '<td class="num">'+cell(e.roa, ROA_MAX)+'</td>'
+      + '</tr>';
+  }).join('');
+}
+
+function setSort(key){
+  if(state.sortKey === key){ state.sortDir *= -1; }
+  else { state.sortKey = key; state.sortDir = key === 'e' ? 1 : -1; }
+  ['th-e','th-roe','th-roa'].forEach(function(id){
+    var th = document.getElementById(id);
+    var k = id.replace('th-','');
+    th.classList.toggle('sorted', k === key);
+    th.querySelector('.arrow').textContent = k === key ? (state.sortDir === 1 ? '↑' : '↓') : '↕';
+  });
+  render();
+}
+
+document.getElementById('th-e').addEventListener('click', function(){ setSort('e'); });
+document.getElementById('th-roe').addEventListener('click', function(){ setSort('roe'); });
+document.getElementById('th-roa').addEventListener('click', function(){ setSort('roa'); });
+
+var chipsEl = document.getElementById('chips');
+chipsEl.innerHTML = '<span class="chip active" data-sector="">Todos</span>' + SECTORS.map(function(s){
+  return '<span class="chip" data-sector="'+s+'">'+s+'</span>';
+}).join('');
+chipsEl.addEventListener('click', function(e){
+  var chip = e.target.closest('.chip');
+  if(!chip) return;
+  chipsEl.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); });
+  chip.classList.add('active');
+  state.sector = chip.dataset.sector || null;
+  render();
+});
+
+document.getElementById('q').addEventListener('input', function(e){
+  state.q = e.target.value;
+  render();
+});
+
+render();
+
+(function(){try{var t=localStorage.getItem('valora-theme')||'light';if(t==='dark')document.body.setAttribute('data-theme','dark');}catch(e){}})();
+function toggleTheme(){
+  var isDark = document.body.getAttribute('data-theme')==='dark';
+  document.body.setAttribute('data-theme', isDark ? 'light':'dark');
+  try{ localStorage.setItem('valora-theme', isDark ? 'light':'dark'); }catch(e){}
+  var btn=document.getElementById('themeBtn'); if(btn) btn.textContent = isDark ? 'OSCURO':'CLARO';
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var btn=document.getElementById('themeBtn');
+  if(btn && document.body.getAttribute('data-theme')==='dark') btn.textContent='CLARO';
+});
+</script>
+</body>
+</html>
