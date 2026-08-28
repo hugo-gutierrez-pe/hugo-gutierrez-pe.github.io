@@ -36,6 +36,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://hgfincorp.com/valora-demo/comparar.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://hgfincorp.com/valora-demo/alicorp-2024.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
