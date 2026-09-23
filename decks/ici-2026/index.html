@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="bloomberg">
+<head>
+<meta charset="UTF-8" />
+<title>IPOs, OPAs y el valor del control en Latinoamérica — ICI 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    /* Type scale (1920×1080 — projection sizes, not web density) */
+    --type-mega:      140px;  /* section dividers */
+    --type-title:      80px;  /* portada */
+    --type-h1:         64px;  /* slide titles */
+    --type-h2:         44px;  /* sub-titles */
+    --type-quote:      60px;  /* citas */
+    --type-body:       26px;  /* párrafos */
+    --type-body-lg:    30px;  /* énfasis en cuerpo */
+    --type-small:      22px;  /* notas */
+    --type-mono-lg:    20px;  /* eyebrows grandes */
+    --type-mono:       16px;  /* eyebrows / chrome */
+    --type-mono-sm:    14px;  /* footer */
+
+    /* Spacing */
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    /* Surface */
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    /* Accent — overridden per course below */
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+
+    /* Course meta — set by tweaks / data-course */
+    --course-code:    '1FIN39';
+    --course-name:    'Bloomberg Terminal';
+    --course-short:   'Bloomberg';
+  }
+
+  /* Course themes — change accent + meta */
+  html[data-course="bloomberg"] {
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+  }
+  html[data-course="corp"] {
+    --accent:       #2A4A6B;
+    --accent-deep:  #16314A;
+    --accent-tint:  rgba(42,74,107,0.07);
+    --accent-tint-2:rgba(42,74,107,0.18);
+  }
+  html[data-course="analisis"] {
+    --accent:       #1F6B5E;
+    --accent-deep:  #11463D;
+    --accent-tint:  rgba(31,107,94,0.07);
+    --accent-tint-2:rgba(31,107,94,0.18);
+  }
+
+  /* Background mode — white (default) vs beige (low-contrast paper).
+     Beige values matched to Hugo's website palette. */
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  /* Dark mode — inspired by the "S1 · Leer el mercado" section slide.
+     Deep neutral background + radial blue glow on every slide.
+     bg-ink slides go a notch deeper so the hierarchy survives. */
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  /* Dark-mode-only tweaks for elements with hardcoded light/dark assumptions */
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(24,95,165,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #9CC4EE; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(24,95,165,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    /* extra top/bottom padding reserves space for chrome bars */
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  /* Italic accent — the website's signature */
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .slide.bg-ink em { color: #9CC4EE; }
+
+  /* ── CHROME: shared header / footer on every slide ───── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  /* Bloomberg-only subtle orange easter egg */
+  html[data-course="bloomberg"] .bloomberg-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #FA8C16;
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  html:not([data-course="bloomberg"]) .bloomberg-dot { display: none; }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+
+  .chrome-bot .num {
+    font-feature-settings: "tnum" 1;
+    color: var(--ink-2);
+  }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  /* hide chrome on portada (slide 1) */
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #9CC4EE; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  .sec-num {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .slide-lede {
+    font-size: var(--type-body-lg);
+    color: var(--ink-2);
+    line-height: 1.45;
+    max-width: 50ch;
+    margin-top: var(--gap-item);
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── 1 · PORTADA DEL CURSO ───────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--ink);
+  }
+  .portada-head .brand-block .brand-mark {
+    width: 44px; height: 44px; border-radius: 9px;
+    font-size: 18px;
+  }
+  .portada-head .brand-name {
+    font-family: var(--font-sans);
+    font-size: 26px; font-weight: 600; letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: var(--ink);
+    max-width: 18ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    max-width: 28ch;
+  }
+
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+
+  /* ── 2 · PORTADA DE SECCIÓN ──────────────────────────── */
+  .seccion {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 180px;
+    padding-bottom: 160px;
+    isolation: isolate;
+  }
+  .seccion::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(60% 80% at 80% 50%, rgba(24,95,165,0.28), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .seccion .sec-mega {
+    font-family: var(--font-mono);
+    font-size: var(--type-mega);
+    font-weight: 500;
+    color: rgba(255,255,255,0.12);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+  .seccion .sec-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9CC4EE;
+    margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .seccion .sec-label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .seccion h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: #fff;
+    max-width: 22ch;
+  }
+  .seccion .sec-lede {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.7);
+    margin-top: 32px;
+    max-width: 50ch;
+    line-height: 1.45;
+  }
+
+  /* ── 3 · AGENDA ──────────────────────────────────────── */
+  .agenda-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 4px;
+  }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 52px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num {
+    font-family: var(--font-mono);
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .agenda-row .title {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .agenda-row .desc {
+    font-size: 24px;
+    color: var(--ink-3);
+    margin-top: 2px;
+  }
+  .agenda-row .tag {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 14px;
+    border: 0.5px solid var(--rule-2);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+
+  .tool-chips {
+    position: absolute; top: 104px; right: var(--pad-x);
+    display: flex; gap: 10px; z-index: 2;
+  }
+  .tool-chip {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* ── 4 · TÍTULO + 2 COLUMNAS DE TEXTO ────────────────── */
+  .two-col-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-col);
+    margin-top: 0;
+  }
+  .text-col h3 {
+    font-size: var(--type-h2);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  .text-col .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 10px;
+    white-space: nowrap;
+  }
+  .text-col .col-eyebrow .num { color: var(--ink-3); }
+  .text-col p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .text-col ul {
+    list-style: none;
+    padding: 0;
+  }
+  .text-col ul li {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    padding: 10px 0 10px 26px;
+    position: relative;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .text-col ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 22px;
+    width: 12px; height: 1px;
+    background: var(--accent);
+  }
+  .text-col ul li:last-child { border-bottom: none; }
+  .text-col ul li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── 5 · TÍTULO + IMAGEN (2 COL) + COMENTARIO ─────────── */
+  .img-comment {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--gap-col);
+  }
+  .img-comment .img-slot {
+    background: #EEF1F5;
+    border: 1px dashed rgba(10,13,18,0.18);
+    border-radius: 14px;
+    aspect-ratio: 16 / 10;
+    position: relative;
+    overflow: hidden;
+    background-image:
+      repeating-linear-gradient(135deg,
+        transparent 0, transparent 18px,
+        rgba(10,13,18,0.05) 18px, rgba(10,13,18,0.05) 19px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--ink-3);
+    text-align: center;
+    padding: 32px;
+  }
+  .img-slot .ph-icon {
+    font-size: 64px;
+    color: var(--accent);
+    opacity: 0.6;
+    margin-bottom: 18px;
+    line-height: 1;
+  }
+  .img-slot .ph-label {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--ink-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .img-slot .ph-caption {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    margin-top: 6px;
+    white-space: nowrap;
+  }
+
+  .comment-block .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .comment-block h3 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .comment-block p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .comment-block .source {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 0.5px solid var(--rule);
+  }
+
+  /* ── 6 · TÍTULO + IMAGEN GRANDE + COMENTARIO ABAJO ───── */
+  .big-img-block {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    flex: 1;
+  }
+  .big-img-block .img-slot.big {
+    aspect-ratio: auto;
+    flex: 1;
+    min-height: 520px;
+    border-radius: 14px;
+  }
+  .big-img-block .img-slot.big .ph-icon { font-size: 72px; }
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding-top: 4px;
+    white-space: nowrap;
+  }
+  .big-comment p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    max-width: 90ch;
+  }
+
+  /* ── 7 · IDEA CLAVE / CITA ───────────────────────────── */
+  .idea-clave {
+    background: var(--bg-alt);
+    justify-content: center;
+    padding-top: 140px;
+    padding-bottom: 140px;
+  }
+  .idea-clave .quote-mark {
+    font-family: var(--font-mono);
+    font-size: 140px;
+    color: var(--accent);
+    line-height: 0.6;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .idea-clave blockquote {
+    font-size: var(--type-quote);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    max-width: 28ch;
+    text-wrap: balance;
+  }
+  .idea-clave blockquote em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .idea-clave .attrib {
+    margin-top: 48px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .idea-clave .attrib .avatar-ph {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--bg-deep);
+    border: 0.5px solid var(--rule-2);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .idea-clave .attrib .who {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .idea-clave .attrib .role {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── 8 · TABLA COMPARATIVA ───────────────────────────── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-size: var(--type-body);
+  }
+  .cmp-table thead th {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    text-align: left;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px;
+    border-bottom: 0.5px solid var(--rule);
+    color: var(--ink-2);
+    font-size: var(--type-body);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .cmp-table tbody td.name {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+  .cmp-table tbody td.code {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 20px;
+    white-space: nowrap;
+  }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table.tight tbody td { padding-top: 12px; padding-bottom: 12px; }
+  .cmp-table.tight tbody td.name { font-size: 26px; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+
+  /* ── 9 · FÓRMULA ─────────────────────────────────────── */
+  .formula-block {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    justify-content: center;
+    flex: 1;
+  }
+  .formula {
+    background: var(--bg);
+    border: 0.5px solid var(--rule);
+    border-radius: 16px;
+    padding: 56px 48px;
+    font-family: var(--font-mono);
+    font-size: 56px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    text-align: center;
+    font-weight: 400;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .formula .frac {
+    display: inline-grid;
+    vertical-align: middle;
+    margin: 0 8px;
+    justify-items: center;
+  }
+  .formula .frac .num {
+    padding: 0 18px 8px;
+    border-bottom: 2px solid currentColor;
+    white-space: nowrap;
+  }
+  .formula .frac .den {
+    padding: 8px 18px 0;
+    white-space: nowrap;
+  }
+  .formula .acc-var { color: var(--accent); font-weight: 500; }
+  .formula sub { font-size: 0.5em; vertical-align: sub; }
+  .formula sup { font-size: 0.55em; vertical-align: super; }
+  .formula-legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .legend-item .var {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .legend-item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 10 · CÓDIGO / TERMINAL ──────────────────────────────
+     For Excel formulas, Python snippets, Bloomberg commands.
+     Self-contained shell so it reads on light/beige/dark. */
+  .code-shell {
+    background: #0A0D12;
+    color: #E6EAF2;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(10,13,18,0.08);
+  }
+  .code-shell .code-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: rgba(230,234,242,0.55);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .code-shell .code-head .traffic {
+    display: inline-flex; gap: 7px;
+  }
+  .code-shell .code-head .traffic span {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: rgba(255,255,255,0.14);
+  }
+  .code-shell .code-head .file { color: rgba(230,234,242,0.85); text-transform: none; letter-spacing: 0; }
+  .code-shell .code-head .lang {
+    margin-left: auto;
+    padding: 4px 10px;
+    border: 0.5px solid rgba(255,255,255,0.16);
+    border-radius: 999px;
+    font-size: 12px;
+  }
+  .code-shell pre.code-body {
+    margin: 0;
+    padding: 28px 32px;
+    font-family: var(--font-mono);
+    font-size: 22px;
+    line-height: 1.6;
+    overflow: auto;
+    flex: 1;
+    color: #E6EAF2;
+    counter-reset: codeline;
+  }
+  .code-shell pre.code-body .ln {
+    display: block;
+    padding-left: 56px;
+    position: relative;
+    white-space: pre;
+    min-height: 1.6em;
+  }
+  .code-shell pre.code-body .ln:empty::after {
+    content: "\200B";
+  }
+  .code-shell pre.code-body .ln::before {
+    counter-increment: codeline;
+    content: counter(codeline, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    color: rgba(230,234,242,0.28);
+    font-size: 14px;
+    top: 0.45em;
+    width: 40px;
+    text-align: right;
+  }
+  .code-shell .tok-key   { color: #9CC4EE; }
+  .code-shell .tok-fn    { color: #FFB66C; }
+  .code-shell .tok-str   { color: #B8E6A0; }
+  .code-shell .tok-num   { color: #E6B0FF; }
+  .code-shell .tok-com   { color: rgba(230,234,242,0.40); font-style: italic; }
+  .code-shell .tok-op    { color: #9CC4EE; }
+
+  .code-legend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 28px;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .code-legend .item .var {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .code-legend .item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 11 · ANTES / DESPUÉS ────────────────────────────────
+     Two image slots side-by-side. Made for market-crash visuals. */
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    flex: 1;
+  }
+  .before-after .pane {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .before-after .pane-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .before-after .pane-label .tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--ink-3);
+  }
+  .before-after .pane-label .tag .badge {
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 0.5px solid var(--rule-2);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+  }
+  .before-after .pane.before .badge { color: var(--ink-2); }
+  .before-after .pane.after  .badge { color: var(--accent); border-color: var(--accent-tint-2); background: var(--accent-tint); }
+  .before-after .pane-label .stat {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .before-after .pane.after .stat { color: #C0392B; }
+  .before-after .pane .img-slot {
+    flex: 1;
+    border-radius: 14px;
+    background: #EEF1F5;
+    border: 1px dashed rgba(10,13,18,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px;
+    overflow: hidden;
+  }
+  .before-after .pane .img-slot > span {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+  html[data-bg="beige"] .before-after .pane .img-slot {
+    background: var(--bg-deep);
+    border-color: var(--rule-2);
+  }
+  html[data-bg="dark"] .before-after .pane .img-slot {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.18);
+  }
+  .ba-caption {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    align-items: start;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .ba-caption .marker {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .ba-caption p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    max-width: 80ch;
+  }
+
+  /* ── 12 · PREGUNTA INTERACTIVA ───────────────────────────
+     4 cards, click → reveal correct answer.
+     Uses inline JS via onclick, no React needed. */
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    flex: 1;
+    align-content: start;
+    margin-top: 24px;
+  }
+  .quiz-opt {
+    background: var(--bg);
+    border: 1px solid var(--rule-2);
+    border-radius: 14px;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    align-items: start;
+    cursor: pointer;
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    text-align: left;
+    width: 100%;
+    font-family: var(--font-sans);
+    color: var(--ink);
+  }
+  .quiz-opt:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .quiz-opt .letter {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    background: var(--bg-alt);
+    border: 0.5px solid var(--rule);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink-2);
+    transition: background .15s ease, color .15s ease;
+  }
+  .quiz-opt .opt-text {
+    font-size: var(--type-body);
+    color: var(--ink);
+    line-height: 1.4;
+    padding-top: 6px;
+  }
+  .quiz-opt .opt-note {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    margin-top: 10px;
+    display: none;
+  }
+
+  /* Reveal states — set on the whole .quiz when a button is clicked */
+  .quiz.revealed .quiz-opt { cursor: default; pointer-events: none; }
+  .quiz.revealed .quiz-opt:not([data-correct="true"]) {
+    opacity: 0.45;
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] {
+    border-color: #1F8A5B;
+    background: rgba(31,138,91,0.05);
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] .letter {
+    background: #1F8A5B;
+    color: #fff;
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] .opt-note { display: block; color: #1F8A5B; }
+  .quiz.revealed .quiz-opt[data-chosen="true"]:not([data-correct="true"]) {
+    border-color: #C0392B;
+    background: rgba(192,57,43,0.05);
+    opacity: 1;
+  }
+  .quiz.revealed .quiz-opt[data-chosen="true"]:not([data-correct="true"]) .letter {
+    background: #C0392B;
+    color: #fff;
+  }
+
+  .quiz-prompt {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .quiz.revealed .quiz-prompt .pre { display: none; }
+  .quiz-prompt .post { display: none; }
+  .quiz.revealed .quiz-prompt .post { display: inline-flex; gap: 10px; align-items: center; color: var(--accent); }
+
+  /* ── 13 · TAREA PARA CASA ────────────────────────────────
+     "Yo expliqué" + "Tu turno" formato.
+     Bottom row: deliverables / formulario / deadline. */
+  .tarea {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    flex: 1;
+    align-content: start;
+  }
+  .tarea .col {
+    border: 1px solid var(--rule-2);
+    border-radius: 18px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: var(--bg);
+  }
+  .tarea .col.mine {
+    background: var(--bg-alt);
+  }
+  .tarea .col.yours {
+    border-color: var(--accent);
+    background: var(--accent-tint);
+  }
+  .tarea .col-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .tarea .col.yours .col-head { color: var(--accent); }
+  .tarea .col-head .num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .tarea .col.yours .col-head .num { background: var(--accent); color: #fff; }
+  .tarea .col h3 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .tarea .col h3 .ticker {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-left: 10px;
+    vertical-align: middle;
+    letter-spacing: 0.04em;
+  }
+  .tarea .col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tarea .col ul li {
+    font-size: 20px;
+    color: var(--ink-2);
+    line-height: 1.45;
+    padding-left: 28px;
+    position: relative;
+  }
+  .tarea .col ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+  .tarea-foot {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .tarea-foot .item {
+    padding-right: 28px;
+    border-right: 0.5px solid var(--rule);
+  }
+  .tarea-foot .item:last-child { border-right: none; }
+  .tarea-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+  .tarea-foot .val {
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .tarea-foot .val .acc { color: var(--accent); }
+
+  /* ── 14 · NOTICIA ──────────────────────────────────────
+     Headline-driven layout. Source pill + date stamp on top,
+     big headline, dek, image + bullets, "why it matters" pull.
+     Diseñado para noticias de prensa (Bloomberg, FT, Reuters, El Comercio).
+     ════════════════════════════════════════════════════════ */
+  .noticia-meta {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--ink-3);
+  }
+  .noticia-meta .source {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px 7px 12px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .noticia-meta .source .badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #FA8C16;
+  }
+  .noticia-meta .stamp {
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .noticia-meta .stamp .sep {
+    width: 4px; height: 4px; border-radius: 50%; background: var(--ink-3);
+  }
+  .noticia-meta .live {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 8px;
+    color: #C0392B;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .noticia-meta .live::before {
+    content: "";
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #C0392B;
+    box-shadow: 0 0 0 4px rgba(192,57,43,0.18);
+    animation: pulse-live 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+  }
+
+  .noticia-headline {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 48px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-weight: 600;
+    max-width: 36ch;
+    margin-bottom: 14px;
+  }
+  .noticia-headline em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .noticia-dek {
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    max-width: 80ch;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+
+  .noticia-body {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  .noticia-body .news-img {
+    background: var(--bg-alt);
+    border: 0.5px solid var(--rule);
+    border-radius: 14px;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .noticia-body .news-img > span {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    line-height: 1.5;
+  }
+  .noticia-body .news-img-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .noticia-body .news-img-wrap .caption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  html[data-bg="dark"] .noticia-body .news-img {
+    background: rgba(255,255,255,0.04);
+  }
+
+  .noticia-body .bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .noticia-body .bullets .b {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: baseline;
+    padding-bottom: 12px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .noticia-body .bullets .b:last-child { border-bottom: none; padding-bottom: 0; }
+  .noticia-body .bullets .b .key {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    min-width: 100px;
+  }
+  .noticia-body .bullets .b .val {
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.35;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .noticia-body .bullets .b .val .big {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .noticia-pull {
+    margin-top: 16px;
+    padding: 14px 22px;
+    background: var(--accent-tint);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .noticia-pull .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    padding-top: 2px;
+  }
+  .noticia-pull p {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.45;
+    margin: 0;
+  }
+  .noticia-disclaimer {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .noticia-disclaimer::before {
+    content: "⚠";
+    color: #FA8C16;
+    font-size: 16px;
+  }
+
+  /* ── 15 · ARTÍCULO ACADÉMICO ─────────────────────────────
+     Paper-like layout: journal masthead, serif title,
+     authors + affiliations, abstract or 3 takeaways,
+     full citation footer.
+     ════════════════════════════════════════════════════════ */
+  .paper-mast {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .paper-mast .journal {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .paper-mast .sep {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--ink-3);
+  }
+  .paper-mast .doi {
+    margin-left: auto;
+    color: var(--ink-3);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 13px;
+  }
+
+  .paper-title {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 50px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    font-weight: 600;
+    max-width: 30ch;
+    margin-bottom: 18px;
+  }
+  .paper-title em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .paper-authors {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 0.5px solid var(--rule);
+    font-size: 19px;
+    color: var(--ink-2);
+  }
+  .paper-authors .author {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .paper-authors .aff {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: super;
+  }
+
+  .paper-body {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    flex: 1;
+  }
+  .paper-abstract h4,
+  .paper-takeaways h4 {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .paper-abstract p {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0;
+    max-width: 60ch;
+    text-align: justify;
+  }
+  .paper-abstract p::first-letter {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .paper-takeaways {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .paper-takeaways .item {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .paper-takeaways .item:last-child { border-bottom: none; }
+  .paper-takeaways .item .n {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .paper-takeaways .item .t {
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.4;
+    padding-top: 4px;
+  }
+  .paper-takeaways .item .t .acc {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .paper-cite {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: var(--bg-alt);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+  }
+  .paper-cite .lbl {
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  /* ── 16 · CIERRE / Q&A ───────────────────────────────── */
+  .cierre {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 160px;
+    padding-bottom: 140px;
+    isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(24,95,165,0.30), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: #9CC4EE;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    max-width: 18ch;
+  }
+  .cierre h2 em { color: #9CC4EE; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 96px;
+    align-items: end;
+    margin-top: 48px;
+  }
+  .cierre .pregunta {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.45;
+    max-width: 50ch;
+  }
+  .cierre .contact-card {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #9CC4EE; }
+  .cierre .contact-row .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+  }
+  .cierre .contact-row .val {
+    font-size: 18px; color: #fff; font-weight: 500;
+    margin-top: 2px;
+  }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">["Buenas tardes. Hoy hablamos de dos cosas que van juntas. Primero, las ofertas públicas de adquisición (OPA): el proceso por el cual una empresa que cotiza en bolsa cambia de control o es consolidada por su grupo. Segundo, cómo se puede investigar en finanzas con inteligencia artificial: cuál es mi stack y qué herramientas uso. La idea es compartir mi experiencia para que la repliquen, me digan qué mejorar y se animen a investigar un tema financiero. Presentar la charla y a los expositores. La investigación es un avance: mostramos cómo se hizo, con qué herramientas y qué se ha encontrado hasta ahora.", "Recorrer el arco de 90 minutos: marco legal con Luz del Sur como ejemplo, la investigación, cómo usamos IA (con demos en vivo), estadística descriptiva con el contraste IPO/OPA, resultados y el caso peruano.", "Abrir la sección legal. Antes de mostrar datos hay que compartir el vocabulario: qué es una OPA y por qué distintos países la regulan distinto.", "Un solo slide para fijar qué es una OPA con dos extremos: EE.UU. (propiedad dispersa, oferta pública tipo carta, ej. Musk-Twitter con US$54,20 por acción) y Perú/LatAm (propiedad concentrada, negociación privada con el mayoritario y luego oferta a minoritarios). Aclarar la diferencia con la OPC. Ejemplo de propiedad dispersa: Musk-Twitter (2022). Anécdota opcional: la venta de la división de móviles de Nokia a Microsoft (2013) no fue una OPA sino una votación de junta extraordinaria, el 19-nov-2013 en el Helsinki Ice Hall (Hartwall Arena, estadio de hockey), por la cantidad de accionistas; más de 99% de los votos a favor (fuentes: Nokia, SEC, Rappler). Sirve para mostrar lo que implica una propiedad dispersa.", "Mostrar la carta. Musk ya tenía ~9% de Twitter. El 13-abr-2022 envió una carta pública a la junta ofreciendo comprar el 100% a US$54,20 por acción, llamándola su oferta final ('best and final offer'). La junta activó primero una poison pill para bloquearlo, luego negoció y aceptó. Musk cerró la compra en oct-2022 con el 100% de las acciones y sacó a Twitter de bolsa. Fuente: SEC Schedule 13D/A, 14-abr-2022.", "Dos estructuras de propiedad, para explicar por que cambia el mecanismo. Twitter antes de Musk: Vanguard 10,8%, Musk 9,6%, Morgan Stanley 8,8%, BlackRock 6,8%, State Street 4,5%, Dorsey 2,4% - nadie con mayoria, institucional ~70%, insiders ~20%, minoristas ~10% (fuente: SEC PREM14A 2022). Luz del Sur antes de la venta: Sempra 83,6%, resto disperso. Por eso en Twitter se ofrece a todos a la vez (tender offer) y en Luz del Sur se negocia en privado con el que ya tiene el control.", "Usar este slide para explicar el proceso de una OPA en Perú con un caso real. Uno: 30/09/2019 Sempra anuncia la venta de su 83,6% a China Yangtze Power por US$ 3.590 M. Dos: 24/04/2020 se cierra la venta privada y el control cambia de manos. Tres: 22/01/2021 la OPA obligatoria por el 13,68% restante a US$ 8,5346 por acción. Cuatro: 24/02/2021 concluye la OPA y CYPC llega a 97,14%. Puntos a marcar: la noticia sale 16 meses antes de la OPA; la oferta a los minoritarios dura 33 días; primero se paga el control y después la oferta. Fuentes: SMV, Capital IQ, prensa (cronología en valora-ai/docs/research/luz-del-sur-cronologia-20260920.md).", "Usarlo para explicar cómo funciona una OPA en la práctica, con un caso real: primero se anuncia la venta del control, meses después cambia de manos, y recién entonces se lanza la oferta a los minoritarios. Cronología verificada en SMV y prensa. 30/09/2019: Sempra anuncia la venta a CYPC y la acción sube 41% en el día; se mantiene alta. 24/04/2020: cierre de la venta privada (control cambia de manos). 22/01/2021: se lanza la OPA obligatoria por el 13,68% restante a US$ 8,5346 (SMV; Capital IQ la registra el 25/01). 24/02/2021: la OPA concluye, CYPC llega a 97,14%. Tras la OPA el precio cae de S/ 23 a S/ 12,5 con ~3% de minoritarios: lectura, no verificada. La fecha regulatoria de la OPA llega 16 meses después de la noticia. Nota: el CAR a 180 días del evento de 2019 era +126,6%, pero incluía un dato erróneo del 16/01/2020 (S/ 14,50 entre cotizaciones de S/ 26,50; unos +37 puntos). Ya está corregido: el CAR oficial queda en +89%, que refleja el salto de +41% y la caída del ETF EPU en marzo de 2020 (unos +39 puntos).", "Citar la norma antes de seguir: art. 73 del TUO de la Ley de Mercado de Valores (D.L. 861) + Reglamento de OPA (Res. CONASEV 009-2006-EF/94.10). El art. 1 inciso 16 define participación significativa desde 25% del capital con voto; el art. 4 fija 25/50/60% como los umbrales que obligan a la OPA. El art. 48 fija el precio mínimo: no menor a lo pagado en la operación que generó la obligación. Aplicarlo a Luz del Sur: CYPC cruzó los tres umbrales de una vez al comprar 83,6% a Sempra.", "Recorrer despacio: el punto no es memorizar umbrales sino ver el momento de la oferta. Perú: previa por regla, posterior si la venta del control es privada en un solo acto (Art. 6 del Reglamento). Chile: Ley 18.045, Art. 199; obligatoria si se toma el control pagando entre 10 y 15% sobre el mercado o se llega a 2/3. Brasil: Art. 254-A, tag along al menos 80%. México: LMV Art. 98, 30%. Investigación vía web, no revisada por abogado: verificar artículos antes de citarlos. Los conteos son operaciones en nuestra base.", "Plantear la discusión legal: ¿de quién es la prima de control? Regla de mercado (EE.UU.) vs oferta obligatoria (UE/UK). El minoritario compró sin prima, ¿por qué venderla con prima? Berdejó (2019) argumenta que los híbridos latinoamericanos pueden superar a ambos. Citar los artículos legales que analizan esto.", "Presentar el squeeze-out: qué pasa con el minoritario que no vendió. Perú es el único de los 4 sin salida forzada ligada al cambio de control (solo OPC si la empresa decide deslistar); Chile sí (Ley 20.382, 95% y 15% de no relacionados); Brasil y México lo atan al delisting.", "Pasar del marco legal a la investigación: con datos de OPAs podemos responder tres preguntas.", "Abrir el bloque de datos con el panorama: cuántas OPAs hubo y cuándo. 412 tender offers en Capital IQ (Brasil 181, Chile 97, México 79, Colombia 55), con pico en 2015 (30 operaciones). De ellas, 284 cambian o consolidan el control y 104 entran al event study. Cuánto dinero se movió: US$ 171 mil millones en las 312 operaciones completadas (286 con dato de valor): Brasil 73, México 55, Chile 27, Colombia 16. Es la contraprestación total en dólares que reporta Capital IQ (se bajó con KeyCurrency=USD, no es un tipo de cambio nuestro). Perú va aparte con datos de la SMV.", "Las tres preguntas que ordenan la investigación: fuga de información, trayectoria del precio, y prima (qué parte es control y qué parte sinergias, y de qué depende).", "Plantear la pregunta que abrió la investigación con Luz del Sur: si t=0 es la fecha de la OPA, ¿medimos el evento que informó al mercado o un trámite posterior?", "Distinguir los dos mecanismos que mezcla una base de OPAs: comprador externo (cambio real de control) y mismo grupo (el controlador consolida). Es la misma distinción legal de la sección de marco legal.", "Abrir la sección de IA. Decir explícitamente que la investigación y la presentación se hicieron con IA.", "Reparto de trabajo: la máquina automatiza lo repetitivo; el investigador decide qué significa, confirma fechas, revisa extremos y comunica límites.", "Presentar el stack: Claude Code dentro del navegador; APIs de pago por consulta; OpenRouter con modelos panel (varios modelos y un juez); Perplexity vía OpenRouter para búsqueda bibliográfica; SMV para las OPAs de Perú; Capital IQ y Bloomberg para datos; yfinance para los ETF de mercado (EPU, EWZ, ECH, EWW) del event study; Google News/Trends para noticias. Un repositorio es como una biblioteca en línea donde se guarda el código y los recursos para que otros los usen; con Claude Code trabajamos directamente sobre repos de GitHub. Aclaración: la SMV no ofrece una API pública para esto; se extrae con requests al formulario.", "Infografia del stack: Claude Code en el centro, conectado a GitHub (los repos son la memoria organizada del proyecto), y desde ahi salimos a buscar en las fuentes: SMV, Capital IQ, Perplexity, Google. La idea es mostrar que el repo no es solo codigo, es donde vive el conocimiento acumulado del proyecto.", "Mostrar tres capturas: Claude Code en el navegador, OpenRouter con modelos panel y Perplexity con links. Las capturas las coloca Hugo.", "El cronograma de la investigación en seis pasos y la herramienta de cada uno. Cada paso se explica en los slides siguientes.", "El error clásico de la IA es crear fuentes de la nada. En nuestra revisión sobre insider trading en OPAs, de 17 referencias dudosas del panel: 12 confirmadas, 3 inventadas y 2 con errores importantes. El registro está en cursos-pucp/investigacion/bibliografia-insider-trading.md. Recomendar: pedir siempre el link o la descarga, verificar en la fuente.", "El flujo que seguimos para la bibliografía. Uno: el panel propone 17 referencias, costó menos de dos dólares. Dos: verificamos cada una en la fuente real; 12 existen, 3 no, 2 tienen errores. Tres: lo que está en acceso abierto se descarga, son 6. Cuatro: los 9 con paywall entran por la biblioteca PUCP, Scopus y HeinOnline desde la red de la universidad; lo muestro en vivo. Idea a cerrar: la IA propone, la fuente confirma.", "Antes de entrar a SMV, explicar la diferencia general entre Selenium (navegador automatizado, simula un humano, mas lento pero universal) y requests/API directa (le habla al servidor sin abrir navegador, mas rapido pero hay que descubrir el endpoint). SMV es un WebForms clasico: se replica el postback con requests. Capital IQ es una SPA moderna: se navega con el navegador y la sesion ya iniciada.", "Explicar la extracción de SMV: el portal SIMV (Frm_Opas) es un WebForms; se descarga el dropdown maestro y por postback con requests la grilla de documentos de cada expediente (sin Selenium). Los PDF se pasan a texto y los escaneados por OCR. Precio y oferente por regex y verificación manual. Esta parte se separó en un repo público y reutilizable (github.com/hugo-gutierrez-pe/smv-opas, licencia MIT), con un comando por paso: expedientes, documentos, pdfs, ocr, dataset y precios.", "Capital IQ: se usó un agente de IA navegando con la sesión ya iniciada para recorrer el Transactions Screener, el Deal Profile de cada caso (prima), las series de precio y volumen, y el módulo de financials para ROE/ROA. Cobertura: prima en 75 de 125 casos; Perú casi nada.", "Validación con noticias: RSS de Google News y Google Trends por empresa. Ejemplos: Luz del Sur (pico de Trends el 30/09/2019 y seis medios) e Imsa (negociaciones públicas diez días antes de la fecha de Capital IQ). Aclarar que no es análisis de sentimiento. Demo en vivo: abrir el enlace de Google Trends (término «Sempra», Perú, sep–oct 2019): hay un único pico a fines de septiembre, el día del anuncio. «Luz del Sur» a secas es ruidoso porque los clientes la buscan todo el tiempo. Plan B: captura de pantalla.", "Bloomberg complementa a Capital IQ: pulls manuales de precios para Brasil, Chile y México. Pendiente: mostrar BQL asistido por IA, búsqueda semántica de documentos y el first-day pop exacto de las IPOs.", "Momento de demostración: correr en vivo `python -m smv_opas expedientes` (unos segundos, requiere internet) y luego `documentos --limit 2`. Salida esperada: 122 expedientes y 20 documentos en el más reciente (OPA posterior de Niagara sobre Orygen Perú, 09/09/2026). Este repo es público (MIT); el resto de valora-ai sigue privado. Plan B: captura de la salida.", "En vivo: mostrar que los 104 casos se descargaron de Capital IQ y aplicar estadística descriptiva con Claude Code sobre el CSV (prompt en demos-en-vivo.md). Lectura: 104 casos (Brasil 66, Chile 15, México 23); 35 comprador externo y 69 mismo grupo. Sectores concentrados: alimentos, telecomunicaciones, electricidad, carreteras y acero. Casi todo entre 2004 y 2018. Los resultados econométricos todavía no están; esto es descripción. Luego: los casos más grandes en US$, el contraste IPO/OPA y los casos con mayor retorno anormal.", "Los diez casos más grandes por contraprestación en dólares. Grupo Modelo (US$ 14.707 M) es el mayor por mucho; le siguen Global Village Telecom, Banmédica y TAM. Azul = comprador externo; gris = mismo grupo. El monto viene de Capital IQ ya convertido a dólares. Pedirle a la IA que ordene los casos por tamaño es parte de la demo de estadística descriptiva.", "Conectar dos fenómenos: el mispricing de las IPOs (EE.UU.) y la transferencia concentrada de control mediante OPAs (LatAm).", "Datos de Capital IQ: entre 2016 y 2025 hubo 3.841 IPOs en EE.UU. y 303 en cinco países de LatAm. En 2021 (pico): 1.377 vs 93. En 2024-2025: 578 vs 3. Underpricing: 15 de 20 IPOs de EE.UU. mayores a US$500M en 2026 subieron en la primera semana (mediana +14,5%). Es rendimiento a una semana, no first-day pop exacto (pendiente en Bloomberg).", "Gráfico de barras IPOs vs OPAs por país, 2016-2025. Brasil 235 vs 54; México 50 vs 31; Chile 10 vs 34; Colombia 5 vs 24; Perú 3 vs 14. Cuidado: las OPAs de Perú vienen del registro SMV y las demás de la clasificación de tender offers de Capital IQ; es una comparación aproximada.", "Los casos con mayor retorno anormal acumulado en la ventana [−10, +10]. Aleatica (+91%), Farmacias Ahumada (+86%), Braskem (+73%), Brasmotor, Andrómaco y Banco Sofisa por encima de +55%; Tarpon es el extremo negativo (−49%). Aclarar que es el retorno total del evento, no necesariamente información previa. Los casos más grandes por monto quedan pendientes hasta convertir a dólares.", "Abrir la sección de resultados: primero cómo medimos, luego las señales pre-anuncio y la prima.", "Definir retorno anormal y CAR antes de usarlos. i es la acción, t el día. El retorno esperado depende de la especificación: se ve en el siguiente slide.", "Explicar primero el ajustado al mercado, que es lo más sencillo: el retorno esperado es el retorno del mercado. Luego el market model, que añade alpha y beta estimados por caso. No usamos el modelo de retorno promedio (media histórica de la acción). Responder qué modelo se usó: en Brasil, Chile y México, market model estimado por MCO caso por caso (no es un modelo agrupado), con ETF de mercado por país. En Perú, retorno ajustado al mercado, sin alpha ni beta, porque el market model daba resultados distorsionados en horizontes largos.", "Las ventanas: estimación del modelo entre −280 y −30 días; volumen normal entre −100 y −11; evento entre −10 y +10, dividido en pre [−10, −1] y post [0, +10]. Son días calendario. La ventana de evento empieza en −10 a propósito, para poder medir la corrida de precio antes del anuncio.", "Qué significa CAR pre-anuncio: la suma de retornos anormales de los diez días antes del anuncio, con su propio estadístico t. 7 de 104 casos son significativos al 5%, todos positivos. Grupo Imsa es el más fuerte.", "Cómo se definió el volumen anormal: z-score contra el promedio y desvío del volumen entre −100 y −11 días; anormal si algún día entre −10 y −1 tiene z ≥ 2. 32 de 104 casos. Es una señal ruidosa por sí sola.", "Los tres casos donde coinciden precio y volumen: Aleatica, Grupo Modelo y Autometal. Grupo Imsa es la discrepancia: el mayor t con volumen normal.", "Explicar cómo funcionaría el insider trading y qué insumos hacen falta. Los datos son indicios; para probarlo harían falta registros de operaciones de insiders.", "Resultado de la verificación con noticias. Modelo: filtración de prensa 3 días antes (no es necesariamente insider trading ilegal). Aleatica: desliste ya público. Imsa: negociaciones confirmadas diez días antes de la fecha de Capital IQ. Autometal: sin explicación tras dos intentos, señal débil (t=2,02, z=2,12).", "Regla de interpretación: una señal de precio previa puede ser noticia pública, fecha mal capturada o filtración. Por eso combinamos precio, volumen y fuentes.", "Explicar qué significa cada número: la prima es el precio de la oferta contra el precio de mercado del día anterior. La mediana dice qué pagó la mitad de los casos. En Brasil los mismo grupo pagan más; en Chile y México es al revés: no hay patrón.", "La especificación: MCO agrupado (pool) con la prima como variable dependiente, clasificación, país y ROE/ROA como explicativas. 74 casos. Perú queda fuera porque falta la variable dependiente (la prima), no ROE/ROA. Se corre también una versión winsorizada al 5% y 95% por un extremo de +394% (Aracruz).", "Resultado: R2 de 0,04 a 0,05 y ningún coeficiente significativo. Es un hallazgo legítimo: la prima se decide caso por caso. Sirve de puente hacia el artículo econométrico (más casos, industria, tamaño de la operación).", "Pasar a Perú: con AR = R_i − R_m medimos el drift post-OPA sin estimar alpha ni beta. El market model queda como prueba de robustez.", "Caso particular del retorno esperado donde E[R_i,t] = R_m,t. i es la acción y m el mercado (ETF EPU). 19 casos utilizables.", "Resultado a +180 días: comprador_externo (N=15) media -8,3% (era -5,8% antes de corregir un dato erróneo de Luz del Sur) y mediana -2,0%, resultado débil; mismo_grupo (N=4) media -9,2% y mediana -10,8%, más consistente. Cartavio y Atacocha 2008 quedan fuera porque EPU comienza en junio de 2009.", "La elección del modelo cambia el resultado en comprador_externo: Volcan A y Corona cambian de signo; Chancay se modera pero sigue extremo. En mismo_grupo la señal se mantiene.", "Qué podemos afirmar y qué no. No prueba sobrepago ni causalidad, no permite afirmar insider trading, N=4 en mismo_grupo es pequeño y la prima de Perú está pendiente.", "Cierre: la pregunta sigue abierta y ahora hay una ruta reproducible. Próximos pasos: first-day pop en Bloomberg, la prima de Perú, casos extremos y Colombia. Abrir preguntas."]</script>
+</head>
+
+<body>
+
+
+<deck-stage id="ici-deck" width="1920" height="1080">
+
+    <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head"><div class="brand-block"><span class="brand-mark">HG</span><span class="brand-name">Hugo Gutierrez</span></div><div class="meta"><div class="label">PUCP · Encuentro ICI 2026</div><div class="val">23 septiembre 2026</div></div></div>
+    <div class="portada-body"><div class="course-code-tag"><span>ICI 2026</span><span class="bloomberg-dot"></span></div><h1 class="course-title">IPOs, OPAs y el <em>valor del control</em> en Latinoamérica</h1><p class="course-sub">Cómo investigamos con Bloomberg, Capital IQ e inteligencia artificial.</p></div>
+    <div class="portada-foot"><div class="item"><div class="lbl">Expositores</div><div class="val">Hugo Gutierrez · Vanessa Abanto</div></div></div>
+  </section>
+  <section class="slide" data-label="02 Agenda"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>ICI 2026 · Agenda</div><h1 class="slide-title">Agenda</h1><div class="title-rule"></div><div class="agenda-list"><div class="agenda-row"><span class="num">01</span><div><div class="title">Marco legal</div><div class="desc">Qué es una OPA, cómo funciona en Perú (Luz del Sur) y cómo se regula en cuatro países.</div></div><span class="tag">15 min</span></div><div class="agenda-row"><span class="num">02</span><div><div class="title">La investigación</div><div class="desc">Panorama de OPAs, fuga de información y prima de control.</div></div><span class="tag">15 min</span></div><div class="agenda-row"><span class="num">03</span><div><div class="title">Cómo investigamos con IA</div><div class="desc">Herramientas, fuentes de datos, verificación y demos en vivo.</div></div><span class="tag">20 min</span></div><div class="agenda-row"><span class="num">04</span><div><div class="title">Estadística descriptiva</div><div class="desc">Los 104 casos, los más grandes y el contraste entre IPOs y OPAs.</div></div><span class="tag">10 min</span></div><div class="agenda-row"><span class="num">05</span><div><div class="title">Resultados</div><div class="desc">Event study, señales pre-anuncio y determinantes de la prima.</div></div><span class="tag">20 min</span></div><div class="agenda-row"><span class="num">06</span><div><div class="title">Perú y cierre</div><div class="desc">Drift post-OPA, límites y qué sigue.</div></div><span class="tag">10 min</span></div></div><div class="chrome-bot"><span>ICI · Agenda</span><span class="num">02 / 56</span></div></section>
+  <section class="slide seccion bg-ink" data-label="03 Marco legal"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="sec-mega">S1</div><div class="sec-label"><span class="bar"></span>Marco legal</div><h2>¿Qué es una OPA y <em>por qué se regula</em>?</h2><p class="sec-lede">Antes del dato: cómo se compra el control de una empresa que cotiza en bolsa, y por qué cada país lo regula distinto.</p><div class="chrome-bot"><span>S1 · Marco legal</span><span class="num">03 / 56</span></div></section>
+    <section class="slide" data-label="04 Qué es una OPA"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Definición</div><h1 class="slide-title">Una OPA es comprar el control, con <em>dos extremos</em></h1><div class="title-rule"></div><p style="font-size:var(--type-body-lg);color:var(--ink-2);max-width:74ch;margin-bottom:32px;">Una oferta pública de adquisición (OPA, o <em>tender offer</em>) es la invitación pública a los accionistas de una empresa para comprarles sus acciones a un precio determinado, generalmente para tomar o consolidar el control.</p><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">01 · EE.UU.</div><h3>Tender offer: la carta</h3><p>La propiedad está dispersa. El comprador se dirige a todos los accionistas con una oferta pública, típicamente una carta con el precio por acción. Directorio y accionistas deciden si la aceptan.</p></div><div class="text-col"><div class="col-eyebrow">02 · Perú y LatAm</div><h3>Negociación privada y luego oferta</h3><p>La propiedad está concentrada. Primero se negocia en privado con el accionista mayoritario. Recién cuando el control ya cambió de manos, a los minoritarios se les ofrece comprar sus acciones.</p></div></div><div class="big-comment"><span class="marker">Ojo</span><p>OPA no es OPC: la OPC (oferta pública de compra por exclusión) es la salida voluntaria de bolsa, no una toma de control.</p></div><div class="chrome-bot"><span>S1 · Qué es una OPA</span><span class="num">04 / 56</span></div></section>
+<section class="slide idea-clave" data-label="05 Ejemplo Musk-Twitter"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Ejemplo · EE.UU., 2022</div><div class="quote-mark">"</div><blockquote><em>This is my best and final offer.</em></blockquote><div style="display:flex;gap:56px;margin-top:32px"><div><div style="font-family:var(--font-mono);font-size:var(--type-h2);font-weight:600;color:var(--accent);letter-spacing:-0.01em">US$54,20</div><div style="font-family:var(--font-mono);font-size:var(--type-mono-sm);color:var(--ink-3);letter-spacing:0.04em;margin-top:4px">POR ACCIÓN, EFECTIVO</div></div><div><div style="font-family:var(--font-mono);font-size:var(--type-h2);font-weight:600;color:var(--accent);letter-spacing:-0.01em">100%</div><div style="font-family:var(--font-mono);font-size:var(--type-mono-sm);color:var(--ink-3);letter-spacing:0.04em;margin-top:4px">DE LAS ACCIONES, OCT-2022</div></div></div><div class="attrib"><div class="avatar-ph">EM</div><div><div class="who">Elon Musk · carta a la junta de Twitter, 13-abr-2022</div><div class="role">La junta activó una "poison pill" para bloquearlo, luego negoció; Musk cerró la compra y sacó a Twitter de bolsa (SEC Schedule 13D/A). <a href="https://www.cnbc.com/2022/04/14/elon-musk-offers-to-buy-twitter-for-54point20-a-share-saying-it-needs-to-be-transformed-as-private-company.html" target="_blank" rel="noopener" style="color:var(--accent)">CNBC, 14-abr-2022</a></div></div></div><div class="chrome-bot"><span>S1 · Ejemplo Musk-Twitter</span><span class="num">05 / 56</span></div></section>
+  <section class="slide" data-label="06 Dos estructuras"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Por qué cambia el mecanismo</div><h1 class="slide-title">Propiedad <em>dispersa</em> vs propiedad <em>concentrada</em></h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">01 · Twitter, antes de Musk</div><h3>Nadie tiene el control</h3><ul><li>Vanguard 10,8% · Musk (ya accionista) 9,6% · Morgan Stanley 8,8% · BlackRock 6,8% · State Street 4,5% · Dorsey 2,4%.</li><li>Institucional ~70%, insiders ~20%, minoristas ~10%.</li><li>Para tomar el control hay que convencer al mercado entero: de ahí la carta pública.</li></ul></div><div class="text-col"><div class="col-eyebrow">02 · Luz del Sur, antes de la venta</div><h3>Un solo accionista controla</h3><ul><li>Sempra 83,6% · resto disperso entre minoritarios 16,4%.</li><li>Para tomar el control basta negociar con Sempra, en privado.</li><li>Los minoritarios se enteran después, cuando ya cambió de manos.</li></ul></div></div><div class="big-comment"><span class="marker">Por eso cambia el mecanismo</span><p>Donde nadie tiene el control, se ofrece a todos a la vez (tender offer). Donde alguien ya lo tiene, se negocia en privado con ese accionista y recién después se ofrece al resto (OPA posterior).</p></div><div class="chrome-bot"><span>S1 · Dos estructuras</span><span class="num">06 / 56</span></div></section>
+  <section class="slide" data-label="07 Luz del Sur cronología"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">SMV</span><span class="tool-chip">Capital IQ</span><span class="tool-chip">Google</span></div><div class="eyebrow"><span class="bar"></span>Perú · Expediente 20917</div><h1 class="slide-title">Cómo funciona una OPA en Perú: <em>Luz del Sur</em></h1><div class="title-rule"></div><table class="cmp-table tight"><thead><tr><th>Fecha</th><th>Etapa</th><th>Qué pasó</th><th>Dato clave</th></tr></thead><tbody><tr><td class="code">30/09/2019</td><td class="name">Anuncio de la venta</td><td>Sempra vende su 83,6% a China Yangtze Power (CYPC).</td><td>US$ 3.590 M · la acción sube 41% en el día</td></tr><tr><td class="code">24/04/2020</td><td class="name">Cambia el control</td><td>Se cierra la venta privada: el control pasa a CYPC.</td><td>9 meses antes de la OPA</td></tr><tr><td class="code">22/01/2021</td><td class="name">OPA a minoritarios</td><td>Oferta obligatoria por el 13,68% restante.</td><td>US$ 8,5346 por acción (≈ S/ 31)</td></tr><tr><td class="code">24/02/2021</td><td class="name">Cierra la OPA</td><td>CYPC llega a 97,14% de la empresa.</td><td>33 días de oferta</td></tr></tbody></table><div class="big-comment"><span class="marker">Lo que enseña</span><p>En Perú primero se paga el control a un solo vendedor y, meses después, se ofrece a los minoritarios. La noticia llega 16 meses antes que la OPA.</p></div><div class="source" style="margin-top:16px">SMV, Expediente 20917 · <a href="https://gestion.pe/economia/empresas/sempra-luz-del-sur-se-vendio-a-china-yangtze-power-co-noticia/" target="_blank" rel="noopener" style="color:var(--accent)">Gestión, 30-sep-2019</a></div><div class="chrome-bot"><span>S2 · Luz del Sur</span><span class="num">07 / 56</span></div></section>
+  <section class="slide" data-label="08 Luz del Sur"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">SMV</span><span class="tool-chip">Google</span></div><div class="eyebrow"><span class="bar"></span>Perú · Expediente 20917</div><h1 class="slide-title">Luz del Sur: el precio se movió <em>antes de la OPA</em></h1><div class="title-rule"></div><div class="img-comment"><div><svg viewBox="0 0 960 600" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Precio de Luz del Sur 2019-2021"><line x1="70" x2="830" y1="540.0" y2="540.0" style="stroke:var(--rule)"/><text x="60" y="547.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">10</text><line x1="70" x2="830" y1="422.5" y2="422.5" style="stroke:var(--rule)"/><text x="60" y="429.5" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">15</text><line x1="70" x2="830" y1="305.0" y2="305.0" style="stroke:var(--rule)"/><text x="60" y="312.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">20</text><line x1="70" x2="830" y1="187.5" y2="187.5" style="stroke:var(--rule)"/><text x="60" y="194.5" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">25</text><line x1="70" x2="830" y1="70.0" y2="70.0" style="stroke:var(--rule)"/><text x="60" y="77.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">30</text><text x="102.6" y="574" text-anchor="middle" style="fill:var(--ink-3);font:20px var(--font-mono)">07/2019</text><text x="302.7" y="574" text-anchor="middle" style="fill:var(--ink-3);font:20px var(--font-mono)">01/2020</text><text x="500.6" y="574" text-anchor="middle" style="fill:var(--ink-3);font:20px var(--font-mono)">07/2020</text><text x="700.6" y="574" text-anchor="middle" style="fill:var(--ink-3);font:20px var(--font-mono)">01/2021</text><path d="M72.2,484.8 L73.3,484.8 L74.3,484.8 L75.4,484.3 L76.5,484.3 L79.8,484.3 L80.9,481.5 L82.0,481.2 L83.0,481.0 L84.1,481.0 L87.4,481.2 L88.5,481.2 L89.6,481.5 L90.7,481.5 L91.7,465.5 L95.0,464.3 L96.1,460.1 L97.2,457.8 L98.3,455.4 L99.4,451.4 L102.6,441.8 L103.7,441.8 L104.8,439.7 L105.9,439.7 L107.0,444.4 L110.2,446.0 L111.3,446.0 L112.4,446.0 L113.5,438.9 L114.6,437.8 L117.8,446.0 L118.9,446.0 L120.0,446.0 L121.1,445.8 L122.2,442.5 L125.5,438.9 L126.5,441.5 L127.6,441.3 L128.7,438.9 L129.8,438.9 L134.1,438.9 L135.2,441.3 L136.3,434.2 L137.4,438.5 L140.7,438.5 L141.8,442.5 L142.8,438.5 L143.9,438.5 L145.0,438.5 L148.3,438.5 L149.4,438.5 L150.5,434.2 L151.5,434.2 L152.6,434.2 L155.9,422.5 L157.0,419.0 L158.1,422.5 L159.2,422.5 L160.2,422.5 L163.5,422.7 L164.6,430.0 L165.7,422.5 L166.8,422.5 L171.1,399.0 L172.2,399.0 L173.3,393.1 L174.4,380.2 L175.5,380.2 L178.7,399.0 L179.8,399.0 L180.9,399.0 L182.0,387.2 L183.1,387.2 L186.3,393.1 L187.4,395.5 L188.5,395.5 L189.6,399.0 L190.7,393.1 L193.9,393.1 L195.0,399.0 L196.1,399.0 L197.2,395.5 L198.3,391.9 L201.6,234.5 L202.6,297.9 L203.7,279.1 L204.8,269.8 L205.9,211.0 L209.2,211.5 L211.3,213.6 L212.4,222.8 L213.5,234.0 L216.8,243.2 L217.9,253.3 L219.0,258.0 L220.0,258.0 L221.1,257.8 L224.4,246.2 L225.5,243.9 L226.6,234.3 L227.7,216.4 L228.7,211.0 L232.0,211.0 L233.1,212.2 L234.2,214.5 L235.3,215.7 L239.6,223.0 L240.7,223.0 L241.8,234.5 L242.9,231.7 L244.0,246.2 L247.2,246.2 L248.3,245.8 L249.4,234.5 L250.5,234.5 L251.6,234.5 L254.8,222.8 L255.9,211.0 L257.0,210.5 L258.1,211.0 L259.2,211.0 L262.4,211.0 L263.5,211.0 L264.6,211.0 L265.7,222.5 L266.8,211.2 L270.1,211.0 L271.1,211.0 L272.2,216.9 L273.3,211.0 L274.4,211.0 L277.7,211.5 L278.8,220.4 L279.8,222.8 L280.9,229.3 L282.0,220.4 L285.3,218.5 L286.4,211.0 L287.5,206.3 L288.5,196.9 L289.6,187.5 L292.9,199.2 L294.0,175.8 L296.2,140.5 L297.2,140.5 L300.5,152.2 L301.6,169.9 L303.8,169.9 L304.8,168.5 L308.1,168.5 L309.2,164.0 L310.3,164.0 L311.4,164.0 L312.5,170.8 L315.7,164.0 L316.8,164.0 L317.9,152.2 L320.1,152.2 L323.3,153.4 L324.4,153.4 L325.5,153.4 L326.6,153.4 L327.7,153.4 L330.9,164.0 L332.0,163.8 L333.1,199.2 L334.2,211.0 L335.3,211.0 L338.6,211.0 L339.6,175.8 L340.7,164.0 L341.8,164.0 L342.9,175.3 L346.2,176.0 L347.3,175.8 L348.3,175.8 L349.4,175.8 L350.5,164.0 L353.8,163.8 L354.9,169.9 L356.0,169.9 L357.0,172.5 L358.1,176.9 L361.4,176.9 L362.5,187.5 L363.6,187.5 L364.6,199.2 L365.7,140.5 L369.0,164.0 L370.1,166.4 L371.2,164.2 L372.3,166.4 L373.3,187.5 L376.6,199.7 L377.7,164.0 L378.8,175.8 L379.9,199.2 L381.0,211.0 L384.2,220.4 L385.3,211.0 L386.4,211.0 L387.5,211.0 L388.6,211.0 L391.8,210.8 L392.9,199.2 L394.0,199.2 L395.1,187.5 L396.2,234.5 L399.4,246.2 L400.5,234.5 L401.6,246.2 L402.7,258.0 L403.8,265.1 L407.1,274.4 L408.1,270.9 L409.2,274.2 L414.7,152.2 L415.8,152.2 L416.8,164.0 L417.9,169.9 L419.0,166.4 L422.3,166.4 L423.4,173.4 L424.4,174.6 L425.5,175.8 L426.6,131.1 L429.9,131.1 L431.0,131.1 L432.1,140.5 L433.1,140.5 L437.5,140.5 L438.6,140.5 L439.7,140.5 L440.8,152.2 L441.8,128.8 L445.1,128.8 L446.2,129.0 L447.3,138.1 L448.4,145.2 L449.5,154.6 L452.7,154.6 L453.8,159.3 L454.9,159.3 L456.0,159.3 L457.1,164.2 L460.3,164.2 L461.4,166.4 L462.5,140.7 L463.6,134.6 L464.7,152.2 L467.9,152.2 L469.0,140.5 L470.1,140.5 L471.2,140.5 L472.3,128.8 L475.6,128.8 L476.6,128.8 L477.7,128.8 L478.8,128.8 L479.9,137.0 L483.2,137.0 L484.2,137.0 L485.3,154.6 L486.4,163.3 L487.5,152.2 L490.8,160.5 L491.9,160.2 L492.9,160.2 L494.0,152.2 L495.1,134.6 L499.5,139.3 L500.6,134.9 L501.6,152.0 L502.7,134.6 L506.0,134.6 L507.1,134.6 L508.2,134.6 L509.3,140.5 L510.3,152.2 L513.6,152.2 L514.7,152.2 L515.8,156.9 L516.9,156.9 L518.0,156.7 L521.2,160.5 L522.3,160.5 L523.4,160.5 L524.5,163.3 L525.6,163.3 L528.8,161.6 L531.0,161.6 L532.1,158.1 L533.2,137.4 L536.4,137.4 L537.5,137.4 L538.6,161.6 L539.7,161.4 L540.8,161.4 L544.0,159.8 L545.1,152.2 L546.2,152.2 L547.3,152.2 L548.4,152.2 L551.7,152.2 L552.7,152.2 L553.8,152.2 L554.9,152.2 L556.0,152.2 L559.3,152.2 L560.4,152.2 L561.4,152.2 L562.5,135.8 L563.6,140.5 L566.9,117.0 L568.0,138.1 L569.1,141.7 L570.1,149.9 L571.2,149.7 L574.5,149.7 L575.6,126.4 L576.7,118.2 L577.8,121.7 L578.8,126.4 L582.1,119.4 L583.2,127.6 L584.3,138.1 L585.4,138.1 L586.5,138.1 L589.7,142.9 L590.8,147.6 L591.9,151.3 L593.0,151.3 L594.1,151.3 L597.3,151.3 L598.4,128.8 L599.5,117.0 L600.6,140.5 L601.7,140.5 L604.9,127.8 L606.0,120.5 L607.1,117.0 L608.2,117.0 L609.3,128.8 L612.5,128.8 L613.6,127.6 L614.7,127.6 L615.8,117.2 L616.9,131.1 L620.2,140.3 L621.2,129.9 L622.3,129.9 L623.4,129.9 L624.5,135.6 L627.8,135.8 L628.9,135.8 L629.9,140.5 L631.0,140.5 L632.1,164.0 L635.4,163.8 L636.5,163.8 L637.6,164.0 L638.6,164.0 L639.7,164.0 L643.0,152.2 L644.1,164.0 L645.2,163.8 L646.3,164.0 L647.3,164.2 L650.6,164.2 L651.7,164.2 L652.8,164.0 L653.9,159.3 L654.9,159.3 L658.2,154.6 L659.3,140.3 L660.4,140.5 L661.5,140.5 L662.6,140.5 L665.8,153.0 L666.9,149.9 L668.0,149.9 L669.1,149.9 L670.2,140.5 L673.4,140.5 L675.6,140.5 L676.7,149.9 L677.8,164.0 L681.0,211.7 L682.1,159.3 L683.2,159.5 L684.3,152.2 L685.4,152.2 L688.7,152.2 L689.7,152.2 L690.8,152.2 L691.9,152.2 L696.3,164.0 L697.4,187.5 L698.4,164.0 L699.5,175.8 L703.9,187.5 L705.0,175.8 L706.1,164.0 L707.1,164.0 L708.2,167.5 L711.5,174.6 L712.6,173.4 L713.7,166.4 L714.7,166.4 L715.8,117.0 L719.1,93.5 L720.2,87.6 L721.3,87.6 L722.4,102.2 L723.4,100.6 L726.7,117.0 L727.8,124.1 L728.9,124.1 L730.0,124.1 L731.1,131.1 L734.3,117.0 L735.4,117.0 L736.5,117.0 L737.6,117.0 L738.7,117.0 L741.9,107.6 L743.0,114.6 L744.1,117.0 L745.2,117.0 L746.3,117.0 L749.5,126.4 L750.6,128.8 L751.7,128.8 L752.8,164.0 L753.9,211.0 L757.2,230.3 L758.2,229.8 L759.3,229.8 L760.4,229.8 L761.5,229.8 L764.8,258.0 L765.9,258.0 L766.9,258.0 L768.0,258.0 L769.1,258.0 L772.4,269.8 L773.5,300.3 L774.5,371.7 L775.6,424.1 L776.7,424.1 L780.0,429.6 L781.1,450.7 L782.2,458.0 L783.2,458.9 L784.3,451.9 L787.6,442.5 L788.7,481.2 L789.8,487.4 L790.9,469.5 L791.9,449.5 L795.2,446.0 L796.3,441.3 L797.4,431.9 L802.8,428.4 L803.9,425.3 L805.0,424.9 L806.1,413.3 L807.2,434.0 L810.4,446.0 L811.5,440.1 L812.6,440.1 L813.7,440.1 L814.8,440.6 L818.0,469.5 L819.1,493.0 L820.2,483.6 L821.3,493.0 L822.4,503.6 L825.7,493.0 L826.7,493.0 L827.8,488.3 L828.9,487.1 L830.0,481.2" fill="none" style="stroke:var(--accent-deep);stroke-width:3"/><line x1="201.6" x2="201.6" y1="42" y2="540" style="stroke:var(--accent);stroke-dasharray:6 6;stroke-width:1.5"/><text x="209.6" y="34" text-anchor="start" style="fill:var(--ink);font:600 21px var(--font-sans)">30/09/2019</text><line x1="426.6" x2="426.6" y1="42" y2="540" style="stroke:var(--accent);stroke-dasharray:6 6;stroke-width:1.5"/><text x="434.6" y="34" text-anchor="start" style="fill:var(--ink);font:600 21px var(--font-sans)">24/04/2020</text><line x1="723.4" x2="723.4" y1="42" y2="540" style="stroke:var(--accent);stroke-dasharray:6 6;stroke-width:1.5"/><text x="715.4" y="34" text-anchor="end" style="fill:var(--ink);font:600 21px var(--font-sans)">22/01/2021</text><line x1="759.3" x2="759.3" y1="42" y2="540" style="stroke:var(--accent);stroke-dasharray:6 6;stroke-width:1.5"/><text x="767.3" y="34" text-anchor="start" style="fill:var(--ink);font:600 21px var(--font-sans)">24/02/2021</text><text x="215.6" y="316.8" style="fill:var(--accent);font:600 24px var(--font-mono)">+41%</text></svg></div><div class="comment-block"><div class="col-eyebrow">Cuatro fechas, un mismo control</div><p><strong>30/09/2019.</strong> Sempra anuncia la venta de su 83,6% a China Yangtze Power (CYPC) por US$ 3.590 M. La acción pasa de S/ 16,30 a S/ 23,00 en un día (+41%) y se mantiene alta.</p><p><strong>24/04/2020.</strong> Se cierra la venta privada: el control cambia de manos.</p><p><strong>22/01/2021.</strong> OPA por el 13,68% restante a US$ 8,5346 por acción (≈ S/ 31). Capital IQ la registra el 25/01.</p><p><strong>24/02/2021.</strong> La OPA concluye y CYPC llega a 97,14%. Después el precio cae de S/ 23 a S/ 12,5, con ~3% en manos de minoritarios.</p><div class="source">Capital IQ (cierre, S/) · SMV · <a href="https://gestion.pe/economia/empresas/sempra-luz-del-sur-se-vendio-a-china-yangtze-power-co-noticia/" target="_blank" rel="noopener" style="color:var(--accent)">prensa (Gestión, 30-sep-2019)</a> · se excluye un dato erróneo del 16/01/2020</div></div></div><div class="chrome-bot"><span>S2 · Luz del Sur</span><span class="num">08 / 56</span></div></section>
+    <section class="slide" data-label="09 OPA obligatoria"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Marco legal · La norma peruana</div><h1 class="slide-title">La OPA obligatoria: <em>qué dice la norma</em></h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">La base legal</div><h3>Participación significativa</h3><p>Art. 73 del TUO de la Ley de Mercado de Valores (D.L. N.º 861) + Reglamento de OPA y de Compra de Valores por Exclusión, Res. CONASEV N.º 009-2006-EF/94.10 (art. 1 inciso 16 y art. 4).</p><ul><li>El reglamento define "participación significativa" desde <strong>25%</strong> del capital con voto (art. 1.16); el art. 4 fija <strong>25%, 50% y 60%</strong> como los umbrales que activan la obligación.</li><li>Cruzar un umbral obliga a lanzar una OPA por el resto de las acciones (art. 73 TUO LMV).</li><li>El precio mínimo no puede ser inferior a lo pagado en la operación que generó la obligación (art. 48, Reglamento OPA).</li></ul></div><div class="text-col"><div class="col-eyebrow">En Luz del Sur</div><h3>Por qué hubo una OPA en 2021</h3><ul><li>CYPC compró el 83,6% de Sempra en privado: cruzó los tres umbrales de una vez.</li><li>Quedó obligada a ofertar el 13,68% restante a los minoritarios.</li><li>El precio de la OPA (US$ 8,5346) no podía ser menor al que le pagó a Sempra por acción.</li></ul></div></div><div class="chrome-bot"><span>S1 · La norma peruana</span><span class="num">09 / 56</span></div></section>
+<section class="slide" data-label="10 Comparado 4 países"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Perú · Chile · Brasil · México</div><h1 class="slide-title">Cuatro países, <em>cuatro momentos</em> para ofertar</h1><div class="title-rule"></div><table class="cmp-table tight"><thead><tr><th>País</th><th>Umbral que obliga</th><th>¿Cuándo se hace la OPA?</th><th>Precio a minoritarios</th></tr></thead><tbody><tr><td class="name">Perú</td><td class="code">25% / 50% / 60%</td><td>Previa; posterior si el control se vende en privado en un solo acto</td><td>El más alto pagado en la operación</td></tr><tr><td class="name">Chile</td><td class="code">Control a precio &gt;10–15% sobre mercado, o 2/3</td><td>Previa, antes de adquirir; exenta si el controlador vende en efectivo sin sobreprecio</td><td>Igual para quienes aceptan</td></tr><tr><td class="name">Brasil</td><td class="code">Cambio de control (sin % fijo)</td><td>Condicionada: la venta privada solo vale si el comprador se obliga a la OPA (tag along)</td><td>Mínimo 80% del precio del controlador</td></tr><tr><td class="name">México</td><td class="code">30% o toma de control</td><td>Previa, antes de adquirir; parcial o por el 100% si toma el control</td><td>Igual para todas las clases</td></tr></tbody></table><div class="big-comment"><span class="marker">Por qué estos cuatro</span><p>Son los mercados con más operaciones en nuestra base: Brasil 181, Chile 97, Perú 83 y México 79. Colombia (55) queda pendiente.</p></div><div class="chrome-bot"><span>S1 · Comparado 4 países</span><span class="num">10 / 56</span></div></section>
+  <section class="slide" data-label="11 La discusión legal"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>La discusión legal</div><h1 class="slide-title">¿Es justo que el minoritario <em>cobre la prima</em>?</h1><div class="title-rule"></div><p style="font-size:var(--type-body-lg);color:var(--ink-2);max-width:74ch;margin-bottom:32px;">Quien compra una acción en el mercado no paga prima de control. Sin embargo, cuando cambia el control la ley puede darle derecho a vender con prima. Esa es la discusión de fondo.</p><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">01 · EE.UU.</div><h3>Regla de mercado</h3><p>El control se negocia libremente entre vendedor y comprador. Los minoritarios no participan de la prima.</p></div><div class="text-col"><div class="col-eyebrow">02 · UE / UK</div><h3>Oferta obligatoria</h3><p>Quien toma el control debe ofrecerle lo mismo a todos los accionistas, al mismo precio.</p></div></div><div class="big-comment"><span class="marker">El punto de la charla</span><p>Latinoamérica no copió ninguna de las dos: construyó un híbrido propio, distinto en cada país. <span style="font-size:var(--type-small);color:var(--ink-3)">Lecturas: Bebchuk (1994), Berdejó (2019), Lazo del Castillo (2015).</span></p></div><div class="chrome-bot"><span>S1 · La prima de control</span><span class="num">11 / 56</span></div></section>
+  <section class="slide" data-label="12 Squeeze-out"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Qué pasa con el que no vende</div><h1 class="slide-title">El <em>squeeze-out</em>: salida forzada del minoritario</h1><div class="title-rule"></div><table class="cmp-table"><thead><tr><th>País</th><th>¿Squeeze-out post-OPA?</th><th>Mecanismo</th></tr></thead><tbody><tr><td class="name">Perú</td><td class="code">No</td><td>Sin salida forzada ligada al cambio de control — solo OPC si la empresa decide deslistar</td></tr><tr><td class="name">Chile</td><td class="code">Sí</td><td>Ley 20.382: bidder llega a 95% + compró 15% de no relacionados → fuerza venta al precio de la OPA</td></tr><tr><td class="name">Brasil</td><td class="code">Atado a delisting</td><td>Si tras la OPA de cancelamento queda &lt;5% de free float, la asamblea redime esas acciones</td></tr><tr><td class="name">México</td><td class="code">Atado a delisting</td><td>Cancelación de registro con ≥95% de voto favorable en asamblea</td></tr></tbody></table><div class="big-comment"><span class="marker">Por qué importa</span><p>Perú es el único de los 4 sin fecha de salida garantizada — un minoritario que se queda puede terminar con acciones casi sin liquidez, por tiempo indefinido.</p></div><div class="chrome-bot"><span>S1 · Squeeze-out</span><span class="num">12 / 56</span></div></section>
+  <section class="slide seccion bg-ink" data-label="13 La investigación"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="sec-mega">S2</div><div class="sec-label"><span class="bar"></span>La investigación</div><h2>¿Qué buscamos <em>en los datos</em>?</h2><p class="sec-lede">Un mercado de OPAs con precios, volúmenes y primas permite hacer tres preguntas.</p><div class="chrome-bot"><span>S2 · La investigación</span><span class="num">13 / 56</span></div></section>
+  <section class="slide" data-label="14 Panorama OPAs"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Capital IQ · Tender offers por año</div><h1 class="slide-title">Cuántas OPAs hubo: <em>412</em> registros en cuatro países</h1><div class="title-rule"></div><div class="img-comment"><div><svg viewBox="0 0 960 600" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tender offers por año, 4 países"><line x1="70" x2="940" y1="530.0" y2="530.0" style="stroke:var(--rule)"/><text x="60" y="537.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">0</text><line x1="70" x2="940" y1="412.5" y2="412.5" style="stroke:var(--rule)"/><text x="60" y="419.5" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">10</text><line x1="70" x2="940" y1="295.0" y2="295.0" style="stroke:var(--rule)"/><text x="60" y="302.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">20</text><line x1="70" x2="940" y1="177.5" y2="177.5" style="stroke:var(--rule)"/><text x="60" y="184.5" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">30</text><line x1="70" x2="940" y1="60.0" y2="60.0" style="stroke:var(--rule)"/><text x="60" y="67.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">40</text><rect x="76.2" y="447.8" width="29.0" height="82.2" rx="3" style="fill:var(--accent)"/><text x="90.7" y="566" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">2005</text><rect x="117.6" y="295.0" width="29.0" height="235.0" rx="3" style="fill:var(--accent)"/><rect x="159.1" y="224.5" width="29.0" height="305.5" rx="3" style="fill:var(--accent)"/><rect x="200.5" y="342.0" width="29.0" height="188.0" rx="3" style="fill:var(--accent)"/><rect x="241.9" y="330.2" width="29.0" height="199.8" rx="3" style="fill:var(--accent)"/><rect x="283.4" y="306.8" width="29.0" height="223.2" rx="3" style="fill:var(--accent)"/><text x="297.9" y="566" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">2010</text><rect x="324.8" y="295.0" width="29.0" height="235.0" rx="3" style="fill:var(--accent)"/><rect x="366.2" y="318.5" width="29.0" height="211.5" rx="3" style="fill:var(--accent)"/><rect x="407.6" y="318.5" width="29.0" height="211.5" rx="3" style="fill:var(--accent)"/><rect x="449.1" y="224.5" width="29.0" height="305.5" rx="3" style="fill:var(--accent)"/><rect x="490.5" y="177.5" width="29.0" height="352.5" rx="3" style="fill:var(--accent)"/><text x="505.0" y="169.5" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">30</text><text x="505.0" y="566" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">2015</text><rect x="531.9" y="236.2" width="29.0" height="293.8" rx="3" style="fill:var(--accent)"/><rect x="573.4" y="283.2" width="29.0" height="246.8" rx="3" style="fill:var(--accent)"/><rect x="614.8" y="283.2" width="29.0" height="246.8" rx="3" style="fill:var(--accent)"/><rect x="656.2" y="400.8" width="29.0" height="129.2" rx="3" style="fill:var(--accent)"/><rect x="697.6" y="459.5" width="29.0" height="70.5" rx="3" style="fill:var(--accent)"/><text x="712.1" y="566" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">2020</text><rect x="739.1" y="342.0" width="29.0" height="188.0" rx="3" style="fill:var(--accent)"/><rect x="780.5" y="342.0" width="29.0" height="188.0" rx="3" style="fill:var(--accent)"/><rect x="821.9" y="447.8" width="29.0" height="82.2" rx="3" style="fill:var(--accent)"/><rect x="863.4" y="389.0" width="29.0" height="141.0" rx="3" style="fill:var(--accent)"/><rect x="904.8" y="436.0" width="29.0" height="94.0" rx="3" style="fill:var(--accent)"/><text x="919.3" y="566" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">2025</text></svg></div><div class="comment-block"><div class="col-eyebrow">El universo</div><p><strong>412</strong> tender offers registradas en Capital IQ: Brasil 181, Chile 97, México 79 y Colombia 55 (1998–2026).</p><p>284 cambian o consolidan el control: 128 con comprador externo y 156 del mismo grupo. De ellas, 104 (Brasil, Chile y México) entran al event study.</p><p>Las 128 restantes no cambiaron ni consolidaron control: ofertas por una posición minoritaria que no le dio el control al comprador, o transacciones anunciadas y luego retiradas o no completadas.</p><p><strong>US$ 171 mil millones</strong> pagados en las operaciones completadas: Brasil 73, México 55, Chile 27 y Colombia 16. Promedio: <strong>US$ 598 M</strong> por operación (171.000 M / 286 con dato); la mediana por país va de US$ 72 a 339 M — el promedio pesa más por unos pocos deals gigantes.</p><div class="source">Capital IQ · Transactions Screener (Screener → Transactions → M&amp;A Details), sep-2026 — requiere sesión de Capital IQ. Pico: 30 operaciones en 2015. Valor: contraprestación total en US$ según Capital IQ (286 completadas con dato). Perú (SMV) se analiza aparte.</div></div></div><div class="chrome-bot"><span>S2 · Panorama de OPAs</span><span class="num">14 / 56</span></div></section>
+  <section class="slide" data-label="15 Tres preguntas"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Tres preguntas</div><h1 class="slide-title">Lo que un mercado de OPAs nos permite <em>medir</em></h1><div class="title-rule"></div><table class="cmp-table"><thead><tr><th>Pregunta</th><th>Qué nos interesa</th><th>Cómo lo medimos</th></tr></thead><tbody><tr><td class="name">01 · Fuga de información</td><td>¿El precio o el volumen se mueven antes del anuncio?</td><td>Retornos y volúmenes anormales antes del anuncio</td></tr><tr><td class="name">02 · Trayectoria del precio</td><td>¿Cómo evoluciona antes, durante y después de la OPA?</td><td>Precio diario en tres etapas: antes del anuncio, entre el anuncio y la OPA, y después</td></tr><tr><td class="name">03 · La prima</td><td>¿Cuánto se pagó de más y de qué depende?</td><td>La prima incluye control y sinergias; depende del sector, del comprador y de si el controlador solo consolida</td></tr></tbody></table><div class="chrome-bot"><span>S2 · Tres preguntas</span><span class="num">15 / 56</span></div></section>
+  <section class="slide idea-clave" data-label="16 Pregunta central"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Pregunta central</div><div class="quote-mark">“</div><blockquote>Si colocamos t=0 en la fecha de la OPA, ¿estamos midiendo el evento que informó al mercado o un <em>trámite posterior</em>?</blockquote><div class="attrib"><div class="avatar-ph">LS</div><div><div class="who">Luz del Sur · Perú</div><div class="role">Caso que abrió la investigación</div></div></div><div class="chrome-bot"><span>S2 · Pregunta central</span><span class="num">16 / 56</span></div></section>
+  <section class="slide" data-label="17 Dos mecanismos"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Clasificación de control</div><h1 class="slide-title">Una base de OPAs puede mezclar <em>dos mecanismos</em></h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow"><span class="num">01</span> · Comprador externo</div><h3>Cambio real de control</h3><p>Un tercero toma el control y la OPA puede estar asociada a una sorpresa de mercado, una prima o una negociación pública.</p><ul><li>La fecha informativa puede ser la venta privada.</li><li>La OPA formal puede llegar después.</li></ul></div><div class="text-col"><div class="col-eyebrow"><span class="num">02</span> · Mismo grupo</div><h3>Consolidación del controlador</h3><p>El controlador existente compra las acciones restantes. La dinámica puede parecerse más a un squeeze-out que a una toma de control.</p><ul><li>No hay cambio de control externo.</li><li>La señal post-OPA puede tener otra interpretación económica.</li></ul></div></div><div class="big-comment"><span class="marker">Vínculo</span><p>Es la misma distinción legal de la sección de marco legal: toma de control real vs. exclusión de minoritarios.</p></div><div class="chrome-bot"><span>S2 · Mecanismos</span><span class="num">17 / 56</span></div></section>
+  <section class="slide seccion bg-ink" data-label="18 Cómo investigamos con IA"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="sec-mega">S4</div><div class="sec-label"><span class="bar"></span>Cómo investigamos</div><h2>La IA <em>extrae evidencia</em>; nosotros la verificamos</h2><p class="sec-lede">Esta investigación, y esta presentación, se hicieron con inteligencia artificial. Aquí está cómo, y dónde falla.</p><div class="chrome-bot"><span>S4 · IA</span><span class="num">18 / 56</span></div></section>
+  <section class="slide bg-alt" data-label="19 Investigación con IA"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>De la pregunta al dato</div><h1 class="slide-title">La IA ayuda a extraer evidencia, pero la investigación exige <em>verificación</em></h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">La máquina</div><h3>Automatizar lo repetitivo</h3><ul><li>Catalogar expedientes y documentos.</li><li>Resolver identificadores de empresas.</li><li>Descargar precios y calcular señales.</li><li>Ordenar candidatos para revisión.</li></ul></div><div class="text-col"><div class="col-eyebrow">El investigador</div><h3>Decidir qué significa</h3><ul><li>Confirmar la fecha informativa.</li><li>Distinguir noticia pública de filtración.</li><li>Revisar casos extremos.</li><li>Comunicar límites y supuestos.</li></ul></div></div><div class="chrome-bot"><span>S4 · Investigación con IA</span><span class="num">19 / 56</span></div></section>
+  <section class="slide" data-label="20 Stack"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>El stack</div><h1 class="slide-title">Qué herramientas <em>usamos</em></h1><div class="title-rule"></div><table class="cmp-table tight"><thead><tr><th>Herramienta</th><th>Para qué</th></tr></thead><tbody><tr><td class="name">Claude Code + GitHub</td><td>Escribir y correr los scrapers, el event study y las regresiones. Los repos de GitHub guardan y comparten el código.</td></tr><tr><td class="name">APIs de pago por consulta</td><td>Varias IA pagando solo lo que se consulta, sin suscripción. Perplexity vía OpenRouter para búsqueda bibliográfica (~US$0,20–1 por consulta) — ej. 17 referencias con un panel de 3 modelos y un juez costaron US$1,87 en total. OpenRouter también da «modelos panel»: varios responden y un juez sintetiza.</td></tr><tr><td class="name">SMV</td><td>Expedientes y prospectos de las OPAs de Perú.</td></tr><tr><td class="name">Capital IQ y Bloomberg</td><td>Transacciones, precios, volúmenes y primas.</td></tr><tr><td class="name">Yahoo Finance (yfinance)</td><td>Precios de los ETF de mercado: EPU, EWZ, ECH y EWW.</td></tr><tr><td class="name">Google News y Trends</td><td>Validar noticias previas y picos de atención pública.</td></tr></tbody></table><div class="chrome-bot"><span>S4 · Stack</span><span class="num">20 / 56</span></div></section>
+  <section class="slide" data-label="21 Infografía stack"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>El stack, en un diagrama</div><h1 class="slide-title">Claude Code y GitHub: <em>cómo encajan</em></h1><div class="title-rule"></div><svg viewBox="0 0 960 460" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama del stack: Claude Code, GitHub y fuentes de datos">
+<rect x="370" y="30" width="220" height="80" rx="12" style="fill:var(--accent)"/>
+<text x="480" y="65" text-anchor="middle" style="fill:#fff;font:600 24px var(--font-sans)">Claude Code</text>
+<text x="480" y="92" text-anchor="middle" style="fill:rgba(255,255,255,0.85);font:18px var(--font-mono)">el investigador da la orden</text>
+<rect x="370" y="190" width="220" height="80" rx="12" style="fill:var(--ink)"/>
+<text x="480" y="225" text-anchor="middle" style="fill:#fff;font:600 24px var(--font-sans)">GitHub</text>
+<text x="480" y="252" text-anchor="middle" style="fill:rgba(255,255,255,0.7);font:18px var(--font-mono)">repos = memoria organizada</text>
+<line x1="480" y1="110" x2="480" y2="190" style="stroke:var(--ink-3);stroke-width:2"/>
+<rect x="40" y="350" width="200" height="70" rx="10" style="fill:var(--bg-alt);stroke:var(--rule-2)"/>
+<text x="140" y="380" text-anchor="middle" style="fill:var(--ink);font:600 20px var(--font-sans)">SMV</text>
+<text x="140" y="402" text-anchor="middle" style="fill:var(--ink-3);font:16px var(--font-mono)">expedientes Perú</text>
+<rect x="270" y="350" width="200" height="70" rx="10" style="fill:var(--bg-alt);stroke:var(--rule-2)"/>
+<text x="370" y="380" text-anchor="middle" style="fill:var(--ink);font:600 20px var(--font-sans)">Capital IQ</text>
+<text x="370" y="402" text-anchor="middle" style="fill:var(--ink-3);font:16px var(--font-mono)">precios, primas, deals</text>
+<rect x="500" y="350" width="200" height="70" rx="10" style="fill:var(--bg-alt);stroke:var(--rule-2)"/>
+<text x="600" y="380" text-anchor="middle" style="fill:var(--ink);font:600 20px var(--font-sans)">Perplexity</text>
+<text x="600" y="402" text-anchor="middle" style="fill:var(--ink-3);font:16px var(--font-mono)">bibliografía, por consulta</text>
+<rect x="730" y="350" width="200" height="70" rx="10" style="fill:var(--bg-alt);stroke:var(--rule-2)"/>
+<text x="830" y="380" text-anchor="middle" style="fill:var(--ink);font:600 20px var(--font-sans)">Google</text>
+<text x="830" y="402" text-anchor="middle" style="fill:var(--ink-3);font:16px var(--font-mono)">News y Trends</text>
+<line x1="140" y1="350" x2="440" y2="270" style="stroke:var(--rule-2);stroke-width:2"/>
+<line x1="370" y1="350" x2="460" y2="270" style="stroke:var(--rule-2);stroke-width:2"/>
+<line x1="600" y1="350" x2="500" y2="270" style="stroke:var(--rule-2);stroke-width:2"/>
+<line x1="830" y1="350" x2="520" y2="270" style="stroke:var(--rule-2);stroke-width:2"/>
+</svg><div class="big-comment"><span class="marker">La idea</span><p>Claude Code orquesta: guarda el código y los datos en un repo de GitHub (la memoria del proyecto) y sale a buscar lo que falta en cada fuente — SMV, Capital IQ, Perplexity, Google — trayendo el resultado de vuelta al repo.</p></div><div class="chrome-bot"><span>S4 · Infografía del stack</span><span class="num">21 / 56</span></div></section>
+  <section class="slide" data-label="22 Stack en pantalla"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>El stack en pantalla</div><h1 class="slide-title">Así se ve el <em>flujo de trabajo</em></h1><div class="title-rule"></div><div class="img-comment"><div class="img-slot"><i class="ti ti-photo ph-icon"></i><div class="ph-label">Detalles</div><div class="ph-caption">Claude Code en el navegador · OpenRouter: modelos panel</div></div><div class="comment-block"><div class="col-eyebrow">Qué mostrar</div><h3>Tres pantallas</h3><p>Claude Code corriendo un scraper en el navegador.</p><p>OpenRouter: la consulta a un modelo panel y su juez.</p><p>Perplexity: una búsqueda con links de descarga.</p></div></div><div class="chrome-bot"><span>S4 · Stack en pantalla</span><span class="num">22 / 56</span></div></section>
+  <section class="slide" data-label="23 Ruta"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Cronograma</div><h1 class="slide-title">De la pregunta a la evidencia en <em>seis pasos</em></h1><div class="title-rule"></div><div class="agenda-list"><div class="agenda-row"><span class="num">01</span><div><div class="title">Revisión bibliográfica</div><div class="desc">Qué se sabe y qué falta.</div></div><span class="tag">Perplexity + panel</span></div><div class="agenda-row"><span class="num">02</span><div><div class="title">Expedientes de OPAs en Perú</div><div class="desc">Catálogo, prospectos, oferente y precio.</div></div><span class="tag">SMV</span></div><div class="agenda-row"><span class="num">03</span><div><div class="title">Precios, volumen y primas</div><div class="desc">Transacciones y series de Brasil, Chile, México y Perú.</div></div><span class="tag">Capital IQ</span></div><div class="agenda-row"><span class="num">04</span><div><div class="title">Event study y regresiones</div><div class="desc">Retornos anormales, volumen anormal y prima.</div></div><span class="tag">Python + yfinance</span></div><div class="agenda-row"><span class="num">05</span><div><div class="title">Verificación con noticias</div><div class="desc">¿Había rumor antes del anuncio?</div></div><span class="tag">Google</span></div><div class="agenda-row"><span class="num">06</span><div><div class="title">Resultados y redacción</div><div class="desc">Lectura crítica, límites y presentación.</div></div><span class="tag">IA + revisión</span></div></div><div class="chrome-bot"><span>S4 · Cronograma</span><span class="num">23 / 56</span></div></section>
+  <section class="slide" data-label="24 Bibliografía"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Paso 1 · Revisión bibliográfica</div><h1 class="slide-title">La IA <em>inventa fuentes</em></h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">Lo que encontramos</div><h3>12 confirmadas · 3 inventadas · 2 con errores</h3><ul><li>«Alarcón &amp; Morales» (SMV): no existe.</li><li>«Castillo &amp; Zúñiga-Jara (2014)»: no existe.</li><li>Berggrun &amp; Lizarzaburu (2015): autores reales, tema equivocado.</li><li>Jarrell &amp; Poulsen: título y revista mal citados.</li></ul></div><div class="text-col"><div class="col-eyebrow">Cómo lo hacemos</div><h3>Pedir el archivo, no solo la cita</h3><ul><li>Pedir siempre el link o la descarga del documento.</li><li>Verificar cada cita en la fuente (SSRN, SciELO, la revista).</li><li>Si es libre, bajar el PDF; si no, entrar por el sistema de la universidad.</li><li>Contrastar con Scopus junto con Vanessa.</li></ul></div></div><div class="big-comment"><span class="marker">Lección</span><p>La búsqueda bibliográfica es la parte más frágil: los errores aparecen cuando se le pide a la IA descargar el archivo.</p></div><div class="chrome-bot"><span>S4 · Revisión bibliográfica</span><span class="num">24 / 56</span></div></section>
+  <section class="slide" data-label="25 Flujo bibliográfico"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Paso 1 · Flujo bibliográfico</div><h1 class="slide-title">De la cita al PDF en <em>cuatro pasos</em></h1><div class="title-rule"></div><div class="agenda-list"><div class="agenda-row"><span class="num">01</span><div><div class="title">Proponer</div><div class="desc">17 referencias sobre insider trading en OPAs, con un panel de 3 modelos y un juez (US$ 1,87).</div></div><span class="tag">Perplexity + panel</span></div><div class="agenda-row"><span class="num">02</span><div><div class="title">Verificar en la fuente</div><div class="desc">Cada cita contra SSRN, SciELO, la revista y Google Scholar: 12 existen, 3 no, 2 con errores.</div></div><span class="tag">Web + Scholar</span></div><div class="agenda-row"><span class="num">03</span><div><div class="title">Descargar lo abierto</div><div class="desc">6 PDFs de acceso abierto quedan guardados junto al análisis.</div></div><span class="tag">IA + repositorio</span></div><div class="agenda-row"><span class="num">04</span><div><div class="title">Entrar por la PUCP</div><div class="desc">Los 9 con paywall o login se piden por Scopus y HeinOnline desde la red PUCP.</div></div><span class="tag">Biblioteca PUCP</span></div></div><div class="big-comment"><span class="marker">Regla</span><p>La IA propone; la fuente confirma. Ninguna cita entra a la bibliografía sin abrir el documento.</p></div><div class="chrome-bot"><span>S4 · Flujo bibliográfico</span><span class="num">25 / 56</span></div></section>
+  <section class="slide" data-label="26 Selenium vs API"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Antes de extraer datos</div><h1 class="slide-title">Dos formas de <em>sacarle datos</em> a una web</h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">01 · Selenium</div><h3>Un navegador controlado por código</h3><ul><li>Abre un navegador real, hace clic, escribe y scrollea como una persona.</li><li>Funciona en casi cualquier sitio, incluso los que arman la página con JavaScript.</li><li>Más lento y más pesado: hay que esperar que cada cosa cargue.</li></ul></div><div class="text-col"><div class="col-eyebrow">02 · Requests / API directa</div><h3>Hablarle directo al servidor</h3><ul><li>Se llama directamente a la dirección que la página ya usa para pedir sus datos, sin abrir navegador.</li><li>Mucho más rápido y liviano.</li><li>Hay que descubrir primero cómo pide los datos esa página en particular.</li></ul></div></div><div class="big-comment"><span class="marker">En este proyecto</span><p>SMV es un formulario clásico (WebForms): se replica el mismo envío con requests, sin Selenium. Capital IQ es una aplicación moderna: se navega con el navegador y la sesión ya iniciada.</p></div><div class="chrome-bot"><span>S4 · Selenium vs API</span><span class="num">26 / 56</span></div></section>
+  <section class="slide" data-label="27 SMV"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Fuente 1 · SMV</div><h1 class="slide-title">SMV: de un portal web a <em>una base de OPAs</em></h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">Cómo se extrajo</div><h3>Requests, no Selenium</h3><ul><li>El formulario de OPAs de SIMV tiene un menú con todos los expedientes (2005–2026).</li><li>Postback del formulario con requests: una fila por expediente y por documento.</li><li>PDFs a texto con PyMuPDF; los escaneados, OCR con Tesseract en español.</li><li>Precio y oferente: regex sobre el prospecto, verificado a mano.</li></ul></div><div class="text-col"><div class="col-eyebrow">Resultado</div><h3>121 expedientes clasificados</h3><ul><li>83 OPAs y 10 OPC (exclusión).</li><li>19 selecciones de valorizadora, 8 rescates o canjes y 1 mejora.</li><li>Precio ofertado y oferente por expediente.</li><li>Repo reutilizable y público: <a href="https://github.com/hugo-gutierrez-pe/smv-opas" target="_blank" rel="noopener" style="color:var(--accent)">github.com/hugo-gutierrez-pe/smv-opas</a></li></ul></div></div><div class="chrome-bot"><span>S4 · Fuente SMV</span><span class="num">27 / 56</span></div></section>
+  <section class="slide" data-label="28 Capital IQ"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Fuente 2 · Capital IQ</div><h1 class="slide-title">Capital IQ: <em>extracción asistida</em> caso por caso</h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">Qué se extrae</div><h3>Cuatro piezas</h3><ul><li>Transactions Screener: tender offers por país y tipo de control.</li><li>Deal Profile: prima 1 día antes, sector y atributos.</li><li>Series diarias de precio y volumen, incluso de empresas deslistadas.</li><li>ROE y ROA pre-anuncio por trimestre.</li></ul></div><div class="text-col"><div class="col-eyebrow">Cómo se hace</div><h3>IA navegando la sesión abierta</h3><ul><li>Un agente de IA recorre el Deal Profile de cada caso con la sesión de Capital IQ ya iniciada, igual que lo haría Hugo a mano.</li><li>El gráfico de prima solo se lee cuando se renderiza.</li><li>125 casos: 104 de Brasil, Chile y México con event study.</li><li>Prima disponible en 75 casos; en Perú, solo 1 de 21.</li></ul></div></div><div class="chrome-bot"><span>S4 · Fuente Capital IQ</span><span class="num">28 / 56</span></div></section>
+  <section class="slide" data-label="29 Noticias"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Fuente 3 · Noticias</div><h1 class="slide-title">Noticias: ¿<em>alguien lo sabía</em> antes?</h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">Cómo se busca</div><h3>Google News y Google Trends</h3><ul><li>RSS de Google News: los titulares más antiguos que mencionan una compra o venta de la empresa.</li><li>Google Trends: el pico de interés de búsqueda.</li><li>Se compara con la fecha de Capital IQ y de SMV.</li><li>No es análisis de sentimiento: es búsqueda de noticias.</li></ul></div><div class="text-col"><div class="col-eyebrow">Dos ejemplos</div><h3>Cuándo se enteró el mercado</h3><ul><li>Luz del Sur: el pico de Trends cae el 30/09/2019; seis medios reportan la venta ese día.</li><li>Grupo Imsa: <a href="https://expansion.mx/negocios/2007/4/30/ternium-tomara-el-control-del-grupo-imsa" target="_blank" rel="noopener" style="color:var(--accent)">negociaciones confirmadas</a> el 20/04/2007, diez días antes de la fecha de Capital IQ.</li><li>En vivo: <a href="https://trends.google.com/trends/explore?date=2019-09-01%202019-10-31&amp;geo=PE&amp;q=Sempra&amp;hl=es" target="_blank" rel="noopener" style="color:var(--accent)">Google Trends · «Sempra», Perú, sep–oct 2019</a></li></ul></div></div><div class="chrome-bot"><span>S4 · Fuente noticias</span><span class="num">29 / 56</span></div></section>
+  <section class="slide" data-label="30 Bloomberg"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Fuente 4 · Bloomberg</div><h1 class="slide-title">Bloomberg: el terminal <em>complementa</em></h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">Qué se hizo</div><h3>Pulls manuales</h3><ul><li>Terminal de la biblioteca PUCP.</li><li>Pull de precios y liquidez de Brasil, Chile y México (archivos xlsx guardados con los datos).</li><li>Complementa a Capital IQ en las empresas que este no cubre.</li></ul></div><div class="text-col"><div class="col-eyebrow">Pendiente</div><h3>Lo que falta mostrar</h3><ul><li>Demostración de BQL asistido por IA.</li><li>Búsqueda semántica de documentos.</li><li>First-day pop exacto de las IPOs de EE.UU.</li></ul></div></div><div class="chrome-bot"><span>S4 · Fuente Bloomberg</span><span class="num">30 / 56</span></div></section>
+  <section class="slide" data-label="31 Código"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Código · github.com/hugo-gutierrez-pe/smv-opas</div><h1 class="slide-title">Una parte del código queda <em>reutilizable</em></h1><div class="title-rule"></div><div class="code-shell"><div class="code-head"><span class="traffic"><span></span><span></span><span></span></span><span class="file">terminal</span><span class="lang">demo</span></div><pre class="code-body"><span class="ln"><span class="tok-num">smv-opas/</span></span><span class="ln"><span class="tok-op">├─</span> smv_opas/   expedientes · documentos · pdfs · ocr · dataset · precios</span><span class="ln"><span class="tok-op">├─</span> requirements.txt</span><span class="ln"><span class="tok-op">└─</span> README.md</span><span class="ln"> </span><span class="ln"><span class="tok-op">$</span> python -m smv_opas expedientes</span><span class="ln">122 expedientes OPA extraidos -> data/opas_expedientes_smv.csv</span><span class="ln"><span class="tok-op">$</span> python -m smv_opas documentos --limit 2</span><span class="ln">[1/2] 25638: 20 documentos</span></pre></div><div class="chrome-bot"><span>S4 · Código</span><span class="num">31 / 56</span></div></section>
+  <section class="slide" data-label="32 Descriptiva 104"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Estadística descriptiva · Brasil, Chile, México</div><h1 class="slide-title">Los 104 casos: <em>quién compra</em> y en qué sector</h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">País y tipo de comprador</div><table class="cmp-table tight"><thead><tr><th>País</th><th>Externo</th><th>Mismo grupo</th><th>Total</th></tr></thead><tbody><tr><td class="name">Brasil</td><td>15</td><td>51</td><td>66</td></tr><tr><td class="name">Chile</td><td>10</td><td>5</td><td>15</td></tr><tr><td class="name">México</td><td>10</td><td>13</td><td>23</td></tr><tr><td class="name">Total</td><td>35</td><td>69</td><td>104</td></tr></tbody></table></div><div class="text-col"><div class="col-eyebrow">Sectores y época</div><h3>Concentrados en pocos sectores</h3><ul><li>Alimentos y carnes: 9. Telecomunicaciones: 8.</li><li>Electricidad: 6. Carreteras y ferrocarriles: 5. Acero: 5.</li><li>51 sectores distintos en total.</li><li>89 de los 104 casos se anunciaron entre 2004 y 2018.</li></ul></div></div><div class="chrome-bot"><span>S5 · Descriptiva</span><span class="num">32 / 56</span></div></section>
+  <section class="slide" data-label="33 Casos grandes"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Tamaño de la operación · US$ millones</div><h1 class="slide-title">Los casos más <em>grandes</em> de los 104</h1><div class="title-rule"></div><div class="img-comment"><div><svg viewBox="0 0 960 600" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Casos más grandes en US$ millones"><line x1="400" x2="400" y1="10" y2="590" style="stroke:var(--ink-3)"/><text x="10" y="49" style="fill:var(--ink);font:24px var(--font-sans)">Grupo Modelo · MX</text><rect x="400" y="20" width="460.0" height="40" rx="3" style="fill:var(--accent)"/><text x="868.0" y="49" style="fill:var(--ink);font:600 22px var(--font-mono)">14.707</text><text x="10" y="106" style="fill:var(--ink);font:24px var(--font-sans)">Global Village Telecom · BR</text><rect x="400" y="77" width="137.8" height="40" rx="3" style="fill:var(--accent)"/><text x="545.8" y="106" style="fill:var(--ink);font:600 22px var(--font-mono)">4.404</text><text x="10" y="163" style="fill:var(--ink);font:24px var(--font-sans)">Banmédica · CL</text><rect x="400" y="134" width="86.2" height="40" rx="3" style="fill:var(--accent)"/><text x="494.2" y="163" style="fill:var(--ink);font:600 22px var(--font-mono)">2.757</text><text x="10" y="220" style="fill:var(--ink);font:24px var(--font-sans)">TAM · BR</text><rect x="400" y="191" width="84.8" height="40" rx="3" style="fill:var(--accent)"/><text x="492.8" y="220" style="fill:var(--ink);font:600 22px var(--font-mono)">2.712</text><text x="10" y="277" style="fill:var(--ink);font:24px var(--font-sans)">Souza Cruz · BR</text><rect x="400" y="248" width="83.4" height="40" rx="3" style="fill:var(--ink-3)"/><text x="491.4" y="277" style="fill:var(--ink);font:600 22px var(--font-mono)">2.668</text><text x="10" y="334" style="fill:var(--ink);font:24px var(--font-sans)">Hylsamex · MX</text><rect x="400" y="305" width="69.8" height="40" rx="3" style="fill:var(--accent)"/><text x="477.8" y="334" style="fill:var(--ink);font:600 22px var(--font-mono)">2.233</text><text x="10" y="391" style="fill:var(--ink);font:24px var(--font-sans)">Comercial Mexicana · MX</text><rect x="400" y="362" width="68.7" height="40" rx="3" style="fill:var(--accent)"/><text x="476.7" y="391" style="fill:var(--ink);font:600 22px var(--font-mono)">2.197</text><text x="10" y="448" style="fill:var(--ink);font:24px var(--font-sans)">FIBRA Macquarie · MX</text><rect x="400" y="419" width="64.5" height="40" rx="3" style="fill:var(--accent)"/><text x="472.5" y="448" style="fill:var(--ink);font:600 22px var(--font-mono)">2.063</text><text x="10" y="505" style="fill:var(--ink);font:24px var(--font-sans)">Brasil Telecom · BR</text><rect x="400" y="476" width="57.4" height="40" rx="3" style="fill:var(--ink-3)"/><text x="465.4" y="505" style="fill:var(--ink);font:600 22px var(--font-mono)">1.835</text><text x="10" y="562" style="fill:var(--ink);font:24px var(--font-sans)">ArcelorMittal Inox · BR</text><rect x="400" y="533" width="54.5" height="40" rx="3" style="fill:var(--ink-3)"/><text x="462.5" y="562" style="fill:var(--ink);font:600 22px var(--font-mono)">1.743</text></svg></div><div class="comment-block"><div class="col-eyebrow">Lo que muestran</div><p>Grupo Modelo (US$ 14.707 M) es más de tres veces el segundo caso. Los diez mayores suman US$ 37,3 mil millones, 55% del total con dato.</p><p>Azul: comprador externo. Gris: mismo grupo. Casi todos los grandes son cambios reales de control.</p><div class="source">Contraprestación total en US$ millones, Capital IQ. 98 de 104 casos con dato (US$ 67 mil millones en total).</div></div></div><div class="chrome-bot"><span>S5 · Casos grandes</span><span class="num">33 / 56</span></div></section>
+  <section class="slide seccion bg-ink" data-label="34 El contraste"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="sec-mega">S3</div><div class="sec-label"><span class="bar"></span>El contraste</div><h2>EE.UU. entra por el <em>mercado</em>.<br/>LatAm, por el control.</h2><p class="sec-lede">La charla conecta dos fenómenos: el mispricing de las IPOs y la transferencia concentrada de control mediante OPAs.</p><div class="chrome-bot"><span>S3 · El contraste</span><span class="num">34 / 56</span></div></section>
+  <section class="slide" data-label="35 IPOs y OPAs"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Capital IQ · Transactions Screener</div><h1 class="slide-title">IPOs y OPAs: dos puertas para <em>llegar al mercado</em></h1><div class="title-rule"></div><div class="img-comment"><div><table class="cmp-table"><thead><tr><th>Mercado</th><th>IPOs · 2016–2025</th></tr></thead><tbody><tr><td class="name">Estados Unidos</td><td class="code">3.841</td></tr><tr><td class="name">Brasil</td><td class="code">235</td></tr><tr><td class="name">México</td><td class="code">50</td></tr><tr><td class="name">Chile · Colombia · Perú</td><td class="code">18</td></tr><tr><td class="name">LatAm · 5 países</td><td class="code">303</td></tr></tbody></table></div><div class="comment-block"><div class="col-eyebrow">La brecha se ensancha, no se cierra</div><p>En el pico de 2021, EE.UU. tuvo 1.377 IPOs frente a 93 en los 5 mercados de LatAm juntos. En 2024–2025 la distancia crece: 578 vs. apenas 3.</p><p>Y el <em>mispricing</em> es recurrente: 15 de las 20 IPOs de EE.UU. mayores a US$500M en 2026 subieron en su primera semana (mediana +14,5%).</p><div class="source">Capital IQ · Transactions Screener · IPOs (ECM), 20-sep-2026</div></div></div><div class="chrome-bot"><span>S3 · IPOs y OPAs</span><span class="num">35 / 56</span></div></section>
+  <section class="slide" data-label="36 IPOs vs OPAs"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Capital IQ · SMV · 2016–2025</div><h1 class="slide-title">En los mercados pequeños, la OPA <em>reemplaza a la IPO</em></h1><div class="title-rule"></div><div class="img-comment"><div><svg viewBox="0 0 960 600" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="IPOs vs OPAs 2016-2025"><line x1="70" x2="940" y1="530.0" y2="530.0" style="stroke:var(--rule)"/><text x="60" y="537.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">0</text><line x1="70" x2="940" y1="436.0" y2="436.0" style="stroke:var(--rule)"/><text x="60" y="443.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">50</text><line x1="70" x2="940" y1="342.0" y2="342.0" style="stroke:var(--rule)"/><text x="60" y="349.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">100</text><line x1="70" x2="940" y1="248.0" y2="248.0" style="stroke:var(--rule)"/><text x="60" y="255.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">150</text><line x1="70" x2="940" y1="154.0" y2="154.0" style="stroke:var(--rule)"/><text x="60" y="161.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">200</text><line x1="70" x2="940" y1="60.0" y2="60.0" style="stroke:var(--rule)"/><text x="60" y="67.0" text-anchor="end" style="fill:var(--ink-3);font:20px var(--font-mono)">250</text><rect x="80" y="14" width="22" height="22" rx="3" style="fill:var(--accent)"/><text x="110" y="32" style="fill:var(--ink);font:22px var(--font-sans)">IPOs</text><rect x="200" y="14" width="22" height="22" rx="3" style="fill:var(--ink-3)"/><text x="230" y="32" style="fill:var(--ink);font:22px var(--font-sans)">OPAs</text><rect x="97.0" y="88.2" width="56" height="441.8" rx="3" style="fill:var(--accent)"/><text x="125.0" y="80.2" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">235</text><rect x="161.0" y="428.5" width="56" height="101.5" rx="3" style="fill:var(--ink-3)"/><text x="189.0" y="420.5" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">54</text><text x="157.0" y="566" text-anchor="middle" style="fill:var(--ink);font:600 24px var(--font-sans)">Brasil</text><rect x="271.0" y="436.0" width="56" height="94.0" rx="3" style="fill:var(--accent)"/><text x="299.0" y="428.0" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">50</text><rect x="335.0" y="471.7" width="56" height="58.3" rx="3" style="fill:var(--ink-3)"/><text x="363.0" y="463.7" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">31</text><text x="331.0" y="566" text-anchor="middle" style="fill:var(--ink);font:600 24px var(--font-sans)">México</text><rect x="445.0" y="511.2" width="56" height="18.8" rx="3" style="fill:var(--accent)"/><text x="473.0" y="503.2" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">10</text><rect x="509.0" y="466.1" width="56" height="63.9" rx="3" style="fill:var(--ink-3)"/><text x="537.0" y="458.1" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">34</text><text x="505.0" y="566" text-anchor="middle" style="fill:var(--ink);font:600 24px var(--font-sans)">Chile</text><rect x="619.0" y="520.6" width="56" height="9.4" rx="3" style="fill:var(--accent)"/><text x="647.0" y="512.6" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">5</text><rect x="683.0" y="484.9" width="56" height="45.1" rx="3" style="fill:var(--ink-3)"/><text x="711.0" y="476.9" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">24</text><text x="679.0" y="566" text-anchor="middle" style="fill:var(--ink);font:600 24px var(--font-sans)">Colombia</text><rect x="793.0" y="524.4" width="56" height="5.6" rx="3" style="fill:var(--accent)"/><text x="821.0" y="516.4" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">3</text><rect x="857.0" y="503.7" width="56" height="26.3" rx="3" style="fill:var(--ink-3)"/><text x="885.0" y="495.7" text-anchor="middle" style="fill:var(--ink);font:600 22px var(--font-mono)">14</text><text x="853.0" y="566" text-anchor="middle" style="fill:var(--ink);font:600 24px var(--font-sans)">Perú</text></svg></div><div class="comment-block"><div class="col-eyebrow">Dos puertas</div><p>En Brasil y México todavía hay más IPOs que OPAs. En Chile, Colombia y Perú es al revés.</p><p>En Perú, entre 2016 y 2025: 3 IPOs y 14 OPAs.</p><div class="source">IPOs: Capital IQ. OPAs: Capital IQ (tender offers) en Brasil, México, Chile y Colombia; registro SMV en Perú. Fuentes distintas: comparación aproximada.</div></div></div><div class="chrome-bot"><span>S3 · IPOs vs OPAs</span><span class="num">36 / 56</span></div></section>
+  <section class="slide" data-label="37 Casos dramáticos"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">yfinance</span><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Retorno anormal acumulado · [−10, +10]</div><h1 class="slide-title">Los casos más <em>dramáticos</em> del event study</h1><div class="title-rule"></div><div class="img-comment"><div><svg viewBox="0 0 960 600" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Casos con mayor retorno anormal"><line x1="480" x2="480" y1="10" y2="590" style="stroke:var(--ink-3)"/><text x="10" y="49" text-anchor="start" style="fill:var(--ink);font:24px var(--font-sans)">Aleatica · MX</text><rect x="480.0" y="20" width="300.0" height="40" rx="3" style="fill:var(--accent)"/><text x="788.0" y="49" text-anchor="start" style="fill:var(--ink);font:600 22px var(--font-mono)">+91%</text><text x="10" y="106" text-anchor="start" style="fill:var(--ink);font:24px var(--font-sans)">Farmacias Ahumada · CL</text><rect x="480.0" y="77" width="282.8" height="40" rx="3" style="fill:var(--accent)"/><text x="770.8" y="106" text-anchor="start" style="fill:var(--ink);font:600 22px var(--font-mono)">+86%</text><text x="10" y="163" text-anchor="start" style="fill:var(--ink);font:24px var(--font-sans)">Braskem Petroq. · BR</text><rect x="480.0" y="134" width="242.4" height="40" rx="3" style="fill:var(--accent)"/><text x="730.4" y="163" text-anchor="start" style="fill:var(--ink);font:600 22px var(--font-mono)">+73%</text><text x="10" y="220" text-anchor="start" style="fill:var(--ink);font:24px var(--font-sans)">Brasmotor · BR</text><rect x="480.0" y="191" width="192.1" height="40" rx="3" style="fill:var(--accent)"/><text x="680.1" y="220" text-anchor="start" style="fill:var(--ink);font:600 22px var(--font-mono)">+58%</text><text x="10" y="277" text-anchor="start" style="fill:var(--ink);font:24px var(--font-sans)">Andrómaco · CL</text><rect x="480.0" y="248" width="188.6" height="40" rx="3" style="fill:var(--accent)"/><text x="676.6" y="277" text-anchor="start" style="fill:var(--ink);font:600 22px var(--font-mono)">+57%</text><text x="10" y="334" text-anchor="start" style="fill:var(--ink);font:24px var(--font-sans)">Banco Sofisa · BR</text><rect x="480.0" y="305" width="183.5" height="40" rx="3" style="fill:var(--accent)"/><text x="671.5" y="334" text-anchor="start" style="fill:var(--ink);font:600 22px var(--font-mono)">+56%</text><text x="10" y="391" text-anchor="start" style="fill:var(--ink);font:24px var(--font-sans)">Tarpon · BR</text><rect x="318.0" y="362" width="162.0" height="40" rx="3" style="fill:var(--ink-3)"/><text x="310.0" y="391" text-anchor="end" style="fill:var(--ink);font:600 22px var(--font-mono)">−49%</text><text x="10" y="448" text-anchor="start" style="fill:var(--ink);font:24px var(--font-sans)">Invermar · CL</text><rect x="480.0" y="419" width="135.3" height="40" rx="3" style="fill:var(--accent)"/><text x="623.3" y="448" text-anchor="start" style="fill:var(--ink);font:600 22px var(--font-mono)">+41%</text><text x="10" y="505" text-anchor="start" style="fill:var(--ink);font:24px var(--font-sans)">Invexans · CL</text><rect x="480.0" y="476" width="135.0" height="40" rx="3" style="fill:var(--accent)"/><text x="623.0" y="505" text-anchor="start" style="fill:var(--ink);font:600 22px var(--font-mono)">+41%</text><text x="10" y="562" text-anchor="start" style="fill:var(--ink);font:24px var(--font-sans)">Quintec · CL</text><rect x="480.0" y="533" width="129.4" height="40" rx="3" style="fill:var(--accent)"/><text x="617.4" y="562" text-anchor="start" style="fill:var(--ink);font:600 22px var(--font-mono)">+39%</text></svg></div><div class="comment-block"><div class="col-eyebrow">Lo que muestran</div><p>Seis casos suben entre +56% y +91% en la ventana [−10, +10]: Aleatica, Farmacias Ahumada, Braskem, Brasmotor, Andrómaco y Banco Sofisa.</p><p>El único extremo negativo es Tarpon (−49%). En conjunto: mediana +4,5%, media +9,8%, y 73 de 104 casos con CAR positivo.</p><div class="source">CAR del evento [−10, +10], market model. Es el retorno total de la ventana, no una señal de información previa.</div></div></div><div class="chrome-bot"><span>S5 · Casos extremos</span><span class="num">37 / 56</span></div></section>
+  <section class="slide seccion bg-ink" data-label="38 Resultados"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="sec-mega">S5</div><div class="sec-label"><span class="bar"></span>Resultados</div><h2>¿Qué encontramos <em>en los datos</em>?</h2><p class="sec-lede">Primero definimos cómo medimos; después, las señales previas al anuncio y la prima de control.</p><div class="chrome-bot"><span>S5 · Resultados</span><span class="num">38 / 56</span></div></section>
+  <section class="slide" data-label="39 AR y CAR"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Definición</div><h1 class="slide-title">Retorno anormal (AR) y <em>acumulado (CAR)</em></h1><div class="title-rule"></div><div class="formula-block"><div class="formula" style="font-size:46px">AR<sub>i,t</sub> = R<sub>i,t</sub> − E[R<sub>i,t</sub>] &nbsp;·&nbsp; CAR<sub>i</sub> = Σ AR<sub>i,t</sub></div><div class="formula-legend"><div class="legend-item"><div class="var">R<sub>i,t</sub></div><div class="desc">Retorno diario de la acción i.</div></div><div class="legend-item"><div class="var">E[R<sub>i,t</sub>]</div><div class="desc">Retorno esperado si no hubiera noticia.</div></div><div class="legend-item"><div class="var">AR</div><div class="desc">Lo que se movió de más o de menos.</div></div><div class="legend-item"><div class="var">CAR</div><div class="desc">Suma de los AR en una ventana.</div></div></div></div><div class="chrome-bot"><span>S5 · Retorno anormal</span><span class="num">39 / 56</span></div></section>
+  <section class="slide" data-label="40 Retorno esperado"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">yfinance</span><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Dos especificaciones</div><h1 class="slide-title">¿Cuánto <em>esperábamos</em> que rindiera?</h1><div class="title-rule"></div><table class="cmp-table"><thead><tr><th>Especificación</th><th>Retorno esperado E[R<sub>i,t</sub>]</th><th>Dónde la usamos</th><th>Cómo se estima</th></tr></thead><tbody><tr><td class="name">Ajustado al mercado</td><td class="code">R<sub>m,t</sub></td><td>Perú (19 casos utilizables)</td><td>Sin estimar: α = 0 y β = 1</td></tr><tr><td class="name">Market model</td><td class="code">α<sub>i</sub> + β<sub>i</sub> · R<sub>m,t</sub></td><td>Brasil, Chile y México (104 casos)</td><td>MCO por caso, ventana [−280, −30]</td></tr></tbody></table><div class="big-comment"><span class="marker">Mercado (m)</span><p>ETF del país: EWZ (Brasil), ECH (Chile), EWW (México) y EPU (Perú). El MCO es de series de tiempo, caso por caso; el modelo agrupado (pool) aparece solo en la regresión de la prima.</p></div><div class="chrome-bot"><span>S5 · Retorno esperado</span><span class="num">40 / 56</span></div></section>
+  <section class="slide" data-label="41 Ventanas"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Ventanas del event study</div><h1 class="slide-title">Cuándo miramos: <em>días alrededor del anuncio</em></h1><div class="title-rule"></div><svg viewBox="0 0 1728 470" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ventanas del event study"><rect x="83.8" y="40" width="1345.2" height="56" rx="6" style="fill:var(--accent-tint-2)"/><text x="756.4" y="77" text-anchor="middle" style="fill:var(--ink);font:600 24px var(--font-sans)">Estimación del modelo · [−280, −30]</text><rect x="1052.3" y="130" width="478.9" height="56" rx="6" style="fill:var(--bg-deep)"/><text x="1291.8" y="167" text-anchor="middle" style="fill:var(--ink);font:600 24px var(--font-sans)">Volumen normal · [−100, −11]</text><rect x="1536.6" y="220" width="48.4" height="56" rx="6" style="fill:var(--accent)"/><text x="1560.8" y="257" text-anchor="middle" style="fill:#fff;font:600 24px var(--font-sans)">Pre</text><rect x="1590.4" y="220" width="53.8" height="56" rx="6" style="fill:var(--accent-deep)"/><text x="1617.3" y="257" text-anchor="middle" style="fill:#fff;font:600 24px var(--font-sans)">Post</text><text x="1522.6" y="257" text-anchor="end" style="fill:var(--ink);font:600 24px var(--font-sans)">Evento · [−10, +10]</text><line x1="1590.4" x2="1590.4" y1="20" y2="330" style="stroke:var(--ink);stroke-width:2"/><text x="1580.4" y="345" text-anchor="end" style="fill:var(--ink);font:600 24px var(--font-mono)">t = 0 · anuncio</text><line x1="30" x2="1698" y1="392" y2="392" style="stroke:var(--ink-3)"/><line x1="83.8" x2="83.8" y1="392" y2="404" style="stroke:var(--ink-3)"/><text x="83.8" y="432" text-anchor="middle" style="fill:var(--ink-3);font:22px var(--font-mono)">-280</text><line x1="514.3" x2="514.3" y1="392" y2="404" style="stroke:var(--ink-3)"/><text x="514.3" y="432" text-anchor="middle" style="fill:var(--ink-3);font:22px var(--font-mono)">-200</text><line x1="1052.3" x2="1052.3" y1="392" y2="404" style="stroke:var(--ink-3)"/><text x="1052.3" y="432" text-anchor="middle" style="fill:var(--ink-3);font:22px var(--font-mono)">-100</text><line x1="1429.0" x2="1429.0" y1="392" y2="404" style="stroke:var(--ink-3)"/><text x="1429.0" y="432" text-anchor="middle" style="fill:var(--ink-3);font:22px var(--font-mono)">-30</text><line x1="1536.6" x2="1536.6" y1="392" y2="404" style="stroke:var(--ink-3)"/><text x="1536.6" y="432" text-anchor="middle" style="fill:var(--ink-3);font:22px var(--font-mono)">-10</text><line x1="1590.4" x2="1590.4" y1="392" y2="404" style="stroke:var(--ink-3)"/><text x="1590.4" y="432" text-anchor="middle" style="fill:var(--ink-3);font:22px var(--font-mono)">0</text><line x1="1644.2" x2="1644.2" y1="392" y2="404" style="stroke:var(--ink-3)"/><text x="1644.2" y="432" text-anchor="middle" style="fill:var(--ink-3);font:22px var(--font-mono)">10</text></svg><p style="font-size:var(--type-small);color:var(--ink-3);margin-top:8px;">Días calendario respecto de la fecha de anuncio. Pre: [−10, −1]. Post: [0, +10].</p><div class="chrome-bot"><span>S5 · Ventanas</span><span class="num">41 / 56</span></div></section>
+  <section class="slide" data-label="42 CAR pre"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">yfinance</span><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Señal 1 · Precio</div><h1 class="slide-title">CAR pre-anuncio: <em>7 de 104</em> casos</h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">Qué medimos</div><h3>El precio antes del anuncio</h3><ul><li>CAR pre: suma de los retornos anormales del día −10 al −1.</li><li>Es significativo si |t| &gt; 1,96 (5%), con t = CAR / (σ · √n).</li><li>σ es el error residual del market model.</li></ul></div><div class="text-col"><div class="col-eyebrow">Qué encontramos</div><h3>Una minoría de casos</h3><ul><li>7 de 104 (7%): 3 en Brasil (de 66), 1 en Chile (de 15) y 3 en México (de 23).</li><li>5 son compradores externos (de 35) y 2 mismo grupo (de 69).</li><li>Los 7 son positivos: el precio subió antes.</li><li>El más fuerte: Grupo Imsa, CAR pre +21%, t = 5,4.</li></ul></div></div><div class="chrome-bot"><span>S5 · CAR pre-anuncio</span><span class="num">42 / 56</span></div></section>
+  <section class="slide" data-label="43 Volumen anormal"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Señal 2 · Volumen</div><h1 class="slide-title">Volumen anormal: <em>32 de 104</em> casos</h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">Qué medimos</div><h3>El volumen antes del anuncio</h3><ul><li>Base: promedio y desviación estándar del volumen diario entre los días −100 y −11.</li><li>Anormal: algún día entre −10 y −1 con z = (V − promedio) / desviación ≥ 2.</li><li>z ≥ 2 es un volumen dos desviaciones sobre lo normal.</li></ul></div><div class="text-col"><div class="col-eyebrow">Qué encontramos</div><h3>Una señal ruidosa</h3><ul><li>32 de 104 (31%): 23 en Brasil (de 66), 3 en Chile (de 15) y 6 en México (de 23).</li><li>19 son mismo grupo y 13 comprador externo.</li><li>Sola no dice mucho: el volumen sube por muchas razones.</li><li>Caso extremo: Grupo Modelo, z = 13,3.</li></ul></div></div><div class="chrome-bot"><span>S5 · Volumen anormal</span><span class="num">43 / 56</span></div></section>
+  <section class="slide" data-label="44 Ambas señales"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Señales combinadas</div><h1 class="slide-title">Ambas señales: <em>3 de 104</em> casos</h1><div class="title-rule"></div><table class="cmp-table"><thead><tr><th>Caso</th><th>País</th><th>t del CAR pre</th><th>z del volumen</th><th>Día del pico</th></tr></thead><tbody><tr><td class="name">Aleatica</td><td>México</td><td class="code">2,52</td><td class="code">6,81</td><td class="code">−4</td></tr><tr><td class="name">Grupo Modelo</td><td>México</td><td class="code">2,49</td><td class="code">13,26</td><td class="code">−4</td></tr><tr><td class="name">Autometal</td><td>Brasil</td><td class="code">2,02</td><td class="code">2,12</td><td class="code">−1</td></tr></tbody></table><div class="big-comment"><span class="marker">Discrepancia</span><p>Grupo Imsa tiene el t más alto (5,44) pero volumen normal (z = −0,18): no encaja con el patrón clásico de un comprador informado.</p></div><div class="chrome-bot"><span>S5 · Ambas señales</span><span class="num">44 / 56</span></div></section>
+  <section class="slide" data-label="45 Insider trading"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Cómo se vería</div><h1 class="slide-title">Insider trading: <em>cómo aparecería</em> en los datos</h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">El mecanismo</div><h3>Alguien sabe antes</h3><ul><li>Una persona conoce la operación antes que el mercado.</li><li>Compra acciones: el volumen sube.</li><li>Sus compras empujan el precio días antes del anuncio.</li><li>Al anunciarse, el CAR pre ya capturó parte del premio.</li></ul></div><div class="text-col"><div class="col-eyebrow">Qué necesitamos</div><h3>Los insumos</h3><ul><li>Precio y volumen diarios (Capital IQ).</li><li>Una fecha de anuncio verificada.</li><li>Noticias y rumores previos (Google).</li><li>Ideal: registros de operaciones de insiders del regulador, que no tenemos.</li></ul></div></div><div class="big-comment"><span class="marker">Límite</span><p>Los datos dan indicios, no prueba: solo el regulador puede probar el uso de información privilegiada.</p></div><div class="chrome-bot"><span>S5 · Insider trading</span><span class="num">45 / 56</span></div></section>
+  <section class="slide" data-label="46 Validación noticias"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Google</span><span class="tool-chip">SMV</span></div><div class="eyebrow"><span class="bar"></span>Verificación con noticias</div><h1 class="slide-title">Al mirar las noticias: <em>1 filtración, 2 explicados, 1 abierto</em></h1><div class="title-rule"></div><table class="cmp-table"><thead><tr><th>Caso</th><th>Qué encontramos</th><th>Veredicto</th></tr></thead><tbody><tr><td class="name">Grupo Modelo</td><td><a href="https://www.cronista.com/negocios/Grupo-Modelo-a-punto-de-ser-comprado-por-AB-InBev-20120626-0070.html" target="_blank" rel="noopener" style="color:var(--accent)">El Cronista</a> publicó 3 días antes que AB InBev estaba por comprarlo.</td><td>Filtración de prensa</td></tr><tr><td class="name">Aleatica</td><td>El <a href="https://www.bloomberglinea.com/latinoamerica/mexico/aleatica-anuncia-nueva-opa-para-concretar-desliste-de-la-bolsa-mexicana/" target="_blank" rel="noopener" style="color:var(--accent)">desliste ya era público</a> desde 3 semanas antes.</td><td>Parcialmente explicado</td></tr><tr><td class="name">Grupo Imsa</td><td>Negociaciones confirmadas el 20/04/2007; <a href="https://expansion.mx/negocios/2007/4/30/ternium-tomara-el-control-del-grupo-imsa" target="_blank" rel="noopener" style="color:var(--accent)">Capital IQ usa el 30/04</a>.</td><td>Fecha mal capturada</td></tr><tr><td class="name">Autometal</td><td>Sin rumor previo tras dos búsquedas.</td><td>Abierto</td></tr></tbody></table><div class="chrome-bot"><span>S5 · Validación con noticias</span><span class="num">46 / 56</span></div></section>
+  <section class="slide idea-clave" data-label="47 Interpretación"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Regla de interpretación</div><div class="quote-mark">“</div><blockquote>Una señal de precio pre-anuncio puede ser noticia pública, fecha mal capturada o filtración. El precio aislado no identifica la <em>causa</em>.</blockquote><div class="attrib"><div><div class="who">Precio + volumen + fuentes</div><div class="role">Tres capas para decidir qué caso merece revisión</div></div></div><div class="chrome-bot"><span>S5 · Interpretación</span><span class="num">47 / 56</span></div></section>
+  <section class="slide" data-label="48 Prima descriptiva"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Prima de control · Brasil, Chile, México</div><h1 class="slide-title">¿Cuánto se paga de más? <em>Depende del caso</em></h1><div class="title-rule"></div><table class="cmp-table tight"><thead><tr><th>País</th><th>Clasificación</th><th>n</th><th>Media</th><th>Mediana</th></tr></thead><tbody><tr><td class="name">Brasil</td><td>Comprador externo</td><td class="code">10</td><td class="code">14,4%</td><td class="code">10,7%</td></tr><tr><td class="name">Brasil</td><td>Mismo grupo</td><td class="code">36</td><td class="code">38,6%</td><td class="code">15,7%</td></tr><tr><td class="name">Chile</td><td>Comprador externo</td><td class="code">8</td><td class="code">35,4%</td><td class="code">24,3%</td></tr><tr><td class="name">Chile</td><td>Mismo grupo</td><td class="code">5</td><td class="code">10,2%</td><td class="code">2,1%</td></tr><tr><td class="name">México</td><td>Comprador externo</td><td class="code">5</td><td class="code">28,7%</td><td class="code">10,5%</td></tr><tr><td class="name">México</td><td>Mismo grupo</td><td class="code">10</td><td class="code">4,7%</td><td class="code">2,1%</td></tr></tbody></table><div class="big-comment"><span class="marker">Cómo leerlo</span><p>La prima es el precio de la oferta frente al precio del día anterior. Brasil, comprador externo: mediana 10,7%, es decir, la mitad de las operaciones pagó 10,7% o menos. La media se infla por casos extremos.</p></div><div class="chrome-bot"><span>S5 · Prima descriptiva</span><span class="num">48 / 56</span></div></section>
+  <section class="slide" data-label="49 Modelo prima"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Regresión</div><h1 class="slide-title">El modelo: <em>MCO agrupado</em> sobre la prima</h1><div class="title-rule"></div><div class="formula-block"><div class="formula" style="font-size:38px">Prima<sub>i</sub> = β<sub>0</sub> + β<sub>1</sub> MismoGrupo<sub>i</sub> + β<sub>2</sub> País<sub>i</sub> + β<sub>3</sub> ROE<sub>i</sub> + β<sub>4</sub> ROA<sub>i</sub> + ε<sub>i</sub></div><div class="formula-legend"><div class="legend-item"><div class="var">Prima</div><div class="desc">Precio de la oferta vs. precio 1 día antes (%).</div></div><div class="legend-item"><div class="var">MismoGrupo</div><div class="desc">1 si el controlador consolida; 0 si es comprador externo.</div></div><div class="legend-item"><div class="var">País</div><div class="desc">Dummies de Chile y México; Brasil es la base.</div></div><div class="legend-item"><div class="var">ROE, ROA</div><div class="desc">Rentabilidad antes del anuncio (%).</div></div></div></div><div class="big-comment"><span class="marker">Muestra</span><p>N = 74 (Brasil 46, México 15, Chile 13; 51 mismo grupo y 23 comprador externo). Prima: media 27,8%, mediana 10,6%. ROE mediano 10,0% y ROA mediano 4,1%. Perú queda fuera: ROE y ROA existen en 20 de 21 casos, pero solo 1 tiene la prima en Capital IQ.</p></div><div class="chrome-bot"><span>S5 · Modelo de la prima</span><span class="num">49 / 56</span></div></section>
+  <section class="slide" data-label="50 Resultado prima"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">Python</span></div><div class="eyebrow"><span class="bar"></span>Resultado</div><h1 class="slide-title">En esta muestra, <em>casi nada</em> explica la prima</h1><div class="title-rule"></div><table class="cmp-table tight"><thead><tr><th>Variable</th><th>Coeficiente</th><th>p-valor</th><th>p-valor winsorizado</th></tr></thead><tbody><tr><td class="name">Mismo grupo</td><td class="code">4,56</td><td class="code">0,789</td><td class="code">0,879</td></tr><tr><td class="name">Chile</td><td class="code">−10,38</td><td class="code">0,628</td><td class="code">0,622</td></tr><tr><td class="name">México</td><td class="code">−22,52</td><td class="code">0,242</td><td class="code">0,158</td></tr><tr><td class="name">ROE</td><td class="code">−0,021</td><td class="code">0,357</td><td class="code">0,352</td></tr><tr><td class="name">ROA</td><td class="code">−0,620</td><td class="code">0,379</td><td class="code">0,297</td></tr><tr><td class="name">R² del modelo</td><td class="code">0,039</td><td class="code">F: 0,736</td><td class="code">R² 0,050 · F: 0,610</td></tr></tbody></table><div class="big-comment"><span class="marker">Lectura</span><p>Ningún coeficiente es significativo: la prima parece una decisión caso por caso (negociación, urgencia, estructura), no una función del país o del tipo de operación.</p></div><div class="chrome-bot"><span>S5 · Resultado de la prima</span><span class="num">50 / 56</span></div></section>
+  <section class="slide seccion bg-ink" data-label="51 Perú drift"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="sec-mega">S6</div><div class="sec-label"><span class="bar"></span>Perú · análisis post-OPA</div><h2>¿El precio de la oferta se sostiene <em>después</em>?</h2><p class="sec-lede">Con AR = rs − rm medimos el drift post-OPA sin estimar alpha ni beta. El market model queda como prueba de robustez.</p><div class="chrome-bot"><span>S6 · Perú</span><span class="num">51 / 56</span></div></section>
+  <section class="slide" data-label="52 Método oficial"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">yfinance</span><span class="tool-chip">Capital IQ</span></div><div class="eyebrow"><span class="bar"></span>Método oficial · 19 casos utilizables</div><h1 class="slide-title">Retorno ajustado al mercado</h1><div class="title-rule"></div><div class="formula-block"><div class="formula">AR<sub>i,t</sub> = R<sub>i,t</sub> − R<sub>m,t</sub> &nbsp;&nbsp;·&nbsp;&nbsp; CAR<sub>i</sub> = Σ AR<sub>i,t</sub></div><div class="formula-legend"><div class="legend-item"><div class="var">R<sub>i,t</sub></div><div class="desc">Retorno diario de la acción i.</div></div><div class="legend-item"><div class="var">R<sub>m,t</sub></div><div class="desc">Retorno diario del ETF EPU (mercado).</div></div><div class="legend-item"><div class="var">CAR</div><div class="desc">Suma de AR entre −10 y el horizonte h.</div></div><div class="legend-item"><div class="var">h</div><div class="desc">+10, +30, +90 o +180 días.</div></div></div></div><div class="chrome-bot"><span>S6 · Método oficial</span><span class="num">52 / 56</span></div></section>
+  <section class="slide" data-label="53 Resultado Perú"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">yfinance</span><span class="tool-chip">SMV</span></div><div class="eyebrow"><span class="bar"></span>Perú · CAR a +180 días</div><h1 class="slide-title">El drift se mantiene en <em>mismo_grupo</em></h1><div class="title-rule"></div><table class="cmp-table"><thead><tr><th>Cohorte</th><th>N</th><th>Media</th><th>Mediana</th><th>Lectura</th></tr></thead><tbody><tr><td class="name">comprador_externo</td><td class="code">15</td><td class="code">−8.3%</td><td class="code">−2.0%</td><td>Resultado agregado débil; la mediana está cerca de cero.</td></tr><tr><td class="name">mismo_grupo</td><td class="code">4</td><td class="code">−9.2%</td><td class="code">−10.8%</td><td>Caída más consistente bajo la especificación oficial.</td></tr></tbody></table><div class="big-comment"><span class="marker">Muestra</span><p>21 candidatos iniciales. Cartavio y Atacocha 2008 quedan fuera porque EPU comienza en junio de 2009.</p></div><div class="chrome-bot"><span>S6 · Resultado Perú</span><span class="num">53 / 56</span></div></section>
+  <section class="slide bg-alt" data-label="54 Robustez"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="tool-chips"><span class="tool-chip">Capital IQ</span><span class="tool-chip">yfinance</span><span class="tool-chip">SMV</span></div><div class="eyebrow"><span class="bar"></span>Prueba de robustez</div><h1 class="slide-title">La elección del modelo cambia el resultado en <em>comprador_externo</em></h1><div class="title-rule"></div><table class="cmp-table"><thead><tr><th>Caso</th><th>Market model</th><th>AR = rs − rm</th><th>Lectura</th></tr></thead><tbody><tr><td class="name">Volcan A · exp. 18098</td><td class="code">−132.8%</td><td class="code">+13.8%</td><td>Cambia de signo.</td></tr><tr><td class="name">Corona · exp. 11282</td><td class="code">−105.2%</td><td class="code">+5.0%</td><td>Cambia de signo.</td></tr><tr><td class="name">Chancay · exp. 24079</td><td class="code">−275.4%</td><td class="code">−73.7%</td><td>Se modera, pero sigue extremo.</td></tr><tr><td class="name">mismo_grupo</td><td class="code">−10.7%</td><td class="code">−9.2%</td><td>La señal agregada se mantiene.</td></tr></tbody></table><div class="chrome-bot"><span>S6 · Robustez</span><span class="num">54 / 56</span></div></section>
+  <section class="slide" data-label="55 Límites y agenda"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="eyebrow"><span class="bar"></span>Qué podemos afirmar</div><h1 class="slide-title">Un resultado útil también necesita <em>límites claros</em></h1><div class="title-rule"></div><div class="two-col-text"><div class="text-col"><div class="col-eyebrow">Sí podemos decir</div><h3>Lo que sí sostiene la evidencia</h3><ul><li>La especificación importa en horizontes largos.</li><li>El drift de <em>mismo_grupo</em> es más consistente.</li><li>Los extremos deben revisarse caso por caso.</li><li>Los insumos quedan disponibles para replicar.</li></ul></div><div class="text-col"><div class="col-eyebrow">Todavía no</div><h3>Lo que no identifica el análisis</h3><ul><li>No prueba sobrepago ni causalidad.</li><li>No permite afirmar insider trading.</li><li>N=4 en mismo_grupo es una muestra pequeña.</li><li>La prima de Perú está pendiente: Capital IQ la tiene en 1 de 21 casos.</li></ul></div></div><div class="chrome-bot"><span>S6 · Límites y agenda</span><span class="num">55 / 56</span></div></section>
+  <section class="slide cierre bg-ink" data-label="56 Cierre"><div class="chrome-top"><span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span><span class="course-tag"><span class="dot"></span> ICI 2026 · Investigación<span class="bloomberg-dot"></span></span></div><div class="label"><span class="bar"></span>Cierre · próximos pasos</div><h2>La pregunta sigue abierta.<br/>Ahora tenemos una ruta <em>reproducible</em>.</h2><div class="closing-grid"><p class="pregunta">Medir el first-day pop en Bloomberg, resolver la prima de Perú, revisar los casos extremos (Luz del Sur, Pluz) y ampliar la muestra a Colombia. La discusión empieza aquí.</p><div class="contact-card"><div class="contact-row"><i class="ti ti-mail"></i><div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div></div><div class="contact-row"><i class="ti ti-world"></i><div><div class="lbl">Web</div><div class="val">hugogutierrez.pe</div></div></div></div></div><div class="chrome-bot"><span>ICI · Q&amp;A</span><span class="num">56 / 56</span></div></section>
+
+</deck-stage>
+
+<!-- ════════════════════════════════════════════════════════════════
+     DOWNLOAD PDF — botón flotante. Usa window.print() + el
+     @media print de deck-stage (una slide por página a 1920×1080).
+     Se oculta en modo presentación y en el propio PDF.
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .pdf-fab {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12;
+    color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover {
+    background: #185FA5;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(24,95,165,0.35), 0 1px 0 rgba(255,255,255,0.06) inset;
+  }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot {
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: #FA8C16;
+    box-shadow: 0 0 0 3px rgba(250,140,22,0.18);
+  }
+  .pdf-fab i {
+    font-size: 16px;
+    line-height: 1;
+  }
+  .pdf-fab .hint {
+    opacity: 0.55;
+    font-size: 11px;
+    margin-left: 4px;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+
+  /* Oculto durante impresión / presentación / preview del host */
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<!-- ════════════════════════════════════════════════════════════════
+     AUDIO POR SLIDE — para versión futura "slides + audio del profesor".
+     Para activar en una slide: añade data-audio="audio/mi-clip.mp3"
+     en el <section>. El player aparece abajo-derecha SOLO cuando la
+     slide actual tiene audio. Se pausa al cambiar de slide.
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .audio-fab {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: none; /* visible only when current slide has data-audio */
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    background: #0A0D12;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18);
+  }
+  .audio-fab.active { display: inline-flex; }
+  .audio-fab .play-btn {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #185FA5;
+    color: #fff;
+    cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 14px;
+  }
+  .audio-fab .play-btn:hover { background: #2A7BC8; }
+  .audio-fab .label {
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .audio-fab .time {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.55;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+  @media print { .audio-fab { display: none !important; } }
+</style>
+
+<div class="audio-fab" id="audio-fab">
+  <button type="button" class="play-btn" id="audio-toggle" aria-label="Reproducir clase">
+    <i class="ti ti-player-play-filled"></i>
+  </button>
+  <span class="label">Clase grabada</span>
+  <span class="time" id="audio-time">0:00</span>
+  <audio id="audio-el" preload="metadata"></audio>
+</div>
+
+<script src="deck-stage.js"></script>
+
+<script>
+/* ── QUIZ click handler — reveal correct/incorrect ─────────────────── */
+window._quizClick = function(e) {
+  const opt = e.target.closest('.quiz-opt');
+  if (!opt) return;
+  const quiz = opt.closest('.quiz');
+  if (!quiz || quiz.classList.contains('revealed')) return;
+  opt.setAttribute('data-chosen', 'true');
+  quiz.classList.add('revealed');
+};
+/* Esc to reset any revealed quiz on the current slide */
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  document.querySelectorAll('.quiz.revealed').forEach((q) => {
+    q.classList.remove('revealed');
+    q.querySelectorAll('[data-chosen]').forEach(o => o.removeAttribute('data-chosen'));
+  });
+});
+
+/* ── AUDIO per-slide — listens to deck-stage's `slidechange` event ──── */
+(function () {
+  const fab = document.getElementById('audio-fab');
+  const audio = document.getElementById('audio-el');
+  const toggle = document.getElementById('audio-toggle');
+  const timeLabel = document.getElementById('audio-time');
+  const playIcon = '<i class="ti ti-player-play-filled"></i>';
+  const pauseIcon = '<i class="ti ti-player-pause-filled"></i>';
+
+  function fmt(s) {
+    if (!isFinite(s)) return '0:00';
+    s = Math.floor(s);
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  audio.addEventListener('timeupdate', () => {
+    timeLabel.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  });
+  audio.addEventListener('ended', () => { toggle.innerHTML = playIcon; });
+  toggle.addEventListener('click', () => {
+    if (audio.paused) { audio.play(); toggle.innerHTML = pauseIcon; }
+    else { audio.pause(); toggle.innerHTML = playIcon; }
+  });
+
+  const stage = document.querySelector('deck-stage');
+  if (!stage) return;
+  stage.addEventListener('slidechange', (e) => {
+    const slide = e.detail && e.detail.slide;
+    audio.pause();
+    toggle.innerHTML = playIcon;
+    const src = slide && slide.getAttribute('data-audio');
+    if (src) {
+      if (audio.getAttribute('src') !== src) audio.setAttribute('src', src);
+      fab.classList.add('active');
+      timeLabel.textContent = '0:00';
+    } else {
+      audio.removeAttribute('src');
+      audio.load();
+      fab.classList.remove('active');
+    }
+  });
+})();
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TWEAKS — switch course, color tone
+     ════════════════════════════════════════════════════════════════ -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks-app.jsx"></script>
+
+<!-- ── CONTROLES FLOTANTES: T Tweaks · R Rail · P PDF · F Fullscreen ── -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(24,95,165,.85);border-color:rgba(24,95,165,.6);color:#fff}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-tweaks"      title="Tweaks — T"><i class="ti ti-adjustments-horizontal"></i></button>
+  <button class="deck-btn" id="btn-rail"         title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf"          title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen"   title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+    document.getElementById('btn-tweaks').addEventListener('click', ()=>{
+      window.postMessage({type:'__activate_edit_mode'},'*');
+    });
+
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      const hidden = stage.hasAttribute('no-rail');
+      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
+      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
+    }
+    railBtn.addEventListener('click', toggleRail);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='t'||e.key==='T') window.postMessage({type:'__activate_edit_mode'},'*');
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>
