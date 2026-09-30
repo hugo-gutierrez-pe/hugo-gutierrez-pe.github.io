@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="aws">
+<head>
+<meta charset="UTF-8" />
+<title>AWS CLF-C02 · D2 Seguridad y cumplimiento — Repaso</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    --type-mega:      140px;
+    --type-title:      80px;
+    --type-h1:         64px;
+    --type-h2:         44px;
+    --type-quote:      60px;
+    --type-body:       26px;
+    --type-body-lg:    30px;
+    --type-small:      22px;
+    --type-mono-lg:    20px;
+    --type-mono:       16px;
+    --type-mono-sm:    14px;
+
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-course="aws"] {
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(255,153,0,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #FFC266; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(255,153,0,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .slide.bg-ink em { color: #FFC266; }
+
+  /* ── CHROME ────────────────────────────────────────────── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand { display: inline-flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag { display: inline-flex; align-items: center; gap: 8px; }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+  .chrome-bot .num { font-feature-settings: "tnum" 1; color: var(--ink-2); }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #FFC266; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── PORTADA ──────────────────────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block { display: flex; align-items: center; gap: 14px; color: var(--ink); }
+  .portada-head .brand-block .brand-mark { width: 44px; height: 44px; border-radius: 9px; font-size: 18px; }
+  .portada-head .brand-name { font-family: var(--font-sans); font-size: 26px; font-weight: 600; letter-spacing: -0.005em; color: var(--ink); }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 20ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    max-width: 34ch;
+  }
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val { font-size: 26px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+
+  /* ── AGENDA ───────────────────────────────────────────── */
+  .agenda-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 12px; }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num { font-family: var(--font-mono); font-size: var(--type-h2); font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
+  .agenda-row .title { font-size: 32px; font-weight: 600; color: var(--ink); letter-spacing: -0.015em; }
+  .agenda-row .desc { font-size: 20px; color: var(--ink-3); margin-top: 4px; }
+  .agenda-row .tag {
+    font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 8px 14px; border: 0.5px solid var(--rule-2); border-radius: 999px; white-space: nowrap;
+  }
+
+  /* ── COMENTARIO ANCHO ─────────────────────────────────── */
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    margin-top: 32px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase; padding-top: 4px; white-space: nowrap;
+  }
+  .big-comment p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; max-width: 90ch; }
+
+  /* ── TABLA COMPARATIVA ────────────────────────────────── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: var(--type-body); }
+  .cmp-table thead th {
+    font-family: var(--font-mono); font-size: var(--type-mono); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3);
+    text-align: left; padding: 16px 22px; border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px; border-bottom: 0.5px solid var(--rule); color: var(--ink-2);
+    font-size: var(--type-body); vertical-align: top; line-height: 1.4;
+  }
+  .cmp-table tbody td.name { color: var(--ink); font-weight: 600; font-size: 28px; letter-spacing: -0.01em; }
+  .cmp-table tbody td.code { font-family: var(--font-mono); color: var(--accent); font-size: 20px; }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+  .cmp-table.dense tbody td { padding: 16px 22px; font-size: 22px; }
+  .cmp-table.dense tbody td.name { font-size: 24px; }
+  .cmp-table.dense thead th { padding: 12px 22px; }
+
+  .acronym-note {
+    font-family: var(--font-mono); font-size: 20px; color: var(--ink-3);
+    margin-top: -20px; margin-bottom: 24px; letter-spacing: 0.01em;
+  }
+  .acronym-note .acc-var { color: var(--accent); font-weight: 500; }
+
+  /* ── STAT GRID ────────────────────────────────────────── */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 12px; }
+  .stat-item { padding: 0 28px; border-right: 0.5px solid var(--rule); }
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-item .lbl { font-family: var(--font-mono); font-size: 15px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 12px; }
+  .stat-item .desc { font-size: 20px; color: var(--ink-2); line-height: 1.4; }
+
+  /* ── STAT GRID · 2×2 (boxes grandes) ─────────────────── */
+  .stat-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 20px; }
+  .stat-box {
+    padding: 32px 36px; border: 0.5px solid var(--rule-2); border-radius: 16px;
+    background: var(--bg); box-shadow: 0 1px 0 rgba(10,13,18,0.02);
+  }
+  section.slide.bg-alt .stat-box { background: var(--bg); }
+  .stat-box .lbl { font-family: var(--font-mono); font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 16px; }
+  .stat-box .desc { font-size: 25px; color: var(--ink-2); line-height: 1.45; }
+
+  /* ── CIERRE ───────────────────────────────────────────── */
+  .cierre {
+    background: var(--ink); color: #fff; justify-content: center;
+    position: relative; overflow: hidden; padding-top: 160px; padding-bottom: 140px; isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(255,153,0,0.28), transparent 60%);
+    pointer-events: none; z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: #FFC266;
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 { font-size: var(--type-title); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; max-width: 20ch; }
+  .cierre h2 em { color: #FFC266; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 96px; align-items: end; margin-top: 48px; }
+  .cierre .pregunta { font-size: var(--type-body-lg); color: rgba(255,255,255,0.75); line-height: 1.45; max-width: 50ch; }
+  .cierre .contact-card { display: flex; flex-direction: column; gap: 12px; }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14); border-radius: 12px; background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #FFC266; }
+  .cierre .contact-row .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+  .cierre .contact-row .val { font-size: 18px; color: #fff; font-weight: 500; margin-top: 2px; }
+
+  /* glosario de siglas (pie de slide) */
+  .chrome-bot { gap: 32px; }
+  .chrome-bot > span:not(.gloss) { flex: none; }
+  .chrome-bot .gloss { flex: 1; min-width: 0; white-space: normal; text-align: center; font-size: 18px; line-height: 1.35; letter-spacing: 0.02em; color: var(--ink-3); }
+  .chrome-bot .gloss b { font-weight: 500; color: var(--accent); }
+  .slide.bg-ink .chrome-bot .gloss { color: rgba(255,255,255,0.55); }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "Portada del Dominio 2: Seguridad y cumplimiento. Pesa 30% del examen CLF-C02.",
+  "Agenda del Dominio 2. Este dominio pesa 30% de las preguntas puntuadas del examen.",
+  "El modelo de responsabilidad compartida es la pregunta más segura del examen. AWS es responsable DE la nube (hardware, infraestructura, servicios gestionados). El cliente es responsable EN la nube (datos, IAM, configuración, cifrado, SO de EC2). Hay controles compartidos como parches y configuración.",
+  "Cuanto más gestionado es el servicio, menos tienes que administrar. En EC2 tú parchas el SO invitado. En RDS AWS parcha el SO y el motor, pero tú configuras acceso y cifrado. En Lambda, AWS ejecuta el runtime y tú solo tu código y permisos. En S3 los permisos del bucket son tuyos.",
+  "Artifact es el portal de reportes de cumplimiento de AWS: lo usas para descargar SOC, PCI DSS, ISO. Config registra y evalúa configuraciones. Audit Manager junta evidencia para auditorías. Control Tower crea una landing zone multicuenta. Organizations aplica SCP. Security Hub centraliza hallazgos.",
+  "Cifrado en reposo protege datos almacenados; cifrado en tránsito protege datos en movimiento (TLS). KMS administra claves. CloudHSM da un módulo dedicado que solo tú controlas. ACM gestiona certificados. Secrets Manager guarda y rota secretos como contraseñas de bases de datos.",
+  "IAM es global y gratuito. Root user solo para unas pocas tareas. Los usuarios reciben permisos con políticas, idealmente vía grupos. Los roles dan credenciales temporales, y son la forma correcta de dar permisos a servicios (p. ej. una EC2 que lee S3), en vez de poner llaves en el código.",
+  "Buenas prácticas de IAM: mínimo privilegio, MFA, roles en lugar de llaves, y no usar el root user. Tareas que solo el root puede hacer: cerrar la cuenta, cambiar el plan de soporte, cambiar datos de cuenta, restaurar permisos de IAM bloqueados.",
+  "IAM Identity Center es para tus empleados (workforce, SSO). Cognito es para los usuarios de tu aplicación (clientes). Directory Service para Active Directory. Las SCP de Organizations ponen un techo de permisos por cuenta, no otorgan permisos. STS entrega credenciales temporales.",
+  "Security group: a nivel instancia, stateful, solo permite. NACL: a nivel subred, stateless, permite y deniega. WAF protege aplicaciones web de ataques como SQL injection. Shield protege de DDoS; Standard viene incluido sin costo.",
+  "GuardDuty detecta actividad sospechosa. Inspector busca vulnerabilidades en cargas de trabajo. Macie encuentra PII en S3. Detective investiga el origen de un incidente. Security Hub reúne todo. Trusted Advisor recomienda buenas prácticas.",
+  "CloudTrail registra llamadas a la API: quién, cuándo y desde dónde. CloudWatch guarda métricas, logs y alarmas. Config guarda el historial de configuraciones y evalúa reglas. Es una de las confusiones más comunes del examen.",
+  "Puedes hacer pruebas de penetración sobre tus propios recursos en varios servicios sin aprobación previa, pero no DDoS ni simulaciones que dañen. Tú decides en qué Region viven tus datos. Artifact entrega los reportes de cumplimiento.",
+  "Cierre del dominio 2. Estos siete pares cubren la mayoría de las preguntas de seguridad.",
+  "Cierre del Dominio 2."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- SLIDE 1 · PORTADA -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">Repaso personal · Lima, Perú</div>
+        <div class="val">AWS CLF-C02 · 2026</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag"><span>AWS CLF-C02</span></div>
+      <h1 class="course-title"><em>Seguridad y cumplimiento</em></h1>
+      <p class="course-sub">Repaso para el examen AWS Certified Cloud Practitioner. Responsabilidad compartida, IAM, cifrado y servicios de seguridad.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item"><div class="lbl">Dominio</div><div class="val">2 · Seguridad y cumplimiento</div></div>
+      <div class="item"><div class="lbl">Bloque</div><div class="val">IAM, cifrado y detección</div></div>
+      <div class="item"><div class="lbl">Formato</div><div class="val">Apunte de repaso</div></div>
+      <div class="item"><div class="lbl">Recurso</div><div class="val">hgfincorp.com</div></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 · AGENDA -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Agenda</div>
+    <h1 class="slide-title">Qué cubre <em>este repaso</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="agenda-list">
+      <div class="agenda-row"><span class="num">01</span><div><div class="title">Responsabilidad compartida</div><div class="desc">Qué es de AWS, qué es tuyo y cómo cambia por servicio.</div></div><span class="tag">Modelo</span></div>
+      <div class="agenda-row"><span class="num">02</span><div><div class="title">Gobierno y datos</div><div class="desc">Artifact, Config, Control Tower, cifrado y secretos.</div></div><span class="tag">Servicios</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">Acceso con IAM</div><div class="desc">Usuarios, roles, políticas, MFA y servicios de identidad.</div></div><span class="tag">Acceso</span></div>
+      <div class="agenda-row"><span class="num">04</span><div><div class="title">Red y detección</div><div class="desc">Security groups, WAF, Shield, GuardDuty, Inspector, Macie.</div></div><span class="tag">Servicios</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Monitoreo y memorización</div><div class="desc">CloudTrail, CloudWatch, Config y tabla final.</div></div><span class="tag">Cierre</span></div>
+    </div>
+
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication · <b>WAF</b> = Web Application Firewall</span><span class="num">02 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 3 · RESPONSABILIDAD COMPARTIDA -->
+  <section class="slide bg-alt" data-label="03 Responsabilidad compartida">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Responsabilidad compartida · Modelo</div>
+    <h1 class="slide-title">Modelo de <em>responsabilidad compartida</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">AWS · seguridad DE la nube</div><div class="desc">Hardware, infraestructura global (Regions, AZ, edge), software de servicios gestionados y seguridad física de los data centers.</div></div>
+      <div class="stat-box"><div class="lbl">Cliente · seguridad EN la nube</div><div class="desc">Tus datos, IAM (usuarios y permisos), configuración de red y firewall, cifrado y el SO de tus instancias EC2.</div></div>
+      <div class="stat-box"><div class="lbl">Controles compartidos</div><div class="desc">Gestión de parches (AWS la infraestructura, tú tu SO y aplicaciones), gestión de configuración y capacitación.</div></div>
+      <div class="stat-box"><div class="lbl">Controles heredados</div><div class="desc">El cliente hereda de AWS los controles físicos y ambientales del data center.</div></div>
+    </div>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Si es una decisión tuya sobre tus datos o permisos, es del cliente. Si es el data center o el hardware, es de AWS.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Responsabilidad compartida</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>IAM</b> = Identity and Access Management · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">03 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 4 · RESPONSABILIDAD POR SERVICIO -->
+  <section class="slide" data-label="04 Responsabilidad por servicio">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Responsabilidad compartida · Por servicio</div>
+    <h1 class="slide-title">Quién hace qué <em>según el servicio</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:16%">Servicio</th><th style="width:42%">AWS se encarga de…</th><th>Tú te encargas de…</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">EC2 (IaaS)</td><td>Hardware y virtualización</td><td>Parches del SO, firewall (security groups), datos</td></tr>
+        <tr><td class="name">RDS (gestionado)</td><td>Parches del SO y del motor, backups automáticos</td><td>Usuarios, acceso de red, cifrado, tamaño</td></tr>
+        <tr><td class="name">Lambda</td><td>SO, runtime y escalado</td><td>Tu código y permisos IAM</td></tr>
+        <tr><td class="name">S3</td><td>Infraestructura y durabilidad</td><td>Permisos del bucket, cifrado, clasificación de datos</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Parchar el sistema operativo de una instancia EC2: siempre el cliente. Parchar el SO de RDS: AWS.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Responsabilidad por servicio</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>IaaS</b> = Infrastructure as a Service · <b>RDS</b> = Relational Database Service · <b>IAM</b> = Identity and Access Management · <b>S3</b> = Simple Storage Service</span><span class="num">04 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 5 · GOBIERNO Y CUMPLIMIENTO -->
+  <section class="slide bg-alt" data-label="05 Gobierno y cumplimiento">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Gobierno · Cumplimiento y auditoría</div>
+    <h1 class="slide-title">Gobierno y <em>cumplimiento</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:30%">Servicio</th><th>Para qué sirve</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">AWS Artifact</td><td>Descargar reportes de cumplimiento (SOC, PCI, ISO) y aceptar acuerdos (p. ej. BAA).</td></tr>
+        <tr><td class="name">AWS Config</td><td>Registrar configuraciones de recursos y detectar cambios fuera de política.</td></tr>
+        <tr><td class="name">AWS Audit Manager</td><td>Recolectar evidencia de forma continua para auditorías.</td></tr>
+        <tr><td class="name">AWS Control Tower</td><td>Configurar y gobernar un entorno multicuenta con buenas prácticas.</td></tr>
+        <tr><td class="name">AWS Organizations</td><td>Agrupar cuentas y aplicar SCP (límites de permisos).</td></tr>
+        <tr><td class="name">AWS Security Hub</td><td>Vista central de alertas y hallazgos de seguridad.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>"Descargar el reporte SOC / ISO de AWS": AWS Artifact. "Auditar cambios de configuración": AWS Config.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Gobierno y cumplimiento</span><span class="gloss"><b>SOC</b> = System and Organization Controls · <b>SCP</b> = Service Control Policy</span><span class="num">05 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 6 · CIFRADO Y SECRETOS -->
+  <section class="slide" data-label="06 Cifrado y secretos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Datos · Cifrado y secretos</div>
+    <h1 class="slide-title">Cifrado y <em>manejo de secretos</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:30%">Servicio</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">AWS KMS</td><td>Crear y administrar claves de cifrado; integrado con S3, EBS, RDS.</td></tr>
+        <tr><td class="name">AWS CloudHSM</td><td>HSM dedicado para claves; control exclusivo y cumplimiento estricto.</td></tr>
+        <tr><td class="name">AWS Certificate Manager (ACM)</td><td>Emitir y renovar certificados SSL/TLS para cifrar en tránsito.</td></tr>
+        <tr><td class="name">AWS Secrets Manager</td><td>Guardar y rotar contraseñas y llaves de API.</td></tr>
+        <tr><td class="name">Cifrado en reposo</td><td>Datos guardados (S3, EBS, RDS) con claves de KMS.</td></tr>
+        <tr><td class="name">Cifrado en tránsito</td><td>Datos en movimiento (HTTPS / TLS).</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Rotar automáticamente una contraseña de base de datos: Secrets Manager. Claves de cifrado: KMS. Hardware dedicado: CloudHSM.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Cifrado y secretos</span><span class="gloss"><b>KMS</b> = Key Management Service · <b>S3</b> = Simple Storage Service · <b>EBS</b> = Elastic Block Store · <b>RDS</b> = Relational Database Service · <b>HSM</b> = Hardware Security Module · <b>ACM</b> = AWS Certificate Manager</span><span class="num">06 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 7 · IAM: CONCEPTOS -->
+  <section class="slide bg-alt" data-label="07 IAM: conceptos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Acceso · Conceptos de IAM</div>
+    <h1 class="slide-title"><em>IAM</em>: usuarios, grupos, roles y políticas</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:26%">Concepto</th><th>Qué es</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Root user</td><td>Cuenta dueña; acceso total. No usarla a diario; protegerla con MFA.</td></tr>
+        <tr><td class="name">IAM user</td><td>Identidad para una persona o aplicación, con credenciales propias.</td></tr>
+        <tr><td class="name">IAM group</td><td>Conjunto de usuarios al que asignas permisos juntos.</td></tr>
+        <tr><td class="name">IAM role</td><td>Identidad con credenciales temporales; la asume un servicio o usuario.</td></tr>
+        <tr><td class="name">IAM policy</td><td>Documento JSON que define permisos (Allow / Deny).</td></tr>
+        <tr><td class="name">MFA</td><td>Segundo factor de autenticación: algo que sabes + algo que tienes.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>EC2 que necesita leer S3: rol de IAM (no access keys en el código). Nunca compartas credenciales.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>IAM: conceptos</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication · <b>EC2</b> = Elastic Compute Cloud · <b>S3</b> = Simple Storage Service</span><span class="num">07 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 8 · BUENAS PRÁCTICAS IAM -->
+  <section class="slide" data-label="08 Buenas prácticas IAM">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Acceso · Buenas prácticas</div>
+    <h1 class="slide-title"><em>Buenas prácticas</em> de IAM</h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Mínimo privilegio</div><div class="desc">Da solo los permisos necesarios para la tarea, ni más ni menos.</div></div>
+      <div class="stat-box"><div class="lbl">MFA en todo</div><div class="desc">Sobre todo en el root user y en usuarios con acceso administrativo.</div></div>
+      <div class="stat-box"><div class="lbl">Roles, no llaves</div><div class="desc">Usa roles y credenciales temporales; evita access keys de larga duración.</div></div>
+      <div class="stat-box"><div class="lbl">Root solo para lo esencial</div><div class="desc">Cerrar la cuenta, cambiar el plan de soporte o restaurar permisos. Crea un usuario administrador para el día a día.</div></div>
+    </div>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Mínimo privilegio aparece en casi todas las preguntas de seguridad: da solo lo necesario.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Buenas prácticas IAM</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication</span><span class="num">08 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 9 · SERVICIOS DE IDENTIDAD -->
+  <section class="slide bg-alt" data-label="09 Servicios de identidad">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Acceso · Servicios de identidad</div>
+    <h1 class="slide-title">Qué servicio de <em>identidad</em> usar</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:32%">Servicio</th><th>Úsalo cuando…</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">IAM Identity Center</td><td>Quieres SSO para tu personal en varias cuentas y apps.</td></tr>
+        <tr><td class="name">Amazon Cognito</td><td>Quieres registrar e iniciar sesión de clientes en tu app web o móvil.</td></tr>
+        <tr><td class="name">AWS Directory Service</td><td>Necesitas Microsoft Active Directory en AWS.</td></tr>
+        <tr><td class="name">AWS Organizations (SCP)</td><td>Quieres limitar lo que pueden hacer las cuentas de la organización.</td></tr>
+        <tr><td class="name">AWS STS</td><td>Necesitas credenciales temporales de seguridad.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ No confundir</span>
+      <p>Empleados con SSO: IAM Identity Center. Clientes de tu app: Cognito.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Servicios de identidad</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>SSO</b> = Single Sign-On · <b>SCP</b> = Service Control Policy</span><span class="num">09 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 10 · SEGURIDAD DE RED -->
+  <section class="slide" data-label="10 Seguridad de red">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Red · Protección perimetral</div>
+    <h1 class="slide-title">Seguridad de <em>red</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:30%">Servicio</th><th>Qué protege</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Security group</td><td>Firewall a nivel de instancia; stateful; solo reglas Allow.</td></tr>
+        <tr><td class="name">Network ACL (NACL)</td><td>Firewall a nivel de subred; stateless; reglas Allow y Deny.</td></tr>
+        <tr><td class="name">AWS WAF</td><td>Firewall de aplicaciones web (capa 7): bloquea SQL injection y XSS.</td></tr>
+        <tr><td class="name">AWS Shield</td><td>Protección DDoS. Standard es gratis; Advanced es de pago.</td></tr>
+        <tr><td class="name">AWS Network Firewall</td><td>Firewall gestionado para el tráfico de tu VPC.</td></tr>
+        <tr><td class="name">AWS Firewall Manager</td><td>Administra reglas de WAF y Shield en toda la organización.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Bloquear una IP específica: NACL (permite Deny). Bloquear SQL injection: WAF. Ataque DDoS: Shield.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Seguridad de red</span><span class="gloss"><b>NACL</b> = Network Access Control List · <b>WAF</b> = Web Application Firewall · <b>DDoS</b> = Distributed Denial of Service · <b>VPC</b> = Virtual Private Cloud</span><span class="num">10 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 11 · DETECCIÓN Y RESPUESTA -->
+  <section class="slide bg-alt" data-label="11 Detección y respuesta">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Seguridad · Detección</div>
+    <h1 class="slide-title">Detección y <em>respuesta</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:26%">Servicio</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Amazon GuardDuty</td><td>Detecta amenazas analizando logs de CloudTrail, VPC Flow Logs y DNS.</td></tr>
+        <tr><td class="name">Amazon Inspector</td><td>Escanea vulnerabilidades en EC2, contenedores y Lambda.</td></tr>
+        <tr><td class="name">Amazon Macie</td><td>Descubre datos sensibles (PII) en S3 con ML.</td></tr>
+        <tr><td class="name">Amazon Detective</td><td>Investiga la causa raíz de hallazgos de seguridad.</td></tr>
+        <tr><td class="name">AWS Security Hub</td><td>Reúne y prioriza hallazgos de varios servicios.</td></tr>
+        <tr><td class="name">AWS Trusted Advisor</td><td>Revisa buenas prácticas de seguridad, costo y rendimiento.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Amenazas en mis cuentas: GuardDuty. Vulnerabilidades en EC2: Inspector. PII en S3: Macie.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Detección y respuesta</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud · <b>DNS</b> = Domain Name System · <b>EC2</b> = Elastic Compute Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service</span><span class="num">11 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 12 · MONITOREO Y AUDITORÍA -->
+  <section class="slide" data-label="12 Monitoreo y auditoría">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Seguridad · Monitoreo y auditoría</div>
+    <h1 class="slide-title">CloudTrail, CloudWatch y <em>Config</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:22%">Servicio</th><th style="width:34%">Responde la pregunta</th><th>Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">AWS CloudTrail</td><td>¿Quién hizo qué y cuándo?</td><td>Quién eliminó un bucket</td></tr>
+        <tr><td class="name">Amazon CloudWatch</td><td>¿Cómo está funcionando?</td><td>Alarma por CPU alta</td></tr>
+        <tr><td class="name">AWS Config</td><td>¿Cómo cambió la configuración?</td><td>Detectar un bucket público</td></tr>
+        <tr><td class="name">AWS X-Ray</td><td>¿Dónde falla mi aplicación?</td><td>Rastrear una solicitud</td></tr>
+        <tr><td class="name">VPC Flow Logs</td><td>¿Qué tráfico pasó por la red?</td><td>Auditar conexiones</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Quién hizo qué: CloudTrail. Métricas y alarmas: CloudWatch. Estado y cambios de configuración: Config.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Monitoreo y auditoría</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud</span><span class="num">12 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 13 · RECURSOS DE SEGURIDAD -->
+  <section class="slide bg-alt" data-label="13 Recursos de seguridad">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Seguridad · Recursos y políticas</div>
+    <h1 class="slide-title">Recursos de <em>seguridad</em> de AWS</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:34%">Recurso</th><th>Qué ofrece</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">AWS Artifact</td><td>Reportes de cumplimiento bajo demanda.</td></tr>
+        <tr><td class="name">Security Center / Blog</td><td>Guías, boletines y novedades de seguridad.</td></tr>
+        <tr><td class="name">Política de pruebas de penetración</td><td>Permitidas en servicios listados sin aprobación previa; no ataques DDoS.</td></tr>
+        <tr><td class="name">Reportar abuso (AWS Abuse)</td><td>Notificar uso indebido de recursos de AWS.</td></tr>
+        <tr><td class="name">Residencia de datos</td><td>Tú eliges la Region; AWS no mueve datos entre Regions sin tu orden.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Los datos no salen de la Region que elijas, salvo que tú los muevas.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Recursos de seguridad</span><span class="gloss"><b>DDoS</b> = Distributed Denial of Service</span><span class="num">13 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 14 · TABLA FINAL D2 -->
+  <section class="slide" data-label="14 Tabla final D2">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Tabla final</div>
+    <h1 class="slide-title">Tabla final de <em>memorización</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:52%">Si el enunciado dice…</th><th>Elige</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Descargar el reporte de cumplimiento de AWS</td><td>AWS Artifact</td></tr>
+        <tr><td class="name">Quién eliminó un recurso</td><td>AWS CloudTrail</td></tr>
+        <tr><td class="name">Detectar amenazas en mi cuenta</td><td>Amazon GuardDuty</td></tr>
+        <tr><td class="name">Encontrar PII en buckets de S3</td><td>Amazon Macie</td></tr>
+        <tr><td class="name">Bloquear SQL injection</td><td>AWS WAF</td></tr>
+        <tr><td class="name">Rotar contraseñas de bases de datos</td><td>AWS Secrets Manager</td></tr>
+        <tr><td class="name">Permisos a un servicio sin llaves</td><td>IAM role</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Tabla final D2</span><span class="gloss"><b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>WAF</b> = Web Application Firewall · <b>IAM</b> = Identity and Access Management</span><span class="num">14 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 15 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="15 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS CLF-C02 · Cloud Practitioner</span>
+    </div>
+    <div class="label"><span class="bar"></span>Cierre · Seguridad y cumplimiento</div>
+    <h2>Listo para el <em>siguiente bloque</em>.</h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">Siguiente bloque: Dominio 3 — Tecnología y servicios.</p>
+      <div class="contact-card">
+        <div class="contact-row"><i class="ti ti-mail"></i><div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div></div>
+        <div class="contact-row"><i class="ti ti-world"></i><div><div class="lbl">Web</div><div class="val">hgfincorp.com</div></div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>Cierre</span><span class="num">15 / 15</span></div>
+  </section>
+
+</deck-stage>
+
+<!-- DOWNLOAD PDF -->
+<style>
+  .pdf-fab {
+    position: fixed; top: 16px; right: 16px; z-index: 9999;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12; color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover { background: #B36B00; transform: translateY(-1px); box-shadow: 0 10px 28px rgba(255,153,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset; }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot { width: 6px; height: 6px; border-radius: 999px; background: #FF9900; box-shadow: 0 0 0 3px rgba(255,153,0,0.18); }
+  .pdf-fab i { font-size: 16px; line-height: 1; }
+  .pdf-fab .hint { opacity: 0.55; font-size: 11px; margin-left: 4px; padding-left: 8px; border-left: 1px solid rgba(255,255,255,0.18); }
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<script src="deck-stage.js"></script>
+
+<!-- CONTROLES FLOTANTES: R Rail · P PDF · F Fullscreen -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(255,153,0,.85);border-color:rgba(255,153,0,.6);color:#fff}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-rail" title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf" title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen" title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      const hidden = stage.hasAttribute('no-rail');
+      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
+      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
+    }
+    railBtn.addEventListener('click', toggleRail);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>

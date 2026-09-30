@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="aws">
+<head>
+<meta charset="UTF-8" />
+<title>AWS CLF-C02 · D3 Tecnología y servicios — Repaso</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    --type-mega:      140px;
+    --type-title:      80px;
+    --type-h1:         64px;
+    --type-h2:         44px;
+    --type-quote:      60px;
+    --type-body:       26px;
+    --type-body-lg:    30px;
+    --type-small:      22px;
+    --type-mono-lg:    20px;
+    --type-mono:       16px;
+    --type-mono-sm:    14px;
+
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-course="aws"] {
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(255,153,0,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #FFC266; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(255,153,0,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .slide.bg-ink em { color: #FFC266; }
+
+  /* ── CHROME ────────────────────────────────────────────── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand { display: inline-flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag { display: inline-flex; align-items: center; gap: 8px; }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+  .chrome-bot .num { font-feature-settings: "tnum" 1; color: var(--ink-2); }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #FFC266; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── PORTADA ──────────────────────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block { display: flex; align-items: center; gap: 14px; color: var(--ink); }
+  .portada-head .brand-block .brand-mark { width: 44px; height: 44px; border-radius: 9px; font-size: 18px; }
+  .portada-head .brand-name { font-family: var(--font-sans); font-size: 26px; font-weight: 600; letter-spacing: -0.005em; color: var(--ink); }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 20ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    max-width: 34ch;
+  }
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val { font-size: 26px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+
+  /* ── AGENDA ───────────────────────────────────────────── */
+  .agenda-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 12px; }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num { font-family: var(--font-mono); font-size: var(--type-h2); font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
+  .agenda-row .title { font-size: 32px; font-weight: 600; color: var(--ink); letter-spacing: -0.015em; }
+  .agenda-row .desc { font-size: 20px; color: var(--ink-3); margin-top: 4px; }
+  .agenda-row .tag {
+    font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 8px 14px; border: 0.5px solid var(--rule-2); border-radius: 999px; white-space: nowrap;
+  }
+
+  /* ── COMENTARIO ANCHO ─────────────────────────────────── */
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    margin-top: 32px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase; padding-top: 4px; white-space: nowrap;
+  }
+  .big-comment p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; max-width: 90ch; }
+
+  /* ── TABLA COMPARATIVA ────────────────────────────────── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: var(--type-body); }
+  .cmp-table thead th {
+    font-family: var(--font-mono); font-size: var(--type-mono); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3);
+    text-align: left; padding: 16px 22px; border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px; border-bottom: 0.5px solid var(--rule); color: var(--ink-2);
+    font-size: var(--type-body); vertical-align: top; line-height: 1.4;
+  }
+  .cmp-table tbody td.name { color: var(--ink); font-weight: 600; font-size: 28px; letter-spacing: -0.01em; }
+  .cmp-table tbody td.code { font-family: var(--font-mono); color: var(--accent); font-size: 20px; }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+  .cmp-table.dense tbody td { padding: 16px 22px; font-size: 22px; }
+  .cmp-table.dense tbody td.name { font-size: 24px; }
+  .cmp-table.dense thead th { padding: 12px 22px; }
+
+  .acronym-note {
+    font-family: var(--font-mono); font-size: 20px; color: var(--ink-3);
+    margin-top: -20px; margin-bottom: 24px; letter-spacing: 0.01em;
+  }
+  .acronym-note .acc-var { color: var(--accent); font-weight: 500; }
+
+  /* ── STAT GRID ────────────────────────────────────────── */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 12px; }
+  .stat-item { padding: 0 28px; border-right: 0.5px solid var(--rule); }
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-item .lbl { font-family: var(--font-mono); font-size: 15px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 12px; }
+  .stat-item .desc { font-size: 20px; color: var(--ink-2); line-height: 1.4; }
+
+  /* ── STAT GRID · 2×2 (boxes grandes) ─────────────────── */
+  .stat-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 20px; }
+  .stat-box {
+    padding: 32px 36px; border: 0.5px solid var(--rule-2); border-radius: 16px;
+    background: var(--bg); box-shadow: 0 1px 0 rgba(10,13,18,0.02);
+  }
+  section.slide.bg-alt .stat-box { background: var(--bg); }
+  .stat-box .lbl { font-family: var(--font-mono); font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 16px; }
+  .stat-box .desc { font-size: 25px; color: var(--ink-2); line-height: 1.45; }
+
+  /* ── CIERRE ───────────────────────────────────────────── */
+  .cierre {
+    background: var(--ink); color: #fff; justify-content: center;
+    position: relative; overflow: hidden; padding-top: 160px; padding-bottom: 140px; isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(255,153,0,0.28), transparent 60%);
+    pointer-events: none; z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: #FFC266;
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 { font-size: var(--type-title); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; max-width: 20ch; }
+  .cierre h2 em { color: #FFC266; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 96px; align-items: end; margin-top: 48px; }
+  .cierre .pregunta { font-size: var(--type-body-lg); color: rgba(255,255,255,0.75); line-height: 1.45; max-width: 50ch; }
+  .cierre .contact-card { display: flex; flex-direction: column; gap: 12px; }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14); border-radius: 12px; background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #FFC266; }
+  .cierre .contact-row .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+  .cierre .contact-row .val { font-size: 18px; color: #fff; font-weight: 500; margin-top: 2px; }
+
+  /* glosario de siglas (pie de slide) */
+  .chrome-bot { gap: 32px; }
+  .chrome-bot > span:not(.gloss) { flex: none; }
+  .chrome-bot .gloss { flex: 1; min-width: 0; white-space: normal; text-align: center; font-size: 18px; line-height: 1.35; letter-spacing: 0.02em; color: var(--ink-3); }
+  .chrome-bot .gloss b { font-weight: 500; color: var(--accent); }
+  .slide.bg-ink .chrome-bot .gloss { color: rgba(255,255,255,0.55); }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "Portada del Dominio 3: Tecnología y servicios. Pesa 34% del examen CLF-C02.",
+  "Agenda del Dominio 3. Este dominio pesa 34% de las preguntas puntuadas del examen.",
+  "Hay tres formas de llamar a AWS: consola, CLI y SDK; todas terminan en la API. Para despliegues repetibles se usa infraestructura como código: CloudFormation (plantillas) o CDK (código). Elastic Beanstalk es la opción más simple para subir una aplicación.",
+  "Una Region contiene varias AZ; cada AZ son uno o más data centers con energía y red independientes. Las edge locations sirven contenido en caché (CloudFront). Outposts lleva AWS a tu data center; Local Zones acerca servicios a una ciudad; Wavelength está en redes 5G.",
+  "Al elegir una Region el orden de prioridad es: cumplimiento primero, luego latencia, costo y disponibilidad de servicios. Es una pregunta frecuente. Si el dato legalmente debe quedarse en un país, eso manda sobre costo o latencia.",
+  "La VPN va por internet cifrada; Direct Connect es una línea privada dedicada, con rendimiento más predecible y menor latencia, pero tarda más en instalarse. Para conectar muchas VPC, Transit Gateway.",
+  "EC2 da más control. Lambda ejecuta funciones por evento sin servidores. ECS y EKS orquestan contenedores; Fargate elimina la administración de los servidores de contenedores. Lightsail es la opción más simple para cargas pequeñas como un sitio web o blog.",
+  "Cinco familias de instancias. La pista está en el recurso que el enunciado destaca: mucha CPU, mucha memoria, mucho I/O de disco, o GPU. General purpose es la opción por defecto cuando no hay necesidad específica.",
+  "ELB distribuye el tráfico y verifica la salud de los destinos. Auto Scaling ajusta la cantidad de instancias. Combinados dan alta disponibilidad y elasticidad. ALB es de capa 7 y NLB de capa 4. Scale out es horizontal, scale up es vertical.",
+  "S3 es almacenamiento de objetos; EBS es el disco de una EC2 dentro de una AZ; EFS es un sistema de archivos compartido por muchas instancias. Instance store es efímero. Storage Gateway conecta el mundo on-premises con S3. AWS Backup centraliza respaldos.",
+  "Tres tipos de almacenamiento: bloque (EBS), archivos (EFS) y objetos (S3). S3 ofrece 11 nueves de durabilidad. EBS vive en una AZ y se conecta a una instancia a la vez. EFS se comparte entre muchas. Instance store es temporal.",
+  "Las clases se ordenan de acceso frecuente (Standard) a archivo frío (Glacier Deep Archive). Intelligent-Tiering es la respuesta cuando no conoces el patrón de acceso. Las reglas de ciclo de vida (lifecycle) mueven objetos entre clases automáticamente.",
+  "RDS gestiona parches, respaldos y replicación de bases relacionales. Aurora es el motor de AWS compatible con MySQL y PostgreSQL. Multi-AZ es para disponibilidad (failover); Read Replicas es para rendimiento de lectura. Redshift es data warehouse, no base transaccional.",
+  "Para elegir la base de datos piensa en el modelo de datos: relacional (RDS, Aurora), clave-valor (DynamoDB), documentos (DocumentDB), grafos (Neptune), series de tiempo (Timestream), caché (ElastiCache). Para este examen basta con saber qué hace cada una.",
+  "Una VPC es tu red privada. Las subredes públicas tienen ruta al Internet Gateway. Las subredes privadas salen a internet mediante un NAT Gateway. Seguridad en dos capas: security groups (instancia) y NACL (subred). VPC Peering y PrivateLink conectan sin pasar por internet.",
+  "Route 53 resuelve nombres de dominio y puede hacer health checks y failover. CloudFront acelera la entrega de contenido mediante una red de edge locations. API Gateway es la puerta de entrada de APIs, muy usada con Lambda.",
+  "SQS es una cola (pull, desacopla); SNS es pub/sub (push, varios destinatarios). EventBridge enruta eventos. Step Functions coordina pasos de un proceso. Desacoplar con colas mejora la resiliencia.",
+  "Athena consulta S3 con SQL. Glue hace ETL. EMR ejecuta Hadoop y Spark. Kinesis procesa datos en tiempo real. QuickSight es BI y visualización. Para este examen basta con asociar cada servicio con su función.",
+  "En Cloud Practitioner solo se pide reconocer qué hace cada servicio de IA. Transcribe convierte voz a texto, Polly texto a voz, Rekognition analiza imágenes, Comprehend entiende texto, Translate traduce, Lex arma chatbots, Textract extrae texto de documentos. Esto se profundiza en el repaso de AI Practitioner.",
+  "CodePipeline orquesta el flujo CI/CD; CodeBuild compila; CodeDeploy despliega. X-Ray ayuda a depurar. Amplify es para aplicaciones web y móviles.",
+  "Systems Manager es el centro de operaciones: parches, comandos y automatización. Trusted Advisor revisa buenas prácticas en cinco categorías. Health Dashboard muestra incidentes del servicio. Compute Optimizer recomienda tamaños de recursos.",
+  "Servicios sueltos que aparecen de vez en cuando: Connect (contact center), WorkSpaces (escritorios virtuales), AppStream (apps en streaming), IoT Core (dispositivos), SES (correo), Batch (trabajos por lotes).",
+  "Primera parte de la tabla final del dominio 3.",
+  "Segunda parte de la tabla final del dominio 3.",
+  "Cierre del Dominio 3."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- SLIDE 1 · PORTADA -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">Repaso personal · Lima, Perú</div>
+        <div class="val">AWS CLF-C02 · 2026</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag"><span>AWS CLF-C02</span></div>
+      <h1 class="course-title"><em>Tecnología y servicios</em></h1>
+      <p class="course-sub">Repaso para el examen AWS Certified Cloud Practitioner. Cómputo, almacenamiento, bases de datos, redes y el resto del catálogo.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item"><div class="lbl">Dominio</div><div class="val">3 · Tecnología y servicios</div></div>
+      <div class="item"><div class="lbl">Bloque</div><div class="val">Los servicios de AWS</div></div>
+      <div class="item"><div class="lbl">Formato</div><div class="val">Apunte de repaso</div></div>
+      <div class="item"><div class="lbl">Recurso</div><div class="val">hgfincorp.com</div></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 · AGENDA -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Agenda</div>
+    <h1 class="slide-title">Qué cubre <em>este repaso</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="agenda-list">
+      <div class="agenda-row"><span class="num">01</span><div><div class="title">Infraestructura global y despliegue</div><div class="desc">Regions, AZ, edge locations, conectividad y formas de operar.</div></div><span class="tag">Base</span></div>
+      <div class="agenda-row"><span class="num">02</span><div><div class="title">Cómputo y escalado</div><div class="desc">EC2, Lambda, contenedores, ELB y Auto Scaling.</div></div><span class="tag">Servicios</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">Almacenamiento y bases de datos</div><div class="desc">S3, EBS, EFS, RDS, Aurora, DynamoDB y más.</div></div><span class="tag">Servicios</span></div>
+      <div class="agenda-row"><span class="num">04</span><div><div class="title">Redes e integración</div><div class="desc">VPC, Route 53, CloudFront, SQS, SNS y EventBridge.</div></div><span class="tag">Servicios</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Analítica, IA y gestión</div><div class="desc">Athena, Kinesis, servicios de IA, Systems Manager y otros.</div></div><span class="tag">Servicios</span></div>
+    </div>
+
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>EC2</b> = Elastic Compute Cloud · <b>S3</b> = Simple Storage Service · <b>EBS</b> = Elastic Block Store · <b>EFS</b> = Elastic File System · <b>RDS</b> = Relational Database Service · <b>VPC</b> = Virtual Private Cloud</span><span class="num">02 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 3 · DESPLEGAR Y OPERAR -->
+  <section class="slide bg-alt" data-label="03 Desplegar y operar">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Operar · Cómo interactuar con AWS</div>
+    <h1 class="slide-title">Formas de <em>desplegar y operar</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:30%">Herramienta</th><th>Para qué sirve</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Management Console</td><td>Interfaz web; ideal para explorar y tareas puntuales.</td></tr>
+        <tr><td class="name">AWS CLI</td><td>Línea de comandos; automatiza tareas con scripts.</td></tr>
+        <tr><td class="name">SDKs</td><td>Bibliotecas para llamar a AWS desde tu código (Python, Java, JS…).</td></tr>
+        <tr><td class="name">AWS CloudShell</td><td>Terminal en el navegador con la CLI ya configurada.</td></tr>
+        <tr><td class="name">CloudFormation</td><td>Infraestructura como código (IaC) con plantillas JSON o YAML.</td></tr>
+        <tr><td class="name">AWS CDK</td><td>IaC con lenguajes de programación (genera CloudFormation).</td></tr>
+        <tr><td class="name">Elastic Beanstalk</td><td>Sube tu código y AWS aprovisiona el entorno.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Despliegues repetibles y consistentes: CloudFormation (IaC). Desplegar una app sin administrar la infraestructura: Elastic Beanstalk.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Desplegar y operar</span><span class="gloss"><b>CLI</b> = Command Line Interface · <b>SDK</b> = Software Development Kit · <b>IaC</b> = Infrastructure as Code</span><span class="num">03 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 4 · INFRAESTRUCTURA GLOBAL -->
+  <section class="slide" data-label="04 Infraestructura global">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Infraestructura global · Piezas</div>
+    <h1 class="slide-title"><em>Regions</em>, AZ y edge locations</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:28%">Componente</th><th>Qué es</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Region</td><td>Zona geográfica con varios data centers; aislada de otras Regions.</td></tr>
+        <tr><td class="name">Availability Zone (AZ)</td><td>Uno o más data centers aislados dentro de una Region (mínimo 3 por Region).</td></tr>
+        <tr><td class="name">Edge location</td><td>Punto de presencia de CloudFront para entregar contenido con baja latencia.</td></tr>
+        <tr><td class="name">Local Zone</td><td>Extensión de una Region cerca de una ciudad grande para latencias de milisegundos.</td></tr>
+        <tr><td class="name">AWS Outposts</td><td>Infraestructura de AWS instalada en tu propio data center.</td></tr>
+        <tr><td class="name">AWS Wavelength</td><td>Cómputo en la red 5G de operadores móviles.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Alta disponibilidad: varias AZ. Recuperación ante desastres o cumplimiento: varias Regions.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Infraestructura global</span><span class="gloss"><b>AZ</b> = Availability Zone</span><span class="num">04 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 5 · ELEGIR UNA REGION -->
+  <section class="slide bg-alt" data-label="05 Elegir una Region">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Infraestructura global · Elegir Region</div>
+    <h1 class="slide-title">Cómo <em>elegir una Region</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">1 · Cumplimiento</div><div class="desc">Leyes de residencia de datos: dónde pueden vivir legalmente los datos.</div></div>
+      <div class="stat-box"><div class="lbl">2 · Latencia</div><div class="desc">Cerca de tus usuarios para menor tiempo de respuesta.</div></div>
+      <div class="stat-box"><div class="lbl">3 · Costo</div><div class="desc">Los precios varían entre Regions.</div></div>
+      <div class="stat-box"><div class="lbl">4 · Servicios disponibles</div><div class="desc">No todos los servicios ni funciones llegan a todas las Regions a la vez.</div></div>
+    </div>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Si hay una restricción legal, el cumplimiento define la Region; después optimizas latencia y costo.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Elegir una Region</span><span class="num">05 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 6 · CONECTIVIDAD -->
+  <section class="slide" data-label="06 Conectividad">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Redes · Conectividad</div>
+    <h1 class="slide-title">Conectar tu red con <em>AWS</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:22%">Opción</th><th style="width:42%">Qué es</th><th>Cuándo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Internet</td><td>Acceso público estándar.</td><td>Acceso general, sin garantías</td></tr>
+        <tr><td class="name">Site-to-Site VPN</td><td>Túnel cifrado por internet entre tu red y tu VPC.</td><td>Rápido y económico</td></tr>
+        <tr><td class="name">Direct Connect</td><td>Enlace físico privado dedicado hacia AWS.</td><td>Ancho de banda estable y baja latencia</td></tr>
+        <tr><td class="name">Client VPN</td><td>VPN para usuarios individuales.</td><td>Acceso remoto de empleados</td></tr>
+        <tr><td class="name">Transit Gateway</td><td>Hub central que conecta muchas VPC y redes.</td><td>Redes grandes y complejas</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Conexión privada dedicada y estable: Direct Connect. Rápida y barata: Site-to-Site VPN.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Conectividad</span><span class="gloss"><b>VPN</b> = Virtual Private Network · <b>VPC</b> = Virtual Private Cloud</span><span class="num">06 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 7 · SERVICIOS DE CÓMPUTO -->
+  <section class="slide bg-alt" data-label="07 Servicios de cómputo">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Cómputo · Servicios</div>
+    <h1 class="slide-title">Servicios de <em>cómputo</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:26%">Servicio</th><th>Qué es</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Amazon EC2</td><td>Servidores virtuales con control total del SO.</td></tr>
+        <tr><td class="name">AWS Lambda</td><td>Ejecuta código sin servidores; pagas por ejecución (hasta 15 min).</td></tr>
+        <tr><td class="name">Amazon ECS</td><td>Orquestador de contenedores propio de AWS.</td></tr>
+        <tr><td class="name">Amazon EKS</td><td>Kubernetes gestionado.</td></tr>
+        <tr><td class="name">AWS Fargate</td><td>Contenedores sin administrar servidores (con ECS o EKS).</td></tr>
+        <tr><td class="name">Elastic Beanstalk</td><td>PaaS: subes el código y AWS gestiona el entorno.</td></tr>
+        <tr><td class="name">Amazon Lightsail</td><td>Servidores virtuales simples con precio fijo y predecible.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Sin administrar servidores: Lambda o Fargate. Kubernetes: EKS. Web simple y barata: Lightsail.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Servicios de cómputo</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>ECS</b> = Elastic Container Service · <b>EKS</b> = Elastic Kubernetes Service · <b>PaaS</b> = Platform as a Service</span><span class="num">07 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 8 · TIPOS DE INSTANCIA EC2 -->
+  <section class="slide" data-label="08 Tipos de instancia EC2">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Cómputo · Tipos de instancia</div>
+    <h1 class="slide-title">Familias de <em>instancias EC2</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:32%">Familia</th><th>Ideal para</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">General purpose</td><td>Balance de CPU, memoria y red: servidores web y aplicaciones.</td></tr>
+        <tr><td class="name">Compute optimized</td><td>Cómputo intensivo: procesamiento por lotes, modelado, servidores de juegos.</td></tr>
+        <tr><td class="name">Memory optimized</td><td>Bases de datos en memoria y análisis de datos grandes.</td></tr>
+        <tr><td class="name">Storage optimized</td><td>Acceso de alta velocidad a mucho almacenamiento local (I/O alto).</td></tr>
+        <tr><td class="name">Accelerated computing</td><td>GPU para machine learning, gráficos y cómputo paralelo.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Mucha memoria: Memory optimized. GPU o machine learning: Accelerated computing. Sin requisitos especiales: General purpose.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Tipos de instancia EC2</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud</span><span class="num">08 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 9 · ELB Y AUTO SCALING -->
+  <section class="slide bg-alt" data-label="09 ELB y Auto Scaling">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Cómputo · Escalado</div>
+    <h1 class="slide-title">Elastic Load Balancing y <em>Auto Scaling</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:30%">Servicio</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Elastic Load Balancing (ELB)</td><td>Reparte tráfico entre varias instancias o AZ.</td></tr>
+        <tr><td class="name">Application Load Balancer</td><td>Capa 7 (HTTP/HTTPS); enrutamiento por ruta o host.</td></tr>
+        <tr><td class="name">Network Load Balancer</td><td>Capa 4 (TCP/UDP); rendimiento extremo y baja latencia.</td></tr>
+        <tr><td class="name">EC2 Auto Scaling</td><td>Agrega o quita instancias automáticamente según la demanda.</td></tr>
+        <tr><td class="name">Scaling dinámico / programado</td><td>Reaccionar a métricas o anticiparse a horarios conocidos.</td></tr>
+        <tr><td class="name">Scale out vs. scale up</td><td>Out: más instancias (horizontal). Up: instancia más grande (vertical).</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Tráfico HTTP con enrutamiento por ruta: Application Load Balancer. Latencia ultrabaja en TCP: Network Load Balancer.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>ELB y Auto Scaling</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">09 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 10 · SERVICIOS DE ALMACENAMIENTO -->
+  <section class="slide" data-label="10 Servicios de almacenamiento">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Almacenamiento · Servicios</div>
+    <h1 class="slide-title">Servicios de <em>almacenamiento</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:26%">Servicio</th><th style="width:22%">Tipo</th><th>Ideal para</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Amazon S3</td><td>Objetos</td><td>Archivos, backups, sitios estáticos, data lakes</td></tr>
+        <tr><td class="name">Amazon EBS</td><td>Bloques</td><td>Disco de una instancia EC2 (una AZ)</td></tr>
+        <tr><td class="name">Amazon EFS</td><td>Archivos (NFS)</td><td>Sistema de archivos compartido entre muchas EC2 (Linux)</td></tr>
+        <tr><td class="name">Amazon FSx</td><td>Archivos gestionados</td><td>Windows File Server, Lustre (HPC)</td></tr>
+        <tr><td class="name">Instance store</td><td>Bloques temporales</td><td>Datos temporales; se pierden al detener la instancia</td></tr>
+        <tr><td class="name">AWS Storage Gateway</td><td>Híbrido</td><td>Conectar on-premises con el almacenamiento en AWS</td></tr>
+        <tr><td class="name">AWS Backup</td><td>Respaldos</td><td>Políticas de respaldo centralizadas</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Objetos: S3. Disco de una EC2: EBS. Archivos compartidos por varias EC2: EFS.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Servicios de almacenamiento</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>EBS</b> = Elastic Block Store · <b>EC2</b> = Elastic Compute Cloud · <b>AZ</b> = Availability Zone · <b>EFS</b> = Elastic File System · <b>FSx</b> = File System (managed)</span><span class="num">10 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 11 · EBS, EFS Y S3 -->
+  <section class="slide bg-alt" data-label="11 EBS, EFS y S3">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Almacenamiento · Bloque, archivos y objetos</div>
+    <h1 class="slide-title">EBS vs. EFS vs. <em>S3</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">EBS · bloques</div><div class="desc">Un disco virtual conectado a una sola instancia EC2, dentro de una AZ. Sirve para sistemas operativos y bases de datos.</div></div>
+      <div class="stat-box"><div class="lbl">EFS · archivos</div><div class="desc">Un sistema de archivos que montan muchas instancias a la vez (Linux); crece automáticamente.</div></div>
+      <div class="stat-box"><div class="lbl">S3 · objetos</div><div class="desc">Almacenamiento casi ilimitado accesible por HTTP; 99.999999999 % (11 nueves) de durabilidad.</div></div>
+      <div class="stat-box"><div class="lbl">Instance store</div><div class="desc">Disco físico del servidor: muy rápido pero temporal; se pierde si la instancia se detiene.</div></div>
+    </div>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Compartido entre muchas EC2: EFS. Sitio web estático o backups: S3. Disco de arranque: EBS.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>EBS, EFS y S3</span><span class="gloss"><b>EBS</b> = Elastic Block Store · <b>EFS</b> = Elastic File System · <b>S3</b> = Simple Storage Service · <b>EC2</b> = Elastic Compute Cloud · <b>AZ</b> = Availability Zone</span><span class="num">11 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 12 · CLASES DE S3 -->
+  <section class="slide" data-label="12 Clases de S3">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Almacenamiento · Clases de S3</div>
+    <h1 class="slide-title">Clases de almacenamiento de <em>S3</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:28%">Clase</th><th>Cuándo usarla</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">S3 Standard</td><td>Acceso frecuente; baja latencia.</td></tr>
+        <tr><td class="name">S3 Intelligent-Tiering</td><td>Patrón de acceso desconocido o cambiante; mueve objetos automáticamente.</td></tr>
+        <tr><td class="name">S3 Standard-IA</td><td>Acceso poco frecuente pero que requiere acceso rápido.</td></tr>
+        <tr><td class="name">S3 One Zone-IA</td><td>Poco frecuente, en una sola AZ; más barato, menor resiliencia.</td></tr>
+        <tr><td class="name">S3 Glacier Instant Retrieval</td><td>Archivo con acceso en milisegundos, una o dos veces por trimestre.</td></tr>
+        <tr><td class="name">S3 Glacier Flexible Retrieval</td><td>Archivo con recuperación de minutos a horas.</td></tr>
+        <tr><td class="name">S3 Glacier Deep Archive</td><td>El más barato; recuperación en horas (12 h o más).</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Retención de años al menor costo: Glacier Deep Archive. Patrón de acceso desconocido: Intelligent-Tiering. Reglas de lifecycle automatizan el cambio de clase.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Clases de S3</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>IA</b> = Infrequent Access · <b>AZ</b> = Availability Zone</span><span class="num">12 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 13 · BASES DE DATOS RELACIONALES -->
+  <section class="slide bg-alt" data-label="13 Bases de datos relacionales">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Bases de datos · Relacionales</div>
+    <h1 class="slide-title">Bases de datos <em>relacionales</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:28%">Servicio</th><th>Qué es</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Amazon RDS</td><td>Base relacional gestionada (MySQL, PostgreSQL, MariaDB, Oracle, SQL Server).</td></tr>
+        <tr><td class="name">Amazon Aurora</td><td>Compatible con MySQL y PostgreSQL; mayor rendimiento y alta disponibilidad.</td></tr>
+        <tr><td class="name">RDS Multi-AZ</td><td>Réplica de espera en otra AZ para conmutación automática (alta disponibilidad).</td></tr>
+        <tr><td class="name">RDS Read Replicas</td><td>Copias de solo lectura para escalar lecturas (rendimiento).</td></tr>
+        <tr><td class="name">Amazon Redshift</td><td>Data warehouse para análisis (OLAP) de grandes volúmenes.</td></tr>
+        <tr><td class="name">AWS DMS</td><td>Migra bases de datos hacia AWS con poco downtime.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Multi-AZ = alta disponibilidad. Read Replica = escalar lecturas. Redshift = análisis, no transacciones.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Bases de datos relacionales</span><span class="gloss"><b>RDS</b> = Relational Database Service · <b>AZ</b> = Availability Zone · <b>DMS</b> = Database Migration Service</span><span class="num">13 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 14 · NOSQL Y ESPECIALIZADAS -->
+  <section class="slide" data-label="14 NoSQL y especializadas">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Bases de datos · NoSQL y especializadas</div>
+    <h1 class="slide-title">NoSQL y bases de datos <em>especializadas</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:28%">Servicio</th><th>Tipo y uso</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Amazon DynamoDB</td><td>Clave-valor NoSQL serverless; milisegundos a cualquier escala.</td></tr>
+        <tr><td class="name">Amazon ElastiCache</td><td>Caché en memoria (Redis / Memcached) para acelerar lecturas.</td></tr>
+        <tr><td class="name">Amazon DocumentDB</td><td>Base de documentos compatible con MongoDB.</td></tr>
+        <tr><td class="name">Amazon Neptune</td><td>Base de grafos: relaciones, redes sociales y fraude.</td></tr>
+        <tr><td class="name">Amazon Timestream</td><td>Series de tiempo: IoT y telemetría.</td></tr>
+        <tr><td class="name">Amazon Keyspaces</td><td>Compatible con Apache Cassandra.</td></tr>
+        <tr><td class="name">Amazon MemoryDB</td><td>Base en memoria compatible con Redis y durable.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Milisegundos a escala sin administrar servidores: DynamoDB. Relaciones entre entidades: Neptune. Caché: ElastiCache.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>NoSQL y especializadas</span><span class="gloss"><b>IoT</b> = Internet of Things</span><span class="num">14 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 15 · AMAZON VPC -->
+  <section class="slide bg-alt" data-label="15 Amazon VPC">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Redes · VPC</div>
+    <h1 class="slide-title"><em>VPC</em>: tu red privada en AWS</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:30%">Componente</th><th>Qué es</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">VPC</td><td>Red virtual aislada y propia dentro de una Region.</td></tr>
+        <tr><td class="name">Subnet (subred)</td><td>Segmento de la VPC dentro de una AZ. Pública o privada.</td></tr>
+        <tr><td class="name">Internet Gateway</td><td>Permite acceso a internet desde la VPC.</td></tr>
+        <tr><td class="name">NAT Gateway</td><td>Permite que instancias privadas salgan a internet sin ser accesibles desde fuera.</td></tr>
+        <tr><td class="name">Route table</td><td>Define hacia dónde va el tráfico de una subred.</td></tr>
+        <tr><td class="name">VPC Peering / PrivateLink</td><td>Conectan VPC entre sí o servicios de forma privada.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Servidor privado que debe descargar actualizaciones: NAT Gateway. Base de datos: subred privada.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Amazon VPC</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud · <b>AZ</b> = Availability Zone · <b>NAT</b> = Network Address Translation</span><span class="num">15 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 16 · ROUTE 53 Y CLOUDFRONT -->
+  <section class="slide" data-label="16 Route 53 y CloudFront">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Redes · DNS y entrega de contenido</div>
+    <h1 class="slide-title">Route 53, CloudFront y <em>API Gateway</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:28%">Servicio</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Amazon Route 53</td><td>DNS escalable; enruta por latencia, geolocalización, failover o pesos.</td></tr>
+        <tr><td class="name">Amazon CloudFront</td><td>CDN: almacena en caché contenido en edge locations cerca del usuario.</td></tr>
+        <tr><td class="name">AWS Global Accelerator</td><td>Dirige el tráfico por la red global de AWS para mejor rendimiento.</td></tr>
+        <tr><td class="name">Amazon API Gateway</td><td>Crea, publica y protege APIs REST y WebSocket.</td></tr>
+        <tr><td class="name">Elastic Load Balancing</td><td>Reparte tráfico dentro de la Region.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Contenido estático cerca del usuario: CloudFront. Convertir nombres a IP: Route 53. API pública con Lambda: API Gateway.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Route 53 y CloudFront</span><span class="gloss"><b>DNS</b> = Domain Name System · <b>API</b> = Application Programming Interface · <b>CDN</b> = Content Delivery Network</span><span class="num">16 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 17 · MENSAJERÍA E INTEGRACIÓN -->
+  <section class="slide bg-alt" data-label="17 Mensajería e integración">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Integración · Desacoplar aplicaciones</div>
+    <h1 class="slide-title">Mensajería e <em>integración</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:28%">Servicio</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Amazon SQS</td><td>Cola de mensajes: el productor guarda, el consumidor procesa cuando puede.</td></tr>
+        <tr><td class="name">Amazon SNS</td><td>Publicar/suscribir: envía un mensaje a muchos suscriptores (push).</td></tr>
+        <tr><td class="name">Amazon EventBridge</td><td>Bus de eventos: reacciona a eventos de AWS, SaaS y tus apps.</td></tr>
+        <tr><td class="name">AWS Step Functions</td><td>Orquesta flujos de trabajo con varios servicios.</td></tr>
+        <tr><td class="name">Amazon MQ</td><td>Broker de mensajes gestionado (ActiveMQ, RabbitMQ).</td></tr>
+        <tr><td class="name">AWS AppSync</td><td>APIs GraphQL gestionadas.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Desacoplar y almacenar mensajes: SQS. Notificar a muchos: SNS. Reaccionar a eventos: EventBridge.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Mensajería e integración</span><span class="gloss"><b>SQS</b> = Simple Queue Service · <b>SNS</b> = Simple Notification Service · <b>SaaS</b> = Software as a Service</span><span class="num">17 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 18 · SERVICIOS DE ANALÍTICA -->
+  <section class="slide" data-label="18 Servicios de analítica">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Análisis · Datos</div>
+    <h1 class="slide-title">Servicios de <em>analítica</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:28%">Servicio</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Amazon Athena</td><td>Consultas SQL directamente sobre datos en S3, sin servidores.</td></tr>
+        <tr><td class="name">AWS Glue</td><td>ETL gestionado y catálogo de datos.</td></tr>
+        <tr><td class="name">Amazon EMR</td><td>Clústeres de big data (Hadoop, Spark).</td></tr>
+        <tr><td class="name">Amazon Kinesis</td><td>Ingesta y análisis de datos en streaming.</td></tr>
+        <tr><td class="name">Amazon QuickSight</td><td>Paneles de BI (business intelligence).</td></tr>
+        <tr><td class="name">Amazon OpenSearch Service</td><td>Búsqueda y análisis de logs.</td></tr>
+        <tr><td class="name">AWS Lake Formation</td><td>Crear y gobernar un data lake.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>SQL sobre archivos en S3: Athena. Datos en tiempo real: Kinesis. Dashboards de BI: QuickSight.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Servicios de analítica</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>ETL</b> = Extract, Transform, Load</span><span class="num">18 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 19 · IA Y MACHINE LEARNING -->
+  <section class="slide bg-alt" data-label="19 IA y machine learning">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>IA y ML · Servicios</div>
+    <h1 class="slide-title"><em>IA y machine learning</em> en AWS</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:28%">Servicio</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Amazon SageMaker</td><td>Construir, entrenar y desplegar modelos de ML.</td></tr>
+        <tr><td class="name">Amazon Bedrock</td><td>Modelos fundacionales (IA generativa) por API.</td></tr>
+        <tr><td class="name">Amazon Rekognition</td><td>Análisis de imágenes y video.</td></tr>
+        <tr><td class="name">Amazon Comprehend</td><td>Análisis de texto (NLP): sentimiento y entidades.</td></tr>
+        <tr><td class="name">Amazon Transcribe / Polly</td><td>Voz a texto / texto a voz.</td></tr>
+        <tr><td class="name">Amazon Translate / Lex / Textract</td><td>Traducción / chatbots / extraer texto de documentos.</td></tr>
+        <tr><td class="name">Amazon Q</td><td>Asistente de IA generativa para el trabajo y desarrollo.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Voz a texto: Transcribe. Texto a voz: Polly. Imágenes: Rekognition. Chatbot: Lex.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>IA y machine learning</span><span class="gloss"><b>IA</b> = Infrequent Access · <b>API</b> = Application Programming Interface</span><span class="num">19 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 20 · SERVICIOS PARA DESARROLLADORES -->
+  <section class="slide" data-label="20 Servicios para desarrolladores">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Herramientas · Desarrolladores</div>
+    <h1 class="slide-title">Servicios para <em>desarrolladores</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:30%">Servicio</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">AWS CodeBuild</td><td>Compila y prueba código.</td></tr>
+        <tr><td class="name">AWS CodeDeploy</td><td>Automatiza despliegues a EC2, Lambda u on-premises.</td></tr>
+        <tr><td class="name">AWS CodePipeline</td><td>Orquesta el flujo CI/CD de extremo a extremo.</td></tr>
+        <tr><td class="name">AWS X-Ray</td><td>Rastrea solicitudes para depurar aplicaciones distribuidas.</td></tr>
+        <tr><td class="name">AWS Amplify</td><td>Construye y hospeda apps web y móviles.</td></tr>
+        <tr><td class="name">AWS Cloud9 / CloudShell</td><td>Entornos de desarrollo y terminal en el navegador.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Automatizar el flujo de entrega continua: CodePipeline.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Servicios para desarrolladores</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud</span><span class="num">20 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 21 · GESTIÓN Y OPERACIONES -->
+  <section class="slide bg-alt" data-label="21 Gestión y operaciones">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Gestión · Operación y visibilidad</div>
+    <h1 class="slide-title">Gestión y <em>operaciones</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:32%">Servicio</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">AWS Systems Manager</td><td>Gestionar y parchar flotas de instancias y servidores.</td></tr>
+        <tr><td class="name">AWS Trusted Advisor</td><td>Recomendaciones en costo, rendimiento, seguridad, tolerancia a fallos y límites.</td></tr>
+        <tr><td class="name">AWS Health Dashboard</td><td>Estado de los servicios y eventos que afectan tus recursos.</td></tr>
+        <tr><td class="name">AWS Compute Optimizer</td><td>Sugiere el tamaño óptimo (right-sizing) de los recursos.</td></tr>
+        <tr><td class="name">AWS Service Catalog</td><td>Catálogo de productos aprobados para tu organización.</td></tr>
+        <tr><td class="name">AWS License Manager</td><td>Gestionar licencias de software.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Estado de salud de AWS que afecta mis recursos: AWS Health Dashboard. Recomendaciones de buenas prácticas: Trusted Advisor.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Gestión y operaciones</span><span class="num">21 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 22 · OTROS SERVICIOS -->
+  <section class="slide" data-label="22 Otros servicios">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Otros servicios · Cobertura del examen</div>
+    <h1 class="slide-title">Otros servicios <em>en alcance</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:32%">Servicio</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Amazon Connect</td><td>Centro de contacto en la nube.</td></tr>
+        <tr><td class="name">Amazon WorkSpaces</td><td>Escritorios virtuales en la nube (VDI).</td></tr>
+        <tr><td class="name">Amazon AppStream 2.0</td><td>Transmite aplicaciones de escritorio al navegador.</td></tr>
+        <tr><td class="name">AWS IoT Core</td><td>Conectar dispositivos IoT de forma segura.</td></tr>
+        <tr><td class="name">Amazon SES</td><td>Envío de correo transaccional y marketing.</td></tr>
+        <tr><td class="name">AWS Batch</td><td>Ejecuta trabajos por lotes a gran escala.</td></tr>
+        <tr><td class="name">AWS Device Farm</td><td>Probar apps móviles en dispositivos reales.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Escritorio virtual: WorkSpaces. Centro de llamadas: Connect. Dispositivos IoT: IoT Core.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Otros servicios</span><span class="gloss"><b>IoT</b> = Internet of Things</span><span class="num">22 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 23 · TABLA FINAL D3 (1/2) -->
+  <section class="slide bg-alt" data-label="23 Tabla final D3 (1/2)">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Tabla final 1/2</div>
+    <h1 class="slide-title">Tabla final de <em>memorización</em> (1/2)</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:52%">Si el enunciado dice…</th><th>Elige</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Ejecutar código sin administrar servidores</td><td>AWS Lambda</td></tr>
+        <tr><td class="name">Contenedores sin administrar servidores</td><td>AWS Fargate</td></tr>
+        <tr><td class="name">Disco de una instancia EC2</td><td>Amazon EBS</td></tr>
+        <tr><td class="name">Archivos compartidos entre varias EC2</td><td>Amazon EFS</td></tr>
+        <tr><td class="name">Archivo de años al menor costo</td><td>S3 Glacier Deep Archive</td></tr>
+        <tr><td class="name">NoSQL de milisegundos a escala</td><td>Amazon DynamoDB</td></tr>
+        <tr><td class="name">Desacoplar con una cola</td><td>Amazon SQS</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Tabla final D3 (1/2)</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>EBS</b> = Elastic Block Store · <b>EFS</b> = Elastic File System · <b>S3</b> = Simple Storage Service · <b>SQS</b> = Simple Queue Service</span><span class="num">23 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 24 · TABLA FINAL D3 (2/2) -->
+  <section class="slide" data-label="24 Tabla final D3 (2/2)">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Tabla final 2/2</div>
+    <h1 class="slide-title">Tabla final de <em>memorización</em> (2/2)</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:52%">Si el enunciado dice…</th><th>Elige</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Entrega de contenido cerca del usuario</td><td>Amazon CloudFront</td></tr>
+        <tr><td class="name">DNS y failover</td><td>Amazon Route 53</td></tr>
+        <tr><td class="name">Conexión privada dedicada a AWS</td><td>AWS Direct Connect</td></tr>
+        <tr><td class="name">Infraestructura como código</td><td>AWS CloudFormation</td></tr>
+        <tr><td class="name">Consultas SQL sobre S3</td><td>Amazon Athena</td></tr>
+        <tr><td class="name">Notificar a muchos suscriptores</td><td>Amazon SNS</td></tr>
+        <tr><td class="name">Red privada virtual en AWS</td><td>Amazon VPC</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Tabla final D3 (2/2)</span><span class="gloss"><b>DNS</b> = Domain Name System · <b>S3</b> = Simple Storage Service · <b>SNS</b> = Simple Notification Service · <b>VPC</b> = Virtual Private Cloud</span><span class="num">24 / 25</span></div>
+  </section>
+
+  <!-- SLIDE 25 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="25 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS CLF-C02 · Cloud Practitioner</span>
+    </div>
+    <div class="label"><span class="bar"></span>Cierre · Tecnología y servicios</div>
+    <h2>Listo para el <em>siguiente bloque</em>.</h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">Siguiente bloque: Dominio 4 — Facturación, precios y soporte.</p>
+      <div class="contact-card">
+        <div class="contact-row"><i class="ti ti-mail"></i><div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div></div>
+        <div class="contact-row"><i class="ti ti-world"></i><div><div class="lbl">Web</div><div class="val">hgfincorp.com</div></div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>Cierre</span><span class="num">25 / 25</span></div>
+  </section>
+
+</deck-stage>
+
+<!-- DOWNLOAD PDF -->
+<style>
+  .pdf-fab {
+    position: fixed; top: 16px; right: 16px; z-index: 9999;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12; color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover { background: #B36B00; transform: translateY(-1px); box-shadow: 0 10px 28px rgba(255,153,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset; }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot { width: 6px; height: 6px; border-radius: 999px; background: #FF9900; box-shadow: 0 0 0 3px rgba(255,153,0,0.18); }
+  .pdf-fab i { font-size: 16px; line-height: 1; }
+  .pdf-fab .hint { opacity: 0.55; font-size: 11px; margin-left: 4px; padding-left: 8px; border-left: 1px solid rgba(255,255,255,0.18); }
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<script src="deck-stage.js"></script>
+
+<!-- CONTROLES FLOTANTES: R Rail · P PDF · F Fullscreen -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(255,153,0,.85);border-color:rgba(255,153,0,.6);color:#fff}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-rail" title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf" title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen" title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      const hidden = stage.hasAttribute('no-rail');
+      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
+      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
+    }
+    railBtn.addEventListener('click', toggleRail);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>

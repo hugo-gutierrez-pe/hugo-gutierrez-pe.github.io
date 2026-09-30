@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="aws">
+<head>
+<meta charset="UTF-8" />
+<title>AWS CLF-C02 · D1 Conceptos de la nube — Repaso</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    --type-mega:      140px;
+    --type-title:      80px;
+    --type-h1:         64px;
+    --type-h2:         44px;
+    --type-quote:      60px;
+    --type-body:       26px;
+    --type-body-lg:    30px;
+    --type-small:      22px;
+    --type-mono-lg:    20px;
+    --type-mono:       16px;
+    --type-mono-sm:    14px;
+
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-course="aws"] {
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(255,153,0,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #FFC266; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(255,153,0,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .slide.bg-ink em { color: #FFC266; }
+
+  /* ── CHROME ────────────────────────────────────────────── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand { display: inline-flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag { display: inline-flex; align-items: center; gap: 8px; }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+  .chrome-bot .num { font-feature-settings: "tnum" 1; color: var(--ink-2); }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #FFC266; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── PORTADA ──────────────────────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block { display: flex; align-items: center; gap: 14px; color: var(--ink); }
+  .portada-head .brand-block .brand-mark { width: 44px; height: 44px; border-radius: 9px; font-size: 18px; }
+  .portada-head .brand-name { font-family: var(--font-sans); font-size: 26px; font-weight: 600; letter-spacing: -0.005em; color: var(--ink); }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 20ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    max-width: 34ch;
+  }
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val { font-size: 26px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+
+  /* ── AGENDA ───────────────────────────────────────────── */
+  .agenda-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 12px; }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num { font-family: var(--font-mono); font-size: var(--type-h2); font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
+  .agenda-row .title { font-size: 32px; font-weight: 600; color: var(--ink); letter-spacing: -0.015em; }
+  .agenda-row .desc { font-size: 20px; color: var(--ink-3); margin-top: 4px; }
+  .agenda-row .tag {
+    font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 8px 14px; border: 0.5px solid var(--rule-2); border-radius: 999px; white-space: nowrap;
+  }
+
+  /* ── COMENTARIO ANCHO ─────────────────────────────────── */
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    margin-top: 32px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase; padding-top: 4px; white-space: nowrap;
+  }
+  .big-comment p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; max-width: 90ch; }
+
+  /* ── TABLA COMPARATIVA ────────────────────────────────── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: var(--type-body); }
+  .cmp-table thead th {
+    font-family: var(--font-mono); font-size: var(--type-mono); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3);
+    text-align: left; padding: 16px 22px; border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px; border-bottom: 0.5px solid var(--rule); color: var(--ink-2);
+    font-size: var(--type-body); vertical-align: top; line-height: 1.4;
+  }
+  .cmp-table tbody td.name { color: var(--ink); font-weight: 600; font-size: 28px; letter-spacing: -0.01em; }
+  .cmp-table tbody td.code { font-family: var(--font-mono); color: var(--accent); font-size: 20px; }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+  .cmp-table.dense tbody td { padding: 16px 22px; font-size: 22px; }
+  .cmp-table.dense tbody td.name { font-size: 24px; }
+  .cmp-table.dense thead th { padding: 12px 22px; }
+
+  .acronym-note {
+    font-family: var(--font-mono); font-size: 20px; color: var(--ink-3);
+    margin-top: -20px; margin-bottom: 24px; letter-spacing: 0.01em;
+  }
+  .acronym-note .acc-var { color: var(--accent); font-weight: 500; }
+
+  /* ── STAT GRID ────────────────────────────────────────── */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 12px; }
+  .stat-item { padding: 0 28px; border-right: 0.5px solid var(--rule); }
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-item .lbl { font-family: var(--font-mono); font-size: 15px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 12px; }
+  .stat-item .desc { font-size: 20px; color: var(--ink-2); line-height: 1.4; }
+
+  /* ── STAT GRID · 2×2 (boxes grandes) ─────────────────── */
+  .stat-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 20px; }
+  .stat-box {
+    padding: 32px 36px; border: 0.5px solid var(--rule-2); border-radius: 16px;
+    background: var(--bg); box-shadow: 0 1px 0 rgba(10,13,18,0.02);
+  }
+  section.slide.bg-alt .stat-box { background: var(--bg); }
+  .stat-box .lbl { font-family: var(--font-mono); font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 16px; }
+  .stat-box .desc { font-size: 25px; color: var(--ink-2); line-height: 1.45; }
+
+  /* ── CIERRE ───────────────────────────────────────────── */
+  .cierre {
+    background: var(--ink); color: #fff; justify-content: center;
+    position: relative; overflow: hidden; padding-top: 160px; padding-bottom: 140px; isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(255,153,0,0.28), transparent 60%);
+    pointer-events: none; z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: #FFC266;
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 { font-size: var(--type-title); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; max-width: 20ch; }
+  .cierre h2 em { color: #FFC266; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 96px; align-items: end; margin-top: 48px; }
+  .cierre .pregunta { font-size: var(--type-body-lg); color: rgba(255,255,255,0.75); line-height: 1.45; max-width: 50ch; }
+  .cierre .contact-card { display: flex; flex-direction: column; gap: 12px; }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14); border-radius: 12px; background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #FFC266; }
+  .cierre .contact-row .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+  .cierre .contact-row .val { font-size: 18px; color: #fff; font-weight: 500; margin-top: 2px; }
+
+  /* glosario de siglas (pie de slide) */
+  .chrome-bot { gap: 32px; }
+  .chrome-bot > span:not(.gloss) { flex: none; }
+  .chrome-bot .gloss { flex: 1; min-width: 0; white-space: normal; text-align: center; font-size: 18px; line-height: 1.35; letter-spacing: 0.02em; color: var(--ink-3); }
+  .chrome-bot .gloss b { font-weight: 500; color: var(--accent); }
+  .slide.bg-ink .chrome-bot .gloss { color: rgba(255,255,255,0.55); }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "Portada del Dominio 1: Conceptos de la nube. Pesa 24% del examen CLF-C02.",
+  "Agenda del Dominio 1. Este dominio pesa 24% de las preguntas puntuadas del examen.",
+  "Son las seis ventajas clásicas de la nube. Las tres que más cae en examen: pasar de CapEx a OpEx (gasto variable), economías de escala y dejar de adivinar la capacidad. Si el enunciado dice \"pagar solo lo que uso\" es gasto variable.",
+  "Tres modelos de despliegue: nube, híbrido y on-premises. Híbrido suele ser la respuesta cuando una empresa no puede mover todo por regulación o latencia. Servicios que ayudan: Direct Connect, VPN, Outposts.",
+  "IaaS da máximo control y más responsabilidad (EC2). PaaS te quita la gestión de la plataforma (Elastic Beanstalk, RDS en cierto sentido). SaaS es un producto terminado que solo usas. Más arriba en la pila = menos responsabilidad tuya.",
+  "Seis pilares del Well-Architected Framework. Son los que más preguntan. Asocia cada uno con su verbo: operar, proteger, recuperarse, rendir, ahorrar, sostener. La herramienta para revisar tu arquitectura contra el marco es AWS Well-Architected Tool.",
+  "Scalability es la capacidad de crecer; elasticity es hacerlo automáticamente en ambos sentidos. High availability minimiza el tiempo caído usando varias AZ. Fault tolerance es más estricto: sin interrupción. Loose coupling desacopla con colas (SQS) o mensajes (SNS).",
+  "El AWS Cloud Adoption Framework (CAF) ayuda a planificar la transición a la nube organizándola en seis perspectivas: Business, People, Governance, Platform, Security y Operations. Lo importante para el examen es que CAF es para planificar la adopción, no para revisar arquitectura (eso es Well-Architected).",
+  "Las 7 R: rehost, replatform, refactor, repurchase, retire, retain, relocate. El examen suele preguntar rehost (mover tal cual) y refactor (rediseñar). \"Lift and shift\" = rehost.",
+  "Antes de migrar se evalúa: Migration Evaluator arma el caso de negocio, Application Discovery Service descubre qué tienes y Migration Hub da seguimiento. MAP es un programa de acompañamiento de AWS, no una herramienta técnica.",
+  "Para mover muchos terabytes sin ancho de banda, la familia Snow. Para bases de datos, DMS (y SCT si cambia el motor). Para servidores completos, Application Migration Service (MGN). DataSync y Transfer Family para archivos.",
+  "Economía de la nube: pasar de CapEx a OpEx, aprovechar economías de escala, ajustar el tamaño (right-sizing) y usar servicios gestionados para reducir el costo operativo y el TCO. Para comparar on-premises con AWS se usa TCO / Migration Evaluator.",
+  "Cierre del dominio 1. Memoriza estos siete pares: cubren la mayoría de las preguntas de conceptos de la nube.",
+  "Cierre del Dominio 1."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- SLIDE 1 · PORTADA -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">Repaso personal · Lima, Perú</div>
+        <div class="val">AWS CLF-C02 · 2026</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag"><span>AWS CLF-C02</span></div>
+      <h1 class="course-title"><em>Conceptos de la nube</em></h1>
+      <p class="course-sub">Repaso para el examen AWS Certified Cloud Practitioner. Ventajas de la nube, principios de diseño, migración y economía.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item"><div class="lbl">Dominio</div><div class="val">1 · Conceptos de la nube</div></div>
+      <div class="item"><div class="lbl">Bloque</div><div class="val">Ventajas, diseño y migración</div></div>
+      <div class="item"><div class="lbl">Formato</div><div class="val">Apunte de repaso</div></div>
+      <div class="item"><div class="lbl">Recurso</div><div class="val">hgfincorp.com</div></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 · AGENDA -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Agenda</div>
+    <h1 class="slide-title">Qué cubre <em>este repaso</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="agenda-list">
+      <div class="agenda-row"><span class="num">01</span><div><div class="title">Ventajas y modelos</div><div class="desc">Las 6 ventajas, despliegue y IaaS / PaaS / SaaS.</div></div><span class="tag">Concepto</span></div>
+      <div class="agenda-row"><span class="num">02</span><div><div class="title">Principios de diseño</div><div class="desc">Well-Architected, escalabilidad, elasticidad y alta disponibilidad.</div></div><span class="tag">Marco</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">Adopción y migración</div><div class="desc">CAF, las 7 R y herramientas para evaluar y mover.</div></div><span class="tag">Migración</span></div>
+      <div class="agenda-row"><span class="num">04</span><div><div class="title">Economía de la nube</div><div class="desc">CapEx vs. OpEx, economías de escala, right-sizing y TCO.</div></div><span class="tag">Economía</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Memorización</div><div class="desc">Tabla final con las asociaciones clave.</div></div><span class="tag">Cierre</span></div>
+    </div>
+
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IaaS</b> = Infrastructure as a Service · <b>PaaS</b> = Platform as a Service · <b>SaaS</b> = Software as a Service · <b>CAF</b> = Cloud Adoption Framework · <b>CapEx</b> = Capital Expenditure · <b>OpEx</b> = Operational Expenditure</span><span class="num">02 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 3 · VENTAJAS DE LA NUBE -->
+  <section class="slide bg-alt" data-label="03 Ventajas de la nube">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Beneficios · Propuesta de valor</div>
+    <h1 class="slide-title">Las <em>6 ventajas</em> de la nube</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:34%">Ventaja</th><th>Qué significa</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Gasto variable</td><td>Cambias CapEx (comprar servidores) por OpEx: pagas solo lo que consumes.</td></tr>
+        <tr><td class="name">Economías de escala</td><td>AWS agrega millones de clientes y baja el precio por unidad de uso.</td></tr>
+        <tr><td class="name">Dejar de adivinar capacidad</td><td>Escalas hacia arriba o abajo según la demanda real (elasticidad).</td></tr>
+        <tr><td class="name">Velocidad y agilidad</td><td>Recursos listos en minutos: experimentar cuesta poco y es rápido.</td></tr>
+        <tr><td class="name">Sin mantener data centers</td><td>No pagas ni operas racks, energía ni seguridad física.</td></tr>
+        <tr><td class="name">Alcance global en minutos</td><td>Despliegas en varias Regions cerca de tus usuarios.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>CapEx = inversión inicial (comprar hardware). OpEx = gasto continuo por uso. La nube mueve de CapEx a OpEx.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Ventajas de la nube</span><span class="gloss"><b>CapEx</b> = Capital Expenditure · <b>OpEx</b> = Operational Expenditure</span><span class="num">03 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 4 · MODELOS DE DESPLIEGUE -->
+  <section class="slide" data-label="04 Modelos de despliegue">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Beneficios · Modelos de despliegue</div>
+    <h1 class="slide-title">Modelos de <em>despliegue</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:20%">Modelo</th><th style="width:44%">Qué es</th><th>Ejemplo típico</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Cloud (nube)</td><td>Todo corre en la nube; sin infraestructura propia.</td><td>Startup 100% en AWS</td></tr>
+        <tr><td class="name">Hybrid (híbrido)</td><td>Parte en la nube y parte on-premises, conectadas.</td><td>Datos sensibles locales + cómputo en AWS</td></tr>
+        <tr><td class="name">On-premises</td><td>Todo en tu propio data center (nube privada).</td><td>Banco con data center propio</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Si el enunciado dice "parte de la carga debe seguir en el data center", la respuesta es híbrido (Direct Connect, VPN, Outposts).</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Modelos de despliegue</span><span class="gloss"><b>VPN</b> = Virtual Private Network</span><span class="num">04 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 5 · IAAS, PAAS Y SAAS -->
+  <section class="slide bg-alt" data-label="05 IaaS, PaaS y SaaS">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Beneficios · Modelos de servicio</div>
+    <h1 class="slide-title"><em>IaaS</em>, PaaS y SaaS</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:14%">Modelo</th><th style="width:44%">Tú administras</th><th>Ejemplo en AWS</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">IaaS</td><td>SO, runtime, aplicación y datos. AWS da infraestructura.</td><td>Amazon EC2</td></tr>
+        <tr><td class="name">PaaS</td><td>Solo tu aplicación y datos. AWS gestiona la plataforma.</td><td>AWS Elastic Beanstalk</td></tr>
+        <tr><td class="name">SaaS</td><td>Solo usas el software; AWS lo opera todo.</td><td>Amazon Connect</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Más control = más responsabilidad tuya. IaaS (EC2) tiene más control; SaaS tiene menos.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>IaaS, PaaS y SaaS</span><span class="gloss"><b>IaaS</b> = Infrastructure as a Service · <b>PaaS</b> = Platform as a Service · <b>SaaS</b> = Software as a Service · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">05 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 6 · WELL-ARCHITECTED FRAMEWORK -->
+  <section class="slide" data-label="06 Well-Architected Framework">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Diseño · Marco de arquitectura</div>
+    <h1 class="slide-title">Los <em>6 pilares</em> del Well-Architected Framework</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:30%">Pilar</th><th>Pregunta clave</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Operational Excellence</td><td>Ejecutar y monitorear sistemas; mejorar procesos de forma continua.</td></tr>
+        <tr><td class="name">Security</td><td>Proteger datos, sistemas y activos (identidad, cifrado, detección).</td></tr>
+        <tr><td class="name">Reliability</td><td>Recuperarse de fallos y cumplir la demanda.</td></tr>
+        <tr><td class="name">Performance Efficiency</td><td>Usar bien los recursos de cómputo a medida que cambia la demanda.</td></tr>
+        <tr><td class="name">Cost Optimization</td><td>Entregar valor al menor costo; evitar gasto innecesario.</td></tr>
+        <tr><td class="name">Sustainability</td><td>Reducir el impacto ambiental de las cargas de trabajo.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Herramienta</span>
+      <p>AWS Well-Architected Tool revisa tus cargas de trabajo contra los 6 pilares y da recomendaciones.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Well-Architected Framework</span><span class="num">06 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 7 · CONCEPTOS DE DISEÑO -->
+  <section class="slide bg-alt" data-label="07 Conceptos de diseño">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Diseño · Conceptos que se confunden</div>
+    <h1 class="slide-title">Escalabilidad, elasticidad y <em>alta disponibilidad</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:22%">Concepto</th><th style="width:48%">Qué es</th><th>Servicio clave</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Scalability</td><td>Capacidad de crecer (vertical: más grande; horizontal: más copias).</td><td>Auto Scaling</td></tr>
+        <tr><td class="name">Elasticity</td><td>Crecer y encogerse automáticamente según la demanda.</td><td>Auto Scaling, Lambda</td></tr>
+        <tr><td class="name">High availability</td><td>El sistema sigue disponible ante fallos (varias AZ).</td><td>ELB, Multi-AZ</td></tr>
+        <tr><td class="name">Fault tolerance</td><td>Sigue operando sin interrupción aunque falle un componente.</td><td>Multi-AZ, S3</td></tr>
+        <tr><td class="name">Loose coupling</td><td>Componentes independientes que se comunican por colas o eventos.</td><td>SQS, SNS, EventBridge</td></tr>
+        <tr><td class="name">Serverless</td><td>No administras servidores; AWS escala y cobra por uso.</td><td>Lambda, Fargate, DynamoDB</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Varias Availability Zones = alta disponibilidad. Varias Regions = recuperación ante desastres y latencia global.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Conceptos de diseño</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>S3</b> = Simple Storage Service · <b>SQS</b> = Simple Queue Service · <b>SNS</b> = Simple Notification Service</span><span class="num">07 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 8 · AWS CAF -->
+  <section class="slide" data-label="08 AWS CAF">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Diseño · Adopción en la empresa</div>
+    <h1 class="slide-title">AWS <em>CAF</em>: 6 perspectivas</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:28%">Perspectiva</th><th>Enfoque</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Business</td><td>Que la inversión en la nube se alinee con resultados de negocio.</td></tr>
+        <tr><td class="name">People</td><td>Capacitación, cultura y cambio organizacional.</td></tr>
+        <tr><td class="name">Governance</td><td>Gestionar riesgo, cumplimiento y portafolio de proyectos.</td></tr>
+        <tr><td class="name">Platform</td><td>Arquitectura, datos y aprovisionamiento en la nube.</td></tr>
+        <tr><td class="name">Security</td><td>Controles, visibilidad y respuesta a incidentes.</td></tr>
+        <tr><td class="name">Operations</td><td>Operar y mejorar las cargas de trabajo en producción.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ No confundir</span>
+      <p>CAF planifica la ADOPCIÓN. Well-Architected revisa la ARQUITECTURA.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>AWS CAF</span><span class="gloss"><b>CAF</b> = Cloud Adoption Framework</span><span class="num">08 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 9 · LAS 7 R DE MIGRACIÓN -->
+  <section class="slide bg-alt" data-label="09 Las 7 R de migración">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Migración · Estrategias</div>
+    <h1 class="slide-title">Las <em>7 R</em> de la migración</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:22%">Estrategia</th><th>Qué implica</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Rehost (lift and shift)</td><td>Mover tal cual a EC2, sin cambios. Rápido.</td></tr>
+        <tr><td class="name">Replatform (lift and reshape)</td><td>Pequeños ajustes; por ejemplo, a una base de datos gestionada (RDS).</td></tr>
+        <tr><td class="name">Refactor / Re-architect</td><td>Rediseñar para aprovechar la nube (serverless, microservicios).</td></tr>
+        <tr><td class="name">Repurchase</td><td>Cambiar a un producto SaaS (p. ej. a un CRM en la nube).</td></tr>
+        <tr><td class="name">Retire</td><td>Apagar lo que ya no se usa.</td></tr>
+        <tr><td class="name">Retain</td><td>Dejarlo donde está (por ahora).</td></tr>
+        <tr><td class="name">Relocate</td><td>Mover infraestructura sin cambios a otra plataforma (p. ej. VMware Cloud on AWS).</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Lift and shift = Rehost. Rediseñar para la nube = Refactor. Cambiar a SaaS = Repurchase.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Las 7 R de migración</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>RDS</b> = Relational Database Service · <b>SaaS</b> = Software as a Service</span><span class="num">09 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 10 · PLANIFICAR MIGRACIÓN -->
+  <section class="slide" data-label="10 Planificar migración">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Migración · Planificar y evaluar</div>
+    <h1 class="slide-title">Herramientas para <em>planificar</em> la migración</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:34%">Herramienta</th><th>Para qué sirve</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Migration Evaluator</td><td>Construir el caso de negocio: estima costos en AWS a partir de tu uso actual.</td></tr>
+        <tr><td class="name">Application Discovery Service</td><td>Descubrir servidores y dependencias on-premises.</td></tr>
+        <tr><td class="name">AWS Migration Hub</td><td>Panel único para seguir el avance de migraciones.</td></tr>
+        <tr><td class="name">AWS CAF</td><td>Marco para planificar la adopción de la nube.</td></tr>
+        <tr><td class="name">Migration Acceleration Program (MAP)</td><td>Programa de AWS con guía y créditos para migrar.</td></tr>
+        <tr><td class="name">AWS Pricing Calculator</td><td>Estimar el costo de una arquitectura nueva.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>¿Cuánto costará migrar? Migration Evaluator. ¿Qué servidores tengo? Application Discovery Service. ¿Cómo va la migración? Migration Hub.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Planificar migración</span><span class="gloss"><b>CAF</b> = Cloud Adoption Framework · <b>MAP</b> = Migration Acceleration Program</span><span class="num">10 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 11 · MOVER DATOS Y CARGAS -->
+  <section class="slide bg-alt" data-label="11 Mover datos y cargas">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Migración · Mover datos y cargas</div>
+    <h1 class="slide-title">Herramientas para <em>mover</em> datos y cargas</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:30%">Herramienta</th><th>Qué mueve</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Snow Family</td><td>Datos masivos offline con dispositivos físicos (Snowcone, Snowball Edge).</td></tr>
+        <tr><td class="name">AWS DataSync</td><td>Transferencia automática y rápida de archivos por red.</td></tr>
+        <tr><td class="name">AWS Transfer Family</td><td>Transferir archivos a S3/EFS por SFTP, FTPS y FTP.</td></tr>
+        <tr><td class="name">AWS DMS</td><td>Migrar bases de datos con poco tiempo caído.</td></tr>
+        <tr><td class="name">Schema Conversion Tool</td><td>Convertir el esquema entre motores de bases de datos.</td></tr>
+        <tr><td class="name">Application Migration Service (MGN)</td><td>Rehost de servidores a EC2.</td></tr>
+        <tr><td class="name">Direct Connect</td><td>Conexión privada dedicada a AWS.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Petabytes y poca banda: Snow Family. Base de datos con poco downtime: DMS. Cambiar de motor: DMS + Schema Conversion Tool.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Mover datos y cargas</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>EFS</b> = Elastic File System · <b>DMS</b> = Database Migration Service · <b>MGN</b> = Application Migration Service · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">11 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 12 · ECONOMÍA DE LA NUBE -->
+  <section class="slide" data-label="12 Economía de la nube">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Economía · Conceptos clave</div>
+    <h1 class="slide-title">Economía de la <em>nube</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">CapEx → OpEx</div><div class="desc">Sin compras iniciales de hardware; pagas por consumo y conviertes un costo fijo en variable.</div></div>
+      <div class="stat-box"><div class="lbl">Economías de escala</div><div class="desc">AWS compra a gran volumen y traslada el ahorro en precios más bajos.</div></div>
+      <div class="stat-box"><div class="lbl">Right-sizing</div><div class="desc">Ajustar el tamaño de los recursos a la carga real para no pagar de más. Herramienta: Compute Optimizer.</div></div>
+      <div class="stat-box"><div class="lbl">Servicios gestionados</div><div class="desc">AWS opera parches, respaldos y escalado: menos trabajo operativo y menor TCO.</div></div>
+    </div>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>TCO = costo total de propiedad (incluye energía, personal y espacio). Para comparar contra on-premises.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Economía de la nube</span><span class="gloss"><b>CapEx</b> = Capital Expenditure · <b>OpEx</b> = Operational Expenditure · <b>TCO</b> = Total Cost of Ownership</span><span class="num">12 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 13 · TABLA FINAL D1 -->
+  <section class="slide bg-alt" data-label="13 Tabla final D1">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Tabla final</div>
+    <h1 class="slide-title">Tabla final de <em>memorización</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:48%">Si el enunciado dice…</th><th>Piensa en</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Pagar solo por lo que uso</td><td>Gasto variable (OpEx)</td></tr>
+        <tr><td class="name">Escalar automáticamente arriba y abajo</td><td>Elasticity (Auto Scaling)</td></tr>
+        <tr><td class="name">El sistema sigue arriba si cae una AZ</td><td>Alta disponibilidad (Multi-AZ)</td></tr>
+        <tr><td class="name">Revisar mi arquitectura contra buenas prácticas</td><td>Well-Architected Tool (6 pilares)</td></tr>
+        <tr><td class="name">Planificar la adopción de la nube en la empresa</td><td>AWS CAF</td></tr>
+        <tr><td class="name">Mover servidores tal cual a EC2</td><td>Rehost (MGN)</td></tr>
+        <tr><td class="name">Estimar el ahorro vs. on-premises</td><td>Migration Evaluator / TCO</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Tabla final D1</span><span class="gloss"><b>OpEx</b> = Operational Expenditure · <b>AZ</b> = Availability Zone · <b>CAF</b> = Cloud Adoption Framework · <b>EC2</b> = Elastic Compute Cloud · <b>MGN</b> = Application Migration Service · <b>TCO</b> = Total Cost of Ownership</span><span class="num">13 / 14</span></div>
+  </section>
+
+  <!-- SLIDE 14 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="14 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS CLF-C02 · Cloud Practitioner</span>
+    </div>
+    <div class="label"><span class="bar"></span>Cierre · Conceptos de la nube</div>
+    <h2>Listo para el <em>siguiente bloque</em>.</h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">Siguiente bloque: Dominio 2 — Seguridad y cumplimiento.</p>
+      <div class="contact-card">
+        <div class="contact-row"><i class="ti ti-mail"></i><div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div></div>
+        <div class="contact-row"><i class="ti ti-world"></i><div><div class="lbl">Web</div><div class="val">hgfincorp.com</div></div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>Cierre</span><span class="num">14 / 14</span></div>
+  </section>
+
+</deck-stage>
+
+<!-- DOWNLOAD PDF -->
+<style>
+  .pdf-fab {
+    position: fixed; top: 16px; right: 16px; z-index: 9999;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12; color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover { background: #B36B00; transform: translateY(-1px); box-shadow: 0 10px 28px rgba(255,153,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset; }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot { width: 6px; height: 6px; border-radius: 999px; background: #FF9900; box-shadow: 0 0 0 3px rgba(255,153,0,0.18); }
+  .pdf-fab i { font-size: 16px; line-height: 1; }
+  .pdf-fab .hint { opacity: 0.55; font-size: 11px; margin-left: 4px; padding-left: 8px; border-left: 1px solid rgba(255,255,255,0.18); }
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<script src="deck-stage.js"></script>
+
+<!-- CONTROLES FLOTANTES: R Rail · P PDF · F Fullscreen -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(255,153,0,.85);border-color:rgba(255,153,0,.6);color:#fff}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-rail" title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf" title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen" title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      const hidden = stage.hasAttribute('no-rail');
+      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
+      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
+    }
+    railBtn.addEventListener('click', toggleRail);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>
