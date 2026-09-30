@@ -24,10 +24,10 @@ Hugo Gutierrez trabaja en modelamiento financiero corporativo, valorización de 
 - [Ratios financieros — guía completa](https://hgfincorp.com/guias/ratios-financieros-guia-completa/)
 - [BDP, BDH y BDS en Bloomberg](https://hgfincorp.com/guias/bloomberg-bdp-bdh-bds/)
 
-## Materiales y certificaciones
+## Recursos y certificaciones
 
-- [Materiales y recursos](https://hgfincorp.com/materiales/): guías, investigación y material de certificaciones.
-- [AWS Certified AI Practitioner (AIF-C01)](https://hgfincorp.com/materiales/aws-ai-practitioner/): deck de 99 slides, decks por dominio y tres simulacros.
+- [Recursos](https://hgfincorp.com/recursos/): guías, investigación y material de certificaciones.
+- [AWS Certified AI Practitioner (AIF-C01)](https://hgfincorp.com/recursos/aws-ai-practitioner/): deck de 99 slides, decks por dominio y tres simulacros.
 
 ## Proyectos y demos
 
