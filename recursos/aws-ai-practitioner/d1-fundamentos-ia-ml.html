@@ -483,6 +483,8 @@
   "Servicio específico vs. genérico: Textract (OCR), Comprehend (NLP), Transcribe/Polly (voz), Rekognition (visión), Translate, Bedrock Knowledge Bases (RAG administrado). Regla de examen: si un servicio de AWS ya resuelve el caso, esa es la respuesta correcta frente a construirlo desde cero con SageMaker.",
   "Servicios administrados adicionales que suelen aparecer en el examen: Kendra (búsqueda), Personalize (recomendaciones), Lex (chatbots), Comprehend Medical (texto clínico), A2I (revisión humana), Amazon Q (asistente GenAI).",
   "Cuando el servicio preentrenado no alcanza, varios servicios permiten personalizar con tus datos: Rekognition Custom Labels para categorías propias de imágenes (requiere imágenes etiquetadas), Comprehend custom para clasificación y entidades propias, Transcribe con custom vocabulary o custom language model para jerga de dominio, Translate con custom terminology. Language identification solo detecta el idioma. Lex es para chatbots.",
+  "Amazon Personalize: servicio administrado de recomendaciones. Usa el historial de interacciones usuario-ítem, más datos opcionales de usuarios e ítems. Casos: recomendar productos, ítems similares, reordenar resultados, segmentar usuarios. No confundir con Forecast (series de tiempo), Kendra (búsqueda) o Bedrock (generar contenido). En el examen real aparecieron varias preguntas sobre Personalize.",
+  "DeepAR es un algoritmo integrado de SageMaker para pronóstico de series de tiempo con redes neuronales recurrentes. Entrena un solo modelo con muchas series relacionadas y entrega pronósticos probabilísticos. Amazon Forecast es el servicio administrado equivalente; verifica su disponibilidad actual. Canvas permite pronóstico sin código.",
   "Matriz de confusión. TP/TN/FP/FN. Aplica a modelos de clasificación con variable objetivo discreta (típicamente binaria: sí/no, fraude/no fraude). Contrastar con regresión (MAE/RMSE), que predice una variable continua y no usa esta matriz. Conectar con econometría: FP = Error Tipo I, FN = Error Tipo II.",
   "Intuición antes de las fórmulas. Recall mira hacia los casos reales, Precision mira hacia lo predicho, Accuracy mira el total. Fijar esta idea antes de ver las fórmulas evita confundir las métricas en el examen.",
   "Precision = TP / (TP+FP). Mide cuán confiable es la alarma cuando suena. Priorizarla cuando el costo de un falso positivo es alto (spam, marketing).",
@@ -555,7 +557,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Info del examen 1/2</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>GenAI</b> = Generative AI · <b>FM</b> = Foundation Model</span><span class="num">02 / 28</span></div>
+    <div class="chrome-bot"><span>Info del examen 1/2</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>GenAI</b> = Generative AI · <b>FM</b> = Foundation Model</span><span class="num">02 / 30</span></div>
   </section>
 
   <!-- SLIDE 3 · INFO DEL EXAMEN 2/2 -->
@@ -580,7 +582,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Info del examen 2/2</span><span class="num">03 / 28</span></div>
+    <div class="chrome-bot"><span>Info del examen 2/2</span><span class="num">03 / 30</span></div>
   </section>
 
   <!-- SLIDE 4 · AGENDA -->
@@ -594,7 +596,7 @@
     <div class="title-rule"></div>
     <div class="agenda-list">
       <div class="agenda-row"><span class="num">01</span><div><div class="title">Conceptos base de IA/ML</div><div class="desc">IA vs. ML vs. DL, tipos de aprendizaje, overfitting, inferencia.</div></div><span class="tag">Conceptos</span></div>
-      <div class="agenda-row"><span class="num">02</span><div><div class="title">Ciclo de vida, MLOps y servicios de AWS</div><div class="desc">Los 7 pasos, MLOps, opciones de inferencia y servicios específicos (incl. personalización).</div></div><span class="tag">Proceso</span></div>
+      <div class="agenda-row"><span class="num">02</span><div><div class="title">Ciclo de vida, MLOps y servicios de AWS</div><div class="desc">Los 7 pasos, MLOps, opciones de inferencia y servicios específicos, Personalize y DeepAR.</div></div><span class="tag">Proceso</span></div>
       <div class="agenda-row"><span class="num">03</span><div><div class="title">Matriz de confusión</div><div class="desc">TP, TN, FP, FN — variable objetivo discreta (binaria).</div></div><span class="tag">Clasificación</span></div>
       <div class="agenda-row"><span class="num">04</span><div><div class="title">Precision, Recall, Accuracy</div><div class="desc">Qué mide cada una y cuándo priorizarlas.</div></div><span class="tag">Clasificación</span></div>
       <div class="agenda-row"><span class="num">05</span><div><div class="title">F1-score y AUC-ROC</div><div class="desc">Balance entre precision y recall; separación de clases.</div></div><span class="tag">Clasificación</span></div>
@@ -602,7 +604,7 @@
       <div class="agenda-row"><span class="num">07</span><div><div class="title">MAE y RMSE</div><div class="desc">Error promedio en regresión — cuándo usar cada una.</div></div><span class="tag">Regresión</span></div>
       <div class="agenda-row"><span class="num">08</span><div><div class="title">Tabla de memorización</div><div class="desc">Las 7 métricas en una sola vista, listas para el examen.</div></div><span class="tag">Cierre</span></div>
     </div>
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>DL</b> = Deep Learning · <b>MLOps</b> = ML Operations · <b>TP</b> = True Positive · <b>TN</b> = True Negative · <b>FP</b> = False Positive · <b>FN</b> = False Negative</span><span class="num">04 / 28</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>DL</b> = Deep Learning · <b>MLOps</b> = ML Operations · <b>TP</b> = True Positive · <b>TN</b> = True Negative · <b>FP</b> = False Positive · <b>FN</b> = False Negative</span><span class="num">04 / 30</span></div>
   </section>
 
   <!-- SLIDE 5 · IA VS ML VS DL -->
@@ -633,7 +635,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>IA vs ML vs DL</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>DL</b> = Deep Learning · <b>NLP</b> = Natural Language Processing</span><span class="num">05 / 28</span></div>
+    <div class="chrome-bot"><span>IA vs ML vs DL</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>DL</b> = Deep Learning · <b>NLP</b> = Natural Language Processing</span><span class="num">05 / 30</span></div>
   </section>
 
   <!-- SLIDE 6 · TIPOS DE APRENDIZAJE -->
@@ -651,9 +653,9 @@
         <tr><th style="width:22%">Tipo</th><th style="width:32%">Datos</th><th>Tareas típicas</th></tr>
       </thead>
       <tbody>
-        <tr><td class="name">Supervisado</td><td>Etiquetados (se conoce la respuesta correcta).</td><td>Clasificación (fraude sí/no) y regresión (precio).</td></tr>
-        <tr><td class="name">No supervisado</td><td>Sin etiquetas — el modelo busca estructura solo.</td><td>Clustering (segmentar clientes), detección de anomalías.</td></tr>
-        <tr><td class="name">Por refuerzo</td><td>Sin dataset: un agente prueba acciones y recibe recompensas.</td><td>Robótica, juegos, RLHF en LLMs.</td></tr>
+        <tr><td class="name">Supervisado</td><td>Etiquetados (se conoce la respuesta correcta).</td><td>Clasificación (fraude sí/no, perros vs. gatos) y regresión (precio).</td></tr>
+        <tr><td class="name">No supervisado</td><td>Sin etiquetas — el modelo busca estructura solo.</td><td>Clustering (K-means: segmentar clientes por compras), detección de anomalías.</td></tr>
+        <tr><td class="name">Por refuerzo</td><td>Sin dataset: un agente prueba acciones y recibe recompensas.</td><td>Ajedrez y juegos, robótica, RLHF. No es supervisado ni no supervisado: es un tercer tipo.</td></tr>
         <tr><td class="name">Semi / auto-supervisado</td><td>Pocas etiquetas + muchos datos sin etiquetar.</td><td>Preentrenamiento de los LLMs.</td></tr>
       </tbody>
     </table>
@@ -663,7 +665,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Tipos de aprendizaje</span><span class="gloss"><b>RLHF</b> = Reinforcement Learning from Human Feedback · <b>LLM</b> = Large Language Model</span><span class="num">06 / 28</span></div>
+    <div class="chrome-bot"><span>Tipos de aprendizaje</span><span class="gloss"><b>RLHF</b> = Reinforcement Learning from Human Feedback · <b>LLM</b> = Large Language Model</span><span class="num">06 / 30</span></div>
   </section>
 
   <!-- SLIDE 7 · OVERFITTING -->
@@ -692,7 +694,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Overfitting</span><span class="num">07 / 28</span></div>
+    <div class="chrome-bot"><span>Overfitting</span><span class="num">07 / 30</span></div>
   </section>
 
   <!-- SLIDE 8 · TIPOS DE INFERENCIA -->
@@ -722,7 +724,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Tipos de inferencia</span><span class="num">08 / 28</span></div>
+    <div class="chrome-bot"><span>Tipos de inferencia</span><span class="num">08 / 30</span></div>
   </section>
 
   <!-- SLIDE 9 · CICLO DE VIDA DE ML -->
@@ -743,7 +745,7 @@
       <div class="agenda-row"><span class="num">06</span><div><div class="title">Evaluar el modelo</div><div class="desc">Precision, recall, RMSE... — todo lo que vimos en este repaso.</div></div><span class="tag">Modelo</span></div>
       <div class="agenda-row"><span class="num">07</span><div><div class="title">Desplegar y monitorear</div><div class="desc">Poner en producción, detectar drift y reentrenar cuando haga falta.</div></div><span class="tag">Producción</span></div>
     </div>
-    <div class="chrome-bot"><span>Ciclo de vida de ML</span><span class="gloss"><b>ML</b> = Machine Learning · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">09 / 28</span></div>
+    <div class="chrome-bot"><span>Ciclo de vida de ML</span><span class="gloss"><b>ML</b> = Machine Learning · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">09 / 30</span></div>
   </section>
 
   <!-- SLIDE 10 · MLOPS Y MÉTRICAS DE NEGOCIO -->
@@ -763,7 +765,7 @@
       <div class="stat-box"><div class="lbl">Métricas de negocio</div><div class="desc">ROI, costo por usuario, satisfacción del cliente, eficiencia — miden si el modelo aporta valor.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>MLOps y métricas de negocio</span><span class="gloss"><b>MLOps</b> = ML Operations · <b>ML</b> = Machine Learning · <b>API</b> = Application Programming Interface · <b>AUC</b> = Area Under the Curve · <b>RMSE</b> = Root Mean Squared Error · <b>ROI</b> = Return on Investment</span><span class="num">10 / 28</span></div>
+    <div class="chrome-bot"><span>MLOps y métricas de negocio</span><span class="gloss"><b>MLOps</b> = ML Operations · <b>ML</b> = Machine Learning · <b>API</b> = Application Programming Interface · <b>AUC</b> = Area Under the Curve · <b>RMSE</b> = Root Mean Squared Error · <b>ROI</b> = Return on Investment</span><span class="num">10 / 30</span></div>
   </section>
 
   <!-- SLIDE 11 · SERVICIO ESPECÍFICO VS GENÉRICO -->
@@ -795,7 +797,7 @@
       <p>Si existe un servicio de AWS que resuelve el caso "out of the box", esa es la respuesta correcta — aunque construirlo tú mismo con SageMaker también sea técnicamente posible. Lo específico gana por costo y velocidad.</p>
     </div>
 
-    <div class="chrome-bot"><span>Específico vs. genérico</span><span class="gloss"><b>OCR</b> = Optical Character Recognition · <b>NLP</b> = Natural Language Processing · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">11 / 28</span></div>
+    <div class="chrome-bot"><span>Específico vs. genérico</span><span class="gloss"><b>OCR</b> = Optical Character Recognition · <b>NLP</b> = Natural Language Processing · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">11 / 30</span></div>
   </section>
 
   <!-- SLIDE 12 · CATÁLOGO DE SERVICIOS AI -->
@@ -822,7 +824,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Catálogo de servicios AI</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>A2I</b> = Augmented AI</span><span class="num">12 / 28</span></div>
+    <div class="chrome-bot"><span>Catálogo de servicios AI</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>A2I</b> = Augmented AI</span><span class="num">12 / 30</span></div>
   </section>
 
   <!-- SLIDE 13 · PERSONALIZAR SERVICIOS DE IA -->
@@ -854,11 +856,66 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Personalizar servicios de IA</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">13 / 28</span></div>
+    <div class="chrome-bot"><span>Personalizar servicios de IA</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">13 / 30</span></div>
   </section>
 
-  <!-- SLIDE 14 · MATRIZ DE CONFUSIÓN -->
-  <section class="slide bg-alt" data-label="14 Matriz de confusion">
+  <!-- SLIDE 14 · AMAZON PERSONALIZE -->
+  <section class="slide" data-label="14 Amazon Personalize">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Decisión · Recomendaciones</div>
+    <h1 class="slide-title">Amazon <em>Personalize</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Qué hace</div><div class="desc">Servicio administrado de recomendaciones personalizadas (la misma tecnología de Amazon.com). No requiere experiencia en ML.</div></div>
+      <div class="stat-box"><div class="lbl">Datos que usa</div><div class="desc">Historial de interacciones usuario–ítem (clics, compras, vistas). Opcional: datos de usuarios e ítems.</div></div>
+      <div class="stat-box"><div class="lbl">Casos típicos</div><div class="desc">Productos recomendados, ítems similares, reordenar resultados por usuario y segmentar usuarios.</div></div>
+      <div class="stat-box"><div class="lbl">No confundir con</div><div class="desc">Forecast (series de tiempo), Kendra (búsqueda), Comprehend (texto) o Bedrock (generar contenido).</div></div>
+    </div>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>"Recomendar a cada usuario según su comportamiento" = <em>Personalize</em>. Si el caso habla de historial de compras o clics, piensa en él.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Amazon Personalize</span><span class="gloss"><b>ML</b> = Machine Learning</span><span class="num">14 / 30</span></div>
+  </section>
+
+  <!-- SLIDE 15 · PRONÓSTICO: DEEPAR Y FORECAST -->
+  <section class="slide bg-alt" data-label="15 Pronóstico: DeepAR y Forecast">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Decisión · Series de tiempo</div>
+    <h1 class="slide-title">Pronóstico de <em>series de tiempo</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:20%">Opción</th><th style="width:50%">Qué es</th><th>Cuándo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">DeepAR</td><td>Algoritmo integrado de SageMaker (red neuronal recurrente). Un solo modelo para muchas series relacionadas; pronóstico probabilístico (rangos).</td><td>Pronosticar demanda o ventas con SageMaker.</td></tr>
+        <tr><td class="name">Amazon Forecast</td><td>Servicio administrado de series de tiempo (usa DeepAR+, entre otros). Verifica su disponibilidad: AWS dejó de aceptar clientes nuevos en 2024.</td><td>Pronóstico sin armar el modelo.</td></tr>
+        <tr><td class="name">SageMaker Canvas</td><td>ML sin código; incluye pronóstico de series de tiempo.</td><td>Analistas de negocio.</td></tr>
+        <tr><td class="name">Regresión simple</td><td>Predice un valor a partir de variables, sin modelar el orden en el tiempo.</td><td>Cuando el tiempo no es el eje.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>"Pronosticar series de tiempo con SageMaker" = <em>DeepAR</em>. Serie de tiempo = valores ordenados en el tiempo (ventas diarias, demanda).</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Pronóstico: DeepAR y Forecast</span><span class="gloss"><b>ML</b> = Machine Learning</span><span class="num">15 / 30</span></div>
+  </section>
+
+  <!-- SLIDE 16 · MATRIZ DE CONFUSIÓN -->
+  <section class="slide bg-alt" data-label="16 Matriz de confusion">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -890,11 +947,11 @@
       <p>Solo para modelos con variable objetivo <em>discreta</em> — típicamente binaria (Sí/No, Fraude/No fraude). Los modelos de <em>regresión</em> (MAE, RMSE, más adelante) predicen una variable <em>continua</em> (precio, monto, demanda) y no usan esta matriz. FP = Error Tipo I · FN = Error Tipo II.</p>
     </div>
 
-    <div class="chrome-bot"><span>Matriz de confusión</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative · <b>FP</b> = False Positive · <b>TN</b> = True Negative · <b>MAE</b> = Mean Absolute Error · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">14 / 28</span></div>
+    <div class="chrome-bot"><span>Matriz de confusión</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative · <b>FP</b> = False Positive · <b>TN</b> = True Negative · <b>MAE</b> = Mean Absolute Error · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">16 / 30</span></div>
   </section>
 
-  <!-- SLIDE 15 · INTUICIÓN DE CADA MÉTRICA -->
-  <section class="slide bg-alt" data-label="15 Intuicion">
+  <!-- SLIDE 17 · INTUICIÓN DE CADA MÉTRICA -->
+  <section class="slide bg-alt" data-label="17 Intuicion">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -920,11 +977,11 @@
       <p>Guarda esta intuición: Recall mira hacia los <em>reales</em>, Precision mira hacia lo <em>predicho</em>, Accuracy mira el <em>total</em>. Las fórmulas de las próximas slides son solo la forma exacta de calcular cada una.</p>
     </div>
 
-    <div class="chrome-bot"><span>Intuición</span><span class="num">15 / 28</span></div>
+    <div class="chrome-bot"><span>Intuición</span><span class="num">17 / 30</span></div>
   </section>
 
-  <!-- SLIDE 16 · PRECISION -->
-  <section class="slide" data-label="16 Precision">
+  <!-- SLIDE 18 · PRECISION -->
+  <section class="slide" data-label="18 Precision">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -945,11 +1002,11 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Precision</span><span class="gloss"><b>TP</b> = True Positive · <b>FP</b> = False Positive</span><span class="num">16 / 28</span></div>
+    <div class="chrome-bot"><span>Precision</span><span class="gloss"><b>TP</b> = True Positive · <b>FP</b> = False Positive</span><span class="num">18 / 30</span></div>
   </section>
 
-  <!-- SLIDE 17 · RECALL -->
-  <section class="slide bg-alt" data-label="17 Recall">
+  <!-- SLIDE 19 · RECALL -->
+  <section class="slide bg-alt" data-label="19 Recall">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -970,11 +1027,11 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Recall</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative</span><span class="num">17 / 28</span></div>
+    <div class="chrome-bot"><span>Recall</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative</span><span class="num">19 / 30</span></div>
   </section>
 
-  <!-- SLIDE 18 · F1-SCORE -->
-  <section class="slide" data-label="18 F1-score">
+  <!-- SLIDE 20 · F1-SCORE -->
+  <section class="slide" data-label="20 F1-score">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -996,11 +1053,11 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>F1-score</span><span class="gloss"><b>FP</b> = False Positive · <b>FN</b> = False Negative · <b>TN</b> = True Negative</span><span class="num">18 / 28</span></div>
+    <div class="chrome-bot"><span>F1-score</span><span class="gloss"><b>FP</b> = False Positive · <b>FN</b> = False Negative · <b>TN</b> = True Negative</span><span class="num">20 / 30</span></div>
   </section>
 
-  <!-- SLIDE 19 · ACCURACY -->
-  <section class="slide bg-alt" data-label="19 Accuracy">
+  <!-- SLIDE 21 · ACCURACY -->
+  <section class="slide bg-alt" data-label="21 Accuracy">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1021,11 +1078,11 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Accuracy</span><span class="gloss"><b>TP</b> = True Positive · <b>TN</b> = True Negative · <b>FP</b> = False Positive · <b>FN</b> = False Negative</span><span class="num">19 / 28</span></div>
+    <div class="chrome-bot"><span>Accuracy</span><span class="gloss"><b>TP</b> = True Positive · <b>TN</b> = True Negative · <b>FP</b> = False Positive · <b>FN</b> = False Negative</span><span class="num">21 / 30</span></div>
   </section>
 
-  <!-- SLIDE 20 · AUC-ROC -->
-  <section class="slide" data-label="20 AUC-ROC">
+  <!-- SLIDE 22 · AUC-ROC -->
+  <section class="slide" data-label="22 AUC-ROC">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1082,11 +1139,11 @@
       </svg>
     </div>
 
-    <div class="chrome-bot"><span>AUC-ROC</span><span class="gloss"><b>AUC</b> = Area Under the Curve · <b>ROC</b> = Receiver Operating Characteristic · <b>TPR</b> = True Positive Rate · <b>FPR</b> = False Positive Rate</span><span class="num">20 / 28</span></div>
+    <div class="chrome-bot"><span>AUC-ROC</span><span class="gloss"><b>AUC</b> = Area Under the Curve · <b>ROC</b> = Receiver Operating Characteristic · <b>TPR</b> = True Positive Rate · <b>FPR</b> = False Positive Rate</span><span class="num">22 / 30</span></div>
   </section>
 
-  <!-- SLIDE 21 · EJEMPLO NUMÉRICO — EL CASO -->
-  <section class="slide" data-label="21 Ejemplo numerico caso">
+  <!-- SLIDE 23 · EJEMPLO NUMÉRICO — EL CASO -->
+  <section class="slide" data-label="23 Ejemplo numerico caso">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1118,11 +1175,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Ejemplo numérico · El caso</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative · <b>FP</b> = False Positive · <b>TN</b> = True Negative</span><span class="num">21 / 28</span></div>
+    <div class="chrome-bot"><span>Ejemplo numérico · El caso</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative · <b>FP</b> = False Positive · <b>TN</b> = True Negative</span><span class="num">23 / 30</span></div>
   </section>
 
-  <!-- SLIDE 22 · EJEMPLO NUMÉRICO — RESULTADOS -->
-  <section class="slide bg-alt" data-label="22 Ejemplo numerico resultados">
+  <!-- SLIDE 24 · EJEMPLO NUMÉRICO — RESULTADOS -->
+  <section class="slide bg-alt" data-label="24 Ejemplo numerico resultados">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1159,11 +1216,11 @@
       <p>93% de accuracy suena excelente, pero de las 100 transacciones que el modelo marcó como fraude, 60 eran en realidad legítimas (precision 40%). Por eso en fraude no se optimiza accuracy — se prioriza <em>recall</em>, aceptando más falsas alarmas a cambio de no dejar pasar fraude real.</p>
     </div>
 
-    <div class="chrome-bot"><span>Ejemplo numérico · Resultados</span><span class="num">22 / 28</span></div>
+    <div class="chrome-bot"><span>Ejemplo numérico · Resultados</span><span class="num">24 / 30</span></div>
   </section>
 
-  <!-- SLIDE 23 · TABLA RESUMEN ESCENARIOS -->
-  <section class="slide bg-alt" data-label="23 Tabla escenarios">
+  <!-- SLIDE 25 · TABLA RESUMEN ESCENARIOS -->
+  <section class="slide bg-alt" data-label="25 Tabla escenarios">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1184,11 +1241,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla de escenarios</span><span class="num">23 / 28</span></div>
+    <div class="chrome-bot"><span>Tabla de escenarios</span><span class="num">25 / 30</span></div>
   </section>
 
-  <!-- SLIDE 24 · MAE -->
-  <section class="slide" data-label="24 MAE">
+  <!-- SLIDE 26 · MAE -->
+  <section class="slide" data-label="26 MAE">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1211,11 +1268,11 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>MAE</span><span class="gloss"><b>MAE</b> = Mean Absolute Error</span><span class="num">24 / 28</span></div>
+    <div class="chrome-bot"><span>MAE</span><span class="gloss"><b>MAE</b> = Mean Absolute Error</span><span class="num">26 / 30</span></div>
   </section>
 
-  <!-- SLIDE 25 · RMSE -->
-  <section class="slide bg-alt" data-label="25 RMSE">
+  <!-- SLIDE 27 · RMSE -->
+  <section class="slide bg-alt" data-label="27 RMSE">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1236,11 +1293,11 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>RMSE</span><span class="gloss"><b>RMSE</b> = Root Mean Squared Error</span><span class="num">25 / 28</span></div>
+    <div class="chrome-bot"><span>RMSE</span><span class="gloss"><b>RMSE</b> = Root Mean Squared Error</span><span class="num">27 / 30</span></div>
   </section>
 
-  <!-- SLIDE 26 · COMPARACIÓN MAE vs RMSE -->
-  <section class="slide" data-label="26 MAE vs RMSE">
+  <!-- SLIDE 28 · COMPARACIÓN MAE vs RMSE -->
+  <section class="slide" data-label="28 MAE vs RMSE">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1273,11 +1330,11 @@
       <p>Si RMSE es mucho mayor que MAE, hay errores puntuales muy grandes (outliers) en tus predicciones.</p>
     </div>
 
-    <div class="chrome-bot"><span>MAE vs RMSE</span><span class="gloss"><b>MAE</b> = Mean Absolute Error · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">26 / 28</span></div>
+    <div class="chrome-bot"><span>MAE vs RMSE</span><span class="gloss"><b>MAE</b> = Mean Absolute Error · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">28 / 30</span></div>
   </section>
 
-  <!-- SLIDE 27 · TABLA FINAL DE MEMORIZACIÓN -->
-  <section class="slide bg-alt" data-label="27 Tabla final">
+  <!-- SLIDE 29 · TABLA FINAL DE MEMORIZACIÓN -->
+  <section class="slide bg-alt" data-label="29 Tabla final">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1301,11 +1358,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>RMSE</b> = Root Mean Squared Error · <b>MAE</b> = Mean Absolute Error · <b>AUC</b> = Area Under the Curve · <b>ROC</b> = Receiver Operating Characteristic</span><span class="num">27 / 28</span></div>
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>RMSE</b> = Root Mean Squared Error · <b>MAE</b> = Mean Absolute Error · <b>AUC</b> = Area Under the Curve · <b>ROC</b> = Receiver Operating Characteristic</span><span class="num">29 / 30</span></div>
   </section>
 
-  <!-- SLIDE 28 · CIERRE -->
-  <section class="slide cierre bg-ink" data-label="28 Cierre">
+  <!-- SLIDE 30 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="30 Cierre">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1321,7 +1378,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>LLM</b> = Large Language Model</span><span class="num">28 / 28</span></div>
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>LLM</b> = Large Language Model</span><span class="num">30 / 30</span></div>
   </section>
 
 </deck-stage>

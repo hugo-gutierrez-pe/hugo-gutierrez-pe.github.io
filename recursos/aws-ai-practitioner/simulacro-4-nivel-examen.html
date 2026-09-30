@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AWS AIF-C01 · Simulacro 4</title>
+<style>
+  :root {
+    --bg: #FAFAF8; --card: #FFFFFF; --ink: #14171C; --ink-2: #3D434D; --ink-3: #6B7280;
+    --rule: #E3E3DE; --accent: #D97706; --accent-soft: #FEF3E2;
+    --ok: #15803D; --ok-soft: #E8F5EC; --bad: #B91C1C; --bad-soft: #FDECEC;
+    --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: ui-monospace, "SF Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F1216; --card: #171B21; --ink: #ECEEF1; --ink-2: #C3C8D0; --ink-3: #8B929E;
+      --rule: #2A2F38; --accent: #F59E0B; --accent-soft: #2A2113;
+      --ok: #4ADE80; --ok-soft: #12261A; --bad: #F87171; --bad-soft: #2B1516;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); line-height: 1.5; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 96px; }
+  h1 { font-size: 30px; letter-spacing: -0.02em; margin: 0 0 4px; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .sub { color: var(--ink-3); margin: 0 0 24px; }
+  .card { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 24px; margin-bottom: 16px; }
+  .card h2 { font-size: 15px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin: 0 0 12px; }
+  .card ul { margin: 0; padding-left: 20px; color: var(--ink-2); }
+  .card li { margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+  th { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); }
+  button { font: inherit; cursor: pointer; }
+  .btn { background: var(--accent); color: #fff; border: 0; padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 16px; }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--rule); }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+  .topbar { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--rule); }
+  .topbar .in { max-width: 860px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 12px; }
+  .timer { font-family: var(--mono); font-size: 20px; font-weight: 600; }
+  .timer.warn { color: var(--bad); }
+  .prog { flex: 1; font-size: 14px; color: var(--ink-3); }
+  .qmeta { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); margin-bottom: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .qmeta .tag { background: var(--accent-soft); color: var(--accent); padding: 2px 8px; border-radius: 6px; }
+  .qtext { font-size: 19px; font-weight: 600; margin: 0 0 16px; }
+  .opt { display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; margin: 8px 0; cursor: pointer; background: var(--card); }
+  .opt:hover { border-color: var(--accent); }
+  .opt.sel { border-color: var(--accent); background: var(--accent-soft); }
+  .opt input { margin-top: 4px; accent-color: var(--accent); }
+  .opt.ok { border-color: var(--ok); background: var(--ok-soft); }
+  .opt.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .nav { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .nav .sp { flex: 1; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 6px; }
+  .grid button { height: 38px; border-radius: 8px; border: 1px solid var(--rule); background: var(--card); color: var(--ink-2); font-family: var(--mono); font-size: 13px; }
+  .grid button.done { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .grid button.flag { box-shadow: inset 0 -3px 0 var(--bad); }
+  .grid button.cur { outline: 2px solid var(--ink); }
+  .score { font-size: 56px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .pass { color: var(--ok); } .fail { color: var(--bad); }
+  .bar { height: 10px; background: var(--rule); border-radius: 6px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: var(--accent); }
+  .bar > i.good { background: var(--ok); }
+  .exp { margin-top: 12px; padding: 12px 14px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 6px; color: var(--ink-2); font-size: 15px; }
+  .hide { display: none; }
+  .filters { display: flex; gap: 8px; margin: 12px 0; }
+  small.note { color: var(--ink-3); }
+
+  .ord { display:flex; align-items:center; gap:10px; border:1px solid var(--rule); border-radius:10px; padding:10px 14px; margin:8px 0; background:var(--card); }
+  .ord .n { font-family:var(--mono); color:var(--accent); font-weight:700; width:22px; }
+  .ord .tx { flex:1; }
+  .ord button { border:1px solid var(--rule); background:transparent; color:var(--ink); border-radius:8px; width:34px; height:34px; }
+  .ord button:disabled { opacity:.3; cursor:default; }
+  .mrow { display:grid; grid-template-columns:1fr 250px; gap:14px; align-items:center; padding:10px 0; border-bottom:1px solid var(--rule); }
+  .mrow select { font:inherit; padding:9px; border-radius:8px; border:1px solid var(--rule); background:var(--card); color:var(--ink); width:100%; }
+  @media (max-width:640px) { .mrow { grid-template-columns:1fr; } }
+  .conf { display:flex; gap:20px; margin-top:18px; align-items:center; color:var(--ink-2); font-size:15px; flex-wrap:wrap; }
+  .conf label { cursor:pointer; display:flex; gap:6px; align-items:center; }
+  .conf input { accent-color: var(--accent); }
+  .chip { font-family:var(--mono); font-size:12px; padding:2px 8px; border-radius:6px; background:var(--rule); color:var(--ink-2); }
+  .chip.warn { background:var(--bad-soft); color:var(--bad); }
+</style>
+</head>
+<body>
+
+<div id="intro" class="wrap">
+  <h1>AWS AIF-C01 · <em>Simulacro 4</em> (nivel examen real)</h1>
+  <p class="sub">Certified AI Practitioner · 20 preguntas en inglés con temas y dificultad del examen real: Personalize, Kendra vs. Q Business, RLHF, sesgo, seguridad de chatbots</p>
+
+  <div class="card">
+    <h2>Instrucciones</h2>
+    <ul>
+      <li><b>20 preguntas</b> y <b>28 minutos</b> (el mismo ritmo del examen real: ~1.4 min por pregunta). El reloj arranca al presionar "Comenzar".</li>
+      <li>Formatos como en el examen real: <b>una respuesta</b> (círculo), <b>varias respuestas</b> (cuadrado, dice cuántas elegir), <b>ordenar</b> (con flechas ↑↓) y <b>emparejar</b> (un menú por fila). Hay que acertar todo para que cuente.</li>
+      <li>Preguntas y opciones están en <b>inglés</b>, como en el examen; las explicaciones al final están en español. Marca tu <b>nivel de confianza</b> en cada pregunta: al final te dice dónde tienes puntos ciegos.</li>
+      <li>Puedes marcar preguntas para revisarlas y saltar entre ellas con la cuadrícula. Las respuestas se pueden cambiar hasta terminar.</li>
+      <li>Sin ayudas: nada de apuntes, buscador ni los decks. Si no sabes, elimina opciones y elige la más probable — en el examen real no se penaliza fallar.</li>
+      <li>Al terminar (o al agotarse el tiempo) verás tu puntaje, el desglose por dominio y la explicación de cada respuesta.</li>
+      <li>Las preguntas y las opciones salen en orden aleatorio cada intento.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Distribución (proporcional al examen)</h2>
+    <table>
+      <thead><tr><th>Dominio</th><th>Peso</th><th>Preguntas</th></tr></thead>
+      <tbody>
+        <tr><td>D1 · Fundamentos de IA y ML</td><td>20%</td><td>4</td></tr>
+        <tr><td>D2 · Fundamentos de IA generativa</td><td>24%</td><td>5</td></tr>
+        <tr><td>D3 · Aplicaciones de foundation models</td><td>28%</td><td>5</td></tr>
+        <tr><td>D4 · IA responsable</td><td>14%</td><td>3</td></tr>
+        <tr><td>D5 · Seguridad, cumplimiento y gobernanza</td><td>14%</td><td>3</td></tr>
+      </tbody>
+    </table>
+    <p><small class="note">Referencia de nivel: el examen real pide 700/1000 (≈ 70%). Con solo 20 preguntas el resultado es una señal gruesa (cada pregunta vale 5 puntos porcentuales y los dominios tienen 3–5 preguntas): úsalo para detectar dominios débiles, no para predecir tu nota. 70% o más = buen rumbo; 55–70% = refuerza los dominios rojos; menos de 55% = repasa los decks.</small></p>
+  </div>
+
+  <button class="btn" id="start">Comenzar simulacro</button>
+</div>
+
+<div id="exam" class="hide">
+  <div class="topbar"><div class="in">
+    <span class="timer" id="timer">28:00</span>
+    <span class="prog" id="prog"></span>
+    <button class="btn ghost" id="finish">Terminar</button>
+  </div></div>
+  <div class="wrap">
+    <div class="card" id="qcard"></div>
+    <div class="card"><h2>Navegación</h2><div class="grid" id="grid"></div>
+      <p><small class="note">Naranja = respondida · borde rojo abajo = marcada para revisar</small></p></div>
+  </div>
+</div>
+
+<div id="result" class="wrap hide"></div>
+
+<script>
+const BANK = [
+ {
+  "t": "single",
+  "d": 1,
+  "q": "An online retailer wants to show each shopper personalized product recommendations based on past clicks and purchases. The team has no ML expertise. Which AWS service should the retailer use?",
+  "o": [
+   "Amazon Personalize",
+   "Amazon Forecast",
+   "Amazon Comprehend",
+   "Amazon Kendra"
+  ],
+  "a": [
+   0
+  ],
+  "e": "<b>Personalize</b> genera recomendaciones a partir del historial de interacciones usuario–ítem, sin experiencia en ML. Forecast es para series de tiempo; Comprehend, NLP; Kendra, búsqueda."
+ },
+ {
+  "t": "single",
+  "d": 1,
+  "q": "Which scenario is an example of reinforcement learning?",
+  "o": [
+   "A model groups customers by purchase behavior without labels",
+   "A model classifies photos as dogs or cats using labeled images",
+   "An agent learns to play chess by earning rewards for winning",
+   "A model predicts house prices from labeled historical sales"
+  ],
+  "a": [
+   2
+  ],
+  "e": "<b>Refuerzo</b>: un agente aprende por ensayo y error con recompensas. Agrupar sin etiquetas es no supervisado; clasificar con etiquetas y predecir precios son supervisado."
+ },
+ {
+  "t": "order",
+  "d": 1,
+  "q": "Order the following Amazon SageMaker AI inference options from LOWEST to HIGHEST latency.",
+  "items": [
+   "Real-time inference",
+   "Asynchronous inference",
+   "Batch transform"
+  ],
+  "e": "Real-time (milisegundos, endpoint persistente) &lt; asynchronous (cola, hasta ~1 hora) &lt; batch transform (offline, puede tardar días)."
+ },
+ {
+  "t": "match",
+  "d": 1,
+  "q": "Match each business need to the most suitable AWS service. Each service is used once.",
+  "prompts": [
+   "Recommend items to each user based on past behavior",
+   "Search across internal documents and return relevant answers",
+   "Give employees a generative AI assistant connected to company data",
+   "Forecast product demand from historical time series"
+  ],
+  "opts": [
+   "Amazon Personalize",
+   "Amazon Kendra",
+   "Amazon Q Business",
+   "Amazon SageMaker DeepAR"
+  ],
+  "a": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "e": "<b>Personalize</b>: recomendaciones. <b>Kendra</b>: búsqueda inteligente. <b>Q Business</b>: asistente generativo sobre datos de la empresa. <b>DeepAR</b>: algoritmo de SageMaker para pronóstico de series de tiempo."
+ },
+ {
+  "t": "single",
+  "d": 2,
+  "q": "A developer wants an LLM to stop adding legal disclaimers to its answers. Which prompt engineering element should the developer add?",
+  "o": [
+   "A negative prompt listing what to avoid",
+   "A larger max tokens value",
+   "A higher temperature value",
+   "Few-shot examples with disclaimers"
+  ],
+  "a": [
+   0
+  ],
+  "e": "Un <b>negative prompt</b> indica qué NO debe hacer el modelo. Max tokens limita longitud; temperature controla aleatoriedad."
+ },
+ {
+  "t": "single",
+  "d": 2,
+  "q": "A model must solve a multi-step math word problem. Which technique asks the model to reason through intermediate steps before giving the answer?",
+  "o": [
+   "Chain-of-thought prompting",
+   "Zero-shot prompting",
+   "Temperature reduction",
+   "Prompt caching"
+  ],
+  "a": [
+   0
+  ],
+  "e": "<b>Chain-of-thought</b> pide razonar paso a paso. Zero-shot no da ejemplos; prompt caching es una optimización de costo."
+ },
+ {
+  "t": "single",
+  "d": 2,
+  "q": "Which type of generative model creates images by gradually removing noise from random pixels?",
+  "o": [
+   "Diffusion model",
+   "Generative adversarial network",
+   "Variational autoencoder",
+   "Transformer decoder"
+  ],
+  "a": [
+   0
+  ],
+  "e": "Los <b>modelos de difusión</b> parten de ruido y lo \"limpian\" paso a paso. GAN usa dos redes que compiten; VAE comprime a un espacio latente; el transformer domina texto."
+ },
+ {
+  "t": "multi",
+  "d": 2,
+  "q": "Which TWO statements describe Retrieval Augmented Generation (RAG)?",
+  "o": [
+   "It retrieves relevant data and adds it to the prompt before generation",
+   "It retrains the model weights on every user question",
+   "It can ground answers in company data that changes often",
+   "It removes the need for any foundation model"
+  ],
+  "a": [
+   0,
+   2
+  ],
+  "e": "RAG recupera datos relevantes y los agrega al prompt, lo que permite responder con información vigente sin reentrenar. Sigue necesitando un FM."
+ },
+ {
+  "t": "single",
+  "d": 2,
+  "q": "What is a token in the context of a large language model?",
+  "o": [
+   "A small unit of text the model processes",
+   "A credential used to call the model API",
+   "A labeled example used in fine-tuning",
+   "A vector stored in a vector database"
+  ],
+  "a": [
+   0
+  ],
+  "e": "Un <b>token</b> es una unidad de texto (palabra o parte de palabra). Los costos y los límites de contexto se miden en tokens."
+ },
+ {
+  "t": "single",
+  "d": 3,
+  "q": "A company wants employees to ask questions in natural language and receive generated answers based on internal documents, without building the application. Which service is the BEST fit?",
+  "o": [
+   "Amazon Q Business",
+   "Amazon Kendra",
+   "Amazon Comprehend",
+   "Amazon Transcribe"
+  ],
+  "a": [
+   0
+  ],
+  "e": "<b>Q Business</b> es un asistente generativo listo para usar sobre datos internos. Kendra busca y devuelve pasajes; no es el asistente conversacional."
+ },
+ {
+  "t": "single",
+  "d": 3,
+  "q": "A company wants its foundation model to stay current by learning from large volumes of new, unlabeled domain text. Which approach should the company use?",
+  "o": [
+   "Continued pre-training",
+   "Instruction-based fine-tuning",
+   "Static training on a fixed dataset",
+   "Prompt engineering with examples"
+  ],
+  "a": [
+   0
+  ],
+  "e": "<b>Continued (continuous) pre-training</b> sigue preentrenando con datos nuevos sin etiquetar. El fine-tuning usa datos etiquetados; \"static\" se entrena una vez."
+ },
+ {
+  "t": "single",
+  "d": 3,
+  "q": "A company wants to move its Amazon Bedrock application from one provider's foundation model to another provider's model. Which action is usually required?",
+  "o": [
+   "Re-evaluate the new model and adapt the prompts",
+   "Copy the fine-tuned weights to the new model",
+   "Provision new hardware for the new model",
+   "Rebuild the vector database from scratch"
+  ],
+  "a": [
+   0
+  ],
+  "e": "En Bedrock cambiar de modelo es simple, pero cada modelo responde distinto: hay que <b>reevaluar y ajustar los prompts</b>. Los pesos afinados no se trasladan."
+ },
+ {
+  "t": "single",
+  "d": 3,
+  "q": "Users rate a chatbot's answers with thumbs up or thumbs down. A team wants to use these ratings to align the model with human preferences. Which technique does this describe?",
+  "o": [
+   "Reinforcement learning from human feedback (RLHF)",
+   "Unsupervised clustering",
+   "Transfer learning",
+   "Model distillation"
+  ],
+  "a": [
+   0
+  ],
+  "e": "<b>RLHF</b>: los humanos califican, se entrena un reward model y el FM se ajusta con refuerzo. Distillation comprime un modelo grande en uno pequeño."
+ },
+ {
+  "t": "single",
+  "d": 3,
+  "q": "A company sends the same long system prompt with every request to a foundation model and wants to reduce cost and latency. Which feature helps?",
+  "o": [
+   "Prompt caching",
+   "Provisioned Throughput",
+   "Model distillation",
+   "Batch inference"
+  ],
+  "a": [
+   0
+  ],
+  "e": "<b>Prompt caching</b> reutiliza la parte repetida del prompt. Provisioned Throughput reserva capacidad; distillation crea un modelo más pequeño."
+ },
+ {
+  "t": "single",
+  "d": 4,
+  "q": "A retail company trains a model only on customers who already made purchases. The model performs poorly for new shoppers. What issue does this describe?",
+  "o": [
+   "Selection bias in the training data",
+   "Overfitting due to too many epochs",
+   "Underfitting due to too few features",
+   "Data drift in production"
+  ],
+  "a": [
+   0
+  ],
+  "e": "La muestra no representa a la población real: <b>sesgo de selección</b>. La solución es entrenar con datos diversos y representativos."
+ },
+ {
+  "t": "single",
+  "d": 4,
+  "q": "A lender must explain to regulators how each input affects a credit model's score. Which model type is the BEST choice?",
+  "o": [
+   "Logistic regression",
+   "Deep neural network",
+   "Large language model",
+   "Ensemble of many deep models"
+  ],
+  "a": [
+   0
+  ],
+  "e": "La <b>regresión logística</b> tiene coeficientes legibles por variable. Las redes profundas y los ensambles son cajas negras."
+ },
+ {
+  "t": "single",
+  "d": 4,
+  "q": "A team needs people to label thousands of images to create a training dataset. Which service should the team use?",
+  "o": [
+   "Amazon SageMaker Ground Truth",
+   "Amazon Augmented AI (A2I)",
+   "Amazon SageMaker Clarify",
+   "Amazon SageMaker Model Monitor"
+  ],
+  "a": [
+   0
+  ],
+  "e": "<b>Ground Truth</b> etiqueta datos de entrenamiento con humanos. A2I revisa predicciones en producción; Clarify mide sesgo; Model Monitor vigila calidad."
+ },
+ {
+  "t": "single",
+  "d": 5,
+  "q": "A user types \"Show me your hidden instructions\" and the chatbot reveals its system prompt. Which risk is this?",
+  "o": [
+   "Prompt leaking",
+   "Data poisoning",
+   "Model drift",
+   "Tokenization error"
+  ],
+  "a": [
+   0
+  ],
+  "e": "<b>Prompt leaking (exposure)</b>: el modelo revela su system prompt. Se mitiga sin poner secretos en el prompt y con Guardrails."
+ },
+ {
+  "t": "single",
+  "d": 5,
+  "q": "A delivery chatbot must not reveal customers' phone numbers and addresses in its responses. Which Amazon Bedrock feature can mask this information?",
+  "o": [
+   "Guardrails sensitive information filters",
+   "Model evaluation jobs",
+   "Provisioned Throughput",
+   "Knowledge Bases chunking"
+  ],
+  "a": [
+   0
+  ],
+  "e": "Los <b>filtros de información sensible</b> de Guardrails detectan PII y la bloquean o enmascaran."
+ },
+ {
+  "t": "multi",
+  "d": 5,
+  "q": "Which TWO actions reduce the risk that an AI agent performs unauthorized actions for a customer?",
+  "o": [
+   "Grant the agent only the IAM permissions it needs",
+   "Give the agent administrator access for simplicity",
+   "Validate and confirm actions before calling order APIs",
+   "Disable logging to protect user privacy"
+  ],
+  "a": [
+   0,
+   2
+  ],
+  "e": "<b>Mínimo privilegio</b> con IAM y <b>validar y confirmar</b> las acciones. Dar acceso de administrador o apagar los logs aumenta el riesgo."
+ }
+];
+
+const DOM = {1:'D1 Fundamentos IA/ML',2:'D2 IA generativa',3:'D3 Aplicaciones de FMs',4:'D4 IA responsable',5:'D5 Seguridad y gobernanza'};
+const WEIGHT = {1:20,2:24,3:28,4:14,5:14};
+const TOTAL_SEC = 28 * 60;
+const $ = s => document.querySelector(s);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+let qs = [], ans = [], flags = [], conf = [], cur = 0, left = TOTAL_SEC, tick = null, done = false;
+
+function prepare() {
+  const singles = BANK.filter(q => q.t === 'single');
+  const targets = shuffle(singles.map((_, k) => k % 4));
+  let si = 0;
+  return shuffle(BANK).map(q => {
+    if (q.t === 'single') {
+      const c = q.a[0], t = targets[si++];
+      const rest = shuffle(q.o.map((_, i) => i).filter(i => i !== c));
+      const idx = []; for (let p = 0; p < 4; p++) idx.push(p === t ? c : rest.shift());
+      return { ...q, o: idx.map(i => q.o[i]), a: [t] };
+    }
+    if (q.t === 'multi') {
+      const idx = shuffle(q.o.map((_, i) => i));
+      return { ...q, o: idx.map(i => q.o[i]), a: q.a.map(x => idx.indexOf(x)).sort() };
+    }
+    if (q.t === 'order') {
+      let d; do { d = shuffle(q.items.map((_, i) => i)); } while (d.every((v, i) => v === i));
+      return { ...q, disp: d };
+    }
+    const p = shuffle(q.prompts.map((_, i) => i)), oi = shuffle(q.opts.map((_, i) => i));
+    return { ...q, prompts: p.map(i => q.prompts[i]), opts: oi.map(i => q.opts[i]), a: p.map(i => oi.indexOf(q.a[i])) };
+  });
+}
+
+function start() {
+  qs = prepare();
+  ans = qs.map(q => q.t === 'match' ? q.prompts.map(() => -1) : []);
+  flags = qs.map(() => false); conf = qs.map(() => null); cur = 0; left = TOTAL_SEC; done = false;
+  $('#intro').classList.add('hide'); $('#result').classList.add('hide'); $('#exam').classList.remove('hide');
+  clearInterval(tick);
+  tick = setInterval(() => { left--; paintTimer(); if (left <= 0) finish(true); }, 1000);
+  paintTimer(); render();
+}
+
+function paintTimer() {
+  const m = Math.floor(left / 60), s = left % 60;
+  const t = $('#timer'); t.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  t.classList.toggle('warn', left <= 300);
+}
+
+const answered = i => { const q = qs[i], a = ans[i]; return q.t === 'match' ? a.some(x => x >= 0) : a.length > 0; };
+const isOk = i => {
+  const q = qs[i], a = ans[i];
+  if (q.t === 'order') return a.length === q.items.length && a.every((v, k) => v === k);
+  if (q.t === 'match') return a.every((v, k) => v === q.a[k]);
+  return JSON.stringify(a) === JSON.stringify(q.a);
+};
+const order = i => ans[i].length ? ans[i] : qs[i].disp;
+
+function body(q, i) {
+  if (q.t === 'order') {
+    const o = order(i);
+    return o.map((k, pos) => `<div class="ord"><span class="n">${pos + 1}</span><span class="tx">${q.items[k]}</span>
+      <button data-mv="${pos}" data-d="-1" ${pos === 0 ? 'disabled' : ''} aria-label="Subir">↑</button>
+      <button data-mv="${pos}" data-d="1" ${pos === o.length - 1 ? 'disabled' : ''} aria-label="Bajar">↓</button></div>`).join('');
+  }
+  if (q.t === 'match') {
+    return q.prompts.map((p, k) => `<div class="mrow"><span>${p}</span><select data-k="${k}"><option value="-1">— Select —</option>${q.opts.map((t, j) => `<option value="${j}" ${ans[i][k] === j ? 'selected' : ''}>${t}</option>`).join('')}</select></div>`).join('');
+  }
+  const type = q.t === 'multi' ? 'checkbox' : 'radio';
+  return q.o.map((t, k) => `<label class="opt ${ans[i].includes(k) ? 'sel' : ''}"><input type="${type}" name="o" ${ans[i].includes(k) ? 'checked' : ''} data-i="${k}"><span>${t}</span></label>`).join('');
+}
+
+const TAG = { single: 'Una respuesta', multi: q => 'Elige ' + q.a.length, order: 'Ordenar', match: 'Emparejar' };
+
+function render() {
+  const q = qs[cur];
+  const tag = typeof TAG[q.t] === 'function' ? TAG[q.t](q) : TAG[q.t];
+  $('#prog').textContent = `Pregunta ${cur + 1} de ${qs.length} · ${qs.filter((_, i) => answered(i)).length} respondidas`;
+  $('#qcard').innerHTML =
+    `<div class="qmeta"><span class="tag">${tag}</span></div>
+     <p class="qtext">${q.q}</p>` + body(q, cur) +
+    `<div class="conf"><b>Nivel de confianza:</b>
+       <label><input type="radio" name="cf" value="sure" ${conf[cur] === 'sure' ? 'checked' : ''}> Seguro</label>
+       <label><input type="radio" name="cf" value="unsure" ${conf[cur] === 'unsure' ? 'checked' : ''}> No estoy seguro</label></div>
+     <div class="nav">
+       <button class="btn ghost" id="prev" ${cur === 0 ? 'disabled' : ''}>← Anterior</button>
+       <button class="btn ghost" id="flag">${flags[cur] ? 'Quitar marca' : 'Marcar para revisar'}</button>
+       <span class="sp"></span>
+       <button class="btn" id="next" ${cur === qs.length - 1 ? 'disabled' : ''}>Siguiente →</button>
+     </div>`;
+  document.querySelectorAll('#qcard input[name=o]').forEach(inp => inp.addEventListener('change', () => {
+    const i = +inp.dataset.i;
+    if (q.t === 'multi') ans[cur] = inp.checked ? [...ans[cur], i].sort() : ans[cur].filter(x => x !== i);
+    else ans[cur] = [i];
+    render();
+  }));
+  document.querySelectorAll('#qcard [data-mv]').forEach(btn => btn.addEventListener('click', () => {
+    const p = +btn.dataset.mv, d = +btn.dataset.d, o = order(cur).slice();
+    [o[p], o[p + d]] = [o[p + d], o[p]]; ans[cur] = o; render();
+  }));
+  document.querySelectorAll('#qcard select').forEach(sel => sel.addEventListener('change', () => {
+    ans[cur] = ans[cur].slice(); ans[cur][+sel.dataset.k] = +sel.value; render();
+  }));
+  document.querySelectorAll('#qcard input[name=cf]').forEach(r => r.addEventListener('change', () => { conf[cur] = r.value; }));
+  $('#prev').onclick = () => { cur--; render(); scrollTo(0, 0); };
+  $('#next').onclick = () => { cur++; render(); scrollTo(0, 0); };
+  $('#flag').onclick = () => { flags[cur] = !flags[cur]; render(); };
+  $('#grid').innerHTML = qs.map((_, i) => `<button data-i="${i}" class="${answered(i) ? 'done' : ''} ${flags[i] ? 'flag' : ''} ${i === cur ? 'cur' : ''}">${i + 1}</button>`).join('');
+  document.querySelectorAll('#grid button').forEach(b => b.onclick = () => { cur = +b.dataset.i; render(); scrollTo(0, 0); });
+}
+
+function review(q, i) {
+  const ok = isOk(i), a = ans[i];
+  let inner = '';
+  if (q.t === 'order') {
+    const mine = a.length ? a : [];
+    inner = `<p style="margin:6px 0"><small class="note">Orden correcto:</small></p>` +
+      q.items.map((t, k) => `<div class="opt ok"><span>${k + 1}</span><span>${t}</span></div>`).join('') +
+      (ok ? '' : `<p style="margin:10px 0 6px"><small class="note">Tu orden:</small></p>` +
+        (mine.length ? mine.map((k, p) => `<div class="opt bad"><span>${p + 1}</span><span>${q.items[k]}</span></div>`).join('') : '<div class="opt"><span>—</span><span>Sin responder</span></div>'));
+  } else if (q.t === 'match') {
+    inner = q.prompts.map((p, k) => {
+      const good = a[k] === q.a[k];
+      return `<div class="opt ${good ? 'ok' : 'bad'}"><span>${good ? '✔' : '✘'}</span><span>${p}<br><small class="note">Correcto: <b>${q.opts[q.a[k]]}</b>${good ? '' : ' · Tu respuesta: ' + (a[k] >= 0 ? q.opts[a[k]] : '—')}</small></span></div>`;
+    }).join('');
+  } else {
+    inner = q.o.map((t, k) => `<div class="opt ${q.a.includes(k) ? 'ok' : a.includes(k) ? 'bad' : ''}"><span>${q.a.includes(k) ? '✔' : a.includes(k) ? '✘' : '·'}</span><span>${t}</span></div>`).join('');
+  }
+  const cf = conf[i] === 'sure' ? 'Seguro' : conf[i] === 'unsure' ? 'No estoy seguro' : 'Sin nivel de confianza';
+  const flagged = (conf[i] === 'sure' && !ok) ? '<span class="chip warn">seguro y fallaste</span>' : (conf[i] === 'unsure' && ok) ? '<span class="chip">dudaste y acertaste</span>' : '';
+  return `<div style="margin:0 0 26px">
+    <div class="qmeta"><span class="tag">${DOM[q.d]}</span><span>${ok ? '✔ correcta' : answered(i) ? '✘ incorrecta' : '— sin responder'}</span><span class="chip">${cf}</span>${flagged}</div>
+    <p class="qtext">${i + 1}. ${q.q}</p>${inner}<div class="exp">${q.e}</div></div>`;
+}
+
+function finish(auto) {
+  if (done) return;
+  if (!auto) {
+    const un = qs.filter((_, i) => !answered(i)).length;
+    if (!confirm(un ? `Tienes ${un} pregunta(s) sin responder. ¿Terminar el simulacro?` : '¿Terminar el simulacro y ver resultados?')) return;
+  }
+  done = true; clearInterval(tick);
+  const used = TOTAL_SEC - left;
+  const by = {1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0]};
+  qs.forEach((q, i) => { by[q.d][1]++; if (isOk(i)) by[q.d][0]++; });
+  const ok = qs.filter((_, i) => isOk(i)).length, pct = Math.round(ok / qs.length * 100);
+  const scaled = Math.round(100 + 900 * ok / qs.length);
+  const pass = pct >= 70;
+  const verdict = pct >= 70 ? 'Vas en nivel de aprobar.' : pct >= 55 ? 'Cerca: refuerza los dominios en rojo.' : 'Aún lejos: repasa los decks completos y vuelve a intentar.';
+  const sureBad = qs.filter((_, i) => conf[i] === 'sure' && !isOk(i)).length;
+  const unsureOk = qs.filter((_, i) => conf[i] === 'unsure' && isOk(i)).length;
+  const unsureBad = qs.filter((_, i) => conf[i] === 'unsure' && !isOk(i)).length;
+  const noConf = qs.filter((_, i) => !conf[i]).length;
+  $('#exam').classList.add('hide'); $('#result').classList.remove('hide');
+  $('#result').innerHTML =
+    `<h1>Resultados · <em>Simulacro 4</em></h1>
+     <div class="card">
+       <div class="score ${pass ? 'pass' : 'fail'}">${pct}%</div>
+       <p><b>${ok} de ${qs.length}</b> correctas · puntaje estimado <b>${scaled}/1000</b> (aprobar = 700) · tiempo usado ${Math.floor(used / 60)} min ${used % 60} s</p>
+       <p>${verdict}</p>
+       <small class="note">Estimación referencial: el examen real usa escala compensatoria propia de AWS y 15 preguntas no puntuadas. Con 20 preguntas el margen de error es grande.</small>
+     </div>
+     <div class="card"><h2>Confianza</h2>
+       <p><b>${sureBad}</b> con "Seguro" y falladas (los puntos ciegos: prioridad de estudio) · <b>${unsureBad}</b> con duda y falladas · <b>${unsureOk}</b> con duda y acertadas (suerte o intuición: repásalas)${noConf ? ' · ' + noConf + ' sin nivel de confianza' : ''}.</p>
+     </div>
+     <div class="card"><h2>Por dominio</h2>` +
+    Object.keys(by).map(d => { const [c, t] = by[d], p = Math.round(c / t * 100);
+      return `<p style="margin:14px 0 4px"><b>${DOM[d]}</b> <small class="note">· peso ${WEIGHT[d]}% · ${c}/${t} · <span class="${p >= 70 ? 'pass' : 'fail'}">${p}%</span></small></p><div class="bar"><i class="${p >= 70 ? 'good' : ''}" style="width:${p}%"></i></div>`; }).join('') +
+    `</div>
+     <div class="card"><h2>Revisión</h2>
+       <div class="filters"><button class="btn ghost" id="fAll">Todas</button><button class="btn ghost" id="fBad">Solo incorrectas</button><button class="btn ghost" id="fDoubt">Con duda o puntos ciegos</button></div>
+       <div id="review"></div></div>
+     <button class="btn" id="again">Intentar de nuevo</button>`;
+  const paint = f => {
+    $('#review').innerHTML = qs.map((q, i) => ({ q, i })).filter(({ i }) => f(i)).map(({ q, i }) => review(q, i)).join('') || '<p>Nada que mostrar con este filtro.</p>';
+  };
+  paint(() => true);
+  $('#fAll').onclick = () => paint(() => true);
+  $('#fBad').onclick = () => paint(i => !isOk(i));
+  $('#fDoubt').onclick = () => paint(i => conf[i] === 'unsure' || (conf[i] === 'sure' && !isOk(i)));
+  $('#again').onclick = start;
+  scrollTo(0, 0);
+}
+
+$('#start').onclick = start;
+$('#finish').onclick = () => finish(false);
+</script>
+</body>
+</html>

@@ -419,6 +419,7 @@
   "Bias entra en distintas etapas: sampling bias (la muestra de datos no representa a la población real), measurement bias (cómo se mide/etiqueta introduce sesgo), observer bias (el criterio humano que etiqueta ya viene sesgado). El bias puede venir de los datos, del algoritmo o de quien lo usa.",
   "Fairness es la métrica que busca que el modelo no discrimine sistemáticamente a un grupo — se mide comparando el desempeño del modelo entre subgrupos (ej. por género, edad, región).",
   "Características de un dataset responsable: inclusivo, diverso, curado y balanceado. Un dataset sesgado produce un modelo sesgado que afecta a ciertos grupos demográficos.",
+  "Sesgos en los datos: selección, representación, histórico y de medición. El ejemplo de entrenar solo con clientes con historial de compra es sesgo de selección, no overfitting. La solución: datos diversos, inclusivos y representativos de la población objetivo.",
   "Explainability vs Performance: hay un trade-off clásico. Modelos simples (regresión lineal, árboles pequeños) son interpretables pero menos potentes. Modelos complejos (deep learning, ensembles) son más precisos pero 'caja negra'. El examen puede preguntar cuál priorizar según el caso (ej. crédito bancario necesita explicabilidad por regulación).",
   "SageMaker Clarify: detecta bias en los datos de entrenamiento y en las predicciones del modelo, y genera explicaciones de predicciones individuales usando SHAP.",
   "SHAP (Shapley values): reparte, para una predicción individual, cuánto aportó cada feature al resultado — positivo o negativo. Viene de teoría de juegos. Clarify lo usa para explicar casos puntuales, no solo el modelo en general.",
@@ -481,7 +482,7 @@
       <div class="agenda-row"><span class="num">04</span><div><div class="title">Herramientas de AWS</div><div class="desc">Clarify, SHAP, Model Cards, AI Service Cards, Guardrails.</div></div><span class="tag">Servicios</span></div>
       <div class="agenda-row"><span class="num">05</span><div><div class="title">Gobernanza y memorización</div><div class="desc">Human-in-the-loop, A2I, riesgos legales y ambientales + resumen.</div></div><span class="tag">Cierre</span></div>
     </div>
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>SHAP</b> = SHapley Additive exPlanations · <b>A2I</b> = Augmented AI</span><span class="num">02 / 17</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>SHAP</b> = SHapley Additive exPlanations · <b>A2I</b> = Augmented AI</span><span class="num">02 / 18</span></div>
   </section>
 
   <!-- SLIDE 3 · LOS 8 PILARES -->
@@ -510,7 +511,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Los 8 pilares</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">03 / 17</span></div>
+    <div class="chrome-bot"><span>Los 8 pilares</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">03 / 18</span></div>
   </section>
 
   <!-- SLIDE 4 · BIAS -->
@@ -539,7 +540,7 @@
       <p>El bias puede colarse en <em>tres puntos</em> distintos: los datos, el algoritmo, o el humano que interpreta el resultado. No es un problema que se resuelve una sola vez.</p>
     </div>
 
-    <div class="chrome-bot"><span>Bias</span><span class="num">04 / 17</span></div>
+    <div class="chrome-bot"><span>Bias</span><span class="num">04 / 18</span></div>
   </section>
 
   <!-- SLIDE 5 · FAIRNESS -->
@@ -564,7 +565,7 @@
       <p>Un modelo puede tener <em>alta accuracy global</em> y aun así ser injusto — si falla mucho más en un subgrupo específico, el promedio lo esconde.</p>
     </div>
 
-    <div class="chrome-bot"><span>Fairness</span><span class="num">05 / 17</span></div>
+    <div class="chrome-bot"><span>Fairness</span><span class="num">05 / 18</span></div>
   </section>
 
   <!-- SLIDE 6 · DATASETS RESPONSABLES -->
@@ -584,11 +585,41 @@
       <div class="stat-box"><div class="lbl">Balanceado</div><div class="desc">Sin sobre o sub-representación de clases o grupos demográficos.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Datasets responsables</span><span class="num">06 / 17</span></div>
+    <div class="chrome-bot"><span>Datasets responsables</span><span class="num">06 / 18</span></div>
   </section>
 
-  <!-- SLIDE 7 · EXPLAINABILITY VS PERFORMANCE -->
-  <section class="slide" data-label="07 Explainability vs Performance">
+  <!-- SLIDE 7 · TIPOS DE SESGO EN LOS DATOS -->
+  <section class="slide bg-alt" data-label="07 Tipos de sesgo en los datos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Concepto · Sesgo en los datos</div>
+    <h1 class="slide-title">Tipos de sesgo en <em>los datos</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:22%">Sesgo</th><th style="width:44%">Qué es</th><th>Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Selección</td><td>La muestra no representa a la población donde se usará el modelo.</td><td>Entrenar solo con clientes que ya compraron.</td></tr>
+        <tr><td class="name">Representación</td><td>Algunos grupos tienen muy pocos datos.</td><td>Pocas mujeres en datos de contratación.</td></tr>
+        <tr><td class="name">Histórico</td><td>Los datos reflejan desigualdades pasadas.</td><td>Créditos negados en el pasado a cierto grupo.</td></tr>
+        <tr><td class="name">Medición o etiquetado</td><td>Las etiquetas o los sensores son imprecisos o subjetivos.</td><td>Etiquetas asignadas con criterios distintos.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Trampa de examen</span>
+      <p>Elegir solo a quienes ya compraron es <em>sesgo de selección</em>, no overfitting. La muestra debe ser diversa y representar a toda la población donde se usará.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Tipos de sesgo en los datos</span><span class="num">07 / 18</span></div>
+  </section>
+
+  <!-- SLIDE 8 · EXPLAINABILITY VS PERFORMANCE -->
+  <section class="slide" data-label="08 Explainability vs Performance">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -603,17 +634,17 @@
       </thead>
       <tbody>
         <tr><td class="name">Ejemplos</td><td>Regresión lineal/logística, árboles pequeños.</td><td>Deep learning, ensembles, Foundation Models.</td></tr>
-        <tr><td class="name">Explicabilidad</td><td>Alta — se entiende el peso de cada variable.</td><td>Baja — difícil saber por qué llegó a esa respuesta.</td></tr>
+        <tr><td class="name">Explicabilidad</td><td>Alta — coeficientes legibles por variable (ej. regresión logística).</td><td>Baja — difícil saber por qué llegó a esa respuesta.</td></tr>
         <tr><td class="name">Performance</td><td>Generalmente menor en problemas complejos.</td><td>Generalmente mayor en problemas complejos.</td></tr>
         <tr><td class="name">Cuándo priorizar</td><td>Sectores regulados: crédito, salud, justicia.</td><td>Cuando la precisión importa más que justificar cada decisión.</td></tr>
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Explainability vs Performance</span><span class="num">07 / 17</span></div>
+    <div class="chrome-bot"><span>Explainability vs Performance</span><span class="num">08 / 18</span></div>
   </section>
 
-  <!-- SLIDE 8 · SAGEMAKER CLARIFY -->
-  <section class="slide bg-alt" data-label="08 SageMaker Clarify">
+  <!-- SLIDE 9 · SAGEMAKER CLARIFY -->
+  <section class="slide bg-alt" data-label="09 SageMaker Clarify">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -634,11 +665,11 @@
     </table>
 
 
-    <div class="chrome-bot"><span>SageMaker Clarify</span><span class="gloss"><b>SHAP</b> = SHapley Additive exPlanations</span><span class="num">08 / 17</span></div>
+    <div class="chrome-bot"><span>SageMaker Clarify</span><span class="gloss"><b>SHAP</b> = SHapley Additive exPlanations</span><span class="num">09 / 18</span></div>
   </section>
 
-  <!-- SLIDE 9 · SHAP -->
-  <section class="slide" data-label="09 SHAP">
+  <!-- SLIDE 10 · SHAP -->
+  <section class="slide" data-label="10 SHAP">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -665,11 +696,11 @@
       <p>Clarify detecta <em>bias agregado</em> en datos y predicciones. SHAP explica <em>una predicción puntual</em> — por qué este caso específico dio ese resultado.</p>
     </div>
 
-    <div class="chrome-bot"><span>SHAP</span><span class="gloss"><b>SHAP</b> = SHapley Additive exPlanations</span><span class="num">09 / 17</span></div>
+    <div class="chrome-bot"><span>SHAP</span><span class="gloss"><b>SHAP</b> = SHapley Additive exPlanations</span><span class="num">10 / 18</span></div>
   </section>
 
-  <!-- SLIDE 10 · MODEL CARDS -->
-  <section class="slide bg-alt" data-label="10 Model Cards">
+  <!-- SLIDE 11 · MODEL CARDS -->
+  <section class="slide bg-alt" data-label="11 Model Cards">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -695,11 +726,11 @@
       <p>Estandariza la documentación para <em>auditoría</em> — cualquiera puede revisar cómo se construyó el modelo sin depender de quien lo entrenó.</p>
     </div>
 
-    <div class="chrome-bot"><span>Model Cards</span><span class="num">10 / 17</span></div>
+    <div class="chrome-bot"><span>Model Cards</span><span class="num">11 / 18</span></div>
   </section>
 
-  <!-- SLIDE 11 · AI SERVICE CARDS -->
-  <section class="slide" data-label="11 AI Service Cards">
+  <!-- SLIDE 12 · AI SERVICE CARDS -->
+  <section class="slide" data-label="12 AI Service Cards">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -715,11 +746,11 @@
       <div class="stat-box"><div class="lbl">Diferencia clave</div><div class="desc">Model Cards = tu modelo. AI Service Cards = servicio ya entrenado por AWS.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>AI Service Cards</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">11 / 17</span></div>
+    <div class="chrome-bot"><span>AI Service Cards</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">12 / 18</span></div>
   </section>
 
-  <!-- SLIDE 12 · GUARDRAILS EN ESTE CONTEXTO -->
-  <section class="slide bg-alt" data-label="12 Guardrails">
+  <!-- SLIDE 13 · GUARDRAILS EN ESTE CONTEXTO -->
+  <section class="slide bg-alt" data-label="13 Guardrails">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -745,11 +776,11 @@
       <p>Guardrails no es un concepto nuevo del Dominio 4 — es la <em>implementación concreta</em> de varios de los 8 pilares dentro de Bedrock.</p>
     </div>
 
-    <div class="chrome-bot"><span>Guardrails</span><span class="gloss"><b>PII</b> = Personally Identifiable Information</span><span class="num">12 / 17</span></div>
+    <div class="chrome-bot"><span>Guardrails</span><span class="gloss"><b>PII</b> = Personally Identifiable Information</span><span class="num">13 / 18</span></div>
   </section>
 
-  <!-- SLIDE 13 · HUMAN-IN-THE-LOOP -->
-  <section class="slide" data-label="13 Human-in-the-loop">
+  <!-- SLIDE 14 · HUMAN-IN-THE-LOOP -->
+  <section class="slide" data-label="14 Human-in-the-loop">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -776,11 +807,11 @@
       <p>A mayor <em>riesgo de la decisión</em> (crédito, salud, seguridad), mayor necesidad de mantener supervisión humana en el proceso.</p>
     </div>
 
-    <div class="chrome-bot"><span>Human-in-the-loop</span><span class="gloss"><b>HITL</b> = Human-in-the-Loop · <b>ML</b> = Machine Learning · <b>A2I</b> = Augmented AI · <b>RLHF</b> = Reinforcement Learning from Human Feedback</span><span class="num">13 / 17</span></div>
+    <div class="chrome-bot"><span>Human-in-the-loop</span><span class="gloss"><b>HITL</b> = Human-in-the-Loop · <b>ML</b> = Machine Learning · <b>A2I</b> = Augmented AI · <b>RLHF</b> = Reinforcement Learning from Human Feedback</span><span class="num">14 / 18</span></div>
   </section>
 
-  <!-- SLIDE 14 · GOBERNANZA -->
-  <section class="slide bg-alt" data-label="14 Gobernanza">
+  <!-- SLIDE 15 · GOBERNANZA -->
+  <section class="slide bg-alt" data-label="15 Gobernanza">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -796,11 +827,11 @@
       <div class="stat-box"><div class="lbl">Por qué importa en el examen</div><div class="desc">AWS lo incluye como parte explícita de "responsible AI", no solo lo técnico.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Gobernanza</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>AI</b> = Artificial Intelligence</span><span class="num">14 / 17</span></div>
+    <div class="chrome-bot"><span>Gobernanza</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>AI</b> = Artificial Intelligence</span><span class="num">15 / 18</span></div>
   </section>
 
-  <!-- SLIDE 15 · RIESGOS LEGALES DE GENAI -->
-  <section class="slide" data-label="15 Riesgos legales de GenAI">
+  <!-- SLIDE 16 · RIESGOS LEGALES DE GENAI -->
+  <section class="slide" data-label="16 Riesgos legales de GenAI">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -822,11 +853,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Riesgos legales de GenAI</span><span class="gloss"><b>GenAI</b> = Generative AI · <b>IA</b> = Inteligencia Artificial</span><span class="num">15 / 17</span></div>
+    <div class="chrome-bot"><span>Riesgos legales de GenAI</span><span class="gloss"><b>GenAI</b> = Generative AI · <b>IA</b> = Inteligencia Artificial</span><span class="num">16 / 18</span></div>
   </section>
 
-  <!-- SLIDE 16 · TABLA FINAL DE MEMORIZACIÓN -->
-  <section class="slide" data-label="16 Tabla final">
+  <!-- SLIDE 17 · TABLA FINAL DE MEMORIZACIÓN -->
+  <section class="slide" data-label="17 Tabla final">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -852,11 +883,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>SHAP</b> = SHapley Additive exPlanations · <b>AI</b> = Artificial Intelligence</span><span class="num">16 / 17</span></div>
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>SHAP</b> = SHapley Additive exPlanations · <b>AI</b> = Artificial Intelligence</span><span class="num">17 / 18</span></div>
   </section>
 
-  <!-- SLIDE 17 · CIERRE -->
-  <section class="slide cierre bg-ink" data-label="17 Cierre">
+  <!-- SLIDE 18 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="18 Cierre">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -872,7 +903,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">17 / 17</span></div>
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">18 / 18</span></div>
   </section>
 
 </deck-stage>
