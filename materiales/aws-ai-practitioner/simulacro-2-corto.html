@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AWS AIF-C01 · Simulacro 2</title>
+<style>
+  :root {
+    --bg: #FAFAF8; --card: #FFFFFF; --ink: #14171C; --ink-2: #3D434D; --ink-3: #6B7280;
+    --rule: #E3E3DE; --accent: #D97706; --accent-soft: #FEF3E2;
+    --ok: #15803D; --ok-soft: #E8F5EC; --bad: #B91C1C; --bad-soft: #FDECEC;
+    --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: ui-monospace, "SF Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F1216; --card: #171B21; --ink: #ECEEF1; --ink-2: #C3C8D0; --ink-3: #8B929E;
+      --rule: #2A2F38; --accent: #F59E0B; --accent-soft: #2A2113;
+      --ok: #4ADE80; --ok-soft: #12261A; --bad: #F87171; --bad-soft: #2B1516;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); line-height: 1.5; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 96px; }
+  h1 { font-size: 30px; letter-spacing: -0.02em; margin: 0 0 4px; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .sub { color: var(--ink-3); margin: 0 0 24px; }
+  .card { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 24px; margin-bottom: 16px; }
+  .card h2 { font-size: 15px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin: 0 0 12px; }
+  .card ul { margin: 0; padding-left: 20px; color: var(--ink-2); }
+  .card li { margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+  th { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); }
+  button { font: inherit; cursor: pointer; }
+  .btn { background: var(--accent); color: #fff; border: 0; padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 16px; }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--rule); }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+  .topbar { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--rule); }
+  .topbar .in { max-width: 860px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 12px; }
+  .timer { font-family: var(--mono); font-size: 20px; font-weight: 600; }
+  .timer.warn { color: var(--bad); }
+  .prog { flex: 1; font-size: 14px; color: var(--ink-3); }
+  .qmeta { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); margin-bottom: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .qmeta .tag { background: var(--accent-soft); color: var(--accent); padding: 2px 8px; border-radius: 6px; }
+  .qtext { font-size: 19px; font-weight: 600; margin: 0 0 16px; }
+  .opt { display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; margin: 8px 0; cursor: pointer; background: var(--card); }
+  .opt:hover { border-color: var(--accent); }
+  .opt.sel { border-color: var(--accent); background: var(--accent-soft); }
+  .opt input { margin-top: 4px; accent-color: var(--accent); }
+  .opt.ok { border-color: var(--ok); background: var(--ok-soft); }
+  .opt.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .nav { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .nav .sp { flex: 1; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 6px; }
+  .grid button { height: 38px; border-radius: 8px; border: 1px solid var(--rule); background: var(--card); color: var(--ink-2); font-family: var(--mono); font-size: 13px; }
+  .grid button.done { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .grid button.flag { box-shadow: inset 0 -3px 0 var(--bad); }
+  .grid button.cur { outline: 2px solid var(--ink); }
+  .score { font-size: 56px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .pass { color: var(--ok); } .fail { color: var(--bad); }
+  .bar { height: 10px; background: var(--rule); border-radius: 6px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: var(--accent); }
+  .bar > i.good { background: var(--ok); }
+  .exp { margin-top: 12px; padding: 12px 14px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 6px; color: var(--ink-2); font-size: 15px; }
+  .hide { display: none; }
+  .filters { display: flex; gap: 8px; margin: 12px 0; }
+  small.note { color: var(--ink-3); }
+</style>
+</head>
+<body>
+
+<div id="intro" class="wrap">
+  <h1>AWS AIF-C01 · <em>Simulacro 2</em> (versión corta)</h1>
+  <p class="sub">Certified AI Practitioner · versión corta de 20 preguntas para validar e iterar</p>
+
+  <div class="card">
+    <h2>Instrucciones</h2>
+    <ul>
+      <li><b>20 preguntas</b> y <b>28 minutos</b> (el mismo ritmo del examen real: ~1.4 min por pregunta). El reloj arranca al presionar "Comenzar".</li>
+      <li>Hay preguntas de <b>una respuesta</b> (círculo) y de <b>varias respuestas</b> (cuadrado, dice cuántas elegir). En estas últimas hay que acertar todas.</li>
+      <li>Puedes marcar preguntas para revisarlas y saltar entre ellas con la cuadrícula. Las respuestas se pueden cambiar hasta terminar.</li>
+      <li>Sin ayudas: nada de apuntes, buscador ni los decks. Si no sabes, elimina opciones y elige la más probable — en el examen real no se penaliza fallar.</li>
+      <li>Al terminar (o al agotarse el tiempo) verás tu puntaje, el desglose por dominio y la explicación de cada respuesta.</li>
+      <li>Las preguntas y las opciones salen en orden aleatorio cada intento.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Distribución (proporcional al examen)</h2>
+    <table>
+      <thead><tr><th>Dominio</th><th>Peso</th><th>Preguntas</th></tr></thead>
+      <tbody>
+        <tr><td>D1 · Fundamentos de IA y ML</td><td>20%</td><td>4</td></tr>
+        <tr><td>D2 · Fundamentos de IA generativa</td><td>24%</td><td>5</td></tr>
+        <tr><td>D3 · Aplicaciones de foundation models</td><td>28%</td><td>5</td></tr>
+        <tr><td>D4 · IA responsable</td><td>14%</td><td>3</td></tr>
+        <tr><td>D5 · Seguridad, cumplimiento y gobernanza</td><td>14%</td><td>3</td></tr>
+      </tbody>
+    </table>
+    <p><small class="note">Referencia de nivel: el examen real pide 700/1000 (≈ 70%). Con solo 20 preguntas el resultado es una señal gruesa (cada pregunta vale 5 puntos porcentuales y los dominios tienen 3–5 preguntas): úsalo para detectar dominios débiles, no para predecir tu nota. 70% o más = buen rumbo; 55–70% = refuerza los dominios rojos; menos de 55% = repasa los decks.</small></p>
+  </div>
+
+  <button class="btn" id="start">Comenzar simulacro</button>
+</div>
+
+<div id="exam" class="hide">
+  <div class="topbar"><div class="in">
+    <span class="timer" id="timer">28:00</span>
+    <span class="prog" id="prog"></span>
+    <button class="btn ghost" id="finish">Terminar</button>
+  </div></div>
+  <div class="wrap">
+    <div class="card" id="qcard"></div>
+    <div class="card"><h2>Navegación</h2><div class="grid" id="grid"></div>
+      <p><small class="note">Naranja = respondida · borde rojo abajo = marcada para revisar</small></p></div>
+  </div>
+</div>
+
+<div id="result" class="wrap hide"></div>
+
+<script>
+const Q = (d, q, o, a, e) => ({ d, q, o, a: Array.isArray(a) ? a : [a], multi: Array.isArray(a), e });
+
+const BANK = [
+// ───────── D1 · Fundamentos de IA y ML (4) ─────────
+Q(1,'Una empresa quiere predecir si un cliente cancelará su suscripción el próximo mes (sí o no). ¿Qué tipo de problema de ML es?',
+  ['Regresión','Clasificación','Clustering','Aprendizaje por refuerzo'],1,
+  'La salida es una categoría discreta (cancela / no cancela): clasificación. Regresión predice valores continuos.'),
+Q(1,'¿Qué es el feature engineering?',
+  ['Elegir el servidor donde se entrena el modelo','Transformar y seleccionar las variables de entrada que alimentan al modelo','Desplegar el modelo en producción','Etiquetar los datos con personas'],1,
+  'Es parte de la preparación de datos: crear, transformar y seleccionar features útiles para el modelo.'),
+Q(1,'En una matriz de confusión, ¿qué es un falso positivo?',
+  ['El modelo predijo negativo y era positivo','El modelo predijo positivo y en realidad era negativo','El modelo predijo positivo y acertó','El modelo predijo negativo y acertó'],1,
+  'Falso positivo (FP) = alarma falsa; equivale al Error Tipo I. El falso negativo (FN) equivale al Error Tipo II.'),
+Q(1,'Tienes clases muy desbalanceadas y quieres una sola métrica que equilibre precision y recall. ¿Cuál eliges?',
+  ['Accuracy','F1-score','MAE','RMSE'],1,
+  'F1 es la media armónica de precision y recall; penaliza si una de las dos es muy baja.'),
+
+// ───────── D2 · Fundamentos de IA generativa (5) ─────────
+Q(2,'En un pipeline de RAG, ¿por qué se divide (chunking) los documentos antes de generar embeddings?',
+  ['Para cifrarlos','Para obtener fragmentos manejables que se puedan indexar y recuperar por similitud','Para reducir el costo del modelo a cero','Para eliminar el sesgo'],1,
+  'Los fragmentos (chunks) se convierten en vectores y se recuperan los más similares a la pregunta.'),
+Q(2,'Le pides a un modelo "Traduce al inglés: ..." sin darle ningún ejemplo. ¿Qué técnica de prompting es?',
+  ['Few-shot','Zero-shot','Chain-of-thought','Prompt chaining con ejemplos'],1,
+  'Zero-shot pide la tarea directamente, sin ejemplos.'),
+Q(2,'¿Qué controla el parámetro max tokens?',
+  ['La creatividad del modelo','La longitud máxima de la respuesta generada','El número de usuarios simultáneos','El tamaño del dataset de entrenamiento'],1,
+  'Limita la extensión de la salida, y por tanto el costo y el tiempo de respuesta.'),
+Q(2,'¿Qué caracteriza a un foundation model multimodal?',
+  ['Solo procesa texto en varios idiomas','Puede procesar o generar varios tipos de datos, como texto e imágenes','Se entrena únicamente con datos etiquetados','No necesita preentrenamiento'],1,
+  'Multimodal = varias modalidades (texto, imagen, audio) en un mismo modelo.'),
+Q(2,'¿Cuáles DOS pasos forman parte de un pipeline de RAG? (Elige 2)',
+  ['Convertir los fragmentos de documentos en embeddings y guardarlos en una base vectorial','Reentrenar todos los pesos del modelo con cada consulta','Buscar los fragmentos más similares a la pregunta y agregarlos al prompt','Eliminar el modelo base al terminar'],[0,2],
+  'RAG indexa embeddings, recupera los fragmentos relevantes y los agrega al prompt. No reentrena el modelo.'),
+
+// ───────── D3 · Aplicaciones de foundation models (5) ─────────
+Q(3,'Un equipo quiere comparar varios modelos de Bedrock con métricas automáticas y también con revisores humanos. ¿Qué capacidad usa?',
+  ['Bedrock Model Evaluation','Bedrock Agents','SageMaker Ground Truth únicamente','AWS Config'],0,
+  'Bedrock Model Evaluation permite evaluación automática (exactitud, robustez, toxicidad) y con revisores humanos.'),
+Q(3,'La información de los productos de una empresa cambia todos los días y el chatbot debe responder con datos vigentes. ¿Qué enfoque conviene?',
+  ['Fine-tuning diario del modelo','RAG con una Knowledge Base','Subir la temperature','Preentrenar un modelo nuevo cada semana'],1,
+  'RAG consulta la fuente actualizada al momento de la pregunta; el fine-tuning "congela" el conocimiento en el modelo.'),
+Q(3,'Una empresa quiere un asistente de IA generativa para sus empleados, conectado a sus datos internos (documentos, wikis, tickets). ¿Qué servicio encaja mejor?',
+  ['Amazon Polly','Amazon Q Business','Amazon Translate','AWS Glue'],1,
+  'Amazon Q Business es un asistente de IA generativa para el negocio, construido sobre Bedrock y conectado a datos de la empresa.'),
+Q(3,'¿Para qué sirve SageMaker Pipelines?',
+  ['Para etiquetar datos','Para automatizar el flujo completo de ML: datos, entrenamiento, evaluación y despliegue','Para detectar PII','Para generar imágenes'],1,
+  'Es la herramienta de orquestación y MLOps de SageMaker.'),
+Q(3,'Un atacante inserta documentos maliciosos en la base de conocimiento que usa un sistema RAG para influir en sus respuestas. ¿Qué ataque es?',
+  ['Jailbreaking','Data poisoning','Model distillation','Prompt leaking'],1,
+  'Poisoning: contaminar datos de entrenamiento o de recuperación. Se mitiga validando y controlando las fuentes.'),
+
+// ───────── D4 · IA responsable (3) ─────────
+Q(4,'¿Qué pilar de IA responsable se refiere a poder entender por qué un modelo tomó una decisión?',
+  ['Explicabilidad','Privacidad','Robustez','Gobernanza'],0,
+  'Explicabilidad (explainability): interpretar las razones detrás de una predicción.'),
+Q(4,'¿Qué es RLHF?',
+  ['Un servicio de cifrado de AWS','Aprendizaje por refuerzo con feedback humano: personas califican respuestas y el modelo se ajusta','Un tipo de base de datos vectorial','Una métrica de evaluación de resúmenes'],1,
+  'RLHF = Reinforcement Learning from Human Feedback; es una forma de supervisión humana en el ciclo del modelo.'),
+Q(4,'Una empresa quiere comparar la tasa de aprobación de créditos entre grupos demográficos para detectar sesgo. ¿Qué herramienta usa?',
+  ['Amazon SageMaker Clarify','AWS CloudTrail','Amazon Macie','AWS KMS'],0,
+  'Clarify calcula métricas de sesgo en datos y predicciones.'),
+
+// ───────── D5 · Seguridad, cumplimiento y gobernanza (3) ─────────
+Q(5,'Quieres monitorear métricas y crear alarmas sobre el uso de tu aplicación con Bedrock. ¿Qué servicio usas?',
+  ['Amazon CloudWatch','AWS Artifact','AWS Audit Manager','Amazon Macie'],0,
+  'CloudWatch = cómo está funcionando (métricas, logs, alarmas). CloudTrail = quién hizo qué (auditoría).'),
+Q(5,'¿Qué es el linaje de datos (data lineage)?',
+  ['El cifrado de los datos en reposo','La trazabilidad del origen de los datos y de las transformaciones que sufrieron','La región donde se almacenan','La eliminación periódica de datos'],1,
+  'Permite saber de dónde vino un dato y cómo se transformó; clave para auditoría y confianza.'),
+Q(5,'Una empresa debe reunir evidencia de forma continua y automática para auditorías de cumplimiento. ¿Qué servicio ayuda?',
+  ['AWS Audit Manager','Amazon Inspector','AWS Shield','Amazon Rekognition'],0,
+  'Audit Manager recolecta evidencia automáticamente frente a frameworks de compliance.'),
+];
+
+// ───────── Lógica ─────────
+const DOM = {1:'D1 Fundamentos IA/ML',2:'D2 IA generativa',3:'D3 Aplicaciones de FMs',4:'D4 IA responsable',5:'D5 Seguridad y gobernanza'};
+const WEIGHT = {1:20,2:24,3:28,4:14,5:14};
+const TOTAL_SEC = 28 * 60;
+const $ = s => document.querySelector(s);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+let qs = [], ans = [], flags = [], cur = 0, left = TOTAL_SEC, tick = null, done = false;
+
+function start() {
+  qs = shuffle(BANK).map(q => {
+    const idx = shuffle(q.o.map((_, i) => i));
+    return { ...q, o: idx.map(i => q.o[i]), a: q.a.map(x => idx.indexOf(x)).sort() };
+  });
+  ans = qs.map(() => []); flags = qs.map(() => false); cur = 0; left = TOTAL_SEC; done = false;
+  $('#intro').classList.add('hide'); $('#result').classList.add('hide'); $('#exam').classList.remove('hide');
+  clearInterval(tick);
+  tick = setInterval(() => { left--; paintTimer(); if (left <= 0) finish(true); }, 1000);
+  paintTimer(); render();
+}
+
+function paintTimer() {
+  const m = Math.floor(left / 60), s = left % 60;
+  const t = $('#timer'); t.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  t.classList.toggle('warn', left <= 300);
+}
+
+function render() {
+  const q = qs[cur];
+  const type = q.multi ? 'checkbox' : 'radio';
+  $('#prog').textContent = `Pregunta ${cur + 1} de ${qs.length} · ${ans.filter(a => a.length).length} respondidas`;
+  $('#qcard').innerHTML =
+    `<div class="qmeta"><span class="tag">${q.multi ? 'Elige ' + q.a.length : 'Una respuesta'}</span></div>
+     <p class="qtext">${q.q}</p>` +
+    q.o.map((t, i) => `<label class="opt ${ans[cur].includes(i) ? 'sel' : ''}"><input type="${type}" name="o" ${ans[cur].includes(i) ? 'checked' : ''} data-i="${i}"><span>${t}</span></label>`).join('') +
+    `<div class="nav">
+       <button class="btn ghost" id="prev" ${cur === 0 ? 'disabled' : ''}>← Anterior</button>
+       <button class="btn ghost" id="flag">${flags[cur] ? 'Quitar marca' : 'Marcar para revisar'}</button>
+       <span class="sp"></span>
+       <button class="btn" id="next" ${cur === qs.length - 1 ? 'disabled' : ''}>Siguiente →</button>
+     </div>`;
+  document.querySelectorAll('#qcard input').forEach(inp => inp.addEventListener('change', () => {
+    const i = +inp.dataset.i;
+    if (q.multi) ans[cur] = inp.checked ? [...ans[cur], i].sort() : ans[cur].filter(x => x !== i);
+    else ans[cur] = [i];
+    render();
+  }));
+  $('#prev').onclick = () => { cur--; render(); scrollTo(0, 0); };
+  $('#next').onclick = () => { cur++; render(); scrollTo(0, 0); };
+  $('#flag').onclick = () => { flags[cur] = !flags[cur]; render(); };
+  $('#grid').innerHTML = qs.map((_, i) => `<button data-i="${i}" class="${ans[i].length ? 'done' : ''} ${flags[i] ? 'flag' : ''} ${i === cur ? 'cur' : ''}">${i + 1}</button>`).join('');
+  document.querySelectorAll('#grid button').forEach(b => b.onclick = () => { cur = +b.dataset.i; render(); scrollTo(0, 0); });
+}
+
+const isOk = i => JSON.stringify(ans[i]) === JSON.stringify(qs[i].a);
+
+function finish(auto) {
+  if (done) return;
+  if (!auto) {
+    const un = ans.filter(a => !a.length).length;
+    if (!confirm(un ? `Tienes ${un} pregunta(s) sin responder. ¿Terminar el simulacro?` : '¿Terminar el simulacro y ver resultados?')) return;
+  }
+  done = true; clearInterval(tick);
+  const used = TOTAL_SEC - left;
+  const by = {1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0]};
+  qs.forEach((q, i) => { by[q.d][1]++; if (isOk(i)) by[q.d][0]++; });
+  const ok = qs.filter((_, i) => isOk(i)).length, pct = Math.round(ok / qs.length * 100);
+  const scaled = Math.round(100 + 900 * ok / qs.length);
+  const pass = pct >= 70;
+  const verdict = pct >= 70 ? 'Vas en nivel de aprobar.' : pct >= 55 ? 'Cerca: refuerza los dominios en rojo.' : 'Aún lejos: repasa los decks completos y vuelve a intentar.';
+  $('#exam').classList.add('hide'); $('#result').classList.remove('hide');
+  $('#result').innerHTML =
+    `<h1>Resultados · <em>Simulacro 2</em></h1>
+     <div class="card">
+       <div class="score ${pass ? 'pass' : 'fail'}">${pct}%</div>
+       <p><b>${ok} de ${qs.length}</b> correctas · puntaje estimado <b>${scaled}/1000</b> (aprobar = 700) · tiempo usado ${Math.floor(used / 60)} min ${used % 60} s</p>
+       <p>${verdict}</p>
+       <small class="note">Estimación referencial: el examen real usa escala compensatoria propia de AWS y 15 preguntas no puntuadas. Con 20 preguntas el margen de error es grande.</small>
+     </div>
+     <div class="card"><h2>Por dominio</h2>` +
+    Object.keys(by).map(d => { const [c, t] = by[d], p = Math.round(c / t * 100);
+      return `<p style="margin:14px 0 4px"><b>${DOM[d]}</b> <small class="note">· peso ${WEIGHT[d]}% · ${c}/${t} · <span class="${p >= 70 ? 'pass' : 'fail'}">${p}%</span></small></p><div class="bar"><i class="${p >= 70 ? 'good' : ''}" style="width:${p}%"></i></div>`; }).join('') +
+    `</div>
+     <div class="card"><h2>Revisión</h2>
+       <div class="filters"><button class="btn ghost" id="fAll">Todas</button><button class="btn ghost" id="fBad">Solo incorrectas</button></div>
+       <div id="review"></div></div>
+     <button class="btn" id="again">Intentar de nuevo</button>`;
+  const paint = onlyBad => {
+    $('#review').innerHTML = qs.map((q, i) => ({ q, i })).filter(({ i }) => !onlyBad || !isOk(i)).map(({ q, i }) =>
+      `<div style="margin:0 0 26px">
+         <div class="qmeta"><span class="tag">${DOM[q.d]}</span><span>${isOk(i) ? '✔ correcta' : ans[i].length ? '✘ incorrecta' : '— sin responder'}</span></div>
+         <p class="qtext">${i + 1}. ${q.q}</p>` +
+      q.o.map((t, k) => `<div class="opt ${q.a.includes(k) ? 'ok' : ans[i].includes(k) ? 'bad' : ''}"><span>${q.a.includes(k) ? '✔' : ans[i].includes(k) ? '✘' : '·'}</span><span>${t}</span></div>`).join('') +
+      `<div class="exp">${q.e}</div></div>`).join('') || '<p>Sin preguntas incorrectas.</p>';
+  };
+  paint(false);
+  $('#fAll').onclick = () => paint(false); $('#fBad').onclick = () => paint(true);
+  $('#again').onclick = start;
+  scrollTo(0, 0);
+}
+
+$('#start').onclick = start;
+$('#finish').onclick = () => finish(false);
+</script>
+</body>
+</html>

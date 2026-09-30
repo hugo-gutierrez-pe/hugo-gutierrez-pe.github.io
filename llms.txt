@@ -24,6 +24,11 @@ Hugo Gutierrez trabaja en modelamiento financiero corporativo, valorización de 
 - [Ratios financieros — guía completa](https://hgfincorp.com/guias/ratios-financieros-guia-completa/)
 - [BDP, BDH y BDS en Bloomberg](https://hgfincorp.com/guias/bloomberg-bdp-bdh-bds/)
 
+## Materiales y certificaciones
+
+- [Materiales y recursos](https://hgfincorp.com/materiales/): guías, investigación y material de certificaciones.
+- [AWS Certified AI Practitioner (AIF-C01)](https://hgfincorp.com/materiales/aws-ai-practitioner/): deck de 99 slides, decks por dominio y tres simulacros.
+
 ## Proyectos y demos
 
 - [Valora — plataforma de análisis de estados financieros SMV](https://hgfincorp.com/valora-demo/): tearsheets financieros de las 17 empresas del índice MSCI nuam Peru Select (Alicorp, InRetail, Credicorp, BBVA, Volcán, Ferreycorp, Banco de Crédito, Buenaventura, Unacem, Southern Copper, Minsur, Orygen, Nexa Resources, Cementos Pacasmayo, Intercorp Financial, Cerro Verde, Engie Energía) con serie histórica multi-año, ratios, análisis vertical y modelo de valorización en Excel (FCFF/FCFE/DDM).

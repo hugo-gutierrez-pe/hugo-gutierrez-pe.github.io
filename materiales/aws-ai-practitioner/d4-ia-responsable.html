@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="aws">
+<head>
+<meta charset="UTF-8" />
+<title>AWS AIF-C01 · D4 IA Responsable — Repaso</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    --type-mega:      140px;
+    --type-title:      80px;
+    --type-h1:         64px;
+    --type-h2:         44px;
+    --type-quote:      60px;
+    --type-body:       26px;
+    --type-body-lg:    30px;
+    --type-small:      22px;
+    --type-mono-lg:    20px;
+    --type-mono:       16px;
+    --type-mono-sm:    14px;
+
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-course="aws"] {
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(255,153,0,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #FFC266; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(255,153,0,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .slide.bg-ink em { color: #FFC266; }
+
+  /* ── CHROME ────────────────────────────────────────────── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand { display: inline-flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag { display: inline-flex; align-items: center; gap: 8px; }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+  .chrome-bot .num { font-feature-settings: "tnum" 1; color: var(--ink-2); }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #FFC266; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── PORTADA ──────────────────────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block { display: flex; align-items: center; gap: 14px; color: var(--ink); }
+  .portada-head .brand-block .brand-mark { width: 44px; height: 44px; border-radius: 9px; font-size: 18px; }
+  .portada-head .brand-name { font-family: var(--font-sans); font-size: 26px; font-weight: 600; letter-spacing: -0.005em; color: var(--ink); }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 20ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    max-width: 34ch;
+  }
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val { font-size: 26px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+
+  /* ── AGENDA ───────────────────────────────────────────── */
+  .agenda-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 12px; }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num { font-family: var(--font-mono); font-size: var(--type-h2); font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
+  .agenda-row .title { font-size: 32px; font-weight: 600; color: var(--ink); letter-spacing: -0.015em; }
+  .agenda-row .desc { font-size: 20px; color: var(--ink-3); margin-top: 4px; }
+  .agenda-row .tag {
+    font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 8px 14px; border: 0.5px solid var(--rule-2); border-radius: 999px; white-space: nowrap;
+  }
+
+  /* ── COMENTARIO ANCHO ─────────────────────────────────── */
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    margin-top: 32px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase; padding-top: 4px; white-space: nowrap;
+  }
+  .big-comment p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; max-width: 90ch; }
+
+  /* ── TABLA COMPARATIVA ────────────────────────────────── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: var(--type-body); }
+  .cmp-table thead th {
+    font-family: var(--font-mono); font-size: var(--type-mono); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3);
+    text-align: left; padding: 16px 22px; border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px; border-bottom: 0.5px solid var(--rule); color: var(--ink-2);
+    font-size: var(--type-body); vertical-align: top; line-height: 1.4;
+  }
+  .cmp-table tbody td.name { color: var(--ink); font-weight: 600; font-size: 28px; letter-spacing: -0.01em; }
+  .cmp-table tbody td.code { font-family: var(--font-mono); color: var(--accent); font-size: 20px; }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+  .cmp-table.dense tbody td { padding: 16px 22px; font-size: 22px; }
+  .cmp-table.dense tbody td.name { font-size: 24px; }
+  .cmp-table.dense thead th { padding: 12px 22px; }
+
+  .acronym-note {
+    font-family: var(--font-mono); font-size: 20px; color: var(--ink-3);
+    margin-top: -20px; margin-bottom: 24px; letter-spacing: 0.01em;
+  }
+  .acronym-note .acc-var { color: var(--accent); font-weight: 500; }
+
+  /* ── STAT GRID ────────────────────────────────────────── */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 12px; }
+  .stat-item { padding: 0 28px; border-right: 0.5px solid var(--rule); }
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-item .lbl { font-family: var(--font-mono); font-size: 15px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 12px; }
+  .stat-item .desc { font-size: 20px; color: var(--ink-2); line-height: 1.4; }
+
+  /* ── STAT GRID · 2×2 (boxes grandes) ─────────────────── */
+  .stat-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 20px; }
+  .stat-box {
+    padding: 32px 36px; border: 0.5px solid var(--rule-2); border-radius: 16px;
+    background: var(--bg); box-shadow: 0 1px 0 rgba(10,13,18,0.02);
+  }
+  section.slide.bg-alt .stat-box { background: var(--bg); }
+  .stat-box .lbl { font-family: var(--font-mono); font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 16px; }
+  .stat-box .desc { font-size: 25px; color: var(--ink-2); line-height: 1.45; }
+
+  /* ── CIERRE ───────────────────────────────────────────── */
+  .cierre {
+    background: var(--ink); color: #fff; justify-content: center;
+    position: relative; overflow: hidden; padding-top: 160px; padding-bottom: 140px; isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(255,153,0,0.28), transparent 60%);
+    pointer-events: none; z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: #FFC266;
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 { font-size: var(--type-title); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; max-width: 20ch; }
+  .cierre h2 em { color: #FFC266; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 96px; align-items: end; margin-top: 48px; }
+  .cierre .pregunta { font-size: var(--type-body-lg); color: rgba(255,255,255,0.75); line-height: 1.45; max-width: 50ch; }
+  .cierre .contact-card { display: flex; flex-direction: column; gap: 12px; }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14); border-radius: 12px; background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #FFC266; }
+  .cierre .contact-row .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+  .cierre .contact-row .val { font-size: 18px; color: #fff; font-weight: 500; margin-top: 2px; }
+
+  /* glosario de siglas (pie de slide) */
+  .chrome-bot { gap: 32px; }
+  .chrome-bot > span:not(.gloss) { flex: none; }
+  .chrome-bot .gloss { flex: 1; min-width: 0; white-space: normal; text-align: center; font-size: 18px; line-height: 1.35; letter-spacing: 0.02em; color: var(--ink-3); }
+  .chrome-bot .gloss b { font-weight: 500; color: var(--accent); }
+  .slide.bg-ink .chrome-bot .gloss { color: rgba(255,255,255,0.55); }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "Portada del repaso. Dominio 4: Guías de IA responsable. Cubre los pilares que AWS define, bias, fairness, explicabilidad, las herramientas concretas (Clarify, SHAP, Model Cards) y gobernanza.",
+  "Agenda: los 8 pilares de responsible AI, bias, fairness, explainability vs performance, SageMaker Clarify, SHAP, Model Cards, AI Service Cards, Guardrails, human-in-the-loop, gobernanza y tabla final.",
+  "AWS define 8 dimensiones de IA responsable: fairness, explainability, privacy & security, safety, controllability, veracity/robustness, governance, transparency. No hay que memorizar el orden, sino reconocer cada una en un escenario del examen.",
+  "Bias entra en distintas etapas: sampling bias (la muestra de datos no representa a la población real), measurement bias (cómo se mide/etiqueta introduce sesgo), observer bias (el criterio humano que etiqueta ya viene sesgado). El bias puede venir de los datos, del algoritmo o de quien lo usa.",
+  "Fairness es la métrica que busca que el modelo no discrimine sistemáticamente a un grupo — se mide comparando el desempeño del modelo entre subgrupos (ej. por género, edad, región).",
+  "Características de un dataset responsable: inclusivo, diverso, curado y balanceado. Un dataset sesgado produce un modelo sesgado que afecta a ciertos grupos demográficos.",
+  "Explainability vs Performance: hay un trade-off clásico. Modelos simples (regresión lineal, árboles pequeños) son interpretables pero menos potentes. Modelos complejos (deep learning, ensembles) son más precisos pero 'caja negra'. El examen puede preguntar cuál priorizar según el caso (ej. crédito bancario necesita explicabilidad por regulación).",
+  "SageMaker Clarify: detecta bias en los datos de entrenamiento y en las predicciones del modelo, y genera explicaciones de predicciones individuales usando SHAP.",
+  "SHAP (Shapley values): reparte, para una predicción individual, cuánto aportó cada feature al resultado — positivo o negativo. Viene de teoría de juegos. Clarify lo usa para explicar casos puntuales, no solo el modelo en general.",
+  "SageMaker Model Cards: documentación estandarizada de un modelo — para qué sirve, cómo se entrenó, sus limitaciones, métricas de evaluación, consideraciones de riesgo. Facilita auditoría y gobernanza.",
+  "AWS AI Service Cards: lo mismo que Model Cards pero para los servicios de IA pre-entrenados de AWS (Rekognition, Textract, etc.) — documentación pública de cómo fueron entrenados y sus limitaciones conocidas.",
+  "Guardrails de Bedrock ya se vio en el Dominio 3 como herramienta de producto, pero aquí encaja en los pilares de safety y controllability — es la implementación concreta de esos principios.",
+  "Human-in-the-loop: mantener revisión humana en el proceso, especialmente en casos de alto riesgo. SageMaker Ground Truth usa etiquetado humano + asistido por ML. RLHF (Reinforcement Learning from Human Feedback) usa ese feedback humano para ajustar el comportamiento del modelo.",
+  "Gobernanza: políticas internas, cumplimiento regulatorio (ej. sector financiero, salud), y consideraciones ambientales — entrenar FMs grandes consume mucha energía y agua; es parte de la conversación de IA responsable aunque no sea técnico.",
+  "Riesgos legales y de negocio de la IA generativa: propiedad intelectual, salidas sesgadas, pérdida de confianza del cliente, riesgo al usuario final y alucinaciones.",
+  "Tabla final de memorización: los conceptos clave del Dominio 4 en una sola vista.",
+  "Cierre del bloque. Siguiente paso: Dominio 5, seguridad, cumplimiento y gobernanza de IA en AWS."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- SLIDE 1 · PORTADA -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">Repaso personal · Lima, Perú</div>
+        <div class="val">AWS AIF-C01 · 2026</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag"><span>AWS AIF-C01</span></div>
+      <h1 class="course-title">Guías de <em>IA responsable</em></h1>
+      <p class="course-sub">Repaso para el examen AWS Certified AI Practitioner. Bias, fairness, explicabilidad y las herramientas concretas que AWS ofrece para gobernarlo.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item"><div class="lbl">Dominio</div><div class="val">4 · IA responsable</div></div>
+      <div class="item"><div class="lbl">Bloque</div><div class="val">Fairness, explicabilidad, gobernanza</div></div>
+      <div class="item"><div class="lbl">Formato</div><div class="val">Apunte de repaso</div></div>
+      <div class="item"><div class="lbl">Recurso</div><div class="val">hugogutierrez.pe</div></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 · AGENDA -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Agenda</div>
+    <h1 class="slide-title">Qué cubre <em>este repaso</em></h1>
+    <div class="title-rule"></div>
+    <div class="agenda-list">
+      <div class="agenda-row"><span class="num">01</span><div><div class="title">Los 8 pilares de Responsible AI</div><div class="desc">El marco que AWS usa para todo el dominio.</div></div><span class="tag">Marco</span></div>
+      <div class="agenda-row"><span class="num">02</span><div><div class="title">Bias, Fairness y datasets</div><div class="desc">De dónde viene el sesgo, cómo se mide y cómo se evita.</div></div><span class="tag">Concepto</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">Explainability vs. Performance</div><div class="desc">El trade-off de la caja negra.</div></div><span class="tag">Concepto</span></div>
+      <div class="agenda-row"><span class="num">04</span><div><div class="title">Herramientas de AWS</div><div class="desc">Clarify, SHAP, Model Cards, AI Service Cards, Guardrails.</div></div><span class="tag">Servicios</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Gobernanza y memorización</div><div class="desc">Human-in-the-loop, A2I, riesgos legales y ambientales + resumen.</div></div><span class="tag">Cierre</span></div>
+    </div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>SHAP</b> = SHapley Additive exPlanations · <b>A2I</b> = Augmented AI</span><span class="num">02 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 3 · LOS 8 PILARES -->
+  <section class="slide bg-alt" data-label="03 Los 8 pilares">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Marco · Definición AWS</div>
+    <h1 class="slide-title">Los <em>8 pilares</em> de Responsible AI</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:24%">Pilar</th><th>Qué busca</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Fairness</td><td>Que el modelo no discrimine sistemáticamente a un grupo.</td></tr>
+        <tr><td class="name">Explainability</td><td>Poder explicar por qué el modelo dio una predicción.</td></tr>
+        <tr><td class="name">Privacy &amp; Security</td><td>Proteger los datos usados para entrenar e inferir.</td></tr>
+        <tr><td class="name">Safety</td><td>Evitar daño físico, psicológico o social por el uso del sistema.</td></tr>
+        <tr><td class="name">Controllability</td><td>Poder intervenir, ajustar o detener el sistema.</td></tr>
+        <tr><td class="name">Veracity &amp; Robustness</td><td>Resultados consistentes y correctos, incluso ante inputs inusuales.</td></tr>
+        <tr><td class="name">Governance</td><td>Políticas, procesos y responsables claros sobre el uso de IA.</td></tr>
+        <tr><td class="name">Transparency</td><td>Comunicar cómo y con qué datos se construyó el sistema.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Los 8 pilares</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">03 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 4 · BIAS -->
+  <section class="slide" data-label="04 Bias">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Concepto · De dónde viene el sesgo</div>
+    <h1 class="slide-title">Bias — <em>tres orígenes</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:26%">Tipo</th><th>Dónde entra</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Sampling bias</td><td>La muestra de datos de entrenamiento no representa a la población real.</td></tr>
+        <tr><td class="name">Measurement bias</td><td>La forma de medir o etiquetar los datos introduce distorsión sistemática.</td></tr>
+        <tr><td class="name">Observer bias</td><td>El criterio humano usado para etiquetar ya viene con sesgo propio.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">Idea clave</span>
+      <p>El bias puede colarse en <em>tres puntos</em> distintos: los datos, el algoritmo, o el humano que interpreta el resultado. No es un problema que se resuelve una sola vez.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Bias</span><span class="num">04 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 5 · FAIRNESS -->
+  <section class="slide bg-alt" data-label="05 Fairness">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Concepto · Medir la equidad</div>
+    <h1 class="slide-title">Fairness — <em>equidad entre grupos</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Qué mide</div><div class="desc">Si el modelo tiene el mismo desempeño (accuracy, recall) entre subgrupos.</div></div>
+      <div class="stat-box"><div class="lbl">Subgrupos típicos</div><div class="desc">Género, edad, región, raza, nivel socioeconómico.</div></div>
+      <div class="stat-box"><div class="lbl">Cómo se detecta</div><div class="desc">Comparando métricas del modelo por subgrupo, no solo el agregado.</div></div>
+      <div class="stat-box"><div class="lbl">Herramienta AWS</div><div class="desc">SageMaker Clarify — mide bias antes y después del entrenamiento.</div></div>
+    </div>
+
+    <div class="big-comment">
+      <span class="marker">Trampa de examen</span>
+      <p>Un modelo puede tener <em>alta accuracy global</em> y aun así ser injusto — si falla mucho más en un subgrupo específico, el promedio lo esconde.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Fairness</span><span class="num">05 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 6 · DATASETS RESPONSABLES -->
+  <section class="slide" data-label="06 Datasets responsables">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Concepto · Datos</div>
+    <h1 class="slide-title">Datasets <em>responsables</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Inclusivo</div><div class="desc">Representa a todos los grupos que usarán o serán afectados por el modelo.</div></div>
+      <div class="stat-box"><div class="lbl">Diverso</div><div class="desc">Variedad de perfiles, contextos y casos — evita que el modelo funcione solo para un segmento.</div></div>
+      <div class="stat-box"><div class="lbl">Curado</div><div class="desc">Fuentes revisadas y confiables, con calidad y origen documentados.</div></div>
+      <div class="stat-box"><div class="lbl">Balanceado</div><div class="desc">Sin sobre o sub-representación de clases o grupos demográficos.</div></div>
+    </div>
+
+    <div class="chrome-bot"><span>Datasets responsables</span><span class="num">06 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 7 · EXPLAINABILITY VS PERFORMANCE -->
+  <section class="slide" data-label="07 Explainability vs Performance">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Trade-off · La caja negra</div>
+    <h1 class="slide-title">Explainability <em>vs.</em> Performance</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:22%">Aspecto</th><th>Modelo interpretable</th><th>Modelo "caja negra"</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Ejemplos</td><td>Regresión lineal/logística, árboles pequeños.</td><td>Deep learning, ensembles, Foundation Models.</td></tr>
+        <tr><td class="name">Explicabilidad</td><td>Alta — se entiende el peso de cada variable.</td><td>Baja — difícil saber por qué llegó a esa respuesta.</td></tr>
+        <tr><td class="name">Performance</td><td>Generalmente menor en problemas complejos.</td><td>Generalmente mayor en problemas complejos.</td></tr>
+        <tr><td class="name">Cuándo priorizar</td><td>Sectores regulados: crédito, salud, justicia.</td><td>Cuando la precisión importa más que justificar cada decisión.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Explainability vs Performance</span><span class="num">07 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 8 · SAGEMAKER CLARIFY -->
+  <section class="slide bg-alt" data-label="08 SageMaker Clarify">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Herramienta · SageMaker</div>
+    <h1 class="slide-title">SageMaker <em>Clarify</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:30%">Función</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Detección de bias</td><td>Analiza los datos de entrenamiento y las predicciones en busca de sesgo hacia subgrupos.</td></tr>
+        <tr><td class="name">Explicabilidad</td><td>Explica predicciones individuales usando SHAP (Shapley values) — cuánto aportó cada feature.</td></tr>
+        <tr><td class="name">Cuándo se usa</td><td>Antes del entrenamiento (bias en datos) y después (bias en predicciones).</td></tr>
+      </tbody>
+    </table>
+
+
+    <div class="chrome-bot"><span>SageMaker Clarify</span><span class="gloss"><b>SHAP</b> = SHapley Additive exPlanations</span><span class="num">08 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 9 · SHAP -->
+  <section class="slide" data-label="09 SHAP">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Concepto · Cómo explica Clarify</div>
+    <h1 class="slide-title">SHAP — <em>cuánto pesó cada variable</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:26%">Aspecto</th><th>Detalle</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Qué hace</td><td>Asigna a cada feature de una predicción individual un valor de contribución (positivo o negativo).</td></tr>
+        <tr><td class="name">Origen</td><td>Basado en Shapley values, un concepto de teoría de juegos — reparte el "crédito" del resultado entre los jugadores (features).</td></tr>
+        <tr><td class="name">Ejemplo</td><td>Un modelo de crédito rechaza una solicitud: SHAP muestra que "ingreso bajo" restó 0.32 y "deuda alta" restó 0.21 a la probabilidad de aprobación.</td></tr>
+        <tr><td class="name">Dónde se usa</td><td>Dentro de SageMaker Clarify, para explicar predicciones puntuales — no solo el modelo en general.</td></tr>
+      </tbody>
+    </table>
+
+
+    <div class="big-comment">
+      <span class="marker">Diferencia clave</span>
+      <p>Clarify detecta <em>bias agregado</em> en datos y predicciones. SHAP explica <em>una predicción puntual</em> — por qué este caso específico dio ese resultado.</p>
+    </div>
+
+    <div class="chrome-bot"><span>SHAP</span><span class="gloss"><b>SHAP</b> = SHapley Additive exPlanations</span><span class="num">09 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 10 · MODEL CARDS -->
+  <section class="slide bg-alt" data-label="10 Model Cards">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Herramienta · Documentación</div>
+    <h1 class="slide-title">SageMaker <em>Model Cards</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:28%">Sección</th><th>Qué documenta</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Propósito</td><td>Para qué sirve el modelo y qué casos de uso cubre.</td></tr>
+        <tr><td class="name">Entrenamiento</td><td>Datos usados, algoritmo, hiperparámetros.</td></tr>
+        <tr><td class="name">Evaluación</td><td>Métricas de desempeño obtenidas.</td></tr>
+        <tr><td class="name">Limitaciones</td><td>Riesgos conocidos, casos donde el modelo no debe usarse.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">Por qué importa</span>
+      <p>Estandariza la documentación para <em>auditoría</em> — cualquiera puede revisar cómo se construyó el modelo sin depender de quien lo entrenó.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Model Cards</span><span class="num">10 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 11 · AI SERVICE CARDS -->
+  <section class="slide" data-label="11 AI Service Cards">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Herramienta · Servicios preentrenados</div>
+    <h1 class="slide-title">AWS <em>AI Service Cards</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Qué es</div><div class="desc">El equivalente a Model Cards, pero para servicios de IA pre-entrenados de AWS.</div></div>
+      <div class="stat-box"><div class="lbl">Ejemplos de servicio</div><div class="desc">Rekognition, Textract, Comprehend, Transcribe.</div></div>
+      <div class="stat-box"><div class="lbl">Quién las publica</div><div class="desc">AWS — son públicas, no las genera el usuario.</div></div>
+      <div class="stat-box"><div class="lbl">Diferencia clave</div><div class="desc">Model Cards = tu modelo. AI Service Cards = servicio ya entrenado por AWS.</div></div>
+    </div>
+
+    <div class="chrome-bot"><span>AI Service Cards</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">11 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 12 · GUARDRAILS EN ESTE CONTEXTO -->
+  <section class="slide bg-alt" data-label="12 Guardrails">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Herramienta · Bedrock, visto desde RAI</div>
+    <h1 class="slide-title">Guardrails — <em>safety y controllability</em> en acción</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:26%">Pilar</th><th>Cómo lo implementa Guardrails</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Safety</td><td>Bloquea contenido dañino: odio, violencia, auto-daño.</td></tr>
+        <tr><td class="name">Controllability</td><td>El negocio define temas denegados y palabras prohibidas — control explícito.</td></tr>
+        <tr><td class="name">Privacy</td><td>Detecta y redacta PII antes de que salga en la respuesta.</td></tr>
+        <tr><td class="name">Veracity</td><td>Grounding check — verifica que la respuesta esté basada en la fuente.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">Conexión</span>
+      <p>Guardrails no es un concepto nuevo del Dominio 4 — es la <em>implementación concreta</em> de varios de los 8 pilares dentro de Bedrock.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Guardrails</span><span class="gloss"><b>PII</b> = Personally Identifiable Information</span><span class="num">12 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 13 · HUMAN-IN-THE-LOOP -->
+  <section class="slide" data-label="13 Human-in-the-loop">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Concepto · Supervisión humana</div>
+    <h1 class="slide-title">Human-in-the-loop <em>(HITL)</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:28%">Dónde aparece</th><th>Cómo funciona</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Ground Truth</td><td>Etiquetado de datos combinando humano + asistido por ML.</td></tr>
+        <tr><td class="name">Amazon A2I</td><td>Agrega flujos de revisión humana a predicciones de baja confianza.</td></tr>
+        <tr><td class="name">Revisión de predicciones</td><td>Un humano valida decisiones de alto riesgo antes de ejecutarlas.</td></tr>
+        <tr><td class="name">RLHF</td><td>Feedback humano usado para ajustar el comportamiento del modelo.</td></tr>
+      </tbody>
+    </table>
+
+
+    <div class="big-comment">
+      <span class="marker">Cuándo aplica</span>
+      <p>A mayor <em>riesgo de la decisión</em> (crédito, salud, seguridad), mayor necesidad de mantener supervisión humana en el proceso.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Human-in-the-loop</span><span class="gloss"><b>HITL</b> = Human-in-the-Loop · <b>ML</b> = Machine Learning · <b>A2I</b> = Augmented AI · <b>RLHF</b> = Reinforcement Learning from Human Feedback</span><span class="num">13 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 14 · GOBERNANZA -->
+  <section class="slide bg-alt" data-label="14 Gobernanza">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Gobernanza · Legal y ambiental</div>
+    <h1 class="slide-title">Gobernanza, <em>legal y ambiental</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Governance</div><div class="desc">Políticas internas, roles y responsables claros sobre el uso de IA en la organización.</div></div>
+      <div class="stat-box"><div class="lbl">Compliance</div><div class="desc">Cumplir regulación del sector (financiero, salud) — puede exigir explicabilidad por ley.</div></div>
+      <div class="stat-box"><div class="lbl">Impacto ambiental</div><div class="desc">Entrenar Foundation Models grandes consume mucha energía y agua.</div></div>
+      <div class="stat-box"><div class="lbl">Por qué importa en el examen</div><div class="desc">AWS lo incluye como parte explícita de "responsible AI", no solo lo técnico.</div></div>
+    </div>
+
+    <div class="chrome-bot"><span>Gobernanza</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>AI</b> = Artificial Intelligence</span><span class="num">14 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 15 · RIESGOS LEGALES DE GENAI -->
+  <section class="slide" data-label="15 Riesgos legales de GenAI">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Gobernanza · Riesgos legales de GenAI</div>
+    <h1 class="slide-title">Riesgos legales de la <em>IA generativa</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:30%">Riesgo</th><th>Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Propiedad intelectual</td><td>El modelo reproduce contenido protegido y la empresa enfrenta reclamos.</td></tr>
+        <tr><td class="name">Salidas sesgadas</td><td>Respuestas discriminatorias que generan responsabilidad legal.</td></tr>
+        <tr><td class="name">Pérdida de confianza</td><td>Un error público del modelo daña la reputación de la marca.</td></tr>
+        <tr><td class="name">Riesgo al usuario final</td><td>Consejos médicos o financieros incorrectos que causan daño.</td></tr>
+        <tr><td class="name">Alucinaciones</td><td>Información falsa presentada con certeza en un contexto que la exige veraz.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Riesgos legales de GenAI</span><span class="gloss"><b>GenAI</b> = Generative AI · <b>IA</b> = Inteligencia Artificial</span><span class="num">15 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 16 · TABLA FINAL DE MEMORIZACIÓN -->
+  <section class="slide" data-label="16 Tabla final">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Memorización</div>
+    <h1 class="slide-title">IA responsable, <em>de un vistazo</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:26%">Concepto</th><th>En una frase</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Bias</td><td>Sesgo que entra por datos, medición u observador.</td></tr>
+        <tr><td class="name">Fairness</td><td>Mismo desempeño del modelo entre subgrupos, no solo en el agregado.</td></tr>
+        <tr><td class="name">Explainability</td><td>Trade-off con performance — más simple, más explicable.</td></tr>
+        <tr><td class="name">SageMaker Clarify</td><td>Detecta bias en datos y predicciones.</td></tr>
+        <tr><td class="name">SHAP</td><td>Explica una predicción puntual — cuánto aportó cada feature.</td></tr>
+        <tr><td class="name">Model Cards</td><td>Documentación estandarizada de tu propio modelo.</td></tr>
+        <tr><td class="name">AI Service Cards</td><td>Documentación pública de los servicios preentrenados de AWS.</td></tr>
+        <tr><td class="name">Guardrails</td><td>Implementación de safety/controllability/privacy dentro de Bedrock.</td></tr>
+        <tr><td class="name">Human-in-the-loop</td><td>Supervisión humana proporcional al riesgo de la decisión.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>SHAP</b> = SHapley Additive exPlanations · <b>AI</b> = Artificial Intelligence</span><span class="num">16 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 17 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="17 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="label"><span class="bar"></span>Cierre · Guías de IA responsable</div>
+    <h2>Listo para el <em>siguiente dominio</em>.</h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">Siguiente bloque: Dominio 5 — Seguridad, cumplimiento y gobernanza de IA en AWS.</p>
+      <div class="contact-card">
+        <div class="contact-row"><i class="ti ti-mail"></i><div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div></div>
+        <div class="contact-row"><i class="ti ti-world"></i><div><div class="lbl">Web</div><div class="val">hugogutierrez.pe</div></div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">17 / 17</span></div>
+  </section>
+
+</deck-stage>
+
+<!-- DOWNLOAD PDF -->
+<style>
+  .pdf-fab {
+    position: fixed; top: 16px; right: 16px; z-index: 9999;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12; color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover { background: #B36B00; transform: translateY(-1px); box-shadow: 0 10px 28px rgba(255,153,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset; }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot { width: 6px; height: 6px; border-radius: 999px; background: #FF9900; box-shadow: 0 0 0 3px rgba(255,153,0,0.18); }
+  .pdf-fab i { font-size: 16px; line-height: 1; }
+  .pdf-fab .hint { opacity: 0.55; font-size: 11px; margin-left: 4px; padding-left: 8px; border-left: 1px solid rgba(255,255,255,0.18); }
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<script src="deck-stage.js"></script>
+
+<!-- CONTROLES FLOTANTES: R Rail · P PDF · F Fullscreen -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(255,153,0,.85);border-color:rgba(255,153,0,.6);color:#fff}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-rail" title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf" title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen" title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      const hidden = stage.hasAttribute('no-rail');
+      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
+      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
+    }
+    railBtn.addEventListener('click', toggleRail);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>

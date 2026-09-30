@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Investigación en Finanzas con IA — Hugo Gutierrez</title>
-  <meta name="description" content="IPOs, OPAs y el valor del control en Latinoamérica: cómo investigar con Bloomberg, Capital IQ e inteligencia artificial. Charla ICI 2026, PUCP.">
+  <title>Materiales y recursos — Hugo Gutierrez</title>
+  <meta name="description" content="Guías de finanzas y Bloomberg, investigación y material de certificaciones que voy armando: presentaciones, decks y simulacros.">
 
   <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 
-  <meta property="og:title" content="Investigación en Finanzas con IA — Hugo Gutierrez">
-  <meta property="og:description" content="IPOs, OPAs y el valor del control en Latinoamérica: cómo investigar con Bloomberg, Capital IQ e inteligencia artificial. Charla ICI 2026, PUCP.">
+  <meta property="og:title" content="Materiales y recursos — Hugo Gutierrez">
+  <meta property="og:description" content="Guías de finanzas y Bloomberg, investigación y material de certificaciones que voy armando: presentaciones, decks y simulacros.">
   <meta property="og:image" content="https://hgfincorp.com/img/og-image.png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -210,7 +210,7 @@
       position: relative;
       font-size: clamp(30px, 4vw, 46px);
       font-weight: 600; line-height: 1.1;
-      letter-spacing: -0.025em; max-width: 22ch;
+      letter-spacing: -0.025em; max-width: 20ch;
       color: var(--ink); margin-top: 20px;
     }
     .course-title em { font-style: italic; font-weight: 500; color: var(--blue); }
@@ -271,9 +271,6 @@
       content: "✓"; position: absolute; left: 0; top: 8px;
       color: var(--blue); font-weight: 600; font-size: 14px;
     }
-
-    .course-content ul.plain li::before { content: none; }
-    .course-content ul.plain li { padding-left: 0; }
 
     .course-content table {
       width: 100%; border-collapse: collapse; margin: 24px 0;
@@ -363,7 +360,6 @@
     </a>
     <div class="nav-links">
       <a href="/#cursos">Cursos</a>
-      <a href="/materiales/">Materiales</a>
       <a href="/#proyectos">Proyectos</a>
       <button id="theme-toggle" aria-label="Cambiar tema">
         <i class="ti ti-palette"></i>
@@ -377,7 +373,6 @@
   <div class="mobile-menu" id="mobile-menu">
     <div class="container">
       <a href="/#cursos">Cursos</a>
-      <a href="/materiales/">Materiales</a>
       <a href="/#proyectos">Proyectos</a>
       <a href="/#contacto" class="nav-cta">Contacto</a>
     </div>
@@ -388,88 +383,52 @@
   <div class="container">
     <div class="hero-eyebrow">
       <span class="dot"></span>
-      ICI 2026 · PUCP · 23 set 2026
+      MATERIALES · RECURSOS
     </div>
-    <h1 class="course-title">IPOs, OPAs y el valor del <em>control</em> en Latinoamérica</h1>
-    <p class="course-lede">Cómo investigar en finanzas con Bloomberg, Capital IQ e inteligencia artificial. Charla dictada en el Encuentro de Investigación Científica (ICI) 2026 de la PUCP, con demos en vivo de IA aplicada a investigación financiera.</p>
-    <div class="course-stats">
-      <span><i class="ti ti-clock"></i>~1h 13min</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-terminal-2"></i>5 demos en vivo</span>
-      <span class="sep"></span>
-      <span><i class="ti ti-chart-candle"></i>Bloomberg · Capital IQ · IA</span>
-    </div>
+    <h1 class="course-title">Materiales y <em>recursos</em></h1>
+    <p class="course-lede">Lo que voy armando: guías de finanzas, investigación y material de estudio para certificaciones. Formato de referencia rápida, abierto y en evolución.</p>
+    <div class="course-stats"><span><i class="ti ti-books"></i>3 secciones</span><span class="sep"></span><span><i class="ti ti-school"></i>PUCP · Hugo Gutierrez</span></div>
   </div>
 </section>
-
 <article class="course-content">
   <div class="container-narrow">
 
-    <p><strong>ICI 2026 · PUCP · Encuentro de Investigación Científica</strong></p>
+    <h2>Guías de finanzas y Bloomberg</h2>
+    <p>Respuestas directas con ejemplo numérico resuelto: WACC, FCFF/FCFE, Dupont, ratios y funciones de Bloomberg.</p>
+    <a href="/guias/" style="display:block;padding:22px 0;border-bottom:0.5px solid var(--rule);text-decoration:none;color:inherit">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <span style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);background:var(--blue-tint);padding:3px 8px;border-radius:4px">Guías · 5 guías</span>
+      </div>
+      <div style="font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-0.01em;margin-bottom:5px">Guías de finanzas y Bloomberg <i class="ti ti-arrow-up-right" style="font-size:14px;color:var(--ink-3)"></i></div>
+      <div style="font-size:13.5px;color:var(--ink-2);line-height:1.5;max-width:70ch">Valorización, análisis financiero y Bloomberg Terminal en formato de referencia rápida, el material que uso en mis cursos en la PUCP.</div>
+    </a>
 
-    <h2>Sobre la charla</h2>
-    <p>Tema: IPOs, OPAs y el valor del control en Latinoamérica — cómo investigamos con Bloomberg, Capital IQ e inteligencia artificial. La charla parte de un caso conocido (la compra de Twitter por Elon Musk) para introducir los conceptos de OPA y valor del control, y luego muestra en vivo cómo la IA acelera cada etapa de una investigación financiera real: bibliografía, extracción de datos públicos (SMV), lectura de repositorios de código, datos de terminal (Capital IQ) y análisis estadístico de una base de 104 casos de OPAs en Latinoamérica.</p>
+    <h2>Investigación</h2>
+    <p>Charlas y trabajos sobre cómo investigar en finanzas con datos e inteligencia artificial.</p>
+    <a href="/investigaciones/" style="display:block;padding:22px 0;border-bottom:0.5px solid var(--rule);text-decoration:none;color:inherit">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <span style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--amber-tint);padding:3px 8px;border-radius:4px">Investigación · ICI 2026</span>
+      </div>
+      <div style="font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-0.01em;margin-bottom:5px">IPOs, OPAs y el valor del control en Latinoamérica <i class="ti ti-arrow-up-right" style="font-size:14px;color:var(--ink-3)"></i></div>
+      <div style="font-size:13.5px;color:var(--ink-2);line-height:1.5;max-width:70ch">Charla del Encuentro de Investigación Científica de la PUCP: cómo investigar con Bloomberg, Capital IQ e IA, con demos en vivo, grabación y materiales.</div>
+    </a>
+    <a href="/decks/ici-2026/" style="display:block;padding:22px 0;border-bottom:0.5px solid var(--rule);text-decoration:none;color:inherit">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <span style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--amber-tint);padding:3px 8px;border-radius:4px">Presentación · ICI 2026</span>
+      </div>
+      <div style="font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-0.01em;margin-bottom:5px">Presentación de la charla (deck interactivo) <i class="ti ti-arrow-up-right" style="font-size:14px;color:var(--ink-3)"></i></div>
+      <div style="font-size:13.5px;color:var(--ink-2);line-height:1.5;max-width:70ch">Los slides de la charla, navegables con el teclado.</div>
+    </a>
 
-    <h2>Grabación y materiales</h2>
-    <ul>
-      <li><a href="https://drive.google.com/file/d/1hvygbTxLVty7x4it23vCw8aX1jwy5hx3/view?usp=drive_link">Grabación completa (Google Drive)</a></li>
-      <li><a href="/decks/ici-2026/">Presentación (deck interactivo)</a></li>
-    </ul>
-
-    <h2>Demos en vivo</h2>
-    <table>
-      <thead>
-        <tr><th>Demo</th><th>Tema</th><th>Herramienta</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Bibliografía verificada sobre insider trading en OPAs en Latinoamérica</td>
-          <td>Claude Code + búsqueda web (OpenRouter)</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Extracción de expedientes de OPAs de la SMV — manual vs. automatizado</td>
-          <td>Formulario SMV + <code>smv-opas</code> (Python)</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Explicar un repositorio de código en lenguaje simple</td>
-          <td>Gemini</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Precio histórico de una acción (Luz del Sur) y su salto en la fecha de una filtración</td>
-          <td>Capital IQ</td>
-        </tr>
-        <tr>
-          <td>4b</td>
-          <td>Cobertura de prensa alrededor del anuncio</td>
-          <td>Google News + Google Trends</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Estadística descriptiva de 104 casos de OPAs en Latinoamérica</td>
-          <td>Python (pandas)</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>Links usados en las demos</h2>
-    <ul class="plain">
-      <li><a href="https://www.cnbc.com/2022/04/14/elon-musk-offers-to-buy-twitter-for-54point20-a-share-saying-it-needs-to-be-transformed-as-private-company.html">Elon Musk ofrece comprar Twitter (CNBC)</a></li>
-      <li><a href="https://www.capitaliq.spglobal.com/web/client?auth=inherit#dashboard">S&amp;P Capital IQ — Dashboard</a></li>
-      <li><a href="https://www.capitaliq.spglobal.com/web/client?auth=inherit#office/screener?perspective=275259">Capital IQ — Screener</a></li>
-      <li><a href="https://www.capitaliq.spglobal.com/web/client?auth=inherit#mna/dealOverview?Id=1621362">Capital IQ — Deal Overview</a></li>
-      <li><a href="https://www.capitaliq.spglobal.com/web/client?auth=inherit#office/screener?peerMode=true&amp;baseTransaction=SPTRD1621362&amp;hideSidebar=true">Capital IQ — Screener de transacciones comparables</a></li>
-      <li><a href="https://www.capitaliq.spglobal.com/web/client?auth=inherit#company/profile">Capital IQ — Company Profile</a></li>
-      <li><a href="https://trends.google.com/trends/explore?date=2019-09-01%202019-10-31&geo=PE&q=Sempra&hl=es">Google Trends — Sempra (2019)</a></li>
-      <li><a href="https://github.com/hugo-gutierrez-pe/smv-opas">GitHub — smv-opas</a></li>
-      <li><a href="https://openrouter.ai/docs">OpenRouter — Documentación</a></li>
-      <li><a href="https://openrouter.ai/pricing">OpenRouter — Pricing</a></li>
-      <li><a href="https://docs.perplexity.ai/docs/getting-started/pricing">Perplexity — Pricing</a></li>
-      <li><a href="https://www.smv.gob.pe/SIMV/Frm_Opas?data=B0BAD43B72085E6947D724B1B24FA334D125F9653C">SMV — Ofertas Públicas de Adquisición (OPAS)</a></li>
-    </ul>
+    <h2>Certificaciones</h2>
+    <p>Material de estudio que armo mientras me preparo para certificaciones profesionales.</p>
+    <a href="/materiales/aws-ai-practitioner/" style="display:block;padding:22px 0;border-bottom:0.5px solid var(--rule);text-decoration:none;color:inherit">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <span style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);background:var(--green-tint);padding:3px 8px;border-radius:4px">Certificación · AWS</span>
+      </div>
+      <div style="font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-0.01em;margin-bottom:5px">AWS Certified AI Practitioner (AIF-C01) <i class="ti ti-arrow-up-right" style="font-size:14px;color:var(--ink-3)"></i></div>
+      <div style="font-size:13.5px;color:var(--ink-2);line-height:1.5;max-width:70ch">Deck único de 99 slides con los 5 dominios del examen, decks por dominio y tres simulacros con explicaciones.</div>
+    </a>
 
   </div>
 </article>

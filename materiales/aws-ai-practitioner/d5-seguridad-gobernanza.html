@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="aws">
+<head>
+<meta charset="UTF-8" />
+<title>AWS AIF-C01 · D5 Seguridad y Gobernanza — Repaso</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    --type-mega:      140px;
+    --type-title:      80px;
+    --type-h1:         64px;
+    --type-h2:         44px;
+    --type-quote:      60px;
+    --type-body:       26px;
+    --type-body-lg:    30px;
+    --type-small:      22px;
+    --type-mono-lg:    20px;
+    --type-mono:       16px;
+    --type-mono-sm:    14px;
+
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-course="aws"] {
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(255,153,0,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #FFC266; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(255,153,0,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .slide.bg-ink em { color: #FFC266; }
+
+  /* ── CHROME ────────────────────────────────────────────── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand { display: inline-flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag { display: inline-flex; align-items: center; gap: 8px; }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+  .chrome-bot .num { font-feature-settings: "tnum" 1; color: var(--ink-2); }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #FFC266; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── PORTADA ──────────────────────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block { display: flex; align-items: center; gap: 14px; color: var(--ink); }
+  .portada-head .brand-block .brand-mark { width: 44px; height: 44px; border-radius: 9px; font-size: 18px; }
+  .portada-head .brand-name { font-family: var(--font-sans); font-size: 26px; font-weight: 600; letter-spacing: -0.005em; color: var(--ink); }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 20ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    max-width: 34ch;
+  }
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val { font-size: 26px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+
+  /* ── AGENDA ───────────────────────────────────────────── */
+  .agenda-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 12px; }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num { font-family: var(--font-mono); font-size: var(--type-h2); font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
+  .agenda-row .title { font-size: 32px; font-weight: 600; color: var(--ink); letter-spacing: -0.015em; }
+  .agenda-row .desc { font-size: 20px; color: var(--ink-3); margin-top: 4px; }
+  .agenda-row .tag {
+    font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 8px 14px; border: 0.5px solid var(--rule-2); border-radius: 999px; white-space: nowrap;
+  }
+
+  /* ── COMENTARIO ANCHO ─────────────────────────────────── */
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    margin-top: 32px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase; padding-top: 4px; white-space: nowrap;
+  }
+  .big-comment p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; max-width: 90ch; }
+
+  /* ── TABLA COMPARATIVA ────────────────────────────────── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: var(--type-body); }
+  .cmp-table thead th {
+    font-family: var(--font-mono); font-size: var(--type-mono); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3);
+    text-align: left; padding: 16px 22px; border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px; border-bottom: 0.5px solid var(--rule); color: var(--ink-2);
+    font-size: var(--type-body); vertical-align: top; line-height: 1.4;
+  }
+  .cmp-table tbody td.name { color: var(--ink); font-weight: 600; font-size: 28px; letter-spacing: -0.01em; }
+  .cmp-table tbody td.code { font-family: var(--font-mono); color: var(--accent); font-size: 20px; }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+  .cmp-table.dense tbody td { padding: 16px 22px; font-size: 22px; }
+  .cmp-table.dense tbody td.name { font-size: 24px; }
+  .cmp-table.dense thead th { padding: 12px 22px; }
+
+  .acronym-note {
+    font-family: var(--font-mono); font-size: 20px; color: var(--ink-3);
+    margin-top: -20px; margin-bottom: 24px; letter-spacing: 0.01em;
+  }
+  .acronym-note .acc-var { color: var(--accent); font-weight: 500; }
+
+  /* ── STAT GRID ────────────────────────────────────────── */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 12px; }
+  .stat-item { padding: 0 28px; border-right: 0.5px solid var(--rule); }
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-item .lbl { font-family: var(--font-mono); font-size: 15px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 12px; }
+  .stat-item .desc { font-size: 20px; color: var(--ink-2); line-height: 1.4; }
+
+  /* ── STAT GRID · 2×2 (boxes grandes) ─────────────────── */
+  .stat-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 20px; }
+  .stat-box {
+    padding: 32px 36px; border: 0.5px solid var(--rule-2); border-radius: 16px;
+    background: var(--bg); box-shadow: 0 1px 0 rgba(10,13,18,0.02);
+  }
+  section.slide.bg-alt .stat-box { background: var(--bg); }
+  .stat-box .lbl { font-family: var(--font-mono); font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 16px; }
+  .stat-box .desc { font-size: 25px; color: var(--ink-2); line-height: 1.45; }
+
+  /* ── CIERRE ───────────────────────────────────────────── */
+  .cierre {
+    background: var(--ink); color: #fff; justify-content: center;
+    position: relative; overflow: hidden; padding-top: 160px; padding-bottom: 140px; isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(255,153,0,0.28), transparent 60%);
+    pointer-events: none; z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: #FFC266;
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 { font-size: var(--type-title); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; max-width: 20ch; }
+  .cierre h2 em { color: #FFC266; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 96px; align-items: end; margin-top: 48px; }
+  .cierre .pregunta { font-size: var(--type-body-lg); color: rgba(255,255,255,0.75); line-height: 1.45; max-width: 50ch; }
+  .cierre .contact-card { display: flex; flex-direction: column; gap: 12px; }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14); border-radius: 12px; background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #FFC266; }
+  .cierre .contact-row .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+  .cierre .contact-row .val { font-size: 18px; color: #fff; font-weight: 500; margin-top: 2px; }
+
+  /* glosario de siglas (pie de slide) */
+  .chrome-bot { gap: 32px; }
+  .chrome-bot > span:not(.gloss) { flex: none; }
+  .chrome-bot .gloss { flex: 1; min-width: 0; white-space: normal; text-align: center; font-size: 18px; line-height: 1.35; letter-spacing: 0.02em; color: var(--ink-3); }
+  .chrome-bot .gloss b { font-weight: 500; color: var(--accent); }
+  .slide.bg-ink .chrome-bot .gloss { color: rgba(255,255,255,0.55); }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "Portada del repaso. Dominio 5: Seguridad, cumplimiento y gobernanza. Cubre el modelo de responsabilidad compartida, IAM, encriptación, aislamiento de red, monitoreo, la matriz de scoping de seguridad para GenAI, compliance y gobernanza de datos.",
+  "Agenda: shared responsibility model, IAM, encriptación, aislamiento de red, monitoreo y auditoría, Macie, la matriz de scoping de seguridad para GenAI, compliance frameworks, gobernanza de datos y tabla final.",
+  "Shared Responsibility Model: AWS es responsable de la seguridad 'DE la nube' (infraestructura física, hardware, servicios administrados). El cliente es responsable de la seguridad 'EN la nube' (configuración de IAM, datos, encriptación de sus propios modelos/datos).",
+  "IAM aplicado a IA: roles y políticas con privilegio mínimo para controlar quién puede invocar modelos de Bedrock, entrenar en SageMaker, o acceder a datos de entrenamiento. Ejemplo: una política que solo permite bedrock:InvokeModel sobre un modelo específico.",
+  "Encriptación: at rest protege los datos almacenados (S3, EBS) usando KMS (AWS Key Management Service). In transit protege los datos mientras viajan por la red, usando TLS/HTTPS. Ambas aplican a datos de entrenamiento y a las llamadas a los modelos.",
+  "Aislamiento de red: VPC endpoints (vía AWS PrivateLink) permiten conectarse a Bedrock o SageMaker sin salir a internet público — el tráfico se queda dentro de la red privada de AWS, reduciendo superficie de ataque.",
+  "Monitoreo y auditoría: CloudTrail registra quién hizo qué (llamadas a la API — auditoría, compliance). CloudWatch monitorea métricas y logs en tiempo real (performance, alertas). Para el examen: CloudTrail = 'quién hizo qué', CloudWatch = 'cómo está funcionando'.",
+  "Amazon Macie: usa ML para descubrir y clasificar datos sensibles (PII, credenciales) almacenados en S3 — útil antes de usar un dataset para entrenar o para RAG, para evitar exponer información sensible.",
+  "La Generative AI Security Scoping Matrix de AWS define 5 'scopes' según cuánto control tienes sobre el modelo: 1) Consumer app (ChatGPT-like, cero control), 2) Enterprise app (SaaS empresarial con GenAI), 3) Pre-trained models (usas un FM tal cual, ej. Bedrock), 4) Fine-tuned models (adaptas un FM con tus datos), 5) Self-trained models (entrenas desde cero). A mayor scope, mayor control pero también mayor responsabilidad de seguridad.",
+  "Compliance frameworks: AWS Artifact es el portal de autoservicio para descargar reportes de compliance de AWS (ISO 27001, SOC 1/2/3, PCI-DSS). El cliente sigue siendo responsable de su propio compliance (HIPAA para salud, GDPR para datos de la UE) usando servicios elegibles.",
+  "Servicios de cumplimiento y auditoría: Config (configuración), Inspector (vulnerabilidades), Audit Manager (evidencia), Trusted Advisor (recomendaciones) y Artifact (reportes de compliance de AWS).",
+  "Gobernanza de datos: cubre el ciclo de vida completo del dato (creación, uso, archivo, eliminación), residencia de datos (en qué región/país se almacenan — importante para regulación local), y linaje de datos (trazabilidad de origen y transformaciones).",
+  "Ingeniería de datos segura: calidad, privacidad (tecnologías que mejoran la privacidad), control de acceso e integridad de los datos.",
+  "Tabla final de memorización: los conceptos clave del Dominio 5 en una sola vista.",
+  "Cierre de la serie completa de 5 dominios. Con esto se cubrieron los 5 dominios del examen AWS Certified AI Practitioner (AIF-C01)."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- SLIDE 1 · PORTADA -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">Repaso personal · Lima, Perú</div>
+        <div class="val">AWS AIF-C01 · 2026</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag"><span>AWS AIF-C01</span></div>
+      <h1 class="course-title">Seguridad, <em>cumplimiento</em> y gobernanza</h1>
+      <p class="course-sub">Repaso para el examen AWS Certified AI Practitioner. IAM, encriptación, monitoreo, la matriz de scoping de seguridad para GenAI y compliance.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item"><div class="lbl">Dominio</div><div class="val">5 · Seguridad y gobernanza</div></div>
+      <div class="item"><div class="lbl">Bloque</div><div class="val">IAM, encriptación, compliance</div></div>
+      <div class="item"><div class="lbl">Formato</div><div class="val">Apunte de repaso</div></div>
+      <div class="item"><div class="lbl">Recurso</div><div class="val">hugogutierrez.pe</div></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 · AGENDA -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Agenda</div>
+    <h1 class="slide-title">Qué cubre <em>este repaso</em></h1>
+    <div class="title-rule"></div>
+    <div class="agenda-list">
+      <div class="agenda-row"><span class="num">01</span><div><div class="title">Shared Responsibility Model</div><div class="desc">Qué asegura AWS y qué aseguras tú.</div></div><span class="tag">Marco</span></div>
+      <div class="agenda-row"><span class="num">02</span><div><div class="title">IAM, encriptación y red</div><div class="desc">Control de acceso, KMS, VPC endpoints.</div></div><span class="tag">Seguridad</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">Monitoreo y datos sensibles</div><div class="desc">CloudTrail, CloudWatch, Macie, Config, Inspector.</div></div><span class="tag">Auditoría</span></div>
+      <div class="agenda-row"><span class="num">04</span><div><div class="title">Security Scoping Matrix</div><div class="desc">Los 5 niveles de control sobre un modelo de GenAI.</div></div><span class="tag">Marco</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Compliance y gobernanza</div><div class="desc">Artifact, Audit Manager, gobierno del dato + resumen final.</div></div><span class="tag">Cierre</span></div>
+    </div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>KMS</b> = Key Management Service · <b>VPC</b> = Virtual Private Cloud · <b>GenAI</b> = Generative AI</span><span class="num">02 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 3 · SHARED RESPONSIBILITY MODEL -->
+  <section class="slide bg-alt" data-label="03 Shared Responsibility">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Marco · Quién asegura qué</div>
+    <h1 class="slide-title">Shared Responsibility <em>Model</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:26%">Responsable</th><th>De qué se encarga</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">AWS — seguridad DE la nube</td><td>Infraestructura física, hardware, red global, y la seguridad de los servicios administrados (Bedrock, SageMaker).</td></tr>
+        <tr><td class="name">Cliente — seguridad EN la nube</td><td>Configuración de IAM, encriptación de sus datos, gestión de accesos, y el contenido que sube (datasets, prompts).</td></tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">Regla rápida</span>
+      <p>AWS protege el servicio. <em>Tú proteges cómo lo configuras y qué datos le das.</em></p>
+    </div>
+
+    <div class="chrome-bot"><span>Shared Responsibility</span><span class="gloss"><b>IAM</b> = Identity and Access Management</span><span class="num">03 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 4 · IAM -->
+  <section class="slide" data-label="04 IAM">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Seguridad · Control de acceso</div>
+    <h1 class="slide-title">IAM aplicado a <em>servicios de IA</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:28%">Elemento</th><th>Para qué sirve en IA/ML</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Roles</td><td>Identidad que asumen servicios (ej. SageMaker) para acceder a otros recursos como S3.</td></tr>
+        <tr><td class="name">Políticas</td><td>Definen qué acciones se permiten — ej. solo <code>bedrock:InvokeModel</code> sobre un modelo específico.</td></tr>
+        <tr><td class="name">Principio de mínimo privilegio</td><td>Dar solo el acceso estrictamente necesario — reduce superficie de riesgo.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>IAM</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>S3</b> = Simple Storage Service</span><span class="num">04 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 5 · ENCRIPTACIÓN -->
+  <section class="slide bg-alt" data-label="05 Encriptación">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Seguridad · Protección de datos</div>
+    <h1 class="slide-title">Encriptación — <em>at rest</em> y <em>in transit</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:24%">Tipo</th><th style="width:38%">Qué protege</th><th>Cómo se implementa</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">At rest</td><td>Datos almacenados — S3, EBS, bases de datos.</td><td>KMS (AWS Key Management Service) gestiona las llaves.</td></tr>
+        <tr><td class="name">In transit</td><td>Datos mientras viajan por la red — llamadas a la API.</td><td>TLS/HTTPS.</td></tr>
+      </tbody>
+    </table>
+
+
+    <div class="chrome-bot"><span>Encriptación</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>KMS</b> = Key Management Service · <b>API</b> = Application Programming Interface · <b>TLS</b> = Transport Layer Security</span><span class="num">05 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 6 · AISLAMIENTO DE RED -->
+  <section class="slide" data-label="06 Aislamiento de red">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Seguridad · Red privada</div>
+    <h1 class="slide-title">Aislamiento de red — <em>VPC endpoints</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">VPC endpoint</div><div class="desc">Conexión privada entre tu VPC y un servicio de AWS (ej. Bedrock).</div></div>
+      <div class="stat-box"><div class="lbl">AWS PrivateLink</div><div class="desc">Tecnología detrás del VPC endpoint — el tráfico no sale a internet público.</div></div>
+      <div class="stat-box"><div class="lbl">Por qué importa</div><div class="desc">Reduce superficie de ataque al mantener el tráfico dentro de la red de AWS.</div></div>
+      <div class="stat-box"><div class="lbl">Cuándo se exige</div><div class="desc">Sectores regulados donde los datos no pueden transitar redes públicas.</div></div>
+    </div>
+
+    <div class="chrome-bot"><span>Aislamiento de red</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud</span><span class="num">06 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 7 · MONITOREO Y AUDITORÍA -->
+  <section class="slide bg-alt" data-label="07 Monitoreo y auditoría">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Seguridad · Auditoría</div>
+    <h1 class="slide-title">CloudTrail <em>vs.</em> CloudWatch</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:24%">Servicio</th><th style="width:38%">Qué responde</th><th>Ejemplo de uso</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">CloudTrail</td><td>¿Quién hizo qué, y cuándo?</td><td>Auditar quién invocó un modelo de Bedrock, para compliance.</td></tr>
+        <tr><td class="name">CloudWatch</td><td>¿Cómo está funcionando el sistema ahora?</td><td>Alertar si la latencia de un endpoint de SageMaker sube.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">Regla rápida</span>
+      <p>CloudTrail = <em>registro de actividad</em> (auditoría). CloudWatch = <em>métricas y logs en vivo</em> (operación).</p>
+    </div>
+
+    <div class="chrome-bot"><span>Monitoreo y auditoría</span><span class="num">07 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 8 · AMAZON MACIE -->
+  <section class="slide" data-label="08 Amazon Macie">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Servicio · Datos sensibles</div>
+    <h1 class="slide-title">Amazon <em>Macie</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:28%">Aspecto</th><th>Detalle</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Qué hace</td><td>Usa ML para descubrir y clasificar datos sensibles (PII, credenciales) en S3.</td></tr>
+        <tr><td class="name">Cuándo usarlo</td><td>Antes de usar un dataset para entrenar un modelo o alimentar un Knowledge Base de RAG.</td></tr>
+        <tr><td class="name">Por qué importa</td><td>Evita exponer información sensible sin darte cuenta al construir una solución de IA.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Amazon Macie</span><span class="gloss"><b>ML</b> = Machine Learning · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>RAG</b> = Retrieval Augmented Generation · <b>IA</b> = Inteligencia Artificial</span><span class="num">08 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 9 · SECURITY SCOPING MATRIX -->
+  <section class="slide bg-alt" data-label="09 Security Scoping Matrix">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Marco · Generative AI Security Scoping Matrix</div>
+    <h1 class="slide-title">Los <em>5 niveles</em> de control sobre un modelo</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:8%">Scope</th><th style="width:26%">Nombre</th><th>Qué implica</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="code">1</td><td class="name">Consumer app</td><td>App de consumo tipo ChatGPT — cero control sobre el modelo.</td></tr>
+        <tr><td class="code">2</td><td class="name">Enterprise app</td><td>SaaS empresarial con GenAI integrada — control limitado.</td></tr>
+        <tr><td class="code">3</td><td class="name">Pre-trained models</td><td>Usas un FM tal cual, ej. vía Bedrock — control medio.</td></tr>
+        <tr><td class="code">4</td><td class="name">Fine-tuned models</td><td>Adaptas un FM con tus propios datos — control alto.</td></tr>
+        <tr><td class="code">5</td><td class="name">Self-trained models</td><td>Entrenas un modelo desde cero — control total.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">Idea clave</span>
+      <p>A mayor <em>scope</em> (control), mayor también la <em>responsabilidad de seguridad</em> que asumes tú en vez de AWS.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Security Scoping Matrix</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>GenAI</b> = Generative AI · <b>FM</b> = Foundation Model</span><span class="num">09 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 10 · COMPLIANCE FRAMEWORKS -->
+  <section class="slide" data-label="10 Compliance">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Gobernanza · Cumplimiento</div>
+    <h1 class="slide-title">Compliance frameworks <em>y AWS Artifact</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:28%">Elemento</th><th>Detalle</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">AWS Artifact</td><td>Portal de autoservicio para descargar reportes de compliance de AWS (ISO 27001, SOC 1/2/3, PCI-DSS).</td></tr>
+        <tr><td class="name">Frameworks comunes</td><td>ISO, SOC, PCI-DSS (pagos), HIPAA (salud, EE.UU.), GDPR (datos, UE).</td></tr>
+        <tr><td class="name">Responsabilidad</td><td>AWS certifica su infraestructura — el cliente sigue siendo responsable de su propio compliance.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Compliance</span><span class="gloss"><b>ISO</b> = International Organization for Standardization · <b>SOC</b> = System and Organization Controls · <b>PCI-DSS</b> = Payment Card Industry Data Security Standard</span><span class="num">10 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 11 · SERVICIOS DE AUDITORÍA -->
+  <section class="slide bg-alt" data-label="11 Servicios de auditoría">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Compliance · Auditoría y cumplimiento</div>
+    <h1 class="slide-title">Servicios de <em>cumplimiento</em> y auditoría</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:26%">Servicio</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">AWS Config</td><td>Registra la configuración de tus recursos y detecta cambios que violan reglas.</td></tr>
+        <tr><td class="name">Amazon Inspector</td><td>Escanea vulnerabilidades automáticamente en EC2, contenedores y Lambda.</td></tr>
+        <tr><td class="name">AWS Audit Manager</td><td>Recolecta evidencia de forma continua para auditorías y frameworks de compliance.</td></tr>
+        <tr><td class="name">AWS Trusted Advisor</td><td>Recomendaciones de seguridad, costo, rendimiento y límites de servicio.</td></tr>
+        <tr><td class="name">AWS Artifact</td><td>Portal de reportes de cumplimiento de AWS (SOC, ISO, PCI) y acuerdos.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Cómo distinguirlos</span>
+      <p>Config = ¿cómo está configurado? · Inspector = ¿tiene vulnerabilidades? · Audit Manager = evidencia para auditoría · Artifact = reportes de AWS.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Servicios de auditoría</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>SOC</b> = System and Organization Controls · <b>ISO</b> = International Organization for Standardization · <b>PCI-DSS</b> = Payment Card Industry Data Security Standard</span><span class="num">11 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 12 · GOBERNANZA DE DATOS -->
+  <section class="slide bg-alt" data-label="12 Gobernanza de datos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Gobernanza · Datos</div>
+    <h1 class="slide-title">Gobernanza <em>de datos</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Ciclo de vida</div><div class="desc">Creación, uso, archivo y eliminación del dato — cada etapa con reglas propias.</div></div>
+      <div class="stat-box"><div class="lbl">Residencia de datos</div><div class="desc">En qué región/país se almacenan — clave para regulación local.</div></div>
+      <div class="stat-box"><div class="lbl">Linaje de datos</div><div class="desc">Trazabilidad del origen y las transformaciones que sufrió el dato.</div></div>
+      <div class="stat-box"><div class="lbl">Monitoreo de datos</div><div class="desc">Vigilar calidad y uso continuo, no solo al momento de ingesta.</div></div>
+    </div>
+
+    <div class="chrome-bot"><span>Gobernanza de datos</span><span class="num">12 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 13 · INGENIERÍA DE DATOS SEGURA -->
+  <section class="slide" data-label="13 Ingeniería de datos segura">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Datos · Ingeniería segura</div>
+    <h1 class="slide-title">Ingeniería de datos <em>segura</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Calidad de datos</div><div class="desc">Datos completos, precisos y representativos — un modelo es tan bueno como sus datos.</div></div>
+      <div class="stat-box"><div class="lbl">Privacidad</div><div class="desc">Anonimización, enmascaramiento y encriptación para proteger datos personales.</div></div>
+      <div class="stat-box"><div class="lbl">Control de acceso</div><div class="desc">Mínimo privilegio con IAM: solo quien lo necesita puede leer o modificar los datos.</div></div>
+      <div class="stat-box"><div class="lbl">Integridad</div><div class="desc">Los datos no se alteran sin autorización — versionado, checksums y auditoría de cambios.</div></div>
+    </div>
+
+
+    <div class="chrome-bot"><span>Ingeniería de datos segura</span><span class="gloss"><b>IAM</b> = Identity and Access Management</span><span class="num">13 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 14 · TABLA FINAL DE MEMORIZACIÓN -->
+  <section class="slide" data-label="14 Tabla final">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Memorización</div>
+    <h1 class="slide-title">Seguridad y gobernanza, <em>de un vistazo</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:26%">Concepto</th><th>En una frase</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Shared Responsibility</td><td>AWS asegura la nube, tú aseguras lo que pones en ella.</td></tr>
+        <tr><td class="name">IAM</td><td>Roles y políticas con mínimo privilegio.</td></tr>
+        <tr><td class="name">KMS</td><td>Gestiona llaves de encriptación at rest.</td></tr>
+        <tr><td class="name">VPC endpoint / PrivateLink</td><td>Tráfico privado, sin salir a internet.</td></tr>
+        <tr><td class="name">CloudTrail</td><td>Quién hizo qué — auditoría.</td></tr>
+        <tr><td class="name">CloudWatch</td><td>Cómo funciona ahora — métricas y alertas.</td></tr>
+        <tr><td class="name">Macie</td><td>Detecta PII en S3 con ML.</td></tr>
+        <tr><td class="name">Security Scoping Matrix</td><td>5 niveles: consumer → enterprise → pre-trained → fine-tuned → self-trained.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>KMS</b> = Key Management Service · <b>VPC</b> = Virtual Private Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>ML</b> = Machine Learning</span><span class="num">14 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 15 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="15 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="label"><span class="bar"></span>Cierre · Seguridad, cumplimiento y gobernanza</div>
+    <h2>Los <em>5 dominios</em> completos.</h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">Con este bloque se cubrieron los 5 dominios del examen AWS Certified AI Practitioner (AIF-C01). Toca repasar y practicar preguntas.</p>
+      <div class="contact-card">
+        <div class="contact-row"><i class="ti ti-mail"></i><div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div></div>
+        <div class="contact-row"><i class="ti ti-world"></i><div><div class="lbl">Web</div><div class="val">hugogutierrez.pe</div></div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>AI</b> = Artificial Intelligence</span><span class="num">15 / 15</span></div>
+  </section>
+
+</deck-stage>
+
+<!-- DOWNLOAD PDF -->
+<style>
+  .pdf-fab {
+    position: fixed; top: 16px; right: 16px; z-index: 9999;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12; color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover { background: #B36B00; transform: translateY(-1px); box-shadow: 0 10px 28px rgba(255,153,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset; }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot { width: 6px; height: 6px; border-radius: 999px; background: #FF9900; box-shadow: 0 0 0 3px rgba(255,153,0,0.18); }
+  .pdf-fab i { font-size: 16px; line-height: 1; }
+  .pdf-fab .hint { opacity: 0.55; font-size: 11px; margin-left: 4px; padding-left: 8px; border-left: 1px solid rgba(255,255,255,0.18); }
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<script src="deck-stage.js"></script>
+
+<!-- CONTROLES FLOTANTES: R Rail · P PDF · F Fullscreen -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(255,153,0,.85);border-color:rgba(255,153,0,.6);color:#fff}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-rail" title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf" title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen" title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      const hidden = stage.hasAttribute('no-rail');
+      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
+      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
+    }
+    railBtn.addEventListener('click', toggleRail);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="aws">
+<head>
+<meta charset="UTF-8" />
+<title>AWS AIF-C01 · D3 Aplicaciones de FMs — Repaso</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    --type-mega:      140px;
+    --type-title:      80px;
+    --type-h1:         64px;
+    --type-h2:         44px;
+    --type-quote:      60px;
+    --type-body:       26px;
+    --type-body-lg:    30px;
+    --type-small:      22px;
+    --type-mono-lg:    20px;
+    --type-mono:       16px;
+    --type-mono-sm:    14px;
+
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-course="aws"] {
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(255,153,0,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #FFC266; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(255,153,0,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .slide.bg-ink em { color: #FFC266; }
+
+  /* ── CHROME ────────────────────────────────────────────── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand { display: inline-flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag { display: inline-flex; align-items: center; gap: 8px; }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+  .chrome-bot .num { font-feature-settings: "tnum" 1; color: var(--ink-2); }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #FFC266; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── PORTADA ──────────────────────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block { display: flex; align-items: center; gap: 14px; color: var(--ink); }
+  .portada-head .brand-block .brand-mark { width: 44px; height: 44px; border-radius: 9px; font-size: 18px; }
+  .portada-head .brand-name { font-family: var(--font-sans); font-size: 26px; font-weight: 600; letter-spacing: -0.005em; color: var(--ink); }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 20ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    max-width: 34ch;
+  }
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val { font-size: 26px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+
+  /* ── AGENDA ───────────────────────────────────────────── */
+  .agenda-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 12px; }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num { font-family: var(--font-mono); font-size: var(--type-h2); font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
+  .agenda-row .title { font-size: 32px; font-weight: 600; color: var(--ink); letter-spacing: -0.015em; }
+  .agenda-row .desc { font-size: 20px; color: var(--ink-3); margin-top: 4px; }
+  .agenda-row .tag {
+    font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 8px 14px; border: 0.5px solid var(--rule-2); border-radius: 999px; white-space: nowrap;
+  }
+
+  /* ── COMENTARIO ANCHO ─────────────────────────────────── */
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    margin-top: 32px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase; padding-top: 4px; white-space: nowrap;
+  }
+  .big-comment p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; max-width: 90ch; }
+
+  /* ── TABLA COMPARATIVA ────────────────────────────────── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: var(--type-body); }
+  .cmp-table thead th {
+    font-family: var(--font-mono); font-size: var(--type-mono); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3);
+    text-align: left; padding: 16px 22px; border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px; border-bottom: 0.5px solid var(--rule); color: var(--ink-2);
+    font-size: var(--type-body); vertical-align: top; line-height: 1.4;
+  }
+  .cmp-table tbody td.name { color: var(--ink); font-weight: 600; font-size: 28px; letter-spacing: -0.01em; }
+  .cmp-table tbody td.code { font-family: var(--font-mono); color: var(--accent); font-size: 20px; }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+  .cmp-table.dense tbody td { padding: 16px 22px; font-size: 22px; }
+  .cmp-table.dense tbody td.name { font-size: 24px; }
+  .cmp-table.dense thead th { padding: 12px 22px; }
+
+  .acronym-note {
+    font-family: var(--font-mono); font-size: 20px; color: var(--ink-3);
+    margin-top: -20px; margin-bottom: 24px; letter-spacing: 0.01em;
+  }
+  .acronym-note .acc-var { color: var(--accent); font-weight: 500; }
+
+  /* ── CIERRE ───────────────────────────────────────────── */
+  .cierre {
+    background: var(--ink); color: #fff; justify-content: center;
+    position: relative; overflow: hidden; padding-top: 160px; padding-bottom: 140px; isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(255,153,0,0.28), transparent 60%);
+    pointer-events: none; z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: #FFC266;
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 { font-size: var(--type-title); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; max-width: 20ch; }
+  .cierre h2 em { color: #FFC266; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 96px; align-items: end; margin-top: 48px; }
+  .cierre .pregunta { font-size: var(--type-body-lg); color: rgba(255,255,255,0.75); line-height: 1.45; max-width: 50ch; }
+  .cierre .contact-card { display: flex; flex-direction: column; gap: 12px; }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14); border-radius: 12px; background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #FFC266; }
+  .cierre .contact-row .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+  .cierre .contact-row .val { font-size: 18px; color: #fff; font-weight: 500; margin-top: 2px; }
+
+  .acronym-note {
+    font-family: var(--font-mono); font-size: 20px; color: var(--ink-3);
+    margin-top: -20px; margin-bottom: 24px; letter-spacing: 0.01em;
+  }
+  .acronym-note .acc-var { color: var(--accent); font-weight: 500; }
+
+  /* ── STAT GRID · 2×2 (boxes grandes) ─────────────────── */
+  .stat-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 20px; }
+  .stat-box {
+    padding: 32px 36px; border: 0.5px solid var(--rule-2); border-radius: 16px;
+    background: var(--bg); box-shadow: 0 1px 0 rgba(10,13,18,0.02);
+  }
+  section.slide.bg-alt .stat-box { background: var(--bg); }
+  .stat-box .lbl { font-family: var(--font-mono); font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 16px; }
+  .stat-box .desc { font-size: 25px; color: var(--ink-2); line-height: 1.45; }
+
+  /* glosario de siglas (pie de slide) */
+  .chrome-bot { gap: 32px; }
+  .chrome-bot > span:not(.gloss) { flex: none; }
+  .chrome-bot .gloss { flex: 1; min-width: 0; white-space: normal; text-align: center; font-size: 18px; line-height: 1.35; letter-spacing: 0.02em; color: var(--ink-3); }
+  .chrome-bot .gloss b { font-weight: 500; color: var(--accent); }
+  .slide.bg-ink .chrome-bot .gloss { color: rgba(255,255,255,0.55); }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "Portada del repaso. Dominio 3: Aplicaciones fundacionales en AWS. Cubre Bedrock, SageMaker y cómo se usan para construir aplicaciones de IA generativa.",
+  "Agenda: Bedrock vs SageMaker, componentes de cada uno, ciclo de vida de un FM, Knowledge Bases, Agents, Guardrails, JumpStart vs Canvas, costos y tabla final.",
+  "Bedrock: acceso administrado (serverless) a FMs de terceros y de Amazon, vía API, sin gestionar infraestructura. SageMaker: plataforma completa de ML para construir, entrenar y desplegar modelos propios con control total.",
+  "Criterios para elegir un FM: modalidad, costo, latencia, tamaño de contexto, idioma, capacidad de personalización y disponibilidad regional. No existe \"el mejor modelo\": depende del caso de uso.",
+  "Componentes de Bedrock: model access/playgrounds para probar FMs, Knowledge Bases (RAG administrado), Agents (orquestación multi-paso), Guardrails (responsible AI), fine-tuning dentro de Bedrock.",
+  "Componentes de SageMaker: Studio (IDE unificado), JumpStart (catálogo de modelos preentrenados), Canvas (ML sin código), Ground Truth (etiquetado), Feature Store, Model Monitor (drift), Pipelines (automatización end-to-end).",
+  "Gobierno de modelos en SageMaker: Model Cards documenta usos previstos, riesgo, entrenamiento y evaluación; Model Dashboard da la vista central; Model Monitor detecta drift en producción; Role Manager define permisos por rol de ML; Model Registry versiona y aprueba; Clarify mide sesgo y explicabilidad.",
+  "Ciclo de vida de un Foundation Model, distinto al ciclo de ML tradicional: selección de datos, selección del modelo base, pre-entrenamiento, adaptación (prompt/RAG/fine-tuning), evaluación, despliegue, monitoreo y feedback (incluye RLHF).",
+  "Variantes de adaptación: fine-tuning (etiquetados), instruction tuning, continued pre-training (sin etiquetar, dominio), transfer learning (concepto general) y distillation (modelo grande enseña a uno pequeño). En todas, la calidad y representatividad de los datos es clave.",
+  "ROUGE (resúmenes), BLEU (traducción) y BERTScore (similitud semántica con embeddings). Son métricas automáticas que comparan la salida del modelo contra una referencia.",
+  "Además de ROUGE/BLEU/BERTScore: evaluación humana, benchmark datasets y Bedrock Model Evaluation (automática o con humanos). La elección depende del caso de negocio.",
+  "Bedrock Knowledge Bases automatiza casi todo el pipeline de RAG: tú solo configuras la fuente de datos (S3), el vector store y el modelo de embeddings — Bedrock se encarga del chunking, retrieval y augmentation.",
+  "Bedrock Agents: el FM actúa como 'cerebro' que decide qué acciones o APIs (action groups) invocar, y en qué orden, para resolver una tarea compleja de varios pasos.",
+  "Bedrock Guardrails: filtros configurables de responsible AI — contenido dañino, temas denegados definidos por el negocio, detección/redacción de PII, listas de palabras prohibidas, y verificación de grounding (anti-alucinación).",
+  "Ataques a prompts: injection, jailbreaking, hijacking, poisoning y leaking. Defensa en capas: Guardrails, validación de entradas y mínimo privilegio.",
+  "SageMaker JumpStart es para data scientists/developers (acceso a código y notebooks). SageMaker Canvas es para usuarios de negocio sin conocimientos de código — interfaz visual.",
+  "Otros recursos de Gen AI en AWS: Amazon Q (asistente de IA generativa construido sobre Bedrock, para devs y para negocio) y PartyRock (playground gratuito de Bedrock, sin código).",
+  "Modelo de costos de Bedrock: On-Demand paga por token usado, sin compromiso — ideal para cargas variables o empezar. Provisioned Throughput reserva capacidad fija por un período — para cargas altas y predecibles que necesitan throughput garantizado.",
+  "Tabla final de memorización: los conceptos clave de Bedrock y SageMaker en una sola vista.",
+  "Cierre del bloque. Siguiente paso: Dominio 4, guías de IA responsable (fairness, transparencia, explicabilidad)."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- SLIDE 1 · PORTADA -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">Repaso personal · Lima, Perú</div>
+        <div class="val">AWS AIF-C01 · 2026</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag"><span>AWS AIF-C01</span></div>
+      <h1 class="course-title">Bedrock <em>y</em> SageMaker</h1>
+      <p class="course-sub">Repaso para el examen AWS Certified AI Practitioner. Aplicaciones fundacionales: cuándo usar cada servicio, componentes clave y costos.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item"><div class="lbl">Dominio</div><div class="val">3 · Aplicaciones fundacionales</div></div>
+      <div class="item"><div class="lbl">Bloque</div><div class="val">Bedrock y SageMaker</div></div>
+      <div class="item"><div class="lbl">Formato</div><div class="val">Apunte de repaso</div></div>
+      <div class="item"><div class="lbl">Recurso</div><div class="val">hugogutierrez.pe</div></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 · AGENDA -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Agenda</div>
+    <h1 class="slide-title">Qué cubre <em>este repaso</em></h1>
+    <div class="title-rule"></div>
+    <div class="agenda-list">
+      <div class="agenda-row"><span class="num">01</span><div><div class="title">Bedrock vs. SageMaker</div><div class="desc">La decisión central + cómo elegir un FM.</div></div><span class="tag">Decisión</span></div>
+      <div class="agenda-row"><span class="num">02</span><div><div class="title">Componentes de cada servicio</div><div class="desc">Knowledge Bases, Agents, Guardrails, Studio, JumpStart, Canvas, Model Cards, Model Monitor...</div></div><span class="tag">Servicios</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">Ciclo de vida, fine-tuning y evaluación</div><div class="desc">Variantes de adaptación, ROUGE, BLEU, BERTScore.</div></div><span class="tag">Proceso</span></div>
+      <div class="agenda-row"><span class="num">04</span><div><div class="title">RAG, Agents, Guardrails y ataques</div><div class="desc">Cómo Bedrock automatiza cada pieza + riesgos de prompts.</div></div><span class="tag">Aplicado</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Costos y memorización</div><div class="desc">On-Demand vs. Provisioned Throughput + resumen final.</div></div><span class="tag">Cierre</span></div>
+    </div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>FM</b> = Foundation Model · <b>ROUGE</b> = Recall-Oriented Understudy for Gisting Evaluation · <b>BLEU</b> = Bilingual Evaluation Understudy · <b>BERTScore</b> = similitud semántica con embeddings BERT</span><span class="num">02 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 3 · BEDROCK VS SAGEMAKER -->
+  <section class="slide bg-alt" data-label="03 Bedrock vs SageMaker">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Decisión · La pregunta central</div>
+    <h1 class="slide-title">Bedrock <em>vs.</em> SageMaker</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:20%">Aspecto</th><th>Bedrock</th><th>SageMaker</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Qué es</td><td>Acceso administrado (serverless) a FMs de terceros/Amazon, vía API.</td><td>Plataforma completa de ML — construir, entrenar y desplegar modelos propios.</td></tr>
+        <tr><td class="name">Infraestructura</td><td>Ninguna que gestionar.</td><td>Tú la gestionas (o delegas parcialmente).</td></tr>
+        <tr><td class="name">Cuándo usarlo</td><td>Usar rápido un FM ya entrenado, sin servidores.</td><td>Entrenar desde cero o necesitas control granular del pipeline.</td></tr>
+        <tr><td class="name">Modelos</td><td>Claude, Llama, Titan, Cohere, AI21, Stability AI.</td><td>Cualquier algoritmo/arquitectura, o FMs vía JumpStart.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Bedrock vs SageMaker</span><span class="gloss"><b>FM</b> = Foundation Model · <b>API</b> = Application Programming Interface · <b>ML</b> = Machine Learning · <b>AI</b> = Artificial Intelligence</span><span class="num">03 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 4 · CRITERIOS DE SELECCIÓN DE FM -->
+  <section class="slide" data-label="04 Criterios de selección de FM">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Decisión · Selección del modelo</div>
+    <h1 class="slide-title">Cómo elegir un <em>Foundation Model</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Modalidad y tarea</div><div class="desc">Texto, imagen, embeddings o multimodal — el modelo debe soportar lo que necesitas.</div></div>
+      <div class="stat-box"><div class="lbl">Costo y latencia</div><div class="desc">Los modelos más grandes son más capaces, pero más lentos y caros por token.</div></div>
+      <div class="stat-box"><div class="lbl">Contexto e idioma</div><div class="desc">Ventana de contexto suficiente para tus documentos y soporte del idioma de tus usuarios.</div></div>
+      <div class="stat-box"><div class="lbl">Personalización y región</div><div class="desc">¿Permite fine-tuning? ¿Está disponible en tu región y cumple tu compliance?</div></div>
+    </div>
+
+    <div class="chrome-bot"><span>Criterios de selección de FM</span><span class="num">04 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 5 · COMPONENTES DE BEDROCK -->
+  <section class="slide" data-label="05 Componentes Bedrock">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Servicios · Bedrock</div>
+    <h1 class="slide-title">Componentes clave de <em>Bedrock</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:28%">Componente</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Model access / Playgrounds</td><td>Probar distintos FMs desde la consola, sin código.</td></tr>
+        <tr><td class="name">Knowledge Bases</td><td>RAG administrado — conecta el FM a tus documentos sin armar tú el pipeline.</td></tr>
+        <tr><td class="name">Agents</td><td>Orquestan tareas multi-paso — el modelo decide qué herramientas/APIs llamar.</td></tr>
+        <tr><td class="name">Guardrails</td><td>Filtros de responsible AI: contenido dañino, temas prohibidos, PII.</td></tr>
+        <tr><td class="name">Fine-tuning</td><td>Adaptar un FM base con tus propios datos, dentro de Bedrock.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Componentes de Bedrock</span><span class="gloss"><b>FM</b> = Foundation Model · <b>RAG</b> = Retrieval Augmented Generation · <b>API</b> = Application Programming Interface · <b>AI</b> = Artificial Intelligence · <b>PII</b> = Personally Identifiable Information</span><span class="num">05 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 6 · COMPONENTES DE SAGEMAKER -->
+  <section class="slide bg-alt" data-label="06 Componentes SageMaker">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Servicios · SageMaker</div>
+    <h1 class="slide-title">Componentes clave de <em>SageMaker</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:24%">Componente</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Studio</td><td>IDE unificado para todo el ciclo de ML.</td></tr>
+        <tr><td class="name">JumpStart</td><td>Catálogo de modelos preentrenados, incl. FMs open source, listos para desplegar o afinar.</td></tr>
+        <tr><td class="name">Canvas</td><td>ML sin código — para usuarios de negocio, no data scientists.</td></tr>
+        <tr><td class="name">Ground Truth</td><td>Etiquetado de datos, humano + asistido por ML.</td></tr>
+        <tr><td class="name">Feature Store</td><td>Repositorio centralizado de features para entrenar/servir modelos.</td></tr>
+        <tr><td class="name">Model Monitor</td><td>Detecta drift y degradación del modelo en producción.</td></tr>
+        <tr><td class="name">Pipelines</td><td>Automatiza el flujo completo: datos → entrenamiento → despliegue.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Componentes de SageMaker</span><span class="gloss"><b>IDE</b> = Integrated Development Environment · <b>ML</b> = Machine Learning · <b>FM</b> = Foundation Model</span><span class="num">06 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 7 · GOBIERNO DE MODELOS EN SAGEMAKER -->
+  <section class="slide" data-label="07 Gobierno de modelos en SageMaker">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Servicios · Gobierno de modelos</div>
+    <h1 class="slide-title">SageMaker: <em>gobierno de modelos</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:24%">Feature</th><th>Para qué sirve</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Model Cards</td><td>Documenta cada modelo: usos previstos, riesgo, datos de entrenamiento y resultados de evaluación.</td></tr>
+        <tr><td class="name">Model Dashboard</td><td>Vista central de todos tus modelos: despliegue, uso y desempeño.</td></tr>
+        <tr><td class="name">Model Monitor</td><td>Vigila la calidad de datos y del modelo en producción; detecta drift.</td></tr>
+        <tr><td class="name">Role Manager</td><td>Define permisos por rol de ML (data scientist, MLOps) con plantillas.</td></tr>
+        <tr><td class="name">Model Registry</td><td>Versiona modelos y controla su aprobación antes de desplegar.</td></tr>
+        <tr><td class="name">Clarify</td><td>Mide sesgo y explica predicciones (ver Dominio 4).</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>"Registro con usos previstos y riesgos" = <em>Model Cards</em>. "Ver todos los modelos en un lugar" = Dashboard. "Detectar drift" = Monitor. "Permisos por rol" = Role Manager.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Gobierno de modelos en SageMaker</span><span class="gloss"><b>ML</b> = Machine Learning · <b>MLOps</b> = ML Operations</span><span class="num">07 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 8 · CICLO DE VIDA DE UN FM -->
+  <section class="slide" data-label="08 Ciclo de vida FM">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Proceso · No confundir con el ciclo de ML</div>
+    <h1 class="slide-title">El ciclo de vida de un <em>Foundation Model</em></h1>
+    <div class="title-rule"></div>
+    <div class="agenda-list">
+      <div class="agenda-row"><span class="num">01</span><div><div class="title">Selección de datos</div><div class="desc">Datos masivos, diversos y de calidad para el pre-entrenamiento.</div></div><span class="tag">Datos</span></div>
+      <div class="agenda-row"><span class="num">02</span><div><div class="title">Selección del modelo</div><div class="desc">Elegir el FM base según caso de uso, tamaño y costo.</div></div><span class="tag">Diseño</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">Pre-entrenamiento</div><div class="desc">Aprendizaje general con datos masivos — lo hacen los grandes labs.</div></div><span class="tag">Modelo</span></div>
+      <div class="agenda-row"><span class="num">04</span><div><div class="title">Adaptación</div><div class="desc">Prompt engineering, RAG o fine-tuning, según el caso.</div></div><span class="tag">Modelo</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Evaluación</div><div class="desc">Coherencia, relevancia, toxicidad — más allá de precision/recall.</div></div><span class="tag">Modelo</span></div>
+      <div class="agenda-row"><span class="num">06</span><div><div class="title">Despliegue</div><div class="desc">Servir el modelo vía API (Bedrock) o endpoint (SageMaker).</div></div><span class="tag">Producción</span></div>
+      <div class="agenda-row"><span class="num">07</span><div><div class="title">Monitoreo y feedback</div><div class="desc">Feedback humano (RLHF), reentrenar o reajustar.</div></div><span class="tag">Producción</span></div>
+    </div>
+    <div class="chrome-bot"><span>Ciclo de vida de un FM</span><span class="gloss"><b>ML</b> = Machine Learning · <b>FM</b> = Foundation Model · <b>RAG</b> = Retrieval Augmented Generation · <b>API</b> = Application Programming Interface · <b>RLHF</b> = Reinforcement Learning from Human Feedback</span><span class="num">08 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 9 · VARIANTES DE FINE-TUNING -->
+  <section class="slide bg-alt" data-label="09 Variantes de fine-tuning">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Adaptación · Más allá del fine-tuning básico</div>
+    <h1 class="slide-title">Variantes de <em>fine-tuning</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:22%">Técnica</th><th style="width:46%">Qué hace</th><th>Datos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Fine-tuning</td><td>Ajusta los pesos del modelo para una tarea o estilo específico.</td><td>Etiquetados (prompt → respuesta).</td></tr>
+        <tr><td class="name">Instruction tuning</td><td>Fine-tuning con instrucciones y respuestas para que siga órdenes mejor.</td><td>Etiquetados (instrucción → respuesta).</td></tr>
+        <tr><td class="name">Continued pre-training</td><td>Sigue preentrenando con texto del dominio (jerga legal, médica, financiera).</td><td>Sin etiquetar, gran volumen.</td></tr>
+        <tr><td class="name">Transfer learning</td><td>Reutiliza un modelo entrenado en una tarea como punto de partida para otra.</td><td>Pocos datos de la nueva tarea.</td></tr>
+        <tr><td class="name">Distillation</td><td>Un modelo grande ("profesor") enseña a uno pequeño ("alumno"): más barato y rápido.</td><td>Salidas del modelo grande.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Calidad de datos</span>
+      <p>Para adaptar un FM importa más la calidad que el volumen: datos curados, representativos y sin sesgos.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Variantes de fine-tuning</span><span class="gloss"><b>FM</b> = Foundation Model</span><span class="num">09 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 10 · MÉTRICAS DE EVALUACIÓN DE FM -->
+  <section class="slide" data-label="10 Métricas de evaluación de FM">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Evaluación · Métricas automáticas</div>
+    <h1 class="slide-title">Evaluar un FM: <em>ROUGE, BLEU, BERTScore</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:18%">Métrica</th><th style="width:24%">Tarea típica</th><th>Cómo compara</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">ROUGE</td><td>Resumen de texto</td><td>Solapamiento de palabras/n-gramas entre el resumen del modelo y uno de referencia.</td></tr>
+        <tr><td class="name">BLEU</td><td>Traducción</td><td>Coincidencia de n-gramas con traducciones de referencia (enfocada en precisión).</td></tr>
+        <tr><td class="name">BERTScore</td><td>Cualquier generación</td><td>Similitud semántica vía embeddings: capta el significado, no solo las palabras exactas.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Resumir → ROUGE. Traducir → BLEU. Comparar significado → BERTScore. Precision/recall/F1 no sirven para texto generado libre.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Métricas de evaluación de FM</span><span class="gloss"><b>FM</b> = Foundation Model · <b>ROUGE</b> = Recall-Oriented Understudy for Gisting Evaluation · <b>BLEU</b> = Bilingual Evaluation Understudy · <b>BERTScore</b> = similitud semántica con embeddings BERT</span><span class="num">10 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 11 · EVALUACIÓN HUMANA Y BEDROCK -->
+  <section class="slide bg-alt" data-label="11 Evaluación humana y Bedrock">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Evaluación · Más allá de las métricas</div>
+    <h1 class="slide-title">Evaluación <em>humana</em>, benchmarks y Bedrock</h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Evaluación humana</div><div class="desc">Personas califican coherencia, relevancia, tono y utilidad — lo que las métricas automáticas no capturan.</div></div>
+      <div class="stat-box"><div class="lbl">Benchmark datasets</div><div class="desc">Conjuntos estándar (ej. GLUE, MMLU, HELM) para comparar modelos de forma objetiva.</div></div>
+      <div class="stat-box"><div class="lbl">Bedrock Model Evaluation</div><div class="desc">Evalúa modelos de forma automática o con revisores humanos: exactitud, robustez, toxicidad.</div></div>
+      <div class="stat-box"><div class="lbl">Qué evaluar</div><div class="desc">Calidad de la respuesta, relevancia, alucinación, toxicidad, costo y latencia — según el caso de negocio.</div></div>
+    </div>
+
+    <div class="chrome-bot"><span>Evaluación humana y Bedrock</span><span class="gloss"><b>GLUE</b> = General Language Understanding Evaluation · <b>MMLU</b> = Massive Multitask Language Understanding · <b>HELM</b> = Holistic Evaluation of Language Models</span><span class="num">11 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 12 · BEDROCK KNOWLEDGE BASES -->
+  <section class="slide bg-alt" data-label="12 Knowledge Bases">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Bedrock · RAG administrado</div>
+    <h1 class="slide-title">Knowledge Bases — <em>RAG sin construirlo tú</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:32%">Elemento</th><th>Qué configuras tú</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Fuente de datos</td><td>Un bucket S3 con tus documentos.</td></tr>
+        <tr><td class="name">Vector store</td><td>OpenSearch Serverless, Aurora PostgreSQL, Neptune Analytics, Pinecone, Redis o MongoDB.</td></tr>
+        <tr><td class="name">Embedding model</td><td>Ej. Titan Embeddings.</td></tr>
+        <tr><td class="name">Chunking</td><td>Tamaño de fragmento — configurable.</td></tr>
+        <tr><td class="name">Retrieval + augmentation</td><td>Automatizado por Bedrock — no lo armas tú.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Knowledge Bases</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation · <b>S3</b> = Simple Storage Service</span><span class="num">12 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 13 · BEDROCK AGENTS -->
+  <section class="slide" data-label="13 Agents">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Bedrock · Orquestación</div>
+    <h1 class="slide-title">Agents — el modelo <em>decide qué hacer</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:26%">Concepto</th><th>Qué es</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Agent</td><td>Orquesta una tarea multi-paso usando un FM como "cerebro" de decisión.</td></tr>
+        <tr><td class="name">Action groups</td><td>Conjunto de APIs / funciones Lambda que el agente puede invocar.</td></tr>
+        <tr><td class="name">Orchestration</td><td>El agente decide en qué orden llamar cada herramienta.</td></tr>
+        <tr><td class="name">Ejemplo</td><td>"Reserva un vuelo y un hotel" → llama a la API de vuelos, luego a la de hoteles.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Agents</span><span class="gloss"><b>FM</b> = Foundation Model · <b>API</b> = Application Programming Interface</span><span class="num">13 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 14 · BEDROCK GUARDRAILS -->
+  <section class="slide bg-alt" data-label="14 Guardrails">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Bedrock · Responsible AI</div>
+    <h1 class="slide-title">Guardrails — los <em>filtros</em> de seguridad</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:26%">Tipo de filtro</th><th>Qué bloquea</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Contenido dañino</td><td>Odio, violencia, contenido sexual, auto-daño.</td></tr>
+        <tr><td class="name">Temas denegados</td><td>Temas específicos definidos por el negocio (ej. consejos legales).</td></tr>
+        <tr><td class="name">PII</td><td>Información personal identificable — redacta o bloquea.</td></tr>
+        <tr><td class="name">Palabras prohibidas</td><td>Lista de palabras o frases específicas.</td></tr>
+        <tr><td class="name">Grounding check</td><td>Verifica que la respuesta esté basada en la fuente — anti-alucinación.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Guardrails</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>PII</b> = Personally Identifiable Information</span><span class="num">14 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 15 · ATAQUES A PROMPTS -->
+  <section class="slide" data-label="15 Ataques a prompts">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Seguridad · Riesgos de prompts</div>
+    <h1 class="slide-title">Ataques a <em>prompts</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:20%">Ataque</th><th style="width:44%">Qué es</th><th>Defensa típica</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Prompt injection</td><td>Instrucciones maliciosas en el input que reemplazan las del sistema.</td><td>Validar entradas, separar instrucciones de datos.</td></tr>
+        <tr><td class="name">Jailbreaking</td><td>Saltarse las restricciones de seguridad del modelo (ej. juegos de rol).</td><td>Guardrails, filtros de contenido.</td></tr>
+        <tr><td class="name">Hijacking</td><td>Redirigir al modelo para que cumpla el objetivo del atacante.</td><td>Mínimo privilegio en herramientas y agentes.</td></tr>
+        <tr><td class="name">Poisoning</td><td>Contaminar los datos de entrenamiento o de RAG con contenido malicioso.</td><td>Validar y controlar las fuentes de datos.</td></tr>
+        <tr><td class="name">Prompt leaking</td><td>Hacer que el modelo revele su system prompt o datos internos.</td><td>No poner secretos en el prompt; guardrails.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>La defensa es en capas: Guardrails + validación de inputs + mínimo privilegio con IAM.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Ataques a prompts</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation · <b>IAM</b> = Identity and Access Management</span><span class="num">15 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 16 · JUMPSTART VS CANVAS -->
+  <section class="slide" data-label="16 JumpStart vs Canvas">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>SageMaker · Dos audiencias</div>
+    <h1 class="slide-title">JumpStart <em>vs.</em> Canvas</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:20%">Aspecto</th><th>JumpStart</th><th>Canvas</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Usuario objetivo</td><td>Data scientists / developers.</td><td>Usuarios de negocio, sin código.</td></tr>
+        <tr><td class="name">Qué hace</td><td>Catálogo de modelos preentrenados listos para desplegar o afinar.</td><td>Interfaz visual para construir modelos de ML sin escribir código.</td></tr>
+        <tr><td class="name">Nivel de control</td><td>Alto — acceso a notebooks y código.</td><td>Bajo — todo vía interfaz.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>JumpStart vs Canvas</span><span class="gloss"><b>ML</b> = Machine Learning</span><span class="num">16 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 17 · OTROS RECURSOS -->
+  <section class="slide bg-alt" data-label="17 Otros recursos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Ecosistema · Otros recursos</div>
+    <h1 class="slide-title">Otros recursos de <em>Gen AI</em> en AWS</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:26%">Servicio</th><th>Qué es</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Amazon Q</td><td>Asistente de IA generativa de AWS (para desarrolladores y para negocio) — construido sobre Bedrock.</td></tr>
+        <tr><td class="name">PartyRock</td><td>Playground gratuito de Bedrock para experimentar sin código.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Otros recursos</span><span class="gloss"><b>GenAI</b> = Generative AI · <b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">17 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 18 · COSTOS DE BEDROCK -->
+  <section class="slide" data-label="18 Costos Bedrock">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Costos · Bedrock</div>
+    <h1 class="slide-title">On-Demand <em>vs.</em> Provisioned Throughput</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:22%">Modo</th><th style="width:38%">Qué es</th><th>Cuándo usarlo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">On-Demand</td><td>Pagas por token usado (input + output), sin compromiso.</td><td>Cargas variables, empezar rápido, bajo volumen.</td></tr>
+        <tr><td class="name">Provisioned Throughput</td><td>Reservas capacidad fija por un período, pago fijo.</td><td>Cargas altas y predecibles, necesitas throughput garantizado.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Costos de Bedrock</span><span class="num">18 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 19 · TABLA FINAL DE MEMORIZACIÓN -->
+  <section class="slide bg-alt" data-label="19 Tabla final">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Memorización</div>
+    <h1 class="slide-title">Bedrock y SageMaker, <em>de un vistazo</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:26%">Concepto</th><th>En una frase</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Bedrock</td><td>Acceso administrado a FMs, sin servidores que gestionar.</td></tr>
+        <tr><td class="name">SageMaker</td><td>Plataforma completa para construir y entrenar modelos propios.</td></tr>
+        <tr><td class="name">Knowledge Bases</td><td>RAG administrado, dentro de Bedrock.</td></tr>
+        <tr><td class="name">Agents</td><td>Orquestan tareas multi-paso llamando herramientas/APIs.</td></tr>
+        <tr><td class="name">Guardrails</td><td>Filtros de responsible AI (contenido, PII, grounding).</td></tr>
+        <tr><td class="name">JumpStart</td><td>Catálogo de modelos preentrenados en SageMaker.</td></tr>
+        <tr><td class="name">Canvas</td><td>ML sin código, para usuarios de negocio.</td></tr>
+        <tr><td class="name">On-Demand vs. Provisioned</td><td>Pago por uso vs. capacidad reservada garantizada.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>FM</b> = Foundation Model · <b>RAG</b> = Retrieval Augmented Generation · <b>API</b> = Application Programming Interface · <b>AI</b> = Artificial Intelligence · <b>PII</b> = Personally Identifiable Information · <b>ML</b> = Machine Learning</span><span class="num">19 / 20</span></div>
+  </section>
+
+  <!-- SLIDE 20 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="20 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="label"><span class="bar"></span>Cierre · Bedrock y SageMaker</div>
+    <h2>Listo para el <em>siguiente dominio</em>.</h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">Siguiente bloque: Dominio 4 — Guías de IA responsable (fairness, transparencia, explicabilidad).</p>
+      <div class="contact-card">
+        <div class="contact-row"><i class="ti ti-mail"></i><div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div></div>
+        <div class="contact-row"><i class="ti ti-world"></i><div><div class="lbl">Web</div><div class="val">hugogutierrez.pe</div></div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">20 / 20</span></div>
+  </section>
+
+</deck-stage>
+
+<!-- DOWNLOAD PDF -->
+<style>
+  .pdf-fab {
+    position: fixed; top: 16px; right: 16px; z-index: 9999;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12; color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover { background: #B36B00; transform: translateY(-1px); box-shadow: 0 10px 28px rgba(255,153,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset; }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot { width: 6px; height: 6px; border-radius: 999px; background: #FF9900; box-shadow: 0 0 0 3px rgba(255,153,0,0.18); }
+  .pdf-fab i { font-size: 16px; line-height: 1; }
+  .pdf-fab .hint { opacity: 0.55; font-size: 11px; margin-left: 4px; padding-left: 8px; border-left: 1px solid rgba(255,255,255,0.18); }
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<script src="deck-stage.js"></script>
+
+<!-- CONTROLES FLOTANTES: R Rail · P PDF · F Fullscreen -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(255,153,0,.85);border-color:rgba(255,153,0,.6);color:#fff}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-rail" title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf" title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen" title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      const hidden = stage.hasAttribute('no-rail');
+      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
+      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
+    }
+    railBtn.addEventListener('click', toggleRail);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>

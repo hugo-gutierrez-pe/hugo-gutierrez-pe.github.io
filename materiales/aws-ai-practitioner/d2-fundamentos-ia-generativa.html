@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="aws">
+<head>
+<meta charset="UTF-8" />
+<title>AWS AIF-C01 · D2 IA Generativa — Repaso</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    --type-mega:      140px;
+    --type-title:      80px;
+    --type-h1:         64px;
+    --type-h2:         44px;
+    --type-quote:      60px;
+    --type-body:       26px;
+    --type-body-lg:    30px;
+    --type-small:      22px;
+    --type-mono-lg:    20px;
+    --type-mono:       16px;
+    --type-mono-sm:    14px;
+
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-course="aws"] {
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(255,153,0,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #FFC266; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(255,153,0,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .slide.bg-ink em { color: #FFC266; }
+
+  /* ── CHROME ────────────────────────────────────────────── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand { display: inline-flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag { display: inline-flex; align-items: center; gap: 8px; }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+  .chrome-bot .num { font-feature-settings: "tnum" 1; color: var(--ink-2); }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #FFC266; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── PORTADA ──────────────────────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block { display: flex; align-items: center; gap: 14px; color: var(--ink); }
+  .portada-head .brand-block .brand-mark { width: 44px; height: 44px; border-radius: 9px; font-size: 18px; }
+  .portada-head .brand-name { font-family: var(--font-sans); font-size: 26px; font-weight: 600; letter-spacing: -0.005em; color: var(--ink); }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 20ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    max-width: 34ch;
+  }
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val { font-size: 26px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+
+  /* ── AGENDA ───────────────────────────────────────────── */
+  .agenda-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 12px; }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num { font-family: var(--font-mono); font-size: var(--type-h2); font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
+  .agenda-row .title { font-size: 32px; font-weight: 600; color: var(--ink); letter-spacing: -0.015em; }
+  .agenda-row .desc { font-size: 20px; color: var(--ink-3); margin-top: 4px; }
+  .agenda-row .tag {
+    font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 8px 14px; border: 0.5px solid var(--rule-2); border-radius: 999px; white-space: nowrap;
+  }
+
+  /* ── DOS COLUMNAS DE TEXTO ────────────────────────────── */
+  .two-col-text { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-col); }
+  .text-col h3 { font-size: var(--type-h2); font-weight: 600; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 20px; line-height: 1.1; }
+  .text-col .col-eyebrow {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+  }
+  .text-col p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; margin-bottom: 16px; }
+  .text-col ul { list-style: none; padding: 0; }
+  .text-col ul li {
+    font-size: var(--type-body); color: var(--ink-2); line-height: 1.5;
+    padding: 10px 0 10px 26px; position: relative; border-bottom: 0.5px solid var(--rule);
+  }
+  .text-col ul li::before { content: ""; position: absolute; left: 0; top: 22px; width: 12px; height: 1px; background: var(--accent); }
+  .text-col ul li:last-child { border-bottom: none; }
+  .text-col ul li strong { color: var(--ink); font-weight: 600; }
+
+  /* ── COMENTARIO ANCHO ─────────────────────────────────── */
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    margin-top: 32px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase; padding-top: 4px; white-space: nowrap;
+  }
+  .big-comment p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; max-width: 90ch; }
+
+  /* ── TABLA COMPARATIVA ────────────────────────────────── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: var(--type-body); }
+  .cmp-table thead th {
+    font-family: var(--font-mono); font-size: var(--type-mono); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3);
+    text-align: left; padding: 16px 22px; border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px; border-bottom: 0.5px solid var(--rule); color: var(--ink-2);
+    font-size: var(--type-body); vertical-align: top; line-height: 1.4;
+  }
+  .cmp-table tbody td.name { color: var(--ink); font-weight: 600; font-size: 28px; letter-spacing: -0.01em; }
+  .cmp-table tbody td.code { font-family: var(--font-mono); color: var(--accent); font-size: 20px; }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+
+  /* ── TABLA DENSA (para tablas de 5-6 filas) ───────────── */
+  .cmp-table.dense tbody td { padding: 16px 22px; font-size: 22px; }
+  .cmp-table.dense tbody td.name { font-size: 24px; }
+  .cmp-table.dense thead th { padding: 12px 22px; }
+
+  .acronym-note {
+    font-family: var(--font-mono); font-size: 20px; color: var(--ink-3);
+    margin-top: -20px; margin-bottom: 24px; letter-spacing: 0.01em;
+  }
+  .acronym-note .acc-var { color: var(--accent); font-weight: 500; }
+
+  /* ── CIERRE ───────────────────────────────────────────── */
+  .cierre {
+    background: var(--ink); color: #fff; justify-content: center;
+    position: relative; overflow: hidden; padding-top: 160px; padding-bottom: 140px; isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(255,153,0,0.28), transparent 60%);
+    pointer-events: none; z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: #FFC266;
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 { font-size: var(--type-title); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; max-width: 20ch; }
+  .cierre h2 em { color: #FFC266; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 96px; align-items: end; margin-top: 48px; }
+  .cierre .pregunta { font-size: var(--type-body-lg); color: rgba(255,255,255,0.75); line-height: 1.45; max-width: 50ch; }
+  .cierre .contact-card { display: flex; flex-direction: column; gap: 12px; }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14); border-radius: 12px; background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #FFC266; }
+  .cierre .contact-row .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+  .cierre .contact-row .val { font-size: 18px; color: #fff; font-weight: 500; margin-top: 2px; }
+
+  .acronym-note {
+    font-family: var(--font-mono); font-size: 20px; color: var(--ink-3);
+    margin-top: -20px; margin-bottom: 24px; letter-spacing: 0.01em;
+  }
+  .acronym-note .acc-var { color: var(--accent); font-weight: 500; }
+
+  /* ── STAT GRID · 2×2 (boxes grandes) ─────────────────── */
+  .stat-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 20px; }
+  .stat-box {
+    padding: 32px 36px; border: 0.5px solid var(--rule-2); border-radius: 16px;
+    background: var(--bg); box-shadow: 0 1px 0 rgba(10,13,18,0.02);
+  }
+  section.slide.bg-alt .stat-box { background: var(--bg); }
+  .stat-box .lbl { font-family: var(--font-mono); font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 16px; }
+  .stat-box .desc { font-size: 25px; color: var(--ink-2); line-height: 1.45; }
+
+  /* glosario de siglas (pie de slide) */
+  .chrome-bot { gap: 32px; }
+  .chrome-bot > span:not(.gloss) { flex: none; }
+  .chrome-bot .gloss { flex: 1; min-width: 0; white-space: normal; text-align: center; font-size: 18px; line-height: 1.35; letter-spacing: 0.02em; color: var(--ink-3); }
+  .chrome-bot .gloss b { font-weight: 500; color: var(--accent); }
+  .slide.bg-ink .chrome-bot .gloss { color: rgba(255,255,255,0.55); }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "Portada del repaso. Dominio 2: Fundamentos de IA Generativa. Cubre conceptos, terminología y técnicas de adaptación de modelos fundacionales.",
+  "Agenda: ML vs Gen AI, FM vs LLM, cómo piensa un LLM, las 3 formas de adaptar un modelo, prompting, parámetros de inferencia, RAG, riesgos, casos de uso y tabla final.",
+  "ML tradicional predice una salida específica y estrecha (etiqueta, número). Gen AI genera contenido nuevo y abierto (texto, imagen, audio, código) a partir de un patrón aprendido.",
+  "Foundation Model es el término general de AWS: modelo grande preentrenado, base para múltiples tareas. LLM es un tipo de FM especializado en texto — dar ejemplos concretos: Claude (Sonnet, Opus), GPT, Llama, Titan.",
+  "Conceptos base de un LLM: token (fragmento de texto, unidad de costo), embedding (vector numérico de significado), ventana de contexto (memoria de tokens que el modelo puede ver), attention (qué partes del texto pesan más).",
+  "Tipos de arquitecturas generativas. Transformer domina texto; diffusion domina imágenes; GAN y VAE son enfoques previos aún mencionados en el examen. Multimodal = varias modalidades en un mismo modelo.",
+  "Las 3 formas de adaptar un FM, de menor a mayor costo: prompt engineering (sin tocar el modelo), RAG (agrega contexto al input, no toca los pesos), fine-tuning (SÍ modifica los pesos internos del modelo vía backpropagation). Ejemplo de fine-tuning: banco que ajusta el modelo con miles de tickets resueltos para fijar tono y formato de marca. El examen pregunta mucho cuál elegir según el escenario.",
+  "Técnicas de prompting: zero-shot (sin ejemplos), few-shot (con ejemplos), chain-of-thought (razonar paso a paso), prompt template (estructura reutilizable).",
+  "Parámetros de inferencia: temperature controla creatividad, top-p y top-k controlan el rango de tokens candidatos, max tokens limita la longitud de la respuesta.",
+  "Pipeline de RAG: ingesta y chunking de documentos, embeddings, almacenamiento en base de datos vectorial, retrieval de los fragmentos más relevantes, se agregan al prompt (augment), y el LLM genera la respuesta con ese contexto.",
+  "Riesgos de los LLMs: alucinación, sesgo, toxicidad, prompt injection, fuga de datos. Cada uno tiene una mitigación típica — tema recurrente en el examen bajo 'responsible AI'. Ejemplo de prompt injection: usuario escribe 'ignora tus instrucciones anteriores', o versión indirecta, instrucciones ocultas dentro de un documento que el modelo lee vía RAG.",
+  "Casos de uso típicos de Gen AI: generación de texto, código, imágenes, Q&A aumentada con RAG, resumen y extracción de información.",
+  "Ventajas: adaptabilidad, velocidad de respuesta y simplicidad. Límites: alucinaciones, no determinismo, interpretabilidad, inexactitud. Para medir el valor: métricas de negocio como satisfacción, conversión, ingreso por usuario y eficiencia.",
+  "Tabla final de memorización: los conceptos clave del dominio en una sola vista, en una frase cada uno.",
+  "Cierre del bloque. Siguiente paso: Dominio 3, aplicaciones fundacionales en AWS (Bedrock, SageMaker)."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- SLIDE 1 · PORTADA -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">Repaso personal · Lima, Perú</div>
+        <div class="val">AWS AIF-C01 · 2026</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag"><span>AWS AIF-C01</span></div>
+      <h1 class="course-title">Fundamentos de <em>IA Generativa</em></h1>
+      <p class="course-sub">Repaso para el examen AWS Certified AI Practitioner. Foundation Models, tipos de modelos generativos, prompting, RAG, fine-tuning, riesgos y límites.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item"><div class="lbl">Dominio</div><div class="val">2 · IA Generativa</div></div>
+      <div class="item"><div class="lbl">Bloque</div><div class="val">Conceptos y terminología</div></div>
+      <div class="item"><div class="lbl">Formato</div><div class="val">Apunte de repaso</div></div>
+      <div class="item"><div class="lbl">Recurso</div><div class="val">hugogutierrez.pe</div></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 · AGENDA -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Agenda</div>
+    <h1 class="slide-title">Qué cubre <em>este repaso</em></h1>
+    <div class="title-rule"></div>
+    <div class="agenda-list">
+      <div class="agenda-row"><span class="num">01</span><div><div class="title">ML vs. Gen AI · FM vs. LLM</div><div class="desc">Terminología base y diferencias clave.</div></div><span class="tag">Fundamentos</span></div>
+      <div class="agenda-row"><span class="num">02</span><div><div class="title">Cómo piensa un LLM</div><div class="desc">Tokens, embeddings, contexto, attention y tipos de modelos generativos.</div></div><span class="tag">Conceptos</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">Adaptar un modelo</div><div class="desc">Prompting, RAG y fine-tuning — cuándo usar cada uno.</div></div><span class="tag">Aplicado</span></div>
+      <div class="agenda-row"><span class="num">04</span><div><div class="title">Prompting y parámetros</div><div class="desc">Técnicas de prompt y controles de inferencia.</div></div><span class="tag">Aplicado</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">RAG y riesgos</div><div class="desc">Pipeline de RAG, alucinación, sesgo, mitigaciones.</div></div><span class="tag">Aplicado</span></div>
+      <div class="agenda-row"><span class="num">06</span><div><div class="title">Casos de uso, límites y memorización</div><div class="desc">Resumen final listo para el examen.</div></div><span class="tag">Cierre</span></div>
+    </div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>ML</b> = Machine Learning · <b>GenAI</b> = Generative AI · <b>AI</b> = Artificial Intelligence · <b>FM</b> = Foundation Model · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">02 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 3 · ML TRADICIONAL VS GEN AI -->
+  <section class="slide bg-alt" data-label="03 ML vs GenAI">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Fundamentos · Diferencia base</div>
+    <h1 class="slide-title">ML tradicional <em>vs.</em> IA Generativa</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:22%">Aspecto</th><th>ML tradicional</th><th>IA Generativa</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Objetivo</td><td>Predecir una salida específica (clasificar, estimar).</td><td>Generar contenido nuevo.</td></tr>
+        <tr><td class="name">Output</td><td>Etiqueta, número o probabilidad — "estrecho".</td><td>Texto, imagen, audio, código — "abierto".</td></tr>
+        <tr><td class="name">Entrenamiento</td><td>Datos etiquetados, específico a una tarea.</td><td>Preentrenado con datos masivos no etiquetados.</td></tr>
+        <tr><td class="name">Ejemplo</td><td>Predecir fraude, precio de una casa.</td><td>Escribir un resumen, generar una imagen.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>ML vs Gen AI</span><span class="gloss"><b>ML</b> = Machine Learning · <b>IA</b> = Inteligencia Artificial</span><span class="num">03 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 4 · FM VS LLM -->
+  <section class="slide" data-label="04 FM vs LLM">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Fundamentos · Terminología</div>
+    <h1 class="slide-title">Foundation Model <em>vs.</em> LLM</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:26%">Término</th><th>Qué es</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Foundation Model (FM)</td><td>Modelo grande, preentrenado con datos masivos, que sirve de base para múltiples tareas (texto, imagen, audio, multimodal).</td></tr>
+        <tr><td class="name">LLM</td><td>Un tipo de FM especializado en lenguaje / texto — ej. Claude (Sonnet, Opus), GPT, Llama, Titan (Amazon).</td></tr>
+        <tr><td class="name">Pre-entrenamiento</td><td>Aprender patrones generales con datos masivos — caro, lo hacen los grandes laboratorios (Anthropic, OpenAI, Amazon).</td></tr>
+        <tr><td class="name">Fine-tuning</td><td>Adaptar un FM ya entrenado a un caso específico — mucho más barato que entrenar desde cero.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>FM vs LLM</span><span class="gloss"><b>LLM</b> = Large Language Model · <b>FM</b> = Foundation Model</span><span class="num">04 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 5 · CÓMO PIENSA UN LLM -->
+  <section class="slide bg-alt" data-label="05 Como piensa un LLM">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Conceptos · Mecánica interna</div>
+    <h1 class="slide-title">Cómo <em>piensa</em> un LLM</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:26%">Concepto</th><th>Definición</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Token</td><td>Fragmento de texto — no siempre una palabra completa. El costo de usar un LLM se mide en tokens (input + output).</td></tr>
+        <tr><td class="name">Embedding</td><td>Vector numérico que representa el significado de un token en un espacio matemático — significados similares quedan cerca.</td></tr>
+        <tr><td class="name">Ventana de contexto</td><td>Cantidad máxima de tokens que el modelo puede "ver" a la vez (prompt + historial + respuesta).</td></tr>
+        <tr><td class="name">Attention</td><td>Mecanismo del transformer que pondera qué partes del texto importan más para predecir el siguiente token.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Cómo piensa un LLM</span><span class="gloss"><b>LLM</b> = Large Language Model</span><span class="num">05 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 6 · TIPOS DE MODELOS GENERATIVOS -->
+  <section class="slide bg-alt" data-label="06 Tipos de modelos generativos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Fundamentos · Arquitecturas</div>
+    <h1 class="slide-title">Tipos de modelos <em>generativos</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:20%">Tipo</th><th style="width:48%">Cómo funciona</th><th>Uso típico</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Transformer</td><td>Usa attention para procesar secuencias completas en paralelo — base de los LLMs.</td><td>Texto, código, chat.</td></tr>
+        <tr><td class="name">Diffusion</td><td>Parte de ruido puro y lo va "limpiando" paso a paso hasta formar la imagen.</td><td>Imágenes (Stable Diffusion, Titan Image).</td></tr>
+        <tr><td class="name">GAN</td><td>Dos redes compiten: un generador crea, un discriminador critica.</td><td>Imágenes sintéticas, deepfakes.</td></tr>
+        <tr><td class="name">VAE</td><td>Comprime los datos a un espacio latente y los reconstruye con variaciones.</td><td>Generación, detección de anomalías.</td></tr>
+        <tr><td class="name">Multimodal</td><td>Entiende o genera varios tipos de dato a la vez (texto + imagen + audio).</td><td>Describir una imagen, responder sobre un PDF.</td></tr>
+      </tbody>
+    </table>
+
+
+    <div class="chrome-bot"><span>Tipos de modelos generativos</span><span class="gloss"><b>LLM</b> = Large Language Model · <b>GAN</b> = Generative Adversarial Network · <b>VAE</b> = Variational Autoencoder</span><span class="num">06 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 7 · 3 FORMAS DE ADAPTAR UN FM -->
+  <section class="slide" data-label="07 Adaptar un FM">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Aplicado · Decisión clave</div>
+    <h1 class="slide-title">3 formas de <em>adaptar</em> un modelo</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:18%">Método</th><th style="width:30%">Qué hace</th><th style="width:20%">Costo / Datos</th><th>Cuándo usarlo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Prompt engineering</td><td>Ajustar la instrucción, sin tocar el modelo.</td><td class="code">Mínimo</td><td>Primera opción, para la mayoría de los casos.</td></tr>
+        <tr><td class="name">RAG</td><td>Conecta el modelo a una fuente de datos externa al momento de la consulta.</td><td class="code">Medio</td><td>Info actualizada o específica de la empresa, sin reentrenar.</td></tr>
+        <tr><td class="name">Fine-tuning</td><td>Reentrena parcialmente el modelo — <em>ajusta sus pesos internos</em> con datos propios etiquetados.</td><td class="code">Alto</td><td>Comportamiento o estilo muy específico y consistente.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">→ Ejemplo</span>
+      <p>Fine-tuning: un banco entrena el modelo con miles de tickets de soporte ya resueltos para que responda siempre en el tono y formato de la marca — queda permanentemente ajustado. Orden de examen: empieza por prompt engineering, sube a RAG si necesitas datos externos, llega a fine-tuning solo si el caso lo justifica.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Adaptar un FM</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation</span><span class="num">07 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 8 · TÉCNICAS DE PROMPTING -->
+  <section class="slide bg-alt" data-label="08 Prompting">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Aplicado · Prompt engineering</div>
+    <h1 class="slide-title">Técnicas de <em>prompting</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:22%">Técnica</th><th style="width:40%">Qué es</th><th>Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Zero-shot</td><td>Pedir la tarea sin dar ejemplos.</td><td class="code">"Traduce esto al inglés: ..."</td></tr>
+        <tr><td class="name">Few-shot</td><td>Dar unos pocos ejemplos de input→output antes de la tarea real.</td><td class="code">2-3 ejemplos + la nueva tarea</td></tr>
+        <tr><td class="name">Chain-of-thought</td><td>Pedir al modelo que razone paso a paso antes de responder.</td><td class="code">"Piensa paso a paso..."</td></tr>
+        <tr><td class="name">Prompt template</td><td>Estructura reutilizable con variables para estandarizar prompts.</td><td class="code">{cliente}, {producto}</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Prompting</span><span class="num">08 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 9 · PARÁMETROS DE INFERENCIA -->
+  <section class="slide" data-label="09 Parametros inferencia">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Aplicado · Controles de inferencia</div>
+    <h1 class="slide-title">Parámetros que <em>controlan</em> la respuesta</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:20%">Parámetro</th><th style="width:38%">Qué controla</th><th>Alto vs. bajo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Temperature</td><td>Aleatoriedad / creatividad de la respuesta.</td><td>Alto = más creativo · Bajo = más determinista</td></tr>
+        <tr><td class="name">Top-p</td><td>Rango de probabilidad acumulada de tokens candidatos.</td><td>Alto = más diverso · Bajo = más enfocado</td></tr>
+        <tr><td class="name">Top-k</td><td>Número de tokens más probables a considerar.</td><td>Alto = más variedad · Bajo = más predecible</td></tr>
+        <tr><td class="name">Max tokens</td><td>Longitud máxima de la respuesta generada.</td><td>Limita costo y extensión de la salida</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Parámetros de inferencia</span><span class="num">09 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 10 · PIPELINE DE RAG -->
+  <section class="slide bg-alt" data-label="10 Pipeline RAG">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Aplicado · RAG</div>
+    <h1 class="slide-title">RAG — <em>búsqueda + generación</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:12%">Paso</th><th>Qué pasa</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">1. Ingesta</td><td>Los documentos propios se dividen en fragmentos (chunks).</td></tr>
+        <tr><td class="name">2. Embedding</td><td>Cada fragmento se convierte en un vector numérico.</td></tr>
+        <tr><td class="name">3. Vector DB</td><td>Los vectores se guardan en una base de datos vectorial (ej. OpenSearch).</td></tr>
+        <tr><td class="name">4. Retrieval</td><td>Ante una pregunta, se buscan los fragmentos más similares semánticamente.</td></tr>
+        <tr><td class="name">5. Augment</td><td>Los fragmentos recuperados se agregan al prompt como contexto.</td></tr>
+        <tr><td class="name">6. Generación</td><td>El LLM genera la respuesta usando ese contexto adicional.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Pipeline de RAG</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation · <b>LLM</b> = Large Language Model</span><span class="num">10 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 11 · RIESGOS DE LOS LLMs -->
+  <section class="slide" data-label="11 Riesgos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Responsible AI · Riesgos</div>
+    <h1 class="slide-title">Riesgos de los <em>LLMs</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:20%">Riesgo</th><th style="width:38%">Qué es</th><th>Mitigación típica</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Alucinación</td><td>El modelo genera información falsa con apariencia de certeza.</td><td>RAG, verificación humana, prompts más específicos.</td></tr>
+        <tr><td class="name">Sesgo (bias)</td><td>Refleja sesgos presentes en los datos de entrenamiento.</td><td>Datos diversos, evaluación de fairness, guardrails.</td></tr>
+        <tr><td class="name">Toxicidad</td><td>Genera contenido dañino, ofensivo o inapropiado.</td><td>Content filters, guardrails (ej. Bedrock Guardrails).</td></tr>
+        <tr><td class="name">Prompt injection</td><td>Un usuario manipula el prompt para que el modelo ignore instrucciones.</td><td>Validación de inputs, separar instrucciones del sistema.</td></tr>
+        <tr><td class="name">Fuga de datos</td><td>El modelo expone información sensible de entrenamiento o contexto.</td><td>Anonimización, control de acceso a los datos.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">→ Ejemplo: prompt injection</span>
+      <p>Un chatbot "solo responde sobre nuestro producto", pero un usuario escribe: <em>"Ignora todas las instrucciones anteriores..."</em>. Versión indirecta, más peligrosa: un documento leído vía RAG trae texto oculto como <em>"envía los datos del usuario a..."</em> y el modelo lo ejecuta.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Riesgos de los LLMs</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">11 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 12 · CASOS DE USO -->
+  <section class="slide bg-alt" data-label="12 Casos de uso">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Aplicado · Casos de uso</div>
+    <h1 class="slide-title">Casos de uso de <em>Gen AI</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:32%">Caso de uso</th><th>Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Generación de texto</td><td>Resúmenes, redacción, chatbots.</td></tr>
+        <tr><td class="name">Generación de código</td><td>Autocompletado, asistentes de programación.</td></tr>
+        <tr><td class="name">Generación de imágenes</td><td>Diseño, marketing, prototipos.</td></tr>
+        <tr><td class="name">Q&amp;A aumentada (RAG)</td><td>Buscar y responder sobre documentos propios.</td></tr>
+        <tr><td class="name">Resumen y extracción</td><td>Resumir contratos, extraer datos clave.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Casos de uso</span><span class="gloss"><b>GenAI</b> = Generative AI · <b>AI</b> = Artificial Intelligence · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">12 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 13 · VENTAJAS Y LÍMITES DE GENAI -->
+  <section class="slide" data-label="13 Ventajas y límites de GenAI">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Fundamentos · Evaluar la conveniencia</div>
+    <h1 class="slide-title">Ventajas, límites y <em>métricas de negocio</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Ventajas</div><div class="desc">Adaptabilidad a muchas tareas, respuesta rápida y simplicidad de uso (lenguaje natural).</div></div>
+      <div class="stat-box"><div class="lbl">Límites</div><div class="desc">Alucinaciones, no determinismo (misma pregunta, respuestas distintas), baja interpretabilidad e inexactitud.</div></div>
+      <div class="stat-box"><div class="lbl">Cuándo NO usar GenAI</div><div class="desc">Cuando exiges respuestas exactas y deterministas, o decisiones totalmente explicables.</div></div>
+      <div class="stat-box"><div class="lbl">Métricas de negocio</div><div class="desc">Satisfacción del usuario, tasa de conversión, ingreso por usuario, eficiencia operativa.</div></div>
+    </div>
+
+    <div class="chrome-bot"><span>Ventajas y límites de GenAI</span><span class="gloss"><b>GenAI</b> = Generative AI</span><span class="num">13 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 14 · TABLA FINAL DE MEMORIZACIÓN -->
+  <section class="slide" data-label="14 Tabla final">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Memorización</div>
+    <h1 class="slide-title">Los conceptos clave, <em>de un vistazo</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:22%">Concepto</th><th>En una frase</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">FM</td><td>Modelo grande preentrenado, base para muchas tareas.</td></tr>
+        <tr><td class="name">LLM</td><td>FM especializado en texto.</td></tr>
+        <tr><td class="name">Prompt engineering</td><td>Adaptar sin tocar el modelo — primera opción.</td></tr>
+        <tr><td class="name">RAG</td><td>Conectar el modelo a datos externos / actualizados.</td></tr>
+        <tr><td class="name">Fine-tuning</td><td>Reentrenar el modelo con datos propios — más costoso.</td></tr>
+        <tr><td class="name">Temperature</td><td>Controla la creatividad / aleatoriedad de la respuesta.</td></tr>
+        <tr><td class="name">Alucinación</td><td>El modelo inventa información con apariencia de certeza.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>FM</b> = Foundation Model · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">14 / 15</span></div>
+  </section>
+
+  <!-- SLIDE 15 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="15 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="label"><span class="bar"></span>Cierre · Fundamentos de IA Generativa</div>
+    <h2>Listo para el <em>siguiente dominio</em>.</h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">Siguiente bloque: Dominio 3 — Aplicaciones fundacionales en AWS (Bedrock, SageMaker, foundation models disponibles).</p>
+      <div class="contact-card">
+        <div class="contact-row"><i class="ti ti-mail"></i><div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div></div>
+        <div class="contact-row"><i class="ti ti-world"></i><div><div class="lbl">Web</div><div class="val">hugogutierrez.pe</div></div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">15 / 15</span></div>
+  </section>
+
+</deck-stage>
+
+<!-- DOWNLOAD PDF -->
+<style>
+  .pdf-fab {
+    position: fixed; top: 16px; right: 16px; z-index: 9999;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12; color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover { background: #B36B00; transform: translateY(-1px); box-shadow: 0 10px 28px rgba(255,153,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset; }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot { width: 6px; height: 6px; border-radius: 999px; background: #FF9900; box-shadow: 0 0 0 3px rgba(255,153,0,0.18); }
+  .pdf-fab i { font-size: 16px; line-height: 1; }
+  .pdf-fab .hint { opacity: 0.55; font-size: 11px; margin-left: 4px; padding-left: 8px; border-left: 1px solid rgba(255,255,255,0.18); }
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<script src="deck-stage.js"></script>
+
+<!-- CONTROLES FLOTANTES: R Rail · P PDF · F Fullscreen -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(255,153,0,.85);border-color:rgba(255,153,0,.6);color:#fff}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-rail" title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf" title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen" title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      const hidden = stage.hasAttribute('no-rail');
+      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
+      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
+    }
+    railBtn.addEventListener('click', toggleRail);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>

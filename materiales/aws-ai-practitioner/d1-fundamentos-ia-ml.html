@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="aws">
+<head>
+<meta charset="UTF-8" />
+<title>AWS AIF-C01 · D1 Fundamentos de IA y ML — Repaso</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    /* Type scale (1920×1080 — projection sizes, not web density) */
+    --type-mega:      140px;
+    --type-title:      80px;
+    --type-h1:         64px;
+    --type-h2:         44px;
+    --type-quote:      60px;
+    --type-body:       26px;
+    --type-body-lg:    30px;
+    --type-small:      22px;
+    --type-mono-lg:    20px;
+    --type-mono:       16px;
+    --type-mono-sm:    14px;
+
+    /* Spacing */
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    /* Surface */
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    /* Accent — overridden per course below */
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  /* Course theme — AWS orange */
+  html[data-course="aws"] {
+    --accent:       #FF9900;
+    --accent-deep:  #B36B00;
+    --accent-tint:  rgba(255,153,0,0.08);
+    --accent-tint-2:rgba(255,153,0,0.20);
+  }
+
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(255,153,0,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #FFC266; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(255,153,0,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .slide.bg-ink em { color: #FFC266; }
+
+  /* ── CHROME ────────────────────────────────────────────── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand { display: inline-flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag { display: inline-flex; align-items: center; gap: 8px; }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+  .chrome-bot .num { font-feature-settings: "tnum" 1; color: var(--ink-2); }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #FFC266; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── PORTADA ──────────────────────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block { display: flex; align-items: center; gap: 14px; color: var(--ink); }
+  .portada-head .brand-block .brand-mark { width: 44px; height: 44px; border-radius: 9px; font-size: 18px; }
+  .portada-head .brand-name { font-family: var(--font-sans); font-size: 26px; font-weight: 600; letter-spacing: -0.005em; color: var(--ink); }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 20ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    max-width: 34ch;
+  }
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val { font-size: 26px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+
+  /* ── AGENDA ───────────────────────────────────────────── */
+  .agenda-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 12px; }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num { font-family: var(--font-mono); font-size: var(--type-h2); font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
+  .agenda-row .title { font-size: 32px; font-weight: 600; color: var(--ink); letter-spacing: -0.015em; }
+  .agenda-row .desc { font-size: 20px; color: var(--ink-3); margin-top: 4px; }
+  .agenda-row .tag {
+    font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 8px 14px; border: 0.5px solid var(--rule-2); border-radius: 999px; white-space: nowrap;
+  }
+
+  /* ── DOS COLUMNAS DE TEXTO ────────────────────────────── */
+  .two-col-text { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-col); }
+  .text-col h3 { font-size: var(--type-h2); font-weight: 600; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 20px; line-height: 1.1; }
+  .text-col .col-eyebrow {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+  }
+  .text-col p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; margin-bottom: 16px; }
+  .text-col ul { list-style: none; padding: 0; }
+  .text-col ul li {
+    font-size: var(--type-body); color: var(--ink-2); line-height: 1.5;
+    padding: 10px 0 10px 26px; position: relative; border-bottom: 0.5px solid var(--rule);
+  }
+  .text-col ul li::before { content: ""; position: absolute; left: 0; top: 22px; width: 12px; height: 1px; background: var(--accent); }
+  .text-col ul li:last-child { border-bottom: none; }
+  .text-col ul li strong { color: var(--ink); font-weight: 600; }
+
+  /* ── COMENTARIO ANCHO (usado bajo tabla / dos columnas) ─── */
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    margin-top: 32px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase; padding-top: 4px; white-space: nowrap;
+  }
+  .big-comment p { font-size: var(--type-body); color: var(--ink-2); line-height: 1.5; max-width: 90ch; }
+
+  /* ── TABLA COMPARATIVA ────────────────────────────────── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: var(--type-body); }
+  .cmp-table thead th {
+    font-family: var(--font-mono); font-size: var(--type-mono); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3);
+    text-align: left; padding: 16px 22px; border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px; border-bottom: 0.5px solid var(--rule); color: var(--ink-2);
+    font-size: var(--type-body); vertical-align: top; line-height: 1.4;
+  }
+  .cmp-table tbody td.name { color: var(--ink); font-weight: 600; font-size: 28px; letter-spacing: -0.01em; }
+  .cmp-table tbody td.code { font-family: var(--font-mono); color: var(--accent); font-size: 20px; }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+  .cmp-table.dense tbody td { padding: 16px 22px; font-size: 22px; }
+  .cmp-table.dense tbody td.name { font-size: 24px; }
+  .cmp-table.dense thead th { padding: 12px 22px; }
+
+  /* ── FÓRMULA ──────────────────────────────────────────── */
+  .formula-block { display: flex; flex-direction: column; gap: 36px; justify-content: center; flex: 1; }
+  .formula {
+    background: var(--bg); border: 0.5px solid var(--rule); border-radius: 16px;
+    padding: 56px 48px; font-family: var(--font-mono); font-size: 56px; color: var(--ink);
+    letter-spacing: -0.01em; text-align: center; font-weight: 400; line-height: 1.3;
+    white-space: nowrap; overflow: hidden;
+  }
+  .formula .frac { display: inline-grid; vertical-align: middle; margin: 0 8px; justify-items: center; }
+  .formula .frac .num { padding: 0 18px 8px; border-bottom: 2px solid currentColor; white-space: nowrap; }
+  .formula .frac .den { padding: 8px 18px 0; white-space: nowrap; }
+  .formula .acc-var { color: var(--accent); font-weight: 500; }
+  .formula sub { font-size: 0.5em; vertical-align: sub; }
+  .formula sup { font-size: 0.55em; vertical-align: super; }
+  .formula-plain {
+    font-family: var(--font-mono); font-size: 22px; color: var(--ink-2);
+    text-align: center; letter-spacing: -0.005em;
+  }
+  .formula-plain .acc-var { color: var(--accent); font-weight: 500; }
+  .acronym-note {
+    font-family: var(--font-mono); font-size: 20px; color: var(--ink-3);
+    margin-top: -20px; margin-bottom: 8px; letter-spacing: 0.01em;
+  }
+  .acronym-note .acc-var { color: var(--accent); font-weight: 500; }
+  .formula-legend { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .legend-item .var { font-family: var(--font-mono); font-size: 24px; color: var(--accent); font-weight: 500; margin-bottom: 6px; }
+  .legend-item .desc { font-size: 20px; color: var(--ink-2); line-height: 1.4; }
+
+  /* ── STAT GRID (ejemplo numérico) ─────────────────────── */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .stat-item {
+    background: var(--bg); border: 0.5px solid var(--rule); border-radius: 14px;
+    padding: 32px 24px; text-align: center;
+  }
+  .stat-item .num { font-family: var(--font-mono); font-size: 48px; color: var(--accent); font-weight: 600; letter-spacing: -0.02em; }
+  .stat-item .lbl { font-size: 19px; color: var(--ink); font-weight: 600; margin-top: 12px; }
+  .stat-item .sub { font-family: var(--font-mono); font-size: 14px; color: var(--ink-3); margin-top: 6px; }
+
+  /* ── CIERRE ───────────────────────────────────────────── */
+  .cierre {
+    background: var(--ink); color: #fff; justify-content: center;
+    position: relative; overflow: hidden; padding-top: 160px; padding-bottom: 140px; isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(255,153,0,0.28), transparent 60%);
+    pointer-events: none; z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono); font-size: var(--type-mono); color: #FFC266;
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 { font-size: var(--type-title); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; max-width: 20ch; }
+  .cierre h2 em { color: #FFC266; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 96px; align-items: end; margin-top: 48px; }
+  .cierre .pregunta { font-size: var(--type-body-lg); color: rgba(255,255,255,0.75); line-height: 1.45; max-width: 50ch; }
+  .cierre .contact-card { display: flex; flex-direction: column; gap: 12px; }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14); border-radius: 12px; background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #FFC266; }
+  .cierre .contact-row .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+  .cierre .contact-row .val { font-size: 18px; color: #fff; font-weight: 500; margin-top: 2px; }
+
+  .acronym-note {
+    font-family: var(--font-mono); font-size: 20px; color: var(--ink-3);
+    margin-top: -20px; margin-bottom: 24px; letter-spacing: 0.01em;
+  }
+  .acronym-note .acc-var { color: var(--accent); font-weight: 500; }
+
+  /* ── STAT GRID · 2×2 (boxes grandes) ─────────────────── */
+  .stat-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 20px; }
+  .stat-box {
+    padding: 32px 36px; border: 0.5px solid var(--rule-2); border-radius: 16px;
+    background: var(--bg); box-shadow: 0 1px 0 rgba(10,13,18,0.02);
+  }
+  section.slide.bg-alt .stat-box { background: var(--bg); }
+  .stat-box .lbl { font-family: var(--font-mono); font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 16px; }
+  .stat-box .desc { font-size: 25px; color: var(--ink-2); line-height: 1.45; }
+
+  .auc-wrap { display: grid; grid-template-columns: 1fr 640px; gap: 48px; align-items: start; margin-top: -6px; }
+  .auc-wrap .big-comment { margin-top: 24px; }
+  .auc-wrap svg.roc { width: 640px; height: 630px; margin-top: -30px; }
+
+  /* glosario de siglas (pie de slide) */
+  .chrome-bot { gap: 32px; }
+  .chrome-bot > span:not(.gloss) { flex: none; }
+  .chrome-bot .gloss { flex: 1; min-width: 0; white-space: normal; text-align: center; font-size: 18px; line-height: 1.35; letter-spacing: 0.02em; color: var(--ink-3); }
+  .chrome-bot .gloss b { font-weight: 500; color: var(--accent); }
+  .slide.bg-ink .chrome-bot .gloss { color: rgba(255,255,255,0.55); }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "Portada del repaso. Este deck cubre el Dominio 1 (Fundamentos de IA/ML, 20% del examen) de AWS AIF-C01: conceptos base, ciclo de vida, MLOps, servicios de AWS y métricas de evaluación.",
+  "Info de la certificación AWS Certified AI Practitioner (AIF-C01): 65 preguntas, 90 minutos, 700/1000 para aprobar, escala compensatoria. Pesos por dominio: 20, 24, 28, 14, 14. Verificar siempre en el sitio oficial porque el formato puede cambiar.",
+  "Cómo se rinde el examen: tipos de pregunta, sin penalización por fallar, 15 preguntas no puntuadas y estrategia de tiempo. Regla práctica: nunca dejar una pregunta en blanco.",
+  "Agenda del repaso: conceptos base, ciclo de vida + MLOps + servicios de AWS, matriz de confusión, precision/recall/accuracy, F1 y AUC-ROC, ejemplo numérico, MAE/RMSE y tabla final.",
+  "Jerarquía de conceptos. IA es el paraguas; ML es la parte que aprende de datos; deep learning usa redes neuronales profundas; la IA generativa es una aplicación de deep learning. NLP y computer vision son campos de aplicación, cada uno con servicios de AWS (Comprehend, Rekognition).",
+  "Aprendizaje supervisado necesita etiquetas; no supervisado descubre estructura; refuerzo aprende por recompensa; los LLMs se preentrenan de forma auto-supervisada (predecir el siguiente token). Recordar también tipos de datos: estructurados vs. no estructurados.",
+  "Overfitting vs. underfitting y el trade-off bias/varianza. La pista de examen es comparar el desempeño en entrenamiento contra el de prueba.",
+  "Inference es usar el modelo ya entrenado para predecir. Real-time para respuestas inmediatas; batch para lotes offline (más barato); asincrónica para payloads grandes; serverless para tráfico irregular.",
+  "Ciclo de vida de ML, 7 pasos: definir objetivo de negocio, enmarcar el problema de ML, recolectar y preparar datos, feature engineering, entrenar el modelo, evaluar el modelo (aquí conectan las métricas del resto del deck), desplegar y monitorear (drift, reentrenamiento).",
+  "MLOps: prácticas para llevar ML a producción de forma repetible. Fuentes de modelos: open source, servicios con API, o entrenamiento propio. Distinguir métricas técnicas (del modelo) de métricas de negocio (del impacto). Un modelo puede tener buen F1 y aun así no justificar su costo.",
+  "Servicio específico vs. genérico: Textract (OCR), Comprehend (NLP), Transcribe/Polly (voz), Rekognition (visión), Translate, Bedrock Knowledge Bases (RAG administrado). Regla de examen: si un servicio de AWS ya resuelve el caso, esa es la respuesta correcta frente a construirlo desde cero con SageMaker.",
+  "Servicios administrados adicionales que suelen aparecer en el examen: Kendra (búsqueda), Personalize (recomendaciones), Lex (chatbots), Comprehend Medical (texto clínico), A2I (revisión humana), Amazon Q (asistente GenAI).",
+  "Cuando el servicio preentrenado no alcanza, varios servicios permiten personalizar con tus datos: Rekognition Custom Labels para categorías propias de imágenes (requiere imágenes etiquetadas), Comprehend custom para clasificación y entidades propias, Transcribe con custom vocabulary o custom language model para jerga de dominio, Translate con custom terminology. Language identification solo detecta el idioma. Lex es para chatbots.",
+  "Matriz de confusión. TP/TN/FP/FN. Aplica a modelos de clasificación con variable objetivo discreta (típicamente binaria: sí/no, fraude/no fraude). Contrastar con regresión (MAE/RMSE), que predice una variable continua y no usa esta matriz. Conectar con econometría: FP = Error Tipo I, FN = Error Tipo II.",
+  "Intuición antes de las fórmulas. Recall mira hacia los casos reales, Precision mira hacia lo predicho, Accuracy mira el total. Fijar esta idea antes de ver las fórmulas evita confundir las métricas en el examen.",
+  "Precision = TP / (TP+FP). Mide cuán confiable es la alarma cuando suena. Priorizarla cuando el costo de un falso positivo es alto (spam, marketing).",
+  "Recall = TP / (TP+FN). Mide cuánto se le escapa al modelo. Priorizarla cuando el costo de un falso negativo es alto (fraude, diagnóstico médico).",
+  "F1-score = media armónica de precision y recall. Penaliza fuerte si una de las dos es muy baja. Útil en datasets desbalanceados sin preferencia clara.",
+  "Accuracy = (TP+TN) / total. % de aciertos totales. Cuidado: engañosa en datasets desbalanceados — puede verse alta aunque el modelo sea inútil.",
+  "AUC-ROC evalúa el clasificador en todos los umbrales posibles. AUC 0.5 equivale a adivinar; cercano a 1 es excelente. Útil para comparar modelos.",
+  "Ejemplo numérico — el caso. Modelo bancario que predice si una transacción por internet es fraudulenta. 1,000 transacciones, 50 reales fraudulentas (5%). Repasar cómo se llenó la matriz.",
+  "Ejemplo numérico — resultados. Accuracy 93% se ve muy bien, pero Precision solo 40%: de 100 transacciones marcadas como fraude, 60 eran legítimas. Esta es la 'paradoja del accuracy' — por eso en fraude se prioriza Recall, no Accuracy.",
+  "Tabla resumen: qué métrica priorizar según el escenario de negocio. Es el tipo de pregunta de caso práctico más común en el examen.",
+  "MAE = promedio del valor absoluto de los errores. Todos los errores pesan igual. Robusta a outliers.",
+  "RMSE = raíz del promedio de los errores al cuadrado. Penaliza fuerte los errores grandes. Sensible a outliers.",
+  "Comparación MAE vs RMSE. Pista de examen: si RMSE es mucho mayor que MAE, hay outliers en las predicciones.",
+  "Tabla final de memorización: 5 métricas de clasificación (incl. AUC-ROC) + 2 de regresión en una sola vista.",
+  "Cierre del bloque. Siguiente paso: Dominio 2, Fundamentos de IA Generativa (LLMs, transformers, prompting)."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- SLIDE 1 · PORTADA -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">Repaso personal · Lima, Perú</div>
+        <div class="val">AWS AIF-C01 · 2026</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag"><span>AWS AIF-C01</span></div>
+      <h1 class="course-title">Fundamentos de IA/ML y <em>métricas</em></h1>
+      <p class="course-sub">Repaso para el examen AWS Certified AI Practitioner. Conceptos base de IA/ML, ciclo de vida, servicios de AWS y métricas de clasificación y regresión.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item"><div class="lbl">Dominio</div><div class="val">1 · Fundamentos ML/IA</div></div>
+      <div class="item"><div class="lbl">Bloque</div><div class="val">Bases de IA/ML + métricas</div></div>
+      <div class="item"><div class="lbl">Formato</div><div class="val">Apunte de repaso</div></div>
+      <div class="item"><div class="lbl">Recurso</div><div class="val">hugogutierrez.pe</div></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 · INFO DEL EXAMEN -->
+  <section class="slide bg-alt" data-label="02 Info del examen 1/2">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>La certificación · AWS Certified AI Practitioner</div>
+    <h1 class="slide-title">El examen <em>AIF-C01</em> en una mirada</h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Formato</div><div class="desc">65 preguntas (50 puntuadas + 15 de prueba) · 90 minutos · opción múltiple, respuesta múltiple, ordenar, emparejar y casos.</div></div>
+      <div class="stat-box"><div class="lbl">Puntaje</div><div class="desc">Escala de 100 a 1000 · aprobar = 700 (≈ 70%). Puntaje compensatorio (sin mínimo por dominio). Sin puntos en contra: fallar no resta.</div></div>
+      <div class="stat-box"><div class="lbl">Dominios y peso</div><div class="desc">D1 Fundamentos IA/ML 20% · D2 GenAI 24% · D3 Aplicaciones de FMs 28% · D4 IA responsable 14% · D5 Seguridad y gobernanza 14%.</div></div>
+      <div class="stat-box"><div class="lbl">Logística</div><div class="desc">USD 100 · Pearson VUE (centro o en línea) · vigencia 3 años · sin prerrequisitos · +30 min si no es tu lengua nativa (se solicita antes).</div></div>
+    </div>
+    <div class="big-comment">
+      <span class="marker">→ Estrategia</span>
+      <p>D3 y D2 suman 52% del examen: es donde más rinde estudiar. Datos sujetos a cambio — confirma en aws.amazon.com/certification.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Info del examen 1/2</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>GenAI</b> = Generative AI · <b>FM</b> = Foundation Model</span><span class="num">02 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 3 · INFO DEL EXAMEN 2/2 -->
+  <section class="slide" data-label="03 Info del examen 2/2">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>La certificación · Tipos de pregunta y estrategia</div>
+    <h1 class="slide-title">Cómo se <em>rinde</em> el examen</h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Tipos de pregunta</div><div class="desc">Opción múltiple (1 correcta) · respuesta múltiple (2 o más) · ordenar pasos · emparejar · caso de estudio.</div></div>
+      <div class="stat-box"><div class="lbl">Sin puntos en contra</div><div class="desc">Fallar no resta: incorrecta y en blanco valen 0. Responde todo, aunque sea por descarte.</div></div>
+      <div class="stat-box"><div class="lbl">Preguntas no puntuadas</div><div class="desc">15 de las 65 son de prueba y no cuentan, pero no sabes cuáles: trata todas en serio.</div></div>
+      <div class="stat-box"><div class="lbl">Estrategia de tiempo</div><div class="desc">~1.4 min por pregunta. Primera pasada rápida, marca las dudosas y vuelve al final.</div></div>
+    </div>
+    <div class="big-comment">
+      <span class="marker">→ Tip de descarte</span>
+      <p>Elimina primero los dos distractores obvios. "Menor esfuerzo operativo" o "sin administrar infraestructura" apunta a un servicio administrado (Textract, Bedrock...).</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Info del examen 2/2</span><span class="num">03 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 4 · AGENDA -->
+  <section class="slide" data-label="04 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Agenda</div>
+    <h1 class="slide-title">Qué cubre <em>este repaso</em></h1>
+    <div class="title-rule"></div>
+    <div class="agenda-list">
+      <div class="agenda-row"><span class="num">01</span><div><div class="title">Conceptos base de IA/ML</div><div class="desc">IA vs. ML vs. DL, tipos de aprendizaje, overfitting, inferencia.</div></div><span class="tag">Conceptos</span></div>
+      <div class="agenda-row"><span class="num">02</span><div><div class="title">Ciclo de vida, MLOps y servicios de AWS</div><div class="desc">Los 7 pasos, MLOps, opciones de inferencia y servicios específicos (incl. personalización).</div></div><span class="tag">Proceso</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">Matriz de confusión</div><div class="desc">TP, TN, FP, FN — variable objetivo discreta (binaria).</div></div><span class="tag">Clasificación</span></div>
+      <div class="agenda-row"><span class="num">04</span><div><div class="title">Precision, Recall, Accuracy</div><div class="desc">Qué mide cada una y cuándo priorizarlas.</div></div><span class="tag">Clasificación</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">F1-score y AUC-ROC</div><div class="desc">Balance entre precision y recall; separación de clases.</div></div><span class="tag">Clasificación</span></div>
+      <div class="agenda-row"><span class="num">06</span><div><div class="title">Ejemplo numérico</div><div class="desc">Caso aplicado: detección de fraude bancario, 1,000 transacciones.</div></div><span class="tag">Aplicado</span></div>
+      <div class="agenda-row"><span class="num">07</span><div><div class="title">MAE y RMSE</div><div class="desc">Error promedio en regresión — cuándo usar cada una.</div></div><span class="tag">Regresión</span></div>
+      <div class="agenda-row"><span class="num">08</span><div><div class="title">Tabla de memorización</div><div class="desc">Las 7 métricas en una sola vista, listas para el examen.</div></div><span class="tag">Cierre</span></div>
+    </div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>DL</b> = Deep Learning · <b>MLOps</b> = ML Operations · <b>TP</b> = True Positive · <b>TN</b> = True Negative · <b>FP</b> = False Positive · <b>FN</b> = False Negative</span><span class="num">04 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 5 · IA VS ML VS DL -->
+  <section class="slide bg-alt" data-label="05 IA vs ML vs DL">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Conceptos · Jerarquía</div>
+    <h1 class="slide-title">IA, ML y <em>Deep Learning</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:22%">Término</th><th style="width:46%">Qué es</th><th>Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Inteligencia Artificial (IA)</td><td>Sistemas que imitan capacidades humanas: razonar, aprender, decidir.</td><td>Asistente virtual, detección de fraude.</td></tr>
+        <tr><td class="name">Machine Learning (ML)</td><td>Subconjunto de IA: el modelo aprende patrones de los datos, sin reglas escritas a mano.</td><td>Predecir el precio de una casa.</td></tr>
+        <tr><td class="name">Deep Learning (DL)</td><td>ML con redes neuronales de muchas capas — muy bueno con imágenes, audio y texto.</td><td>Reconocer rostros en fotos.</td></tr>
+        <tr><td class="name">Red neuronal</td><td>Capas de nodos conectados que transforman la entrada en una predicción.</td><td>Base de todo el deep learning.</td></tr>
+        <tr><td class="name">NLP / Computer Vision</td><td>Ramas de la IA: entender lenguaje humano / interpretar imágenes y video.</td><td>Comprehend (NLP) · Rekognition (CV).</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Anidados</span>
+      <p>IA ⊃ ML ⊃ Deep Learning ⊃ IA Generativa. Cada nivel es un subconjunto del anterior.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>IA vs ML vs DL</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>DL</b> = Deep Learning · <b>NLP</b> = Natural Language Processing</span><span class="num">05 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 6 · TIPOS DE APRENDIZAJE -->
+  <section class="slide" data-label="06 Tipos de aprendizaje">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Conceptos · Cómo aprende un modelo</div>
+    <h1 class="slide-title">Tipos de <em>aprendizaje</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:22%">Tipo</th><th style="width:32%">Datos</th><th>Tareas típicas</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Supervisado</td><td>Etiquetados (se conoce la respuesta correcta).</td><td>Clasificación (fraude sí/no) y regresión (precio).</td></tr>
+        <tr><td class="name">No supervisado</td><td>Sin etiquetas — el modelo busca estructura solo.</td><td>Clustering (segmentar clientes), detección de anomalías.</td></tr>
+        <tr><td class="name">Por refuerzo</td><td>Sin dataset: un agente prueba acciones y recibe recompensas.</td><td>Robótica, juegos, RLHF en LLMs.</td></tr>
+        <tr><td class="name">Semi / auto-supervisado</td><td>Pocas etiquetas + muchos datos sin etiquetar.</td><td>Preentrenamiento de los LLMs.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Tipos de datos</span>
+      <p>Estructurados: tabulares y series de tiempo. No estructurados: texto, imagen, audio y video. Etiquetado = tiene la "respuesta" incluida.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Tipos de aprendizaje</span><span class="gloss"><b>RLHF</b> = Reinforcement Learning from Human Feedback · <b>LLM</b> = Large Language Model</span><span class="num">06 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 7 · OVERFITTING -->
+  <section class="slide bg-alt" data-label="07 Overfitting">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Conceptos · Calidad del ajuste</div>
+    <h1 class="slide-title"><em>Overfitting</em> vs. underfitting</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:16%">Caso</th><th style="width:28%">Qué pasa</th><th style="width:28%">Síntoma</th><th>Cómo se corrige</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Underfitting</td><td>Modelo demasiado simple — no captura el patrón (alto bias).</td><td>Mal en entrenamiento y en prueba.</td><td>Modelo más complejo, más features, entrenar más.</td></tr>
+        <tr><td class="name">Overfitting</td><td>Memoriza el entrenamiento, incluido el ruido (alta varianza).</td><td>Excelente en entrenamiento, malo con datos nuevos.</td><td>Más datos, regularización, early stopping, modelo más simple.</td></tr>
+        <tr><td class="name">Buen ajuste</td><td>Aprende el patrón general.</td><td>Rendimiento similar en entrenamiento y prueba.</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Buen resultado en train pero malo en test = overfitting. Malo en ambos = underfitting. Bias alto ↔ underfitting; varianza alta ↔ overfitting.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Overfitting</span><span class="num">07 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 8 · TIPOS DE INFERENCIA -->
+  <section class="slide" data-label="08 Tipos de inferencia">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Conceptos · Cómo se usa el modelo</div>
+    <h1 class="slide-title">Inferencia: <em>batch</em> vs. real-time</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:22%">Modo</th><th style="width:54%">Cuándo</th><th>Latencia</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Real-time</td><td>Predicción inmediata, una a una — endpoint siempre activo.</td><td>Milisegundos</td></tr>
+        <tr><td class="name">Batch</td><td>Procesar lotes grandes de una vez, sin endpoint permanente (SageMaker Batch Transform).</td><td>Horas a días (offline)</td></tr>
+        <tr><td class="name">Asincrónica</td><td>Payloads grandes o procesos de hasta ~1 hora: se encolan y el resultado llega después.</td><td>Minutos (hasta 1 h)</td></tr>
+        <tr><td class="name">Serverless</td><td>Tráfico intermitente: pagas solo por uso, sin gestionar capacidad.</td><td>Variable (cold start)</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Chatbot o fraude en el momento = real-time. Reporte nocturno de miles de registros = batch. Orden de latencia: real-time &lt; asincrónica &lt; batch.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Tipos de inferencia</span><span class="num">08 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 9 · CICLO DE VIDA DE ML -->
+  <section class="slide" data-label="09 Ciclo de vida ML">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Proceso · De la idea al modelo en producción</div>
+    <h1 class="slide-title">El ciclo de vida de <em>ML</em></h1>
+    <div class="title-rule"></div>
+    <div class="agenda-list">
+      <div class="agenda-row"><span class="num">01</span><div><div class="title">Definir el objetivo de negocio</div><div class="desc">¿Qué problema real se quiere resolver, y por qué con ML?</div></div><span class="tag">Negocio</span></div>
+      <div class="agenda-row"><span class="num">02</span><div><div class="title">Enmarcar el problema de ML</div><div class="desc">¿Clasificación, regresión o generativo? Define el enfoque.</div></div><span class="tag">Diseño</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">Recolectar y preparar los datos</div><div class="desc">Fuentes, etiquetado, limpieza y calidad. Aquí también puedes sumar más datos y variables.</div></div><span class="tag">Datos</span></div>
+      <div class="agenda-row"><span class="num">04</span><div><div class="title">Feature engineering</div><div class="desc">Crear, transformar, extraer y seleccionar variables para mejorar el modelo.</div></div><span class="tag">Datos</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Entrenar el modelo</div><div class="desc">Elegir algoritmo, ajustar hiperparámetros.</div></div><span class="tag">Modelo</span></div>
+      <div class="agenda-row"><span class="num">06</span><div><div class="title">Evaluar el modelo</div><div class="desc">Precision, recall, RMSE... — todo lo que vimos en este repaso.</div></div><span class="tag">Modelo</span></div>
+      <div class="agenda-row"><span class="num">07</span><div><div class="title">Desplegar y monitorear</div><div class="desc">Poner en producción, detectar drift y reentrenar cuando haga falta.</div></div><span class="tag">Producción</span></div>
+    </div>
+    <div class="chrome-bot"><span>Ciclo de vida de ML</span><span class="gloss"><b>ML</b> = Machine Learning · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">09 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 10 · MLOPS Y MÉTRICAS DE NEGOCIO -->
+  <section class="slide bg-alt" data-label="10 MLOps y métricas de negocio">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Proceso · Más allá del entrenamiento</div>
+    <h1 class="slide-title">MLOps, fuentes y <em>métricas de negocio</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">MLOps</div><div class="desc">DevOps aplicado a ML: automatizar, versionar y monitorear el ciclo completo (SageMaker Pipelines, Model Registry, Model Monitor).</div></div>
+      <div class="stat-box"><div class="lbl">Fuentes de modelos</div><div class="desc">Open source preentrenado (Hugging Face, JumpStart), modelos vía API (Bedrock) o entrenar el tuyo propio.</div></div>
+      <div class="stat-box"><div class="lbl">Métricas técnicas</div><div class="desc">Accuracy, precision, recall, F1, AUC, RMSE — miden qué tan bien predice el modelo.</div></div>
+      <div class="stat-box"><div class="lbl">Métricas de negocio</div><div class="desc">ROI, costo por usuario, satisfacción del cliente, eficiencia — miden si el modelo aporta valor.</div></div>
+    </div>
+
+    <div class="chrome-bot"><span>MLOps y métricas de negocio</span><span class="gloss"><b>MLOps</b> = ML Operations · <b>ML</b> = Machine Learning · <b>API</b> = Application Programming Interface · <b>AUC</b> = Area Under the Curve · <b>RMSE</b> = Root Mean Squared Error · <b>ROI</b> = Return on Investment</span><span class="num">10 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 11 · SERVICIO ESPECÍFICO VS GENÉRICO -->
+  <section class="slide bg-alt" data-label="11 Servicio especifico vs generico">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Decisión · Elige lo específico</div>
+    <h1 class="slide-title">Servicio <em>específico</em> vs. genérico</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:34%">Necesitas</th><th style="width:26%">Usa esto (específico)</th><th>Evita esto (genérico)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Extraer texto de PDF/imagen</td><td class="code">Textract</td><td>Entrenar OCR en SageMaker</td></tr>
+        <tr><td class="name">Análisis de sentimiento / NLP</td><td class="code">Comprehend</td><td>Entrenar un clasificador NLP propio</td></tr>
+        <tr><td class="name">Voz → texto / texto → voz</td><td class="code">Transcribe / Polly</td><td>Modelo propio de speech-to-text</td></tr>
+        <tr><td class="name">Reconocimiento de imágenes/video</td><td class="code">Rekognition</td><td>Entrenar un modelo de visión propio</td></tr>
+        <tr><td class="name">Traducción</td><td class="code">Translate</td><td>—</td></tr>
+        <tr><td class="name">Preguntas sobre tus documentos (LLM)</td><td class="code">Bedrock Knowledge Bases</td><td>Armar tú mismo el pipeline de RAG</td></tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Si existe un servicio de AWS que resuelve el caso "out of the box", esa es la respuesta correcta — aunque construirlo tú mismo con SageMaker también sea técnicamente posible. Lo específico gana por costo y velocidad.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Específico vs. genérico</span><span class="gloss"><b>OCR</b> = Optical Character Recognition · <b>NLP</b> = Natural Language Processing · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">11 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 12 · CATÁLOGO DE SERVICIOS AI -->
+  <section class="slide" data-label="12 Catálogo de servicios AI">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Decisión · Más servicios de IA</div>
+    <h1 class="slide-title">Otros servicios <em>de IA</em> de AWS</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:58%">Necesitas</th><th>Servicio</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Búsqueda inteligente sobre documentos de la empresa</td><td class="code">Amazon Kendra</td></tr>
+        <tr><td class="name">Recomendaciones personalizadas (productos, contenido)</td><td class="code">Amazon Personalize</td></tr>
+        <tr><td class="name">Chatbots conversacionales de voz y texto</td><td class="code">Amazon Lex</td></tr>
+        <tr><td class="name">Extraer entidades de texto clínico</td><td class="code">Comprehend Medical</td></tr>
+        <tr><td class="name">Revisión humana de predicciones de baja confianza</td><td class="code">Amazon A2I</td></tr>
+        <tr><td class="name">Asistente de IA generativa para empresa / desarrolladores</td><td class="code">Amazon Q</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Catálogo de servicios AI</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>A2I</b> = Augmented AI</span><span class="num">12 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 13 · PERSONALIZAR SERVICIOS DE IA -->
+  <section class="slide bg-alt" data-label="13 Personalizar servicios de IA">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Decisión · Personalizar servicios</div>
+    <h1 class="slide-title">Servicios de IA con <em>datos propios</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:32%">Necesitas</th><th style="width:30%">Servicio / feature</th><th>Clave</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Clasificar imágenes en tus propias categorías</td><td class="code">Rekognition Custom Labels</td><td>Requiere imágenes etiquetadas por categoría.</td></tr>
+        <tr><td class="name">Clasificar texto o detectar entidades propias</td><td class="code">Comprehend custom models</td><td>Requiere datos de entrenamiento etiquetados.</td></tr>
+        <tr><td class="name">Transcribir jerga, marcas o acrónimos del negocio</td><td class="code">Transcribe custom vocabulary / custom language model</td><td>Mejora la precisión en habla de dominio.</td></tr>
+        <tr><td class="name">Detectar el idioma del audio</td><td class="code">Transcribe language identification</td><td>Solo identifica el idioma; no mejora la jerga.</td></tr>
+        <tr><td class="name">Traducir con términos propios</td><td class="code">Translate custom terminology</td><td>Fija cómo se traducen marcas y términos.</td></tr>
+        <tr><td class="name">Crear un bot conversacional</td><td class="code">Amazon Lex</td><td>Conversa; no sirve para afinar transcripciones.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Entrenar un modelo personalizado exige <em>datos etiquetados</em>: sin etiquetas no hay aprendizaje supervisado. Sin etiquetas, lo típico es clustering (no supervisado).</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Personalizar servicios de IA</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">13 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 14 · MATRIZ DE CONFUSIÓN -->
+  <section class="slide bg-alt" data-label="14 Matriz de confusion">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Clasificación · Base</div>
+    <h1 class="slide-title">Matriz de <em>confusión</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:28%"></th><th>Predicho: Positivo</th><th>Predicho: Negativo</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Real: Positivo</td>
+          <td class="code">TP — True Positive</td>
+          <td class="code">FN — False Negative</td>
+        </tr>
+        <tr>
+          <td class="name">Real: Negativo</td>
+          <td class="code">FP — False Positive</td>
+          <td class="code">TN — True Negative</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">→ Cuándo aplica</span>
+      <p>Solo para modelos con variable objetivo <em>discreta</em> — típicamente binaria (Sí/No, Fraude/No fraude). Los modelos de <em>regresión</em> (MAE, RMSE, más adelante) predicen una variable <em>continua</em> (precio, monto, demanda) y no usan esta matriz. FP = Error Tipo I · FN = Error Tipo II.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Matriz de confusión</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative · <b>FP</b> = False Positive · <b>TN</b> = True Negative · <b>MAE</b> = Mean Absolute Error · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">14 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 15 · INTUICIÓN DE CADA MÉTRICA -->
+  <section class="slide bg-alt" data-label="15 Intuicion">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Clasificación · Intuición</div>
+    <h1 class="slide-title">Qué responde <em>cada métrica</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:20%">Métrica</th><th>En una frase</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Recall</td><td>De los casos reales positivos, ¿cuántos lograste detectar?</td></tr>
+        <tr><td class="name">Precision</td><td>De lo que proyectaste como positivo, ¿cuántos son realmente positivos?</td></tr>
+        <tr><td class="name">Accuracy</td><td>De todas tus predicciones, ¿cuántas acertaste?</td></tr>
+        <tr><td class="name">F1-score</td><td>¿Qué tan equilibrado está el modelo entre precision y recall?</td></tr>
+      </tbody>
+    </table>
+
+    <div class="big-comment">
+      <span class="marker">→ Antes de las fórmulas</span>
+      <p>Guarda esta intuición: Recall mira hacia los <em>reales</em>, Precision mira hacia lo <em>predicho</em>, Accuracy mira el <em>total</em>. Las fórmulas de las próximas slides son solo la forma exacta de calcular cada una.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Intuición</span><span class="num">15 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 16 · PRECISION -->
+  <section class="slide" data-label="16 Precision">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Clasificación · Precision</div>
+    <h1 class="slide-title">Precision — confiabilidad de la <em>alarma</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block">
+      <div class="formula">
+        <span class="acc-var">Precision</span> &nbsp;=&nbsp;
+        <span class="frac"><span class="num">TP</span><span class="den">TP + FP</span></span>
+      </div>
+      <div class="formula-plain">= <span class="acc-var">Positivos correctos</span> / Total de predicciones positivas</div>
+      <div class="formula-legend">
+        <div class="legend-item"><div class="var">Qué mide</div><div class="desc">De todo lo que marqué como positivo, cuánto acerté.</div></div>
+        <div class="legend-item"><div class="var">Prioridad alta</div><div class="desc">Cuando un falso positivo es costoso: spam, marketing, bloqueo de clientes honestos.</div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>Precision</span><span class="gloss"><b>TP</b> = True Positive · <b>FP</b> = False Positive</span><span class="num">16 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 17 · RECALL -->
+  <section class="slide bg-alt" data-label="17 Recall">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Clasificación · Recall</div>
+    <h1 class="slide-title">Recall — cuánto se te <em>escapa</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block">
+      <div class="formula">
+        <span class="acc-var">Recall</span> &nbsp;=&nbsp;
+        <span class="frac"><span class="num">TP</span><span class="den">TP + FN</span></span>
+      </div>
+      <div class="formula-plain">= <span class="acc-var">Positivos correctos</span> / Total de casos positivos reales</div>
+      <div class="formula-legend">
+        <div class="legend-item"><div class="var">Qué mide</div><div class="desc">De todos los positivos reales, cuántos logré detectar.</div></div>
+        <div class="legend-item"><div class="var">Prioridad alta</div><div class="desc">Cuando un falso negativo es costoso: fraude, diagnóstico médico grave.</div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>Recall</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative</span><span class="num">17 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 18 · F1-SCORE -->
+  <section class="slide" data-label="18 F1-score">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Clasificación · F1</div>
+    <h1 class="slide-title">F1-score — el <em>balance</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block">
+      <div class="formula">
+        <span class="acc-var">F1</span> &nbsp;=&nbsp; 2 &nbsp;×&nbsp;
+        <span class="frac"><span class="num">P × R</span><span class="den">P + R</span></span>
+      </div>
+      <div class="formula-plain">= <span class="acc-var">2TP</span> / (2TP + FP + FN) &nbsp;·&nbsp; en términos de la matriz de confusión</div>
+      <div class="formula-plain">= <span class="acc-var">Equilibrio</span> entre precision y recall, en un solo número</div>
+      <div class="formula-legend">
+        <div class="legend-item"><div class="var">P = Precision · R = Recall</div><div class="desc">Media armónica, no la media simple — penaliza fuerte cuando una de las dos es baja.</div></div>
+        <div class="legend-item"><div class="var">Cuándo usarla</div><div class="desc">Sin preferencia clara entre precision y recall, o en datasets desbalanceados. Nota: F1 no usa TN.</div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>F1-score</span><span class="gloss"><b>FP</b> = False Positive · <b>FN</b> = False Negative · <b>TN</b> = True Negative</span><span class="num">18 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 19 · ACCURACY -->
+  <section class="slide bg-alt" data-label="19 Accuracy">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Clasificación · Accuracy</div>
+    <h1 class="slide-title">Accuracy — el <em>% de aciertos</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block">
+      <div class="formula">
+        <span class="acc-var">Accuracy</span> &nbsp;=&nbsp;
+        <span class="frac"><span class="num">TP + TN</span><span class="den">TP + TN + FP + FN</span></span>
+      </div>
+      <div class="formula-plain">= <span class="acc-var">Predicciones correctas</span> / Total de predicciones</div>
+      <div class="formula-legend">
+        <div class="legend-item"><div class="var">Qué mide</div><div class="desc">% de predicciones correctas sobre el total.</div></div>
+        <div class="legend-item"><div class="var">Cuidado</div><div class="desc">Engañosa en clases desbalanceadas — un modelo inútil puede tener accuracy alto (ver ejemplo siguiente).</div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>Accuracy</span><span class="gloss"><b>TP</b> = True Positive · <b>TN</b> = True Negative · <b>FP</b> = False Positive · <b>FN</b> = False Negative</span><span class="num">19 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 20 · AUC-ROC -->
+  <section class="slide" data-label="20 AUC-ROC">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Clasificación · Evaluar sin fijar umbral</div>
+    <h1 class="slide-title"><em>AUC-ROC</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="auc-wrap">
+      <div class="auc-left">
+        <table class="cmp-table dense">
+          <thead>
+            <tr><th style="width:26%">Concepto</th><th>Qué es</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="name">Curva ROC</td><td>Recall (TPR) vs. tasa de falsos positivos (FPR), al variar el umbral de decisión.</td></tr>
+            <tr><td class="name">AUC</td><td>Área bajo la curva, de 0 a 1: resume qué tan bien separa las clases.</td></tr>
+            <tr><td class="name">Lectura</td><td>0.5 = azar · 1.0 = perfecto · más área = mejor modelo.</td></tr>
+            <tr><td class="name">Cuándo usarla</td><td>Comparar clasificadores sin fijar un umbral específico.</td></tr>
+          </tbody>
+        </table>
+        <div class="big-comment">
+          <span class="marker">→ Regla de examen</span>
+          <p>Separar bien las clases en todos los umbrales = <em>AUC-ROC</em>.</p>
+        </div>
+      </div>
+      <svg class="roc" viewBox="0 0 640 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Curva ROC: modelo bueno, azar y perfecto">
+        <g style="font-family: var(--font-mono); font-size: 20px;">
+          <path d="M100 540 C 112 330, 160 190, 238 144 S 400 96, 560 80 L560 540 Z" fill="var(--accent)" fill-opacity="0.12"/>
+          <line x1="100" y1="310" x2="560" y2="310" stroke="var(--rule)" stroke-width="1"/>
+          <line x1="330" y1="80" x2="330" y2="540" stroke="var(--rule)" stroke-width="1"/>
+          <path d="M100 540 L100 80 L560 80" fill="none" stroke="var(--ink-3)" stroke-width="2.5" stroke-dasharray="8 7"/>
+          <line x1="100" y1="540" x2="560" y2="80" stroke="var(--ink-3)" stroke-width="2.5" stroke-dasharray="3 7" stroke-linecap="round"/>
+          <path d="M100 540 C 112 330, 160 190, 238 144 S 400 96, 560 80" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round"/>
+          <line x1="100" y1="540" x2="560" y2="540" stroke="var(--ink)" stroke-width="2"/>
+          <line x1="100" y1="540" x2="100" y2="80" stroke="var(--ink)" stroke-width="2"/>
+          <circle cx="146" cy="255" r="9" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+          <text x="168" y="262" fill="var(--ink)">un umbral</text>
+          <g fill="var(--ink-3)" text-anchor="middle">
+            <text x="100" y="568">0</text><text x="330" y="568">0.5</text><text x="560" y="568">1</text>
+            <text x="330" y="608" fill="var(--ink-2)">FPR · falsos positivos</text>
+          </g>
+          <g fill="var(--ink-3)" text-anchor="end">
+            <text x="86" y="547">0</text><text x="86" y="317">0.5</text><text x="86" y="87">1</text>
+          </g>
+          <text x="26" y="310" fill="var(--ink-2)" text-anchor="middle" transform="rotate(-90 26 310)">TPR · Recall</text>
+          <line x1="296" y1="448" x2="322" y2="448" stroke="var(--accent)" stroke-width="5" stroke-linecap="round"/>
+          <text x="332" y="454" fill="var(--ink)">Modelo · AUC ≈ 0.9</text>
+          <line x1="296" y1="482" x2="322" y2="482" stroke="var(--ink-3)" stroke-width="2.5" stroke-dasharray="3 6" stroke-linecap="round"/>
+          <text x="332" y="488" fill="var(--ink)">Azar · AUC = 0.5</text>
+          <line x1="296" y1="516" x2="322" y2="516" stroke="var(--ink-3)" stroke-width="2.5" stroke-dasharray="8 6"/>
+          <text x="332" y="522" fill="var(--ink)">Perfecto · AUC = 1</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="chrome-bot"><span>AUC-ROC</span><span class="gloss"><b>AUC</b> = Area Under the Curve · <b>ROC</b> = Receiver Operating Characteristic · <b>TPR</b> = True Positive Rate · <b>FPR</b> = False Positive Rate</span><span class="num">20 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 21 · EJEMPLO NUMÉRICO — EL CASO -->
+  <section class="slide" data-label="21 Ejemplo numerico caso">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Clasificación · Aplicado</div>
+    <h1 class="slide-title">Ejemplo — <em>fraude bancario</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="big-comment" style="margin-top: 0; padding-top: 0; border-top: none; margin-bottom: 32px;">
+      <span class="marker">→ El caso</span>
+      <p>Un banco entrena un modelo para predecir si una transacción de compra por internet es <em>fraudulenta</em> (Sí/No). Se evalúan 1,000 transacciones, de las cuales 50 son realmente fraudulentas (5%).</p>
+    </div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:28%"></th><th>Predicho: Fraude</th><th>Predicho: No fraude</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Real: Fraude (50)</td>
+          <td class="code">TP = 40</td>
+          <td class="code">FN = 10</td>
+        </tr>
+        <tr>
+          <td class="name">Real: No fraude (950)</td>
+          <td class="code">FP = 60</td>
+          <td class="code">TN = 890</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Ejemplo numérico · El caso</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative · <b>FP</b> = False Positive · <b>TN</b> = True Negative</span><span class="num">21 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 22 · EJEMPLO NUMÉRICO — RESULTADOS -->
+  <section class="slide bg-alt" data-label="22 Ejemplo numerico resultados">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Clasificación · Aplicado</div>
+    <h1 class="slide-title">Ejemplo — <em>los números</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid">
+      <div class="stat-item">
+        <div class="num">93%</div>
+        <div class="lbl">Accuracy</div>
+        <div class="sub">(40+890) / 1000</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">40%</div>
+        <div class="lbl">Precision</div>
+        <div class="sub">40 / (40+60)</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">80%</div>
+        <div class="lbl">Recall</div>
+        <div class="sub">40 / (40+10)</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">53.3%</div>
+        <div class="lbl">F1-score</div>
+        <div class="sub">2·(P·R)/(P+R)</div>
+      </div>
+    </div>
+
+    <div class="big-comment">
+      <span class="marker">→ La paradoja</span>
+      <p>93% de accuracy suena excelente, pero de las 100 transacciones que el modelo marcó como fraude, 60 eran en realidad legítimas (precision 40%). Por eso en fraude no se optimiza accuracy — se prioriza <em>recall</em>, aceptando más falsas alarmas a cambio de no dejar pasar fraude real.</p>
+    </div>
+
+    <div class="chrome-bot"><span>Ejemplo numérico · Resultados</span><span class="num">22 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 23 · TABLA RESUMEN ESCENARIOS -->
+  <section class="slide bg-alt" data-label="23 Tabla escenarios">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Clasificación · Resumen</div>
+    <h1 class="slide-title">Qué métrica priorizar <em>según el caso</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:34%">Escenario</th><th style="width:18%">Métrica</th><th>Por qué</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Fraude / diagnóstico médico grave</td><td class="code">Recall</td><td>No puedes dejar pasar un positivo real — el falso negativo es carísimo.</td></tr>
+        <tr><td class="name">Spam / marketing</td><td class="code">Precision</td><td>Una falsa alarma molesta más que dejar pasar un caso.</td></tr>
+        <tr><td class="name">Desbalanceado, sin preferencia clara</td><td class="code">F1-score</td><td>Balance robusto entre precision y recall.</td></tr>
+        <tr><td class="name">Balanceado, errores cuestan igual</td><td class="code">Accuracy</td><td>Simple y suficiente cuando no hay desbalance.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Tabla de escenarios</span><span class="num">23 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 24 · MAE -->
+  <section class="slide" data-label="24 MAE">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Regresión · MAE</div>
+    <h1 class="slide-title">MAE — error <em>promedio</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block">
+      <div class="formula">
+        <span class="acc-var">MAE</span> &nbsp;=&nbsp;
+        <span class="frac"><span class="num">1</span><span class="den">n</span></span>
+        &nbsp;∑<sub>i=1</sub><sup>n</sup>&nbsp;
+        |y<sub>i</sub> − ŷ<sub>i</sub>|
+      </div>
+      <div class="formula-plain">= <span class="acc-var">Suma de errores absolutos</span> / Número de observaciones</div>
+      <div class="formula-legend">
+        <div class="legend-item"><div class="var">Qué mide</div><div class="desc">Promedio del valor absoluto del error. Todos los errores pesan igual.</div></div>
+        <div class="legend-item"><div class="var">Cuándo usarla</div><div class="desc">Robusta a outliers, fácil de interpretar (mismas unidades que Y).</div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>MAE</span><span class="gloss"><b>MAE</b> = Mean Absolute Error</span><span class="num">24 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 25 · RMSE -->
+  <section class="slide bg-alt" data-label="25 RMSE">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Regresión · RMSE</div>
+    <h1 class="slide-title">RMSE — castiga los errores <em>grandes</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block">
+      <div class="formula">
+        <span class="acc-var">RMSE</span> &nbsp;=&nbsp; √
+        <span class="frac"><span class="num">∑ (y<sub>i</sub> − ŷ<sub>i</sub>)²</span><span class="den">n</span></span>
+      </div>
+      <div class="formula-plain">= Raíz de la <span class="acc-var">suma de errores al cuadrado</span> / Número de observaciones</div>
+      <div class="formula-legend">
+        <div class="legend-item"><div class="var">Qué mide</div><div class="desc">Raíz del promedio de errores al cuadrado. Penaliza fuerte los errores grandes.</div></div>
+        <div class="legend-item"><div class="var">Cuándo usarla</div><div class="desc">Cuando un error grande es desproporcionadamente costoso. Sensible a outliers.</div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>RMSE</span><span class="gloss"><b>RMSE</b> = Root Mean Squared Error</span><span class="num">25 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 26 · COMPARACIÓN MAE vs RMSE -->
+  <section class="slide" data-label="26 MAE vs RMSE">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Regresión · Comparación</div>
+    <h1 class="slide-title">MAE <em>vs.</em> RMSE</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow">MAE</div>
+        <ul>
+          <li>Todos los errores pesan <strong>igual</strong>.</li>
+          <li><strong>Robusta</strong> a outliers.</li>
+          <li>Fácil de interpretar: error promedio en las unidades de Y.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow">RMSE</div>
+        <ul>
+          <li>Penaliza fuerte los errores <strong>grandes</strong>.</li>
+          <li><strong>Sensible</strong> a outliers.</li>
+          <li>La más común como función de pérdida en entrenamiento.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="big-comment">
+      <span class="marker">→ Pista de examen</span>
+      <p>Si RMSE es mucho mayor que MAE, hay errores puntuales muy grandes (outliers) en tus predicciones.</p>
+    </div>
+
+    <div class="chrome-bot"><span>MAE vs RMSE</span><span class="gloss"><b>MAE</b> = Mean Absolute Error · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">26 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 27 · TABLA FINAL DE MEMORIZACIÓN -->
+  <section class="slide bg-alt" data-label="27 Tabla final">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Repaso · Memorización</div>
+    <h1 class="slide-title">Las 7 métricas, <em>de un vistazo</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:16%">Métrica</th><th style="width:16%">Problema</th><th>Qué mide</th><th style="width:16%">Outliers</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">RMSE</td><td class="code">Regresión</td><td>Error, penaliza los grandes desproporcionadamente.</td><td class="code">Muy sensible</td></tr>
+        <tr><td class="name">MAE</td><td class="code">Regresión</td><td>Error promedio, todos pesan igual.</td><td class="code">Robusta</td></tr>
+        <tr><td class="name">Accuracy</td><td class="code">Clasificación</td><td>% de aciertos totales — engañosa si hay desbalance.</td><td class="code">No aplica</td></tr>
+        <tr><td class="name">Precision</td><td class="code">Clasificación</td><td>Confiabilidad de lo marcado como positivo.</td><td class="code">No aplica</td></tr>
+        <tr><td class="name">Recall</td><td class="code">Clasificación</td><td>Cobertura de los positivos reales.</td><td class="code">No aplica</td></tr>
+        <tr><td class="name">F1-score</td><td class="code">Clasificación</td><td>Balance (media armónica) entre precision y recall.</td><td class="code">No aplica</td></tr>
+        <tr><td class="name">AUC-ROC</td><td class="code">Clasificación</td><td>Qué tan bien separa las clases con cualquier umbral (0.5 = azar).</td><td class="code">No aplica</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>RMSE</b> = Root Mean Squared Error · <b>MAE</b> = Mean Absolute Error · <b>AUC</b> = Area Under the Curve · <b>ROC</b> = Receiver Operating Characteristic</span><span class="num">27 / 28</span></div>
+  </section>
+
+  <!-- SLIDE 28 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="28 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="label"><span class="bar"></span>Cierre · Bloque de métricas</div>
+    <h2>Listo para el <em>siguiente dominio</em>.</h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">Siguiente bloque: Dominio 2 — Fundamentos de IA Generativa (LLMs, transformers, prompting). Repasa la tabla anterior antes del examen.</p>
+      <div class="contact-card">
+        <div class="contact-row"><i class="ti ti-mail"></i><div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div></div>
+        <div class="contact-row"><i class="ti ti-world"></i><div><div class="lbl">Web</div><div class="val">hugogutierrez.pe</div></div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>LLM</b> = Large Language Model</span><span class="num">28 / 28</span></div>
+  </section>
+
+</deck-stage>
+
+<!-- DOWNLOAD PDF -->
+<style>
+  .pdf-fab {
+    position: fixed; top: 16px; right: 16px; z-index: 9999;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12; color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover { background: #B36B00; transform: translateY(-1px); box-shadow: 0 10px 28px rgba(255,153,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset; }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot { width: 6px; height: 6px; border-radius: 999px; background: #FF9900; box-shadow: 0 0 0 3px rgba(255,153,0,0.18); }
+  .pdf-fab i { font-size: 16px; line-height: 1; }
+  .pdf-fab .hint { opacity: 0.55; font-size: 11px; margin-left: 4px; padding-left: 8px; border-left: 1px solid rgba(255,255,255,0.18); }
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<script src="deck-stage.js"></script>
+
+<!-- CONTROLES FLOTANTES: R Rail · P PDF · F Fullscreen -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(255,153,0,.85);border-color:rgba(255,153,0,.6);color:#fff}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-rail" title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf" title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen" title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      const hidden = stage.hasAttribute('no-rail');
+      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
+      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
+    }
+    railBtn.addEventListener('click', toggleRail);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>
