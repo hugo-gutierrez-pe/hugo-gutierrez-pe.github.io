@@ -420,10 +420,12 @@
   "Artifact es el portal de reportes de cumplimiento de AWS: lo usas para descargar SOC, PCI DSS, ISO. Config registra y evalúa configuraciones. Audit Manager junta evidencia para auditorías. Control Tower crea una landing zone multicuenta. Organizations aplica SCP. Security Hub centraliza hallazgos.",
   "Cifrado en reposo protege datos almacenados; cifrado en tránsito protege datos en movimiento (TLS). KMS administra claves. CloudHSM da un módulo dedicado que solo tú controlas. ACM gestiona certificados. Secrets Manager guarda y rota secretos como contraseñas de bases de datos.",
   "IAM es global y gratuito. Root user solo para unas pocas tareas. Los usuarios reciben permisos con políticas, idealmente vía grupos. Los roles dan credenciales temporales, y son la forma correcta de dar permisos a servicios (p. ej. una EC2 que lee S3), en vez de poner llaves en el código.",
+  "Para acceso programático (CLI, SDK, API) se necesitan DOS piezas: el ID de clave de acceso y la clave de acceso secreta. Un ID de usuario o una contraseña no sirven para eso. La consola usa usuario y contraseña, idealmente con MFA. La clave secreta solo se muestra al crearla. Preferir roles con credenciales temporales.",
   "Buenas prácticas de IAM: mínimo privilegio, MFA, roles en lugar de llaves, y no usar el root user. Tareas que solo el root puede hacer: cerrar la cuenta, cambiar el plan de soporte, cambiar datos de cuenta, restaurar permisos de IAM bloqueados.",
   "IAM Identity Center es para tus empleados (workforce, SSO). Cognito es para los usuarios de tu aplicación (clientes). Directory Service para Active Directory. Las SCP de Organizations ponen un techo de permisos por cuenta, no otorgan permisos. STS entrega credenciales temporales.",
   "Security group: a nivel instancia, stateful, solo permite. NACL: a nivel subred, stateless, permite y deniega. WAF protege aplicaciones web de ataques como SQL injection. Shield protege de DDoS; Standard viene incluido sin costo.",
   "GuardDuty detecta actividad sospechosa. Inspector busca vulnerabilidades en cargas de trabajo. Macie encuentra PII en S3. Detective investiga el origen de un incidente. Security Hub reúne todo. Trusted Advisor recomienda buenas prácticas.",
+  "Trusted Advisor inspecciona tu cuenta y recomienda mejoras en costo, rendimiento, seguridad, tolerancia a fallos y límites. Es la respuesta cuando piden identificar security groups abiertos al mundo, MFA faltante en el root o recursos ociosos. IAM administra permisos; no audita security groups.",
   "CloudTrail registra llamadas a la API: quién, cuándo y desde dónde. CloudWatch guarda métricas, logs y alarmas. Config guarda el historial de configuraciones y evalúa reglas. Es una de las confusiones más comunes del examen.",
   "Puedes hacer pruebas de penetración sobre tus propios recursos en varios servicios sin aprobación previa, pero no DDoS ni simulaciones que dañen. Tú decides en qué Region viven tus datos. Artifact entrega los reportes de cumplimiento.",
   "Cierre del dominio 2. Estos siete pares cubren la mayoría de las preguntas de seguridad.",
@@ -476,12 +478,12 @@
     <div class="agenda-list">
       <div class="agenda-row"><span class="num">01</span><div><div class="title">Responsabilidad compartida</div><div class="desc">Qué es de AWS, qué es tuyo y cómo cambia por servicio.</div></div><span class="tag">Modelo</span></div>
       <div class="agenda-row"><span class="num">02</span><div><div class="title">Gobierno y datos</div><div class="desc">Artifact, Config, Control Tower, cifrado y secretos.</div></div><span class="tag">Servicios</span></div>
-      <div class="agenda-row"><span class="num">03</span><div><div class="title">Acceso con IAM</div><div class="desc">Usuarios, roles, políticas, MFA y servicios de identidad.</div></div><span class="tag">Acceso</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">Acceso con IAM</div><div class="desc">Usuarios, roles, políticas, MFA, credenciales y servicios de identidad.</div></div><span class="tag">Acceso</span></div>
       <div class="agenda-row"><span class="num">04</span><div><div class="title">Red y detección</div><div class="desc">Security groups, WAF, Shield, GuardDuty, Inspector, Macie.</div></div><span class="tag">Servicios</span></div>
-      <div class="agenda-row"><span class="num">05</span><div><div class="title">Monitoreo y memorización</div><div class="desc">CloudTrail, CloudWatch, Config y tabla final.</div></div><span class="tag">Cierre</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Monitoreo y memorización</div><div class="desc">Trusted Advisor, CloudTrail, CloudWatch, Config y tabla final.</div></div><span class="tag">Cierre</span></div>
     </div>
 
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication · <b>WAF</b> = Web Application Firewall</span><span class="num">02 / 15</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication · <b>WAF</b> = Web Application Firewall</span><span class="num">02 / 17</span></div>
   </section>
 
   <!-- SLIDE 3 · RESPONSABILIDAD COMPARTIDA -->
@@ -506,7 +508,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Responsabilidad compartida</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>IAM</b> = Identity and Access Management · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">03 / 15</span></div>
+    <div class="chrome-bot"><span>Responsabilidad compartida</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>IAM</b> = Identity and Access Management · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">03 / 17</span></div>
   </section>
 
   <!-- SLIDE 4 · RESPONSABILIDAD POR SERVICIO -->
@@ -536,7 +538,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Responsabilidad por servicio</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>IaaS</b> = Infrastructure as a Service · <b>RDS</b> = Relational Database Service · <b>IAM</b> = Identity and Access Management · <b>S3</b> = Simple Storage Service</span><span class="num">04 / 15</span></div>
+    <div class="chrome-bot"><span>Responsabilidad por servicio</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>IaaS</b> = Infrastructure as a Service · <b>RDS</b> = Relational Database Service · <b>IAM</b> = Identity and Access Management · <b>S3</b> = Simple Storage Service</span><span class="num">04 / 17</span></div>
   </section>
 
   <!-- SLIDE 5 · GOBIERNO Y CUMPLIMIENTO -->
@@ -568,7 +570,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Gobierno y cumplimiento</span><span class="gloss"><b>SOC</b> = System and Organization Controls · <b>SCP</b> = Service Control Policy</span><span class="num">05 / 15</span></div>
+    <div class="chrome-bot"><span>Gobierno y cumplimiento</span><span class="gloss"><b>SOC</b> = System and Organization Controls · <b>SCP</b> = Service Control Policy</span><span class="num">05 / 17</span></div>
   </section>
 
   <!-- SLIDE 6 · CIFRADO Y SECRETOS -->
@@ -600,7 +602,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Cifrado y secretos</span><span class="gloss"><b>KMS</b> = Key Management Service · <b>S3</b> = Simple Storage Service · <b>EBS</b> = Elastic Block Store · <b>RDS</b> = Relational Database Service · <b>HSM</b> = Hardware Security Module · <b>ACM</b> = AWS Certificate Manager</span><span class="num">06 / 15</span></div>
+    <div class="chrome-bot"><span>Cifrado y secretos</span><span class="gloss"><b>KMS</b> = Key Management Service · <b>S3</b> = Simple Storage Service · <b>EBS</b> = Elastic Block Store · <b>RDS</b> = Relational Database Service · <b>HSM</b> = Hardware Security Module · <b>ACM</b> = AWS Certificate Manager</span><span class="num">06 / 17</span></div>
   </section>
 
   <!-- SLIDE 7 · IAM: CONCEPTOS -->
@@ -632,11 +634,43 @@
     </div>
 
 
-    <div class="chrome-bot"><span>IAM: conceptos</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication · <b>EC2</b> = Elastic Compute Cloud · <b>S3</b> = Simple Storage Service</span><span class="num">07 / 15</span></div>
+    <div class="chrome-bot"><span>IAM: conceptos</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication · <b>EC2</b> = Elastic Compute Cloud · <b>S3</b> = Simple Storage Service</span><span class="num">07 / 17</span></div>
   </section>
 
-  <!-- SLIDE 8 · BUENAS PRÁCTICAS IAM -->
-  <section class="slide" data-label="08 Buenas prácticas IAM">
+  <!-- SLIDE 8 · CREDENCIALES DE ACCESO -->
+  <section class="slide" data-label="08 Credenciales de acceso">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Acceso · Credenciales</div>
+    <h1 class="slide-title">Cómo te <em>autenticas</em> en AWS</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:24%">Forma de acceso</th><th style="width:38%">Credenciales que usa</th><th>Nota</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Management Console</td><td>Usuario y contraseña (más MFA)</td><td>Acceso humano por navegador</td></tr>
+        <tr><td class="name">AWS CLI</td><td>ID de clave de acceso + clave de acceso secreta</td><td>Acceso programático</td></tr>
+        <tr><td class="name">SDKs y API</td><td>ID de clave de acceso + clave de acceso secreta</td><td>Acceso programático</td></tr>
+        <tr><td class="name">Clave de acceso secreta</td><td>Se muestra una sola vez, al crearla</td><td>Si se pierde, creas un par nuevo</td></tr>
+        <tr><td class="name">Roles de IAM</td><td>Credenciales temporales (STS)</td><td>Mejor que llaves de larga duración</td></tr>
+        <tr><td class="name">Buenas prácticas</td><td>No poner llaves en el código y rotarlas</td><td>Nunca crear llaves para el root</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Acceso programático = ID de clave de acceso + clave de acceso secreta. Las dos, siempre juntas.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Credenciales de acceso</span><span class="gloss"><b>MFA</b> = Multi-Factor Authentication · <b>CLI</b> = Command Line Interface · <b>SDK</b> = Software Development Kit · <b>API</b> = Application Programming Interface · <b>IAM</b> = Identity and Access Management</span><span class="num">08 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 9 · BUENAS PRÁCTICAS IAM -->
+  <section class="slide bg-alt" data-label="09 Buenas prácticas IAM">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -657,11 +691,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Buenas prácticas IAM</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication</span><span class="num">08 / 15</span></div>
+    <div class="chrome-bot"><span>Buenas prácticas IAM</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication</span><span class="num">09 / 17</span></div>
   </section>
 
-  <!-- SLIDE 9 · SERVICIOS DE IDENTIDAD -->
-  <section class="slide bg-alt" data-label="09 Servicios de identidad">
+  <!-- SLIDE 10 · SERVICIOS DE IDENTIDAD -->
+  <section class="slide" data-label="10 Servicios de identidad">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -688,11 +722,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Servicios de identidad</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>SSO</b> = Single Sign-On · <b>SCP</b> = Service Control Policy</span><span class="num">09 / 15</span></div>
+    <div class="chrome-bot"><span>Servicios de identidad</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>SSO</b> = Single Sign-On · <b>SCP</b> = Service Control Policy</span><span class="num">10 / 17</span></div>
   </section>
 
-  <!-- SLIDE 10 · SEGURIDAD DE RED -->
-  <section class="slide" data-label="10 Seguridad de red">
+  <!-- SLIDE 11 · SEGURIDAD DE RED -->
+  <section class="slide bg-alt" data-label="11 Seguridad de red">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -720,11 +754,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Seguridad de red</span><span class="gloss"><b>NACL</b> = Network Access Control List · <b>WAF</b> = Web Application Firewall · <b>DDoS</b> = Distributed Denial of Service · <b>VPC</b> = Virtual Private Cloud</span><span class="num">10 / 15</span></div>
+    <div class="chrome-bot"><span>Seguridad de red</span><span class="gloss"><b>NACL</b> = Network Access Control List · <b>WAF</b> = Web Application Firewall · <b>DDoS</b> = Distributed Denial of Service · <b>VPC</b> = Virtual Private Cloud</span><span class="num">11 / 17</span></div>
   </section>
 
-  <!-- SLIDE 11 · DETECCIÓN Y RESPUESTA -->
-  <section class="slide bg-alt" data-label="11 Detección y respuesta">
+  <!-- SLIDE 12 · DETECCIÓN Y RESPUESTA -->
+  <section class="slide" data-label="12 Detección y respuesta">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -752,11 +786,43 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Detección y respuesta</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud · <b>DNS</b> = Domain Name System · <b>EC2</b> = Elastic Compute Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service</span><span class="num">11 / 15</span></div>
+    <div class="chrome-bot"><span>Detección y respuesta</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud · <b>DNS</b> = Domain Name System · <b>EC2</b> = Elastic Compute Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service</span><span class="num">12 / 17</span></div>
   </section>
 
-  <!-- SLIDE 12 · MONITOREO Y AUDITORÍA -->
-  <section class="slide" data-label="12 Monitoreo y auditoría">
+  <!-- SLIDE 13 · TRUSTED ADVISOR -->
+  <section class="slide bg-alt" data-label="13 Trusted Advisor">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Seguridad · Recomendaciones</div>
+    <h1 class="slide-title"><em>Trusted Advisor</em>: chequeos de buenas prácticas</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:28%">Categoría</th><th>Ejemplos de chequeo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Seguridad</td><td>Security groups con acceso sin restricciones, MFA en el root, buckets de S3 públicos</td></tr>
+        <tr><td class="name">Optimización de costos</td><td>Instancias EC2 ociosas o subutilizadas, IP elásticas sin asociar</td></tr>
+        <tr><td class="name">Rendimiento</td><td>Instancias con uso muy alto de forma sostenida</td></tr>
+        <tr><td class="name">Tolerancia a fallos</td><td>Falta de backups, bases de datos sin Multi-AZ</td></tr>
+        <tr><td class="name">Límites de servicio</td><td>Uso cercano a las cuotas de la cuenta</td></tr>
+        <tr><td class="name">Según tu plan</td><td>Basic y Developer: chequeos core. Business o superior: todos los chequeos</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>"Identificar security groups con acceso sin restricciones": Trusted Advisor. IAM no audita security groups.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Trusted Advisor</span><span class="gloss"><b>MFA</b> = Multi-Factor Authentication · <b>S3</b> = Simple Storage Service · <b>EC2</b> = Elastic Compute Cloud · <b>AZ</b> = Availability Zone · <b>IAM</b> = Identity and Access Management</span><span class="num">13 / 17</span></div>
+  </section>
+
+  <!-- SLIDE 14 · MONITOREO Y AUDITORÍA -->
+  <section class="slide" data-label="14 Monitoreo y auditoría">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -783,11 +849,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Monitoreo y auditoría</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud</span><span class="num">12 / 15</span></div>
+    <div class="chrome-bot"><span>Monitoreo y auditoría</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud</span><span class="num">14 / 17</span></div>
   </section>
 
-  <!-- SLIDE 13 · RECURSOS DE SEGURIDAD -->
-  <section class="slide bg-alt" data-label="13 Recursos de seguridad">
+  <!-- SLIDE 15 · RECURSOS DE SEGURIDAD -->
+  <section class="slide bg-alt" data-label="15 Recursos de seguridad">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -814,11 +880,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Recursos de seguridad</span><span class="gloss"><b>DDoS</b> = Distributed Denial of Service</span><span class="num">13 / 15</span></div>
+    <div class="chrome-bot"><span>Recursos de seguridad</span><span class="gloss"><b>DDoS</b> = Distributed Denial of Service</span><span class="num">15 / 17</span></div>
   </section>
 
-  <!-- SLIDE 14 · TABLA FINAL D2 -->
-  <section class="slide" data-label="14 Tabla final D2">
+  <!-- SLIDE 16 · TABLA FINAL D2 -->
+  <section class="slide" data-label="16 Tabla final D2">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -842,11 +908,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final D2</span><span class="gloss"><b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>WAF</b> = Web Application Firewall · <b>IAM</b> = Identity and Access Management</span><span class="num">14 / 15</span></div>
+    <div class="chrome-bot"><span>Tabla final D2</span><span class="gloss"><b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>WAF</b> = Web Application Firewall · <b>IAM</b> = Identity and Access Management</span><span class="num">16 / 17</span></div>
   </section>
 
-  <!-- SLIDE 15 · CIERRE -->
-  <section class="slide cierre bg-ink" data-label="15 Cierre">
+  <!-- SLIDE 17 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="17 Cierre">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS CLF-C02 · Cloud Practitioner</span>
@@ -862,7 +928,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Cierre</span><span class="num">15 / 15</span></div>
+    <div class="chrome-bot"><span>Cierre</span><span class="num">17 / 17</span></div>
   </section>
 
 </deck-stage>
