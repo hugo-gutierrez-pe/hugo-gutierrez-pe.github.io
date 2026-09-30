@@ -426,6 +426,7 @@
   "Servicios de cumplimiento y auditoría: Config (configuración), Inspector (vulnerabilidades), Audit Manager (evidencia), Trusted Advisor (recomendaciones) y Artifact (reportes de compliance de AWS).",
   "Gobernanza de datos: cubre el ciclo de vida completo del dato (creación, uso, archivo, eliminación), residencia de datos (en qué región/país se almacenan — importante para regulación local), y linaje de datos (trazabilidad de origen y transformaciones).",
   "Ingeniería de datos segura: calidad, privacidad (tecnologías que mejoran la privacidad), control de acceso e integridad de los datos.",
+  "Si un modelo se entrenó con datos confidenciales puede filtrarlos en sus respuestas (memorización). Prevención: gobernanza y exclusión o anonimización antes de entrenar. Parche inmediato: Guardrails. Solución de fondo: reentrenar sin esos datos. Alternativa: RAG con control de acceso. Privado suele ser PII; confidencial son secretos del negocio: Guardrails detecta PII de forma nativa y para lo confidencial se usan denied topics, word filters o regex.",
   "Tabla final de memorización: los conceptos clave del Dominio 5 en una sola vista.",
   "Cierre de la serie completa de 5 dominios. Con esto se cubrieron los 5 dominios del examen AWS Certified AI Practitioner (AIF-C01)."
 ]
@@ -477,9 +478,9 @@
       <div class="agenda-row"><span class="num">02</span><div><div class="title">IAM, encriptación y red</div><div class="desc">Control de acceso, KMS, VPC endpoints.</div></div><span class="tag">Seguridad</span></div>
       <div class="agenda-row"><span class="num">03</span><div><div class="title">Monitoreo y datos sensibles</div><div class="desc">CloudTrail, CloudWatch, Macie, Config, Inspector.</div></div><span class="tag">Auditoría</span></div>
       <div class="agenda-row"><span class="num">04</span><div><div class="title">Security Scoping Matrix</div><div class="desc">Los 5 niveles de control sobre un modelo de GenAI.</div></div><span class="tag">Marco</span></div>
-      <div class="agenda-row"><span class="num">05</span><div><div class="title">Compliance y gobernanza</div><div class="desc">Artifact, Audit Manager, gobierno del dato + resumen final.</div></div><span class="tag">Cierre</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Compliance y gobernanza</div><div class="desc">Artifact, Audit Manager, gobierno del dato, datos confidenciales + resumen final.</div></div><span class="tag">Cierre</span></div>
     </div>
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>KMS</b> = Key Management Service · <b>VPC</b> = Virtual Private Cloud · <b>GenAI</b> = Generative AI</span><span class="num">02 / 15</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>KMS</b> = Key Management Service · <b>VPC</b> = Virtual Private Cloud · <b>GenAI</b> = Generative AI</span><span class="num">02 / 16</span></div>
   </section>
 
   <!-- SLIDE 3 · SHARED RESPONSIBILITY MODEL -->
@@ -507,7 +508,7 @@
       <p>AWS protege el servicio. <em>Tú proteges cómo lo configuras y qué datos le das.</em></p>
     </div>
 
-    <div class="chrome-bot"><span>Shared Responsibility</span><span class="gloss"><b>IAM</b> = Identity and Access Management</span><span class="num">03 / 15</span></div>
+    <div class="chrome-bot"><span>Shared Responsibility</span><span class="gloss"><b>IAM</b> = Identity and Access Management</span><span class="num">03 / 16</span></div>
   </section>
 
   <!-- SLIDE 4 · IAM -->
@@ -531,7 +532,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>IAM</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>S3</b> = Simple Storage Service</span><span class="num">04 / 15</span></div>
+    <div class="chrome-bot"><span>IAM</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>S3</b> = Simple Storage Service</span><span class="num">04 / 16</span></div>
   </section>
 
   <!-- SLIDE 5 · ENCRIPTACIÓN -->
@@ -555,7 +556,7 @@
     </table>
 
 
-    <div class="chrome-bot"><span>Encriptación</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>KMS</b> = Key Management Service · <b>API</b> = Application Programming Interface · <b>TLS</b> = Transport Layer Security</span><span class="num">05 / 15</span></div>
+    <div class="chrome-bot"><span>Encriptación</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>KMS</b> = Key Management Service · <b>API</b> = Application Programming Interface · <b>TLS</b> = Transport Layer Security</span><span class="num">05 / 16</span></div>
   </section>
 
   <!-- SLIDE 6 · AISLAMIENTO DE RED -->
@@ -575,7 +576,7 @@
       <div class="stat-box"><div class="lbl">Cuándo se exige</div><div class="desc">Sectores regulados donde los datos no pueden transitar redes públicas.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Aislamiento de red</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud</span><span class="num">06 / 15</span></div>
+    <div class="chrome-bot"><span>Aislamiento de red</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud</span><span class="num">06 / 16</span></div>
   </section>
 
   <!-- SLIDE 7 · MONITOREO Y AUDITORÍA -->
@@ -603,7 +604,7 @@
       <p>CloudTrail = <em>registro de actividad</em> (auditoría). CloudWatch = <em>métricas y logs en vivo</em> (operación).</p>
     </div>
 
-    <div class="chrome-bot"><span>Monitoreo y auditoría</span><span class="num">07 / 15</span></div>
+    <div class="chrome-bot"><span>Monitoreo y auditoría</span><span class="num">07 / 16</span></div>
   </section>
 
   <!-- SLIDE 8 · AMAZON MACIE -->
@@ -627,7 +628,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Amazon Macie</span><span class="gloss"><b>ML</b> = Machine Learning · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>RAG</b> = Retrieval Augmented Generation · <b>IA</b> = Inteligencia Artificial</span><span class="num">08 / 15</span></div>
+    <div class="chrome-bot"><span>Amazon Macie</span><span class="gloss"><b>ML</b> = Machine Learning · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>RAG</b> = Retrieval Augmented Generation · <b>IA</b> = Inteligencia Artificial</span><span class="num">08 / 16</span></div>
   </section>
 
   <!-- SLIDE 9 · SECURITY SCOPING MATRIX -->
@@ -658,7 +659,7 @@
       <p>A mayor <em>scope</em> (control), mayor también la <em>responsabilidad de seguridad</em> que asumes tú en vez de AWS.</p>
     </div>
 
-    <div class="chrome-bot"><span>Security Scoping Matrix</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>GenAI</b> = Generative AI · <b>FM</b> = Foundation Model</span><span class="num">09 / 15</span></div>
+    <div class="chrome-bot"><span>Security Scoping Matrix</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>GenAI</b> = Generative AI · <b>FM</b> = Foundation Model</span><span class="num">09 / 16</span></div>
   </section>
 
   <!-- SLIDE 10 · COMPLIANCE FRAMEWORKS -->
@@ -682,7 +683,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Compliance</span><span class="gloss"><b>ISO</b> = International Organization for Standardization · <b>SOC</b> = System and Organization Controls · <b>PCI-DSS</b> = Payment Card Industry Data Security Standard</span><span class="num">10 / 15</span></div>
+    <div class="chrome-bot"><span>Compliance</span><span class="gloss"><b>ISO</b> = International Organization for Standardization · <b>SOC</b> = System and Organization Controls · <b>PCI-DSS</b> = Payment Card Industry Data Security Standard</span><span class="num">10 / 16</span></div>
   </section>
 
   <!-- SLIDE 11 · SERVICIOS DE AUDITORÍA -->
@@ -713,7 +714,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Servicios de auditoría</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>SOC</b> = System and Organization Controls · <b>ISO</b> = International Organization for Standardization · <b>PCI-DSS</b> = Payment Card Industry Data Security Standard</span><span class="num">11 / 15</span></div>
+    <div class="chrome-bot"><span>Servicios de auditoría</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>SOC</b> = System and Organization Controls · <b>ISO</b> = International Organization for Standardization · <b>PCI-DSS</b> = Payment Card Industry Data Security Standard</span><span class="num">11 / 16</span></div>
   </section>
 
   <!-- SLIDE 12 · GOBERNANZA DE DATOS -->
@@ -733,7 +734,7 @@
       <div class="stat-box"><div class="lbl">Monitoreo de datos</div><div class="desc">Vigilar calidad y uso continuo, no solo al momento de ingesta.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Gobernanza de datos</span><span class="num">12 / 15</span></div>
+    <div class="chrome-bot"><span>Gobernanza de datos</span><span class="num">12 / 16</span></div>
   </section>
 
   <!-- SLIDE 13 · INGENIERÍA DE DATOS SEGURA -->
@@ -754,11 +755,41 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Ingeniería de datos segura</span><span class="gloss"><b>IAM</b> = Identity and Access Management</span><span class="num">13 / 15</span></div>
+    <div class="chrome-bot"><span>Ingeniería de datos segura</span><span class="gloss"><b>IAM</b> = Identity and Access Management</span><span class="num">13 / 16</span></div>
   </section>
 
-  <!-- SLIDE 14 · TABLA FINAL DE MEMORIZACIÓN -->
-  <section class="slide" data-label="14 Tabla final">
+  <!-- SLIDE 14 · DATOS CONFIDENCIALES EN UN MODELO -->
+  <section class="slide bg-alt" data-label="14 Datos confidenciales en un modelo">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Datos · Fuga de información</div>
+    <h1 class="slide-title">Modelo entrenado con datos <em>confidenciales</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:26%">Situación</th><th>Qué se hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Prevención (lo ideal)</td><td>Gobernanza antes de entrenar: clasificar datos, excluir o anonimizar los confidenciales y dar mínimo privilegio. Macie descubre datos sensibles en S3.</td></tr>
+        <tr><td class="name">Ya entrenaste con ellos</td><td>Bloquear salidas con Guardrails (sensitive information, denied topics, word filters). Es un parche: el dato sigue en el modelo.</td></tr>
+        <tr><td class="name">Solución de fondo</td><td>Quitar los datos del dataset y reentrenar o volver a afinar: no hay forma sencilla de borrar un dato de un modelo ya entrenado.</td></tr>
+        <tr><td class="name">Mejor arquitectura</td><td>No entrenar con ellos: déjalos en una base de conocimiento (RAG) con permisos por usuario; cifra con KMS.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>"Bloquear respuestas ya, sin reentrenar" = <em>Guardrails</em>. "Evitar que el modelo los aprenda" = excluir o anonimizar antes. "Ya se entrenó mal" = reentrenar. Eliminar el modelo casi nunca es la respuesta.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Datos confidenciales en un modelo</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>RAG</b> = Retrieval Augmented Generation · <b>KMS</b> = Key Management Service</span><span class="num">14 / 16</span></div>
+  </section>
+
+  <!-- SLIDE 15 · TABLA FINAL DE MEMORIZACIÓN -->
+  <section class="slide" data-label="15 Tabla final">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -783,11 +814,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>KMS</b> = Key Management Service · <b>VPC</b> = Virtual Private Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>ML</b> = Machine Learning</span><span class="num">14 / 15</span></div>
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>KMS</b> = Key Management Service · <b>VPC</b> = Virtual Private Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>ML</b> = Machine Learning</span><span class="num">15 / 16</span></div>
   </section>
 
-  <!-- SLIDE 15 · CIERRE -->
-  <section class="slide cierre bg-ink" data-label="15 Cierre">
+  <!-- SLIDE 16 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="16 Cierre">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -803,7 +834,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>AI</b> = Artificial Intelligence</span><span class="num">15 / 15</span></div>
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>AI</b> = Artificial Intelligence</span><span class="num">16 / 16</span></div>
   </section>
 
 </deck-stage>

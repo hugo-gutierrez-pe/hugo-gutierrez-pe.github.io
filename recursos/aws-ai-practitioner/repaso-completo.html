@@ -575,6 +575,7 @@
   "Servicios de cumplimiento y auditoría: Config (configuración), Inspector (vulnerabilidades), Audit Manager (evidencia), Trusted Advisor (recomendaciones) y Artifact (reportes de compliance de AWS).",
   "Gobernanza de datos: cubre el ciclo de vida completo del dato (creación, uso, archivo, eliminación), residencia de datos (en qué región/país se almacenan — importante para regulación local), y linaje de datos (trazabilidad de origen y transformaciones).",
   "Ingeniería de datos segura: calidad, privacidad (tecnologías que mejoran la privacidad), control de acceso e integridad de los datos.",
+  "Si un modelo se entrenó con datos confidenciales puede filtrarlos en sus respuestas (memorización). Prevención: gobernanza y exclusión o anonimización antes de entrenar. Parche inmediato: Guardrails. Solución de fondo: reentrenar sin esos datos. Alternativa: RAG con control de acceso. Privado suele ser PII; confidencial son secretos del negocio: Guardrails detecta PII de forma nativa y para lo confidencial se usan denied topics, word filters o regex.",
   "Tabla final de memorización: los conceptos clave del Dominio 5 en una sola vista.",
   "Cheat-sheet de confusiones frecuentes, sacado de los errores reales en simulacros. Regla común: lee qué VERBO pide el enunciado (auditar, escanear, descubrir, revisar, documentar) y elige el servicio cuyo trabajo sea exactamente ese.",
   "Los simulacros viven junto a los decks en la misma carpeta: Simulacro-1 (65 preguntas), Simulacro-2-Corto y Simulacro-3-Estilo-Oficial y Simulacro-4-Nivel-Examen. Ruta: repasa el deck, haz el simulacro oficial de Skill Builder y vuelve sobre los dominios donde fallaste con confianza alta.",
@@ -629,11 +630,11 @@
       <div class="agenda-row"><span class="num">02</span><div><div class="title">D2 · Fundamentos de IA generativa</div><div class="desc">Slides 33–47 · pesa 24% del examen.</div></div><span class="tag">D2</span></div>
       <div class="agenda-row"><span class="num">03</span><div><div class="title">D3 · Aplicaciones de foundation models</div><div class="desc">Slides 48–74 · pesa 28% del examen.</div></div><span class="tag">D3</span></div>
       <div class="agenda-row"><span class="num">04</span><div><div class="title">D4 · IA responsable</div><div class="desc">Slides 75–92 · pesa 14% del examen.</div></div><span class="tag">D4</span></div>
-      <div class="agenda-row"><span class="num">05</span><div><div class="title">D5 · Seguridad, cumplimiento y gobernanza</div><div class="desc">Slides 93–106 · pesa 14% del examen.</div></div><span class="tag">D5</span></div>
-      <div class="agenda-row"><span class="num">06</span><div><div class="title">Repaso final</div><div class="desc">Slides 107–109: confusiones frecuentes, simulacros y ruta de estudio.</div></div><span class="tag">Cierre</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">D5 · Seguridad, cumplimiento y gobernanza</div><div class="desc">Slides 93–107 · pesa 14% del examen.</div></div><span class="tag">D5</span></div>
+      <div class="agenda-row"><span class="num">06</span><div><div class="title">Repaso final</div><div class="desc">Slides 108–110: confusiones frecuentes, simulacros y ruta de estudio.</div></div><span class="tag">Cierre</span></div>
     </div>
 
-    <div class="chrome-bot"><span>Índice</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning</span><span class="num">02 / 109</span></div>
+    <div class="chrome-bot"><span>Índice</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning</span><span class="num">02 / 110</span></div>
   </section>
 
   <!-- SLIDE 3 · PORTADA -->
@@ -685,7 +686,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Info del examen 1/2</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>GenAI</b> = Generative AI · <b>FM</b> = Foundation Model</span><span class="num">04 / 109</span></div>
+    <div class="chrome-bot"><span>Info del examen 1/2</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>GenAI</b> = Generative AI · <b>FM</b> = Foundation Model</span><span class="num">04 / 110</span></div>
   </section>
 
   <!-- SLIDE 5 · INFO DEL EXAMEN 2/2 -->
@@ -710,7 +711,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Info del examen 2/2</span><span class="num">05 / 109</span></div>
+    <div class="chrome-bot"><span>Info del examen 2/2</span><span class="num">05 / 110</span></div>
   </section>
 
   <!-- SLIDE 6 · AGENDA -->
@@ -732,7 +733,7 @@
       <div class="agenda-row"><span class="num">07</span><div><div class="title">MAE y RMSE</div><div class="desc">Error promedio en regresión — cuándo usar cada una.</div></div><span class="tag">Regresión</span></div>
       <div class="agenda-row"><span class="num">08</span><div><div class="title">Tabla de memorización</div><div class="desc">Las 7 métricas en una sola vista, listas para el examen.</div></div><span class="tag">Cierre</span></div>
     </div>
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>DL</b> = Deep Learning · <b>MLOps</b> = ML Operations · <b>TP</b> = True Positive · <b>TN</b> = True Negative · <b>FP</b> = False Positive · <b>FN</b> = False Negative</span><span class="num">06 / 109</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>DL</b> = Deep Learning · <b>MLOps</b> = ML Operations · <b>TP</b> = True Positive · <b>TN</b> = True Negative · <b>FP</b> = False Positive · <b>FN</b> = False Negative</span><span class="num">06 / 110</span></div>
   </section>
 
   <!-- SLIDE 7 · IA VS ML VS DL -->
@@ -763,7 +764,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>IA vs ML vs DL</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>DL</b> = Deep Learning · <b>NLP</b> = Natural Language Processing</span><span class="num">07 / 109</span></div>
+    <div class="chrome-bot"><span>IA vs ML vs DL</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>DL</b> = Deep Learning · <b>NLP</b> = Natural Language Processing</span><span class="num">07 / 110</span></div>
   </section>
 
   <!-- SLIDE 8 · TIPOS DE APRENDIZAJE -->
@@ -793,7 +794,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Tipos de aprendizaje</span><span class="gloss"><b>RLHF</b> = Reinforcement Learning from Human Feedback · <b>LLM</b> = Large Language Model</span><span class="num">08 / 109</span></div>
+    <div class="chrome-bot"><span>Tipos de aprendizaje</span><span class="gloss"><b>RLHF</b> = Reinforcement Learning from Human Feedback · <b>LLM</b> = Large Language Model</span><span class="num">08 / 110</span></div>
   </section>
 
   <!-- SLIDE 9 · OVERFITTING -->
@@ -822,7 +823,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Overfitting</span><span class="num">09 / 109</span></div>
+    <div class="chrome-bot"><span>Overfitting</span><span class="num">09 / 110</span></div>
   </section>
 
   <!-- SLIDE 10 · TIPOS DE INFERENCIA -->
@@ -852,7 +853,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Tipos de inferencia</span><span class="num">10 / 109</span></div>
+    <div class="chrome-bot"><span>Tipos de inferencia</span><span class="num">10 / 110</span></div>
   </section>
 
   <!-- SLIDE 11 · CICLO DE VIDA DE ML -->
@@ -873,7 +874,7 @@
       <div class="agenda-row"><span class="num">06</span><div><div class="title">Evaluar el modelo</div><div class="desc">Precision, recall, RMSE... — todo lo que vimos en este repaso.</div></div><span class="tag">Modelo</span></div>
       <div class="agenda-row"><span class="num">07</span><div><div class="title">Desplegar y monitorear</div><div class="desc">Poner en producción, detectar drift y reentrenar cuando haga falta.</div></div><span class="tag">Producción</span></div>
     </div>
-    <div class="chrome-bot"><span>Ciclo de vida de ML</span><span class="gloss"><b>ML</b> = Machine Learning · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">11 / 109</span></div>
+    <div class="chrome-bot"><span>Ciclo de vida de ML</span><span class="gloss"><b>ML</b> = Machine Learning · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">11 / 110</span></div>
   </section>
 
   <!-- SLIDE 12 · MLOPS Y MÉTRICAS DE NEGOCIO -->
@@ -893,7 +894,7 @@
       <div class="stat-box"><div class="lbl">Métricas de negocio</div><div class="desc">ROI, costo por usuario, satisfacción del cliente, eficiencia — miden si el modelo aporta valor.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>MLOps y métricas de negocio</span><span class="gloss"><b>MLOps</b> = ML Operations · <b>ML</b> = Machine Learning · <b>API</b> = Application Programming Interface · <b>AUC</b> = Area Under the Curve · <b>RMSE</b> = Root Mean Squared Error · <b>ROI</b> = Return on Investment</span><span class="num">12 / 109</span></div>
+    <div class="chrome-bot"><span>MLOps y métricas de negocio</span><span class="gloss"><b>MLOps</b> = ML Operations · <b>ML</b> = Machine Learning · <b>API</b> = Application Programming Interface · <b>AUC</b> = Area Under the Curve · <b>RMSE</b> = Root Mean Squared Error · <b>ROI</b> = Return on Investment</span><span class="num">12 / 110</span></div>
   </section>
 
   <!-- SLIDE 13 · SERVICIO ESPECÍFICO VS GENÉRICO -->
@@ -925,7 +926,7 @@
       <p>Si existe un servicio de AWS que resuelve el caso "out of the box", esa es la respuesta correcta — aunque construirlo tú mismo con SageMaker también sea técnicamente posible. Lo específico gana por costo y velocidad.</p>
     </div>
 
-    <div class="chrome-bot"><span>Específico vs. genérico</span><span class="gloss"><b>OCR</b> = Optical Character Recognition · <b>NLP</b> = Natural Language Processing · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">13 / 109</span></div>
+    <div class="chrome-bot"><span>Específico vs. genérico</span><span class="gloss"><b>OCR</b> = Optical Character Recognition · <b>NLP</b> = Natural Language Processing · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">13 / 110</span></div>
   </section>
 
   <!-- SLIDE 14 · CATÁLOGO DE SERVICIOS AI -->
@@ -952,7 +953,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Catálogo de servicios AI</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>A2I</b> = Augmented AI</span><span class="num">14 / 109</span></div>
+    <div class="chrome-bot"><span>Catálogo de servicios AI</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>A2I</b> = Augmented AI</span><span class="num">14 / 110</span></div>
   </section>
 
   <!-- SLIDE 15 · PERSONALIZAR SERVICIOS DE IA -->
@@ -984,7 +985,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Personalizar servicios de IA</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">15 / 109</span></div>
+    <div class="chrome-bot"><span>Personalizar servicios de IA</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">15 / 110</span></div>
   </section>
 
   <!-- SLIDE 16 · AMAZON PERSONALIZE -->
@@ -1009,7 +1010,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Amazon Personalize</span><span class="gloss"><b>ML</b> = Machine Learning</span><span class="num">16 / 109</span></div>
+    <div class="chrome-bot"><span>Amazon Personalize</span><span class="gloss"><b>ML</b> = Machine Learning</span><span class="num">16 / 110</span></div>
   </section>
 
   <!-- SLIDE 17 · PRONÓSTICO: DEEPAR Y FORECAST -->
@@ -1039,7 +1040,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Pronóstico: DeepAR y Forecast</span><span class="gloss"><b>ML</b> = Machine Learning</span><span class="num">17 / 109</span></div>
+    <div class="chrome-bot"><span>Pronóstico: DeepAR y Forecast</span><span class="gloss"><b>ML</b> = Machine Learning</span><span class="num">17 / 110</span></div>
   </section>
 
   <!-- SLIDE 18 · MATRIZ DE CONFUSIÓN -->
@@ -1075,7 +1076,7 @@
       <p>Solo para modelos con variable objetivo <em>discreta</em> — típicamente binaria (Sí/No, Fraude/No fraude). Los modelos de <em>regresión</em> (MAE, RMSE, más adelante) predicen una variable <em>continua</em> (precio, monto, demanda) y no usan esta matriz. FP = Error Tipo I · FN = Error Tipo II.</p>
     </div>
 
-    <div class="chrome-bot"><span>Matriz de confusión</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative · <b>FP</b> = False Positive · <b>TN</b> = True Negative · <b>MAE</b> = Mean Absolute Error · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">18 / 109</span></div>
+    <div class="chrome-bot"><span>Matriz de confusión</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative · <b>FP</b> = False Positive · <b>TN</b> = True Negative · <b>MAE</b> = Mean Absolute Error · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">18 / 110</span></div>
   </section>
 
   <!-- SLIDE 19 · INTUICIÓN DE CADA MÉTRICA -->
@@ -1105,7 +1106,7 @@
       <p>Guarda esta intuición: Recall mira hacia los <em>reales</em>, Precision mira hacia lo <em>predicho</em>, Accuracy mira el <em>total</em>. Las fórmulas de las próximas slides son solo la forma exacta de calcular cada una.</p>
     </div>
 
-    <div class="chrome-bot"><span>Intuición</span><span class="num">19 / 109</span></div>
+    <div class="chrome-bot"><span>Intuición</span><span class="num">19 / 110</span></div>
   </section>
 
   <!-- SLIDE 20 · PRECISION -->
@@ -1130,7 +1131,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Precision</span><span class="gloss"><b>TP</b> = True Positive · <b>FP</b> = False Positive</span><span class="num">20 / 109</span></div>
+    <div class="chrome-bot"><span>Precision</span><span class="gloss"><b>TP</b> = True Positive · <b>FP</b> = False Positive</span><span class="num">20 / 110</span></div>
   </section>
 
   <!-- SLIDE 21 · RECALL -->
@@ -1155,7 +1156,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Recall</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative</span><span class="num">21 / 109</span></div>
+    <div class="chrome-bot"><span>Recall</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative</span><span class="num">21 / 110</span></div>
   </section>
 
   <!-- SLIDE 22 · F1-SCORE -->
@@ -1181,7 +1182,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>F1-score</span><span class="gloss"><b>FP</b> = False Positive · <b>FN</b> = False Negative · <b>TN</b> = True Negative</span><span class="num">22 / 109</span></div>
+    <div class="chrome-bot"><span>F1-score</span><span class="gloss"><b>FP</b> = False Positive · <b>FN</b> = False Negative · <b>TN</b> = True Negative</span><span class="num">22 / 110</span></div>
   </section>
 
   <!-- SLIDE 23 · ACCURACY -->
@@ -1206,7 +1207,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Accuracy</span><span class="gloss"><b>TP</b> = True Positive · <b>TN</b> = True Negative · <b>FP</b> = False Positive · <b>FN</b> = False Negative</span><span class="num">23 / 109</span></div>
+    <div class="chrome-bot"><span>Accuracy</span><span class="gloss"><b>TP</b> = True Positive · <b>TN</b> = True Negative · <b>FP</b> = False Positive · <b>FN</b> = False Negative</span><span class="num">23 / 110</span></div>
   </section>
 
   <!-- SLIDE 24 · AUC-ROC -->
@@ -1267,7 +1268,7 @@
       </svg>
     </div>
 
-    <div class="chrome-bot"><span>AUC-ROC</span><span class="gloss"><b>AUC</b> = Area Under the Curve · <b>ROC</b> = Receiver Operating Characteristic · <b>TPR</b> = True Positive Rate · <b>FPR</b> = False Positive Rate</span><span class="num">24 / 109</span></div>
+    <div class="chrome-bot"><span>AUC-ROC</span><span class="gloss"><b>AUC</b> = Area Under the Curve · <b>ROC</b> = Receiver Operating Characteristic · <b>TPR</b> = True Positive Rate · <b>FPR</b> = False Positive Rate</span><span class="num">24 / 110</span></div>
   </section>
 
   <!-- SLIDE 25 · EJEMPLO NUMÉRICO — EL CASO -->
@@ -1303,7 +1304,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Ejemplo numérico · El caso</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative · <b>FP</b> = False Positive · <b>TN</b> = True Negative</span><span class="num">25 / 109</span></div>
+    <div class="chrome-bot"><span>Ejemplo numérico · El caso</span><span class="gloss"><b>TP</b> = True Positive · <b>FN</b> = False Negative · <b>FP</b> = False Positive · <b>TN</b> = True Negative</span><span class="num">25 / 110</span></div>
   </section>
 
   <!-- SLIDE 26 · EJEMPLO NUMÉRICO — RESULTADOS -->
@@ -1344,7 +1345,7 @@
       <p>93% de accuracy suena excelente, pero de las 100 transacciones que el modelo marcó como fraude, 60 eran en realidad legítimas (precision 40%). Por eso en fraude no se optimiza accuracy — se prioriza <em>recall</em>, aceptando más falsas alarmas a cambio de no dejar pasar fraude real.</p>
     </div>
 
-    <div class="chrome-bot"><span>Ejemplo numérico · Resultados</span><span class="num">26 / 109</span></div>
+    <div class="chrome-bot"><span>Ejemplo numérico · Resultados</span><span class="num">26 / 110</span></div>
   </section>
 
   <!-- SLIDE 27 · TABLA RESUMEN ESCENARIOS -->
@@ -1369,7 +1370,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla de escenarios</span><span class="num">27 / 109</span></div>
+    <div class="chrome-bot"><span>Tabla de escenarios</span><span class="num">27 / 110</span></div>
   </section>
 
   <!-- SLIDE 28 · MAE -->
@@ -1396,7 +1397,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>MAE</span><span class="gloss"><b>MAE</b> = Mean Absolute Error</span><span class="num">28 / 109</span></div>
+    <div class="chrome-bot"><span>MAE</span><span class="gloss"><b>MAE</b> = Mean Absolute Error</span><span class="num">28 / 110</span></div>
   </section>
 
   <!-- SLIDE 29 · RMSE -->
@@ -1421,7 +1422,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>RMSE</span><span class="gloss"><b>RMSE</b> = Root Mean Squared Error</span><span class="num">29 / 109</span></div>
+    <div class="chrome-bot"><span>RMSE</span><span class="gloss"><b>RMSE</b> = Root Mean Squared Error</span><span class="num">29 / 110</span></div>
   </section>
 
   <!-- SLIDE 30 · COMPARACIÓN MAE vs RMSE -->
@@ -1458,7 +1459,7 @@
       <p>Si RMSE es mucho mayor que MAE, hay errores puntuales muy grandes (outliers) en tus predicciones.</p>
     </div>
 
-    <div class="chrome-bot"><span>MAE vs RMSE</span><span class="gloss"><b>MAE</b> = Mean Absolute Error · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">30 / 109</span></div>
+    <div class="chrome-bot"><span>MAE vs RMSE</span><span class="gloss"><b>MAE</b> = Mean Absolute Error · <b>RMSE</b> = Root Mean Squared Error</span><span class="num">30 / 110</span></div>
   </section>
 
   <!-- SLIDE 31 · TABLA FINAL DE MEMORIZACIÓN -->
@@ -1486,7 +1487,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>RMSE</b> = Root Mean Squared Error · <b>MAE</b> = Mean Absolute Error · <b>AUC</b> = Area Under the Curve · <b>ROC</b> = Receiver Operating Characteristic</span><span class="num">31 / 109</span></div>
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>RMSE</b> = Root Mean Squared Error · <b>MAE</b> = Mean Absolute Error · <b>AUC</b> = Area Under the Curve · <b>ROC</b> = Receiver Operating Characteristic</span><span class="num">31 / 110</span></div>
   </section>
 
   <!-- SLIDE 32 · CIERRE -->
@@ -1506,7 +1507,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>LLM</b> = Large Language Model</span><span class="num">32 / 109</span></div>
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>LLM</b> = Large Language Model</span><span class="num">32 / 110</span></div>
   </section>
 
 
@@ -1554,7 +1555,7 @@
       <div class="agenda-row"><span class="num">05</span><div><div class="title">RAG y riesgos</div><div class="desc">Pipeline de RAG, alucinación, sesgo, mitigaciones.</div></div><span class="tag">Aplicado</span></div>
       <div class="agenda-row"><span class="num">06</span><div><div class="title">Casos de uso, límites y memorización</div><div class="desc">Resumen final listo para el examen.</div></div><span class="tag">Cierre</span></div>
     </div>
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>ML</b> = Machine Learning · <b>GenAI</b> = Generative AI · <b>AI</b> = Artificial Intelligence · <b>FM</b> = Foundation Model · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">34 / 109</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>ML</b> = Machine Learning · <b>GenAI</b> = Generative AI · <b>AI</b> = Artificial Intelligence · <b>FM</b> = Foundation Model · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">34 / 110</span></div>
   </section>
 
   <!-- SLIDE 35 · ML TRADICIONAL VS GEN AI -->
@@ -1579,7 +1580,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>ML vs Gen AI</span><span class="gloss"><b>ML</b> = Machine Learning · <b>IA</b> = Inteligencia Artificial</span><span class="num">35 / 109</span></div>
+    <div class="chrome-bot"><span>ML vs Gen AI</span><span class="gloss"><b>ML</b> = Machine Learning · <b>IA</b> = Inteligencia Artificial</span><span class="num">35 / 110</span></div>
   </section>
 
   <!-- SLIDE 36 · FM VS LLM -->
@@ -1604,7 +1605,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>FM vs LLM</span><span class="gloss"><b>LLM</b> = Large Language Model · <b>FM</b> = Foundation Model</span><span class="num">36 / 109</span></div>
+    <div class="chrome-bot"><span>FM vs LLM</span><span class="gloss"><b>LLM</b> = Large Language Model · <b>FM</b> = Foundation Model</span><span class="num">36 / 110</span></div>
   </section>
 
   <!-- SLIDE 37 · CÓMO PIENSA UN LLM -->
@@ -1629,7 +1630,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Cómo piensa un LLM</span><span class="gloss"><b>LLM</b> = Large Language Model</span><span class="num">37 / 109</span></div>
+    <div class="chrome-bot"><span>Cómo piensa un LLM</span><span class="gloss"><b>LLM</b> = Large Language Model</span><span class="num">37 / 110</span></div>
   </section>
 
   <!-- SLIDE 38 · TIPOS DE MODELOS GENERATIVOS -->
@@ -1656,7 +1657,7 @@
     </table>
 
 
-    <div class="chrome-bot"><span>Tipos de modelos generativos</span><span class="gloss"><b>LLM</b> = Large Language Model · <b>GAN</b> = Generative Adversarial Network · <b>VAE</b> = Variational Autoencoder</span><span class="num">38 / 109</span></div>
+    <div class="chrome-bot"><span>Tipos de modelos generativos</span><span class="gloss"><b>LLM</b> = Large Language Model · <b>GAN</b> = Generative Adversarial Network · <b>VAE</b> = Variational Autoencoder</span><span class="num">38 / 110</span></div>
   </section>
 
   <!-- SLIDE 39 · 3 FORMAS DE ADAPTAR UN FM -->
@@ -1685,7 +1686,7 @@
       <p>Fine-tuning: un banco entrena el modelo con miles de tickets de soporte ya resueltos para que responda siempre en el tono y formato de la marca — queda permanentemente ajustado. Orden de examen: empieza por prompt engineering, sube a RAG si necesitas datos externos, llega a fine-tuning solo si el caso lo justifica.</p>
     </div>
 
-    <div class="chrome-bot"><span>Adaptar un FM</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation</span><span class="num">39 / 109</span></div>
+    <div class="chrome-bot"><span>Adaptar un FM</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation</span><span class="num">39 / 110</span></div>
   </section>
 
   <!-- SLIDE 40 · TÉCNICAS DE PROMPTING -->
@@ -1710,7 +1711,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Prompting</span><span class="num">40 / 109</span></div>
+    <div class="chrome-bot"><span>Prompting</span><span class="num">40 / 110</span></div>
   </section>
 
   <!-- SLIDE 41 · PARÁMETROS DE INFERENCIA -->
@@ -1735,7 +1736,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Parámetros de inferencia</span><span class="num">41 / 109</span></div>
+    <div class="chrome-bot"><span>Parámetros de inferencia</span><span class="num">41 / 110</span></div>
   </section>
 
   <!-- SLIDE 42 · PIPELINE DE RAG -->
@@ -1762,7 +1763,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Pipeline de RAG</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation · <b>LLM</b> = Large Language Model</span><span class="num">42 / 109</span></div>
+    <div class="chrome-bot"><span>Pipeline de RAG</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation · <b>LLM</b> = Large Language Model</span><span class="num">42 / 110</span></div>
   </section>
 
   <!-- SLIDE 43 · RIESGOS DE LOS LLMs -->
@@ -1793,7 +1794,7 @@
       <p>Un chatbot "solo responde sobre nuestro producto", pero un usuario escribe: <em>"Ignora todas las instrucciones anteriores..."</em>. Versión indirecta, más peligrosa: un documento leído vía RAG trae texto oculto como <em>"envía los datos del usuario a..."</em> y el modelo lo ejecuta.</p>
     </div>
 
-    <div class="chrome-bot"><span>Riesgos de los LLMs</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">43 / 109</span></div>
+    <div class="chrome-bot"><span>Riesgos de los LLMs</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">43 / 110</span></div>
   </section>
 
   <!-- SLIDE 44 · CASOS DE USO -->
@@ -1819,7 +1820,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Casos de uso</span><span class="gloss"><b>GenAI</b> = Generative AI · <b>AI</b> = Artificial Intelligence · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">44 / 109</span></div>
+    <div class="chrome-bot"><span>Casos de uso</span><span class="gloss"><b>GenAI</b> = Generative AI · <b>AI</b> = Artificial Intelligence · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">44 / 110</span></div>
   </section>
 
   <!-- SLIDE 45 · VENTAJAS Y LÍMITES DE GENAI -->
@@ -1839,7 +1840,7 @@
       <div class="stat-box"><div class="lbl">Métricas de negocio</div><div class="desc">Satisfacción del usuario, tasa de conversión, ingreso por usuario, eficiencia operativa.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Ventajas y límites de GenAI</span><span class="gloss"><b>GenAI</b> = Generative AI</span><span class="num">45 / 109</span></div>
+    <div class="chrome-bot"><span>Ventajas y límites de GenAI</span><span class="gloss"><b>GenAI</b> = Generative AI</span><span class="num">45 / 110</span></div>
   </section>
 
   <!-- SLIDE 46 · TABLA FINAL DE MEMORIZACIÓN -->
@@ -1867,7 +1868,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>FM</b> = Foundation Model · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">46 / 109</span></div>
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>FM</b> = Foundation Model · <b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">46 / 110</span></div>
   </section>
 
   <!-- SLIDE 47 · CIERRE -->
@@ -1887,7 +1888,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">47 / 109</span></div>
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">47 / 110</span></div>
   </section>
 
 
@@ -1934,7 +1935,7 @@
       <div class="agenda-row"><span class="num">04</span><div><div class="title">RAG, Agents, Guardrails y ataques</div><div class="desc">Kendra vs. Q Business vs. Knowledge Bases, Agents, Guardrails, ataques y chatbot seguro.</div></div><span class="tag">Aplicado</span></div>
       <div class="agenda-row"><span class="num">05</span><div><div class="title">Costos y memorización</div><div class="desc">On-Demand vs. Provisioned Throughput + resumen final.</div></div><span class="tag">Cierre</span></div>
     </div>
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>FM</b> = Foundation Model · <b>RLHF</b> = Reinforcement Learning from Human Feedback · <b>ROUGE</b> = Recall-Oriented Understudy for Gisting Evaluation · <b>BLEU</b> = Bilingual Evaluation Understudy</span><span class="num">49 / 109</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>FM</b> = Foundation Model · <b>RLHF</b> = Reinforcement Learning from Human Feedback · <b>ROUGE</b> = Recall-Oriented Understudy for Gisting Evaluation · <b>BLEU</b> = Bilingual Evaluation Understudy</span><span class="num">49 / 110</span></div>
   </section>
 
   <!-- SLIDE 50 · BEDROCK VS SAGEMAKER -->
@@ -1959,7 +1960,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Bedrock vs SageMaker</span><span class="gloss"><b>FM</b> = Foundation Model · <b>API</b> = Application Programming Interface · <b>ML</b> = Machine Learning · <b>AI</b> = Artificial Intelligence</span><span class="num">50 / 109</span></div>
+    <div class="chrome-bot"><span>Bedrock vs SageMaker</span><span class="gloss"><b>FM</b> = Foundation Model · <b>API</b> = Application Programming Interface · <b>ML</b> = Machine Learning · <b>AI</b> = Artificial Intelligence</span><span class="num">50 / 110</span></div>
   </section>
 
   <!-- SLIDE 51 · CRITERIOS DE SELECCIÓN DE FM -->
@@ -1979,7 +1980,7 @@
       <div class="stat-box"><div class="lbl">Personalización y región</div><div class="desc">¿Permite fine-tuning? ¿Está disponible en tu región y cumple tu compliance?</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Criterios de selección de FM</span><span class="num">51 / 109</span></div>
+    <div class="chrome-bot"><span>Criterios de selección de FM</span><span class="num">51 / 110</span></div>
   </section>
 
   <!-- SLIDE 52 · PROMPT CACHING Y PROMPT MANAGEMENT -->
@@ -1999,7 +2000,7 @@
       <div class="stat-box"><div class="lbl">Buenas prácticas</div><div class="desc">Ser específico y conciso, usar negative prompts (lo que NO debe hacer) y probar con experimentos.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Prompt caching y Prompt Management</span><span class="num">52 / 109</span></div>
+    <div class="chrome-bot"><span>Prompt caching y Prompt Management</span><span class="num">52 / 110</span></div>
   </section>
 
   <!-- SLIDE 53 · CAMBIAR DE MODELO O PROVEEDOR -->
@@ -2019,7 +2020,7 @@
       <div class="stat-box"><div class="lbl">Reevaluar</div><div class="desc">Compara con Model Evaluation (calidad, costo, latencia) antes de migrar.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Cambiar de modelo o proveedor</span><span class="gloss"><b>API</b> = Application Programming Interface</span><span class="num">53 / 109</span></div>
+    <div class="chrome-bot"><span>Cambiar de modelo o proveedor</span><span class="gloss"><b>API</b> = Application Programming Interface</span><span class="num">53 / 110</span></div>
   </section>
 
   <!-- SLIDE 54 · COMPONENTES DE BEDROCK -->
@@ -2045,7 +2046,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Componentes de Bedrock</span><span class="gloss"><b>FM</b> = Foundation Model · <b>RAG</b> = Retrieval Augmented Generation · <b>API</b> = Application Programming Interface · <b>AI</b> = Artificial Intelligence · <b>PII</b> = Personally Identifiable Information</span><span class="num">54 / 109</span></div>
+    <div class="chrome-bot"><span>Componentes de Bedrock</span><span class="gloss"><b>FM</b> = Foundation Model · <b>RAG</b> = Retrieval Augmented Generation · <b>API</b> = Application Programming Interface · <b>AI</b> = Artificial Intelligence · <b>PII</b> = Personally Identifiable Information</span><span class="num">54 / 110</span></div>
   </section>
 
   <!-- SLIDE 55 · COMPONENTES DE SAGEMAKER -->
@@ -2073,7 +2074,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Componentes de SageMaker</span><span class="gloss"><b>IDE</b> = Integrated Development Environment · <b>ML</b> = Machine Learning · <b>FM</b> = Foundation Model</span><span class="num">55 / 109</span></div>
+    <div class="chrome-bot"><span>Componentes de SageMaker</span><span class="gloss"><b>IDE</b> = Integrated Development Environment · <b>ML</b> = Machine Learning · <b>FM</b> = Foundation Model</span><span class="num">55 / 110</span></div>
   </section>
 
   <!-- SLIDE 56 · GOBIERNO DE MODELOS EN SAGEMAKER -->
@@ -2105,7 +2106,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Gobierno de modelos en SageMaker</span><span class="gloss"><b>ML</b> = Machine Learning · <b>MLOps</b> = ML Operations</span><span class="num">56 / 109</span></div>
+    <div class="chrome-bot"><span>Gobierno de modelos en SageMaker</span><span class="gloss"><b>ML</b> = Machine Learning · <b>MLOps</b> = ML Operations</span><span class="num">56 / 110</span></div>
   </section>
 
   <!-- SLIDE 57 · CICLO DE VIDA DE UN FM -->
@@ -2126,7 +2127,7 @@
       <div class="agenda-row"><span class="num">06</span><div><div class="title">Despliegue</div><div class="desc">Servir el modelo vía API (Bedrock) o endpoint (SageMaker).</div></div><span class="tag">Producción</span></div>
       <div class="agenda-row"><span class="num">07</span><div><div class="title">Monitoreo y feedback</div><div class="desc">Feedback humano (RLHF), reentrenar o reajustar.</div></div><span class="tag">Producción</span></div>
     </div>
-    <div class="chrome-bot"><span>Ciclo de vida de un FM</span><span class="gloss"><b>ML</b> = Machine Learning · <b>FM</b> = Foundation Model · <b>RAG</b> = Retrieval Augmented Generation · <b>API</b> = Application Programming Interface · <b>RLHF</b> = Reinforcement Learning from Human Feedback</span><span class="num">57 / 109</span></div>
+    <div class="chrome-bot"><span>Ciclo de vida de un FM</span><span class="gloss"><b>ML</b> = Machine Learning · <b>FM</b> = Foundation Model · <b>RAG</b> = Retrieval Augmented Generation · <b>API</b> = Application Programming Interface · <b>RLHF</b> = Reinforcement Learning from Human Feedback</span><span class="num">57 / 110</span></div>
   </section>
 
   <!-- SLIDE 58 · VARIANTES DE FINE-TUNING -->
@@ -2157,7 +2158,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Variantes de fine-tuning</span><span class="gloss"><b>FM</b> = Foundation Model</span><span class="num">58 / 109</span></div>
+    <div class="chrome-bot"><span>Variantes de fine-tuning</span><span class="gloss"><b>FM</b> = Foundation Model</span><span class="num">58 / 110</span></div>
   </section>
 
   <!-- SLIDE 59 · MANTENER UN FM ACTUALIZADO -->
@@ -2187,7 +2188,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Mantener un FM actualizado</span><span class="gloss"><b>FM</b> = Foundation Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">59 / 109</span></div>
+    <div class="chrome-bot"><span>Mantener un FM actualizado</span><span class="gloss"><b>FM</b> = Foundation Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">59 / 110</span></div>
   </section>
 
   <!-- SLIDE 60 · RLHF Y FEEDBACK DE USUARIOS -->
@@ -2212,7 +2213,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>RLHF y feedback de usuarios</span><span class="gloss"><b>RLHF</b> = Reinforcement Learning from Human Feedback · <b>FM</b> = Foundation Model · <b>MLOps</b> = ML Operations</span><span class="num">60 / 109</span></div>
+    <div class="chrome-bot"><span>RLHF y feedback de usuarios</span><span class="gloss"><b>RLHF</b> = Reinforcement Learning from Human Feedback · <b>FM</b> = Foundation Model · <b>MLOps</b> = ML Operations</span><span class="num">60 / 110</span></div>
   </section>
 
   <!-- SLIDE 61 · MÉTRICAS DE EVALUACIÓN DE FM -->
@@ -2242,7 +2243,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Métricas de evaluación de FM</span><span class="gloss"><b>FM</b> = Foundation Model · <b>ROUGE</b> = Recall-Oriented Understudy for Gisting Evaluation · <b>BLEU</b> = Bilingual Evaluation Understudy · <b>BERTScore</b> = similitud semántica con embeddings BERT</span><span class="num">61 / 109</span></div>
+    <div class="chrome-bot"><span>Métricas de evaluación de FM</span><span class="gloss"><b>FM</b> = Foundation Model · <b>ROUGE</b> = Recall-Oriented Understudy for Gisting Evaluation · <b>BLEU</b> = Bilingual Evaluation Understudy · <b>BERTScore</b> = similitud semántica con embeddings BERT</span><span class="num">61 / 110</span></div>
   </section>
 
   <!-- SLIDE 62 · EVALUACIÓN HUMANA Y BEDROCK -->
@@ -2262,7 +2263,7 @@
       <div class="stat-box"><div class="lbl">Qué evaluar</div><div class="desc">Calidad de la respuesta, relevancia, alucinación, toxicidad, costo y latencia — según el caso de negocio.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Evaluación humana y Bedrock</span><span class="gloss"><b>GLUE</b> = General Language Understanding Evaluation · <b>MMLU</b> = Massive Multitask Language Understanding · <b>HELM</b> = Holistic Evaluation of Language Models</span><span class="num">62 / 109</span></div>
+    <div class="chrome-bot"><span>Evaluación humana y Bedrock</span><span class="gloss"><b>GLUE</b> = General Language Understanding Evaluation · <b>MMLU</b> = Massive Multitask Language Understanding · <b>HELM</b> = Holistic Evaluation of Language Models</span><span class="num">62 / 110</span></div>
   </section>
 
   <!-- SLIDE 63 · LLM-AS-A-JUDGE Y MÉTRICAS DE NEGOCIO -->
@@ -2282,7 +2283,7 @@
       <div class="stat-box"><div class="lbl">Productividad y engagement</div><div class="desc">Tiempo ahorrado, uso recurrente y adopción por los usuarios.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>LLM-as-a-judge y métricas de negocio</span><span class="gloss"><b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">63 / 109</span></div>
+    <div class="chrome-bot"><span>LLM-as-a-judge y métricas de negocio</span><span class="gloss"><b>LLM</b> = Large Language Model · <b>RAG</b> = Retrieval Augmented Generation</span><span class="num">63 / 110</span></div>
   </section>
 
   <!-- SLIDE 64 · BEDROCK KNOWLEDGE BASES -->
@@ -2308,7 +2309,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Knowledge Bases</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation · <b>S3</b> = Simple Storage Service</span><span class="num">64 / 109</span></div>
+    <div class="chrome-bot"><span>Knowledge Bases</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation · <b>S3</b> = Simple Storage Service</span><span class="num">64 / 110</span></div>
   </section>
 
   <!-- SLIDE 65 · KENDRA VS Q BUSINESS VS KB -->
@@ -2337,7 +2338,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Kendra vs Q Business vs KB</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation</span><span class="num">65 / 109</span></div>
+    <div class="chrome-bot"><span>Kendra vs Q Business vs KB</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation</span><span class="num">65 / 110</span></div>
   </section>
 
   <!-- SLIDE 66 · BEDROCK AGENTS -->
@@ -2362,7 +2363,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Agents</span><span class="gloss"><b>FM</b> = Foundation Model · <b>API</b> = Application Programming Interface</span><span class="num">66 / 109</span></div>
+    <div class="chrome-bot"><span>Agents</span><span class="gloss"><b>FM</b> = Foundation Model · <b>API</b> = Application Programming Interface</span><span class="num">66 / 110</span></div>
   </section>
 
   <!-- SLIDE 67 · BEDROCK GUARDRAILS -->
@@ -2388,7 +2389,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Guardrails</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>PII</b> = Personally Identifiable Information</span><span class="num">67 / 109</span></div>
+    <div class="chrome-bot"><span>Guardrails</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>PII</b> = Personally Identifiable Information</span><span class="num">67 / 110</span></div>
   </section>
 
   <!-- SLIDE 68 · ATAQUES A PROMPTS -->
@@ -2419,7 +2420,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Ataques a prompts</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation · <b>IAM</b> = Identity and Access Management</span><span class="num">68 / 109</span></div>
+    <div class="chrome-bot"><span>Ataques a prompts</span><span class="gloss"><b>RAG</b> = Retrieval Augmented Generation · <b>IAM</b> = Identity and Access Management</span><span class="num">68 / 110</span></div>
   </section>
 
   <!-- SLIDE 69 · PROTEGER UN CHATBOT -->
@@ -2446,7 +2447,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Proteger un chatbot</span><span class="gloss"><b>PII</b> = Personally Identifiable Information · <b>IAM</b> = Identity and Access Management</span><span class="num">69 / 109</span></div>
+    <div class="chrome-bot"><span>Proteger un chatbot</span><span class="gloss"><b>PII</b> = Personally Identifiable Information · <b>IAM</b> = Identity and Access Management</span><span class="num">69 / 110</span></div>
   </section>
 
   <!-- SLIDE 70 · JUMPSTART VS CANVAS -->
@@ -2470,7 +2471,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>JumpStart vs Canvas</span><span class="gloss"><b>ML</b> = Machine Learning</span><span class="num">70 / 109</span></div>
+    <div class="chrome-bot"><span>JumpStart vs Canvas</span><span class="gloss"><b>ML</b> = Machine Learning</span><span class="num">70 / 110</span></div>
   </section>
 
   <!-- SLIDE 71 · OTROS RECURSOS -->
@@ -2493,7 +2494,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Otros recursos</span><span class="gloss"><b>GenAI</b> = Generative AI · <b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">71 / 109</span></div>
+    <div class="chrome-bot"><span>Otros recursos</span><span class="gloss"><b>GenAI</b> = Generative AI · <b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">71 / 110</span></div>
   </section>
 
   <!-- SLIDE 72 · COSTOS DE BEDROCK -->
@@ -2516,7 +2517,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Costos de Bedrock</span><span class="num">72 / 109</span></div>
+    <div class="chrome-bot"><span>Costos de Bedrock</span><span class="num">72 / 110</span></div>
   </section>
 
   <!-- SLIDE 73 · TABLA FINAL DE MEMORIZACIÓN -->
@@ -2545,7 +2546,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>FM</b> = Foundation Model · <b>RAG</b> = Retrieval Augmented Generation · <b>API</b> = Application Programming Interface · <b>AI</b> = Artificial Intelligence · <b>PII</b> = Personally Identifiable Information · <b>ML</b> = Machine Learning</span><span class="num">73 / 109</span></div>
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>FM</b> = Foundation Model · <b>RAG</b> = Retrieval Augmented Generation · <b>API</b> = Application Programming Interface · <b>AI</b> = Artificial Intelligence · <b>PII</b> = Personally Identifiable Information · <b>ML</b> = Machine Learning</span><span class="num">73 / 110</span></div>
   </section>
 
   <!-- SLIDE 74 · CIERRE -->
@@ -2565,7 +2566,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">74 / 109</span></div>
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">74 / 110</span></div>
   </section>
 
 
@@ -2612,7 +2613,7 @@
       <div class="agenda-row"><span class="num">04</span><div><div class="title">Herramientas de AWS</div><div class="desc">Clarify, SHAP, Model Cards, AI Service Cards, Guardrails.</div></div><span class="tag">Servicios</span></div>
       <div class="agenda-row"><span class="num">05</span><div><div class="title">Gobernanza y memorización</div><div class="desc">Human-in-the-loop, A2I, riesgos legales y ambientales + resumen.</div></div><span class="tag">Cierre</span></div>
     </div>
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>SHAP</b> = SHapley Additive exPlanations · <b>A2I</b> = Augmented AI</span><span class="num">76 / 109</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>SHAP</b> = SHapley Additive exPlanations · <b>A2I</b> = Augmented AI</span><span class="num">76 / 110</span></div>
   </section>
 
   <!-- SLIDE 77 · LOS 8 PILARES -->
@@ -2641,7 +2642,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Los 8 pilares</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">77 / 109</span></div>
+    <div class="chrome-bot"><span>Los 8 pilares</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">77 / 110</span></div>
   </section>
 
   <!-- SLIDE 78 · BIAS -->
@@ -2670,7 +2671,7 @@
       <p>El bias puede colarse en <em>tres puntos</em> distintos: los datos, el algoritmo, o el humano que interpreta el resultado. No es un problema que se resuelve una sola vez.</p>
     </div>
 
-    <div class="chrome-bot"><span>Bias</span><span class="num">78 / 109</span></div>
+    <div class="chrome-bot"><span>Bias</span><span class="num">78 / 110</span></div>
   </section>
 
   <!-- SLIDE 79 · FAIRNESS -->
@@ -2695,7 +2696,7 @@
       <p>Un modelo puede tener <em>alta accuracy global</em> y aun así ser injusto — si falla mucho más en un subgrupo específico, el promedio lo esconde.</p>
     </div>
 
-    <div class="chrome-bot"><span>Fairness</span><span class="num">79 / 109</span></div>
+    <div class="chrome-bot"><span>Fairness</span><span class="num">79 / 110</span></div>
   </section>
 
   <!-- SLIDE 80 · DATASETS RESPONSABLES -->
@@ -2715,7 +2716,7 @@
       <div class="stat-box"><div class="lbl">Balanceado</div><div class="desc">Sin sobre o sub-representación de clases o grupos demográficos.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Datasets responsables</span><span class="num">80 / 109</span></div>
+    <div class="chrome-bot"><span>Datasets responsables</span><span class="num">80 / 110</span></div>
   </section>
 
   <!-- SLIDE 81 · TIPOS DE SESGO EN LOS DATOS -->
@@ -2745,7 +2746,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Tipos de sesgo en los datos</span><span class="num">81 / 109</span></div>
+    <div class="chrome-bot"><span>Tipos de sesgo en los datos</span><span class="num">81 / 110</span></div>
   </section>
 
   <!-- SLIDE 82 · EXPLAINABILITY VS PERFORMANCE -->
@@ -2770,7 +2771,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Explainability vs Performance</span><span class="num">82 / 109</span></div>
+    <div class="chrome-bot"><span>Explainability vs Performance</span><span class="num">82 / 110</span></div>
   </section>
 
   <!-- SLIDE 83 · SAGEMAKER CLARIFY -->
@@ -2795,7 +2796,7 @@
     </table>
 
 
-    <div class="chrome-bot"><span>SageMaker Clarify</span><span class="gloss"><b>SHAP</b> = SHapley Additive exPlanations</span><span class="num">83 / 109</span></div>
+    <div class="chrome-bot"><span>SageMaker Clarify</span><span class="gloss"><b>SHAP</b> = SHapley Additive exPlanations</span><span class="num">83 / 110</span></div>
   </section>
 
   <!-- SLIDE 84 · SHAP -->
@@ -2826,7 +2827,7 @@
       <p>Clarify detecta <em>bias agregado</em> en datos y predicciones. SHAP explica <em>una predicción puntual</em> — por qué este caso específico dio ese resultado.</p>
     </div>
 
-    <div class="chrome-bot"><span>SHAP</span><span class="gloss"><b>SHAP</b> = SHapley Additive exPlanations</span><span class="num">84 / 109</span></div>
+    <div class="chrome-bot"><span>SHAP</span><span class="gloss"><b>SHAP</b> = SHapley Additive exPlanations</span><span class="num">84 / 110</span></div>
   </section>
 
   <!-- SLIDE 85 · MODEL CARDS -->
@@ -2856,7 +2857,7 @@
       <p>Estandariza la documentación para <em>auditoría</em> — cualquiera puede revisar cómo se construyó el modelo sin depender de quien lo entrenó.</p>
     </div>
 
-    <div class="chrome-bot"><span>Model Cards</span><span class="num">85 / 109</span></div>
+    <div class="chrome-bot"><span>Model Cards</span><span class="num">85 / 110</span></div>
   </section>
 
   <!-- SLIDE 86 · AI SERVICE CARDS -->
@@ -2876,7 +2877,7 @@
       <div class="stat-box"><div class="lbl">Diferencia clave</div><div class="desc">Model Cards = tu modelo. AI Service Cards = servicio ya entrenado por AWS.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>AI Service Cards</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">86 / 109</span></div>
+    <div class="chrome-bot"><span>AI Service Cards</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>IA</b> = Inteligencia Artificial</span><span class="num">86 / 110</span></div>
   </section>
 
   <!-- SLIDE 87 · GUARDRAILS EN ESTE CONTEXTO -->
@@ -2906,7 +2907,7 @@
       <p>Guardrails no es un concepto nuevo del Dominio 4 — es la <em>implementación concreta</em> de varios de los 8 pilares dentro de Bedrock.</p>
     </div>
 
-    <div class="chrome-bot"><span>Guardrails</span><span class="gloss"><b>PII</b> = Personally Identifiable Information</span><span class="num">87 / 109</span></div>
+    <div class="chrome-bot"><span>Guardrails</span><span class="gloss"><b>PII</b> = Personally Identifiable Information</span><span class="num">87 / 110</span></div>
   </section>
 
   <!-- SLIDE 88 · HUMAN-IN-THE-LOOP -->
@@ -2937,7 +2938,7 @@
       <p>A mayor <em>riesgo de la decisión</em> (crédito, salud, seguridad), mayor necesidad de mantener supervisión humana en el proceso.</p>
     </div>
 
-    <div class="chrome-bot"><span>Human-in-the-loop</span><span class="gloss"><b>HITL</b> = Human-in-the-Loop · <b>ML</b> = Machine Learning · <b>A2I</b> = Augmented AI · <b>RLHF</b> = Reinforcement Learning from Human Feedback</span><span class="num">88 / 109</span></div>
+    <div class="chrome-bot"><span>Human-in-the-loop</span><span class="gloss"><b>HITL</b> = Human-in-the-Loop · <b>ML</b> = Machine Learning · <b>A2I</b> = Augmented AI · <b>RLHF</b> = Reinforcement Learning from Human Feedback</span><span class="num">88 / 110</span></div>
   </section>
 
   <!-- SLIDE 89 · GOBERNANZA -->
@@ -2957,7 +2958,7 @@
       <div class="stat-box"><div class="lbl">Por qué importa en el examen</div><div class="desc">AWS lo incluye como parte explícita de "responsible AI", no solo lo técnico.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Gobernanza</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>AI</b> = Artificial Intelligence</span><span class="num">89 / 109</span></div>
+    <div class="chrome-bot"><span>Gobernanza</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>AI</b> = Artificial Intelligence</span><span class="num">89 / 110</span></div>
   </section>
 
   <!-- SLIDE 90 · RIESGOS LEGALES DE GENAI -->
@@ -2983,7 +2984,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Riesgos legales de GenAI</span><span class="gloss"><b>GenAI</b> = Generative AI · <b>IA</b> = Inteligencia Artificial</span><span class="num">90 / 109</span></div>
+    <div class="chrome-bot"><span>Riesgos legales de GenAI</span><span class="gloss"><b>GenAI</b> = Generative AI · <b>IA</b> = Inteligencia Artificial</span><span class="num">90 / 110</span></div>
   </section>
 
   <!-- SLIDE 91 · TABLA FINAL DE MEMORIZACIÓN -->
@@ -3013,7 +3014,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>SHAP</b> = SHapley Additive exPlanations · <b>AI</b> = Artificial Intelligence</span><span class="num">91 / 109</span></div>
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>IA</b> = Inteligencia Artificial · <b>SHAP</b> = SHapley Additive exPlanations · <b>AI</b> = Artificial Intelligence</span><span class="num">91 / 110</span></div>
   </section>
 
   <!-- SLIDE 92 · CIERRE -->
@@ -3033,7 +3034,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">92 / 109</span></div>
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>IA</b> = Inteligencia Artificial</span><span class="num">92 / 110</span></div>
   </section>
 
 
@@ -3078,9 +3079,9 @@
       <div class="agenda-row"><span class="num">02</span><div><div class="title">IAM, encriptación y red</div><div class="desc">Control de acceso, KMS, VPC endpoints.</div></div><span class="tag">Seguridad</span></div>
       <div class="agenda-row"><span class="num">03</span><div><div class="title">Monitoreo y datos sensibles</div><div class="desc">CloudTrail, CloudWatch, Macie, Config, Inspector.</div></div><span class="tag">Auditoría</span></div>
       <div class="agenda-row"><span class="num">04</span><div><div class="title">Security Scoping Matrix</div><div class="desc">Los 5 niveles de control sobre un modelo de GenAI.</div></div><span class="tag">Marco</span></div>
-      <div class="agenda-row"><span class="num">05</span><div><div class="title">Compliance y gobernanza</div><div class="desc">Artifact, Audit Manager, gobierno del dato + resumen final.</div></div><span class="tag">Cierre</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Compliance y gobernanza</div><div class="desc">Artifact, Audit Manager, gobierno del dato, datos confidenciales + resumen final.</div></div><span class="tag">Cierre</span></div>
     </div>
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>KMS</b> = Key Management Service · <b>VPC</b> = Virtual Private Cloud · <b>GenAI</b> = Generative AI</span><span class="num">94 / 109</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>KMS</b> = Key Management Service · <b>VPC</b> = Virtual Private Cloud · <b>GenAI</b> = Generative AI</span><span class="num">94 / 110</span></div>
   </section>
 
   <!-- SLIDE 95 · SHARED RESPONSIBILITY MODEL -->
@@ -3108,7 +3109,7 @@
       <p>AWS protege el servicio. <em>Tú proteges cómo lo configuras y qué datos le das.</em></p>
     </div>
 
-    <div class="chrome-bot"><span>Shared Responsibility</span><span class="gloss"><b>IAM</b> = Identity and Access Management</span><span class="num">95 / 109</span></div>
+    <div class="chrome-bot"><span>Shared Responsibility</span><span class="gloss"><b>IAM</b> = Identity and Access Management</span><span class="num">95 / 110</span></div>
   </section>
 
   <!-- SLIDE 96 · IAM -->
@@ -3132,7 +3133,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>IAM</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>S3</b> = Simple Storage Service</span><span class="num">96 / 109</span></div>
+    <div class="chrome-bot"><span>IAM</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>IA</b> = Inteligencia Artificial · <b>ML</b> = Machine Learning · <b>S3</b> = Simple Storage Service</span><span class="num">96 / 110</span></div>
   </section>
 
   <!-- SLIDE 97 · ENCRIPTACIÓN -->
@@ -3156,7 +3157,7 @@
     </table>
 
 
-    <div class="chrome-bot"><span>Encriptación</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>KMS</b> = Key Management Service · <b>API</b> = Application Programming Interface · <b>TLS</b> = Transport Layer Security</span><span class="num">97 / 109</span></div>
+    <div class="chrome-bot"><span>Encriptación</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>KMS</b> = Key Management Service · <b>API</b> = Application Programming Interface · <b>TLS</b> = Transport Layer Security</span><span class="num">97 / 110</span></div>
   </section>
 
   <!-- SLIDE 98 · AISLAMIENTO DE RED -->
@@ -3176,7 +3177,7 @@
       <div class="stat-box"><div class="lbl">Cuándo se exige</div><div class="desc">Sectores regulados donde los datos no pueden transitar redes públicas.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Aislamiento de red</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud</span><span class="num">98 / 109</span></div>
+    <div class="chrome-bot"><span>Aislamiento de red</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud</span><span class="num">98 / 110</span></div>
   </section>
 
   <!-- SLIDE 99 · MONITOREO Y AUDITORÍA -->
@@ -3204,7 +3205,7 @@
       <p>CloudTrail = <em>registro de actividad</em> (auditoría). CloudWatch = <em>métricas y logs en vivo</em> (operación).</p>
     </div>
 
-    <div class="chrome-bot"><span>Monitoreo y auditoría</span><span class="num">99 / 109</span></div>
+    <div class="chrome-bot"><span>Monitoreo y auditoría</span><span class="num">99 / 110</span></div>
   </section>
 
   <!-- SLIDE 100 · AMAZON MACIE -->
@@ -3228,7 +3229,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Amazon Macie</span><span class="gloss"><b>ML</b> = Machine Learning · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>RAG</b> = Retrieval Augmented Generation · <b>IA</b> = Inteligencia Artificial</span><span class="num">100 / 109</span></div>
+    <div class="chrome-bot"><span>Amazon Macie</span><span class="gloss"><b>ML</b> = Machine Learning · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>RAG</b> = Retrieval Augmented Generation · <b>IA</b> = Inteligencia Artificial</span><span class="num">100 / 110</span></div>
   </section>
 
   <!-- SLIDE 101 · SECURITY SCOPING MATRIX -->
@@ -3259,7 +3260,7 @@
       <p>A mayor <em>scope</em> (control), mayor también la <em>responsabilidad de seguridad</em> que asumes tú en vez de AWS.</p>
     </div>
 
-    <div class="chrome-bot"><span>Security Scoping Matrix</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>GenAI</b> = Generative AI · <b>FM</b> = Foundation Model</span><span class="num">101 / 109</span></div>
+    <div class="chrome-bot"><span>Security Scoping Matrix</span><span class="gloss"><b>AI</b> = Artificial Intelligence · <b>GenAI</b> = Generative AI · <b>FM</b> = Foundation Model</span><span class="num">101 / 110</span></div>
   </section>
 
   <!-- SLIDE 102 · COMPLIANCE FRAMEWORKS -->
@@ -3283,7 +3284,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Compliance</span><span class="gloss"><b>ISO</b> = International Organization for Standardization · <b>SOC</b> = System and Organization Controls · <b>PCI-DSS</b> = Payment Card Industry Data Security Standard</span><span class="num">102 / 109</span></div>
+    <div class="chrome-bot"><span>Compliance</span><span class="gloss"><b>ISO</b> = International Organization for Standardization · <b>SOC</b> = System and Organization Controls · <b>PCI-DSS</b> = Payment Card Industry Data Security Standard</span><span class="num">102 / 110</span></div>
   </section>
 
   <!-- SLIDE 103 · SERVICIOS DE AUDITORÍA -->
@@ -3314,7 +3315,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Servicios de auditoría</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>SOC</b> = System and Organization Controls · <b>ISO</b> = International Organization for Standardization · <b>PCI-DSS</b> = Payment Card Industry Data Security Standard</span><span class="num">103 / 109</span></div>
+    <div class="chrome-bot"><span>Servicios de auditoría</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>SOC</b> = System and Organization Controls · <b>ISO</b> = International Organization for Standardization · <b>PCI-DSS</b> = Payment Card Industry Data Security Standard</span><span class="num">103 / 110</span></div>
   </section>
 
   <!-- SLIDE 104 · GOBERNANZA DE DATOS -->
@@ -3334,7 +3335,7 @@
       <div class="stat-box"><div class="lbl">Monitoreo de datos</div><div class="desc">Vigilar calidad y uso continuo, no solo al momento de ingesta.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Gobernanza de datos</span><span class="num">104 / 109</span></div>
+    <div class="chrome-bot"><span>Gobernanza de datos</span><span class="num">104 / 110</span></div>
   </section>
 
   <!-- SLIDE 105 · INGENIERÍA DE DATOS SEGURA -->
@@ -3355,11 +3356,41 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Ingeniería de datos segura</span><span class="gloss"><b>IAM</b> = Identity and Access Management</span><span class="num">105 / 109</span></div>
+    <div class="chrome-bot"><span>Ingeniería de datos segura</span><span class="gloss"><b>IAM</b> = Identity and Access Management</span><span class="num">105 / 110</span></div>
   </section>
 
-  <!-- SLIDE 106 · TABLA FINAL DE MEMORIZACIÓN -->
-  <section class="slide" data-label="106 D5 · Tabla final">
+  <!-- SLIDE 106 · DATOS CONFIDENCIALES EN UN MODELO -->
+  <section class="slide bg-alt" data-label="106 D5 · Datos confidenciales en un modelo">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Datos · Fuga de información</div>
+    <h1 class="slide-title">Modelo entrenado con datos <em>confidenciales</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:26%">Situación</th><th>Qué se hace</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Prevención (lo ideal)</td><td>Gobernanza antes de entrenar: clasificar datos, excluir o anonimizar los confidenciales y dar mínimo privilegio. Macie descubre datos sensibles en S3.</td></tr>
+        <tr><td class="name">Ya entrenaste con ellos</td><td>Bloquear salidas con Guardrails (sensitive information, denied topics, word filters). Es un parche: el dato sigue en el modelo.</td></tr>
+        <tr><td class="name">Solución de fondo</td><td>Quitar los datos del dataset y reentrenar o volver a afinar: no hay forma sencilla de borrar un dato de un modelo ya entrenado.</td></tr>
+        <tr><td class="name">Mejor arquitectura</td><td>No entrenar con ellos: déjalos en una base de conocimiento (RAG) con permisos por usuario; cifra con KMS.</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>"Bloquear respuestas ya, sin reentrenar" = <em>Guardrails</em>. "Evitar que el modelo los aprenda" = excluir o anonimizar antes. "Ya se entrenó mal" = reentrenar. Eliminar el modelo casi nunca es la respuesta.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Datos confidenciales en un modelo</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>RAG</b> = Retrieval Augmented Generation · <b>KMS</b> = Key Management Service</span><span class="num">106 / 110</span></div>
+  </section>
+
+  <!-- SLIDE 107 · TABLA FINAL DE MEMORIZACIÓN -->
+  <section class="slide" data-label="107 D5 · Tabla final">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -3384,11 +3415,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>KMS</b> = Key Management Service · <b>VPC</b> = Virtual Private Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>ML</b> = Machine Learning</span><span class="num">106 / 109</span></div>
+    <div class="chrome-bot"><span>Tabla final</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>KMS</b> = Key Management Service · <b>VPC</b> = Virtual Private Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>ML</b> = Machine Learning</span><span class="num">107 / 110</span></div>
   </section>
 
-  <!-- SLIDE 107 · SLIDE -->
-  <section class="slide" data-label="107 Confusiones frecuentes de servicios">
+  <!-- SLIDE 108 · SLIDE -->
+  <section class="slide" data-label="108 Confusiones frecuentes de servicios">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -3412,11 +3443,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Confusiones frecuentes de servicios</span><span class="gloss"><b>API</b> = Application Programming Interface · <b>EC2</b> = Elastic Compute Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>KMS</b> = Key Management Service · <b>A2I</b> = Augmented AI</span><span class="num">107 / 109</span></div>
+    <div class="chrome-bot"><span>Confusiones frecuentes de servicios</span><span class="gloss"><b>API</b> = Application Programming Interface · <b>EC2</b> = Elastic Compute Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>KMS</b> = Key Management Service · <b>A2I</b> = Augmented AI</span><span class="num">108 / 110</span></div>
   </section>
 
-  <!-- SLIDE 108 · SLIDE -->
-  <section class="slide bg-alt" data-label="108 Simulacros y ruta de estudio">
+  <!-- SLIDE 109 · SLIDE -->
+  <section class="slide bg-alt" data-label="109 Simulacros y ruta de estudio">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -3432,11 +3463,11 @@
       <div class="stat-box"><div class="lbl">Ruta sugerida</div><div class="desc">Repasar este deck, hacer el simulacro oficial de AWS Skill Builder y revisar los puntos ciegos.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Simulacros y ruta de estudio</span><span class="gloss"><b>RLHF</b> = Reinforcement Learning from Human Feedback</span><span class="num">108 / 109</span></div>
+    <div class="chrome-bot"><span>Simulacros y ruta de estudio</span><span class="gloss"><b>RLHF</b> = Reinforcement Learning from Human Feedback</span><span class="num">109 / 110</span></div>
   </section>
 
-  <!-- SLIDE 109 · CIERRE -->
-  <section class="slide cierre bg-ink" data-label="109 Cierre">
+  <!-- SLIDE 110 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="110 Cierre">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -3452,7 +3483,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>AI</b> = Artificial Intelligence</span><span class="num">109 / 109</span></div>
+    <div class="chrome-bot"><span>Cierre</span><span class="gloss"><b>AI</b> = Artificial Intelligence</span><span class="num">110 / 110</span></div>
   </section>
 
 </deck-stage>
