@@ -452,6 +452,9 @@
   "Las preguntas mezclan estos conceptos a propósito. Varias AZ dentro de una Region dan alta disponibilidad y eliminan el punto único de falla; no mejoran la latencia global. Para usuarios en muchos países: varias Regions y CloudFront. ELB reparte carga dentro de una Region.",
   "La VPN va por internet cifrada; Direct Connect es una línea privada dedicada, con rendimiento más predecible y menor latencia, pero tarda más en instalarse. Para conectar muchas VPC, Transit Gateway.",
   "EC2 da más control. Lambda ejecuta funciones por evento sin servidores. ECS y EKS orquestan contenedores; Fargate elimina la administración de los servidores de contenedores. Lightsail es la opción más simple para cargas pequeñas como un sitio web o blog.",
+  "Lambda es cómputo serverless y basado en eventos: no aprovisionas ni parchas servidores, solo entregas la función. Sirve para tareas cortas disparadas por algo que ocurre. Para una aplicación siempre encendida o procesos de más de 15 minutos se usa EC2 o contenedores. En responsabilidad compartida, AWS gestiona el SO y el runtime; tú el código y los permisos IAM.",
+  "Lambda cobra por solicitudes y por duración. La duración se mide en milisegundos y se multiplica por la memoria configurada. No hay cobro por servidores inactivos. Los valores de referencia pueden cambiar según Region y fecha; para el examen importa el modelo: pagas por solicitudes y tiempo de cómputo.",
+  "Ejemplo sin nivel gratuito. Costo de duración = ejecuciones × segundos × GB de memoria × precio por GB-segundo. Si el tiempo se duplica, ese componente se duplica; las solicitudes cuestan lo mismo. Subir la memoria a veces acelera la función y puede salir más barato en total, porque la CPU también aumenta.",
   "Cinco familias de instancias. La pista está en el recurso que el enunciado destaca: mucha CPU, mucha memoria, mucho I/O de disco, o GPU. General purpose es la opción por defecto cuando no hay necesidad específica.",
   "ELB distribuye el tráfico y verifica la salud de los destinos. Auto Scaling ajusta la cantidad de instancias. Combinados dan alta disponibilidad y elasticidad. ALB es de capa 7 y NLB de capa 4. Scale out es horizontal, scale up es vertical.",
   "S3 es almacenamiento de objetos; EBS es el disco de una EC2 dentro de una AZ; EFS es un sistema de archivos compartido por muchas instancias. Instance store es efímero. Storage Gateway conecta el mundo on-premises con S3. AWS Backup centraliza respaldos.",
@@ -535,12 +538,12 @@
     <div class="agenda-list">
       <div class="agenda-row"><span class="num">01</span><div><div class="title">D1 · Conceptos de la nube</div><div class="desc">Slides 3–15 · pesa 24% del examen.</div></div><span class="tag">D1</span></div>
       <div class="agenda-row"><span class="num">02</span><div><div class="title">D2 · Seguridad y cumplimiento</div><div class="desc">Slides 16–31 · pesa 30% del examen.</div></div><span class="tag">D2</span></div>
-      <div class="agenda-row"><span class="num">03</span><div><div class="title">D3 · Tecnología y servicios</div><div class="desc">Slides 32–58 · pesa 34% del examen.</div></div><span class="tag">D3</span></div>
-      <div class="agenda-row"><span class="num">04</span><div><div class="title">D4 · Facturación, precios y soporte</div><div class="desc">Slides 59–69 · pesa 12% del examen.</div></div><span class="tag">D4</span></div>
-      <div class="agenda-row"><span class="num">05</span><div><div class="title">Repaso final</div><div class="desc">Slides 70–74: confusiones frecuentes, simulacros y ruta de estudio.</div></div><span class="tag">Cierre</span></div>
+      <div class="agenda-row"><span class="num">03</span><div><div class="title">D3 · Tecnología y servicios</div><div class="desc">Slides 32–61 · pesa 34% del examen.</div></div><span class="tag">D3</span></div>
+      <div class="agenda-row"><span class="num">04</span><div><div class="title">D4 · Facturación, precios y soporte</div><div class="desc">Slides 62–72 · pesa 12% del examen.</div></div><span class="tag">D4</span></div>
+      <div class="agenda-row"><span class="num">05</span><div><div class="title">Repaso final</div><div class="desc">Slides 73–77: confusiones frecuentes, simulacros y ruta de estudio.</div></div><span class="tag">Cierre</span></div>
     </div>
 
-    <div class="chrome-bot"><span>Índice</span><span class="num">02 / 74</span></div>
+    <div class="chrome-bot"><span>Índice</span><span class="num">02 / 77</span></div>
   </section>
 
   <!-- SLIDE 3 · PORTADA -->
@@ -588,7 +591,7 @@
       <div class="agenda-row"><span class="num">05</span><div><div class="title">Memorización</div><div class="desc">Tabla final con las asociaciones clave.</div></div><span class="tag">Cierre</span></div>
     </div>
 
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IaaS</b> = Infrastructure as a Service · <b>PaaS</b> = Platform as a Service · <b>SaaS</b> = Software as a Service · <b>CAF</b> = Cloud Adoption Framework · <b>CapEx</b> = Capital Expenditure · <b>OpEx</b> = Operational Expenditure</span><span class="num">04 / 74</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IaaS</b> = Infrastructure as a Service · <b>PaaS</b> = Platform as a Service · <b>SaaS</b> = Software as a Service · <b>CAF</b> = Cloud Adoption Framework · <b>CapEx</b> = Capital Expenditure · <b>OpEx</b> = Operational Expenditure</span><span class="num">04 / 77</span></div>
   </section>
 
   <!-- SLIDE 5 · VENTAJAS DE LA NUBE -->
@@ -620,7 +623,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Ventajas de la nube</span><span class="gloss"><b>CapEx</b> = Capital Expenditure · <b>OpEx</b> = Operational Expenditure</span><span class="num">05 / 74</span></div>
+    <div class="chrome-bot"><span>Ventajas de la nube</span><span class="gloss"><b>CapEx</b> = Capital Expenditure · <b>OpEx</b> = Operational Expenditure</span><span class="num">05 / 77</span></div>
   </section>
 
   <!-- SLIDE 6 · MODELOS DE DESPLIEGUE -->
@@ -649,7 +652,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Modelos de despliegue</span><span class="gloss"><b>VPN</b> = Virtual Private Network</span><span class="num">06 / 74</span></div>
+    <div class="chrome-bot"><span>Modelos de despliegue</span><span class="gloss"><b>VPN</b> = Virtual Private Network</span><span class="num">06 / 77</span></div>
   </section>
 
   <!-- SLIDE 7 · IAAS, PAAS Y SAAS -->
@@ -678,7 +681,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>IaaS, PaaS y SaaS</span><span class="gloss"><b>IaaS</b> = Infrastructure as a Service · <b>PaaS</b> = Platform as a Service · <b>SaaS</b> = Software as a Service · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">07 / 74</span></div>
+    <div class="chrome-bot"><span>IaaS, PaaS y SaaS</span><span class="gloss"><b>IaaS</b> = Infrastructure as a Service · <b>PaaS</b> = Platform as a Service · <b>SaaS</b> = Software as a Service · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">07 / 77</span></div>
   </section>
 
   <!-- SLIDE 8 · WELL-ARCHITECTED FRAMEWORK -->
@@ -710,7 +713,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Well-Architected Framework</span><span class="num">08 / 74</span></div>
+    <div class="chrome-bot"><span>Well-Architected Framework</span><span class="num">08 / 77</span></div>
   </section>
 
   <!-- SLIDE 9 · CONCEPTOS DE DISEÑO -->
@@ -742,7 +745,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Conceptos de diseño</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>S3</b> = Simple Storage Service · <b>SQS</b> = Simple Queue Service · <b>SNS</b> = Simple Notification Service</span><span class="num">09 / 74</span></div>
+    <div class="chrome-bot"><span>Conceptos de diseño</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>S3</b> = Simple Storage Service · <b>SQS</b> = Simple Queue Service · <b>SNS</b> = Simple Notification Service</span><span class="num">09 / 77</span></div>
   </section>
 
   <!-- SLIDE 10 · AWS CAF -->
@@ -774,7 +777,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>AWS CAF</span><span class="gloss"><b>CAF</b> = Cloud Adoption Framework</span><span class="num">10 / 74</span></div>
+    <div class="chrome-bot"><span>AWS CAF</span><span class="gloss"><b>CAF</b> = Cloud Adoption Framework</span><span class="num">10 / 77</span></div>
   </section>
 
   <!-- SLIDE 11 · LAS 7 R DE MIGRACIÓN -->
@@ -807,7 +810,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Las 7 R de migración</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>RDS</b> = Relational Database Service · <b>SaaS</b> = Software as a Service</span><span class="num">11 / 74</span></div>
+    <div class="chrome-bot"><span>Las 7 R de migración</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>RDS</b> = Relational Database Service · <b>SaaS</b> = Software as a Service</span><span class="num">11 / 77</span></div>
   </section>
 
   <!-- SLIDE 12 · PLANIFICAR MIGRACIÓN -->
@@ -839,7 +842,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Planificar migración</span><span class="gloss"><b>CAF</b> = Cloud Adoption Framework · <b>MAP</b> = Migration Acceleration Program</span><span class="num">12 / 74</span></div>
+    <div class="chrome-bot"><span>Planificar migración</span><span class="gloss"><b>CAF</b> = Cloud Adoption Framework · <b>MAP</b> = Migration Acceleration Program</span><span class="num">12 / 77</span></div>
   </section>
 
   <!-- SLIDE 13 · MOVER DATOS Y CARGAS -->
@@ -872,7 +875,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Mover datos y cargas</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>EFS</b> = Elastic File System · <b>DMS</b> = Database Migration Service · <b>MGN</b> = Application Migration Service · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">13 / 74</span></div>
+    <div class="chrome-bot"><span>Mover datos y cargas</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>EFS</b> = Elastic File System · <b>DMS</b> = Database Migration Service · <b>MGN</b> = Application Migration Service · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">13 / 77</span></div>
   </section>
 
   <!-- SLIDE 14 · ECONOMÍA DE LA NUBE -->
@@ -897,7 +900,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Economía de la nube</span><span class="gloss"><b>CapEx</b> = Capital Expenditure · <b>OpEx</b> = Operational Expenditure · <b>TCO</b> = Total Cost of Ownership</span><span class="num">14 / 74</span></div>
+    <div class="chrome-bot"><span>Economía de la nube</span><span class="gloss"><b>CapEx</b> = Capital Expenditure · <b>OpEx</b> = Operational Expenditure · <b>TCO</b> = Total Cost of Ownership</span><span class="num">14 / 77</span></div>
   </section>
 
   <!-- SLIDE 15 · TABLA FINAL D1 -->
@@ -925,7 +928,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final D1</span><span class="gloss"><b>OpEx</b> = Operational Expenditure · <b>AZ</b> = Availability Zone · <b>CAF</b> = Cloud Adoption Framework · <b>EC2</b> = Elastic Compute Cloud · <b>MGN</b> = Application Migration Service · <b>TCO</b> = Total Cost of Ownership</span><span class="num">15 / 74</span></div>
+    <div class="chrome-bot"><span>Tabla final D1</span><span class="gloss"><b>OpEx</b> = Operational Expenditure · <b>AZ</b> = Availability Zone · <b>CAF</b> = Cloud Adoption Framework · <b>EC2</b> = Elastic Compute Cloud · <b>MGN</b> = Application Migration Service · <b>TCO</b> = Total Cost of Ownership</span><span class="num">15 / 77</span></div>
   </section>
 
   <!-- SLIDE 16 · PORTADA -->
@@ -973,7 +976,7 @@
       <div class="agenda-row"><span class="num">05</span><div><div class="title">Monitoreo y memorización</div><div class="desc">Trusted Advisor, CloudTrail, CloudWatch, Config y tabla final.</div></div><span class="tag">Cierre</span></div>
     </div>
 
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication · <b>WAF</b> = Web Application Firewall</span><span class="num">17 / 74</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication · <b>WAF</b> = Web Application Firewall</span><span class="num">17 / 77</span></div>
   </section>
 
   <!-- SLIDE 18 · RESPONSABILIDAD COMPARTIDA -->
@@ -998,7 +1001,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Responsabilidad compartida</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>IAM</b> = Identity and Access Management · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">18 / 74</span></div>
+    <div class="chrome-bot"><span>Responsabilidad compartida</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>IAM</b> = Identity and Access Management · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">18 / 77</span></div>
   </section>
 
   <!-- SLIDE 19 · RESPONSABILIDAD POR SERVICIO -->
@@ -1028,7 +1031,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Responsabilidad por servicio</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>IaaS</b> = Infrastructure as a Service · <b>RDS</b> = Relational Database Service · <b>IAM</b> = Identity and Access Management · <b>S3</b> = Simple Storage Service</span><span class="num">19 / 74</span></div>
+    <div class="chrome-bot"><span>Responsabilidad por servicio</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>IaaS</b> = Infrastructure as a Service · <b>RDS</b> = Relational Database Service · <b>IAM</b> = Identity and Access Management · <b>S3</b> = Simple Storage Service</span><span class="num">19 / 77</span></div>
   </section>
 
   <!-- SLIDE 20 · GOBIERNO Y CUMPLIMIENTO -->
@@ -1060,7 +1063,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Gobierno y cumplimiento</span><span class="gloss"><b>SOC</b> = System and Organization Controls · <b>SCP</b> = Service Control Policy</span><span class="num">20 / 74</span></div>
+    <div class="chrome-bot"><span>Gobierno y cumplimiento</span><span class="gloss"><b>SOC</b> = System and Organization Controls · <b>SCP</b> = Service Control Policy</span><span class="num">20 / 77</span></div>
   </section>
 
   <!-- SLIDE 21 · CIFRADO Y SECRETOS -->
@@ -1092,7 +1095,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Cifrado y secretos</span><span class="gloss"><b>KMS</b> = Key Management Service · <b>S3</b> = Simple Storage Service · <b>EBS</b> = Elastic Block Store · <b>RDS</b> = Relational Database Service · <b>HSM</b> = Hardware Security Module · <b>ACM</b> = AWS Certificate Manager</span><span class="num">21 / 74</span></div>
+    <div class="chrome-bot"><span>Cifrado y secretos</span><span class="gloss"><b>KMS</b> = Key Management Service · <b>S3</b> = Simple Storage Service · <b>EBS</b> = Elastic Block Store · <b>RDS</b> = Relational Database Service · <b>HSM</b> = Hardware Security Module · <b>ACM</b> = AWS Certificate Manager</span><span class="num">21 / 77</span></div>
   </section>
 
   <!-- SLIDE 22 · IAM: CONCEPTOS -->
@@ -1124,7 +1127,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>IAM: conceptos</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication · <b>EC2</b> = Elastic Compute Cloud · <b>S3</b> = Simple Storage Service</span><span class="num">22 / 74</span></div>
+    <div class="chrome-bot"><span>IAM: conceptos</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication · <b>EC2</b> = Elastic Compute Cloud · <b>S3</b> = Simple Storage Service</span><span class="num">22 / 77</span></div>
   </section>
 
   <!-- SLIDE 23 · CREDENCIALES DE ACCESO -->
@@ -1156,7 +1159,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Credenciales de acceso</span><span class="gloss"><b>MFA</b> = Multi-Factor Authentication · <b>CLI</b> = Command Line Interface · <b>SDK</b> = Software Development Kit · <b>API</b> = Application Programming Interface · <b>IAM</b> = Identity and Access Management</span><span class="num">23 / 74</span></div>
+    <div class="chrome-bot"><span>Credenciales de acceso</span><span class="gloss"><b>MFA</b> = Multi-Factor Authentication · <b>CLI</b> = Command Line Interface · <b>SDK</b> = Software Development Kit · <b>API</b> = Application Programming Interface · <b>IAM</b> = Identity and Access Management</span><span class="num">23 / 77</span></div>
   </section>
 
   <!-- SLIDE 24 · BUENAS PRÁCTICAS IAM -->
@@ -1181,7 +1184,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Buenas prácticas IAM</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication</span><span class="num">24 / 74</span></div>
+    <div class="chrome-bot"><span>Buenas prácticas IAM</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>MFA</b> = Multi-Factor Authentication</span><span class="num">24 / 77</span></div>
   </section>
 
   <!-- SLIDE 25 · SERVICIOS DE IDENTIDAD -->
@@ -1212,7 +1215,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Servicios de identidad</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>SSO</b> = Single Sign-On · <b>SCP</b> = Service Control Policy</span><span class="num">25 / 74</span></div>
+    <div class="chrome-bot"><span>Servicios de identidad</span><span class="gloss"><b>IAM</b> = Identity and Access Management · <b>SSO</b> = Single Sign-On · <b>SCP</b> = Service Control Policy</span><span class="num">25 / 77</span></div>
   </section>
 
   <!-- SLIDE 26 · SEGURIDAD DE RED -->
@@ -1244,7 +1247,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Seguridad de red</span><span class="gloss"><b>NACL</b> = Network Access Control List · <b>WAF</b> = Web Application Firewall · <b>DDoS</b> = Distributed Denial of Service · <b>VPC</b> = Virtual Private Cloud</span><span class="num">26 / 74</span></div>
+    <div class="chrome-bot"><span>Seguridad de red</span><span class="gloss"><b>NACL</b> = Network Access Control List · <b>WAF</b> = Web Application Firewall · <b>DDoS</b> = Distributed Denial of Service · <b>VPC</b> = Virtual Private Cloud</span><span class="num">26 / 77</span></div>
   </section>
 
   <!-- SLIDE 27 · DETECCIÓN Y RESPUESTA -->
@@ -1276,7 +1279,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Detección y respuesta</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud · <b>DNS</b> = Domain Name System · <b>EC2</b> = Elastic Compute Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service</span><span class="num">27 / 74</span></div>
+    <div class="chrome-bot"><span>Detección y respuesta</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud · <b>DNS</b> = Domain Name System · <b>EC2</b> = Elastic Compute Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service</span><span class="num">27 / 77</span></div>
   </section>
 
   <!-- SLIDE 28 · TRUSTED ADVISOR -->
@@ -1308,7 +1311,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Trusted Advisor</span><span class="gloss"><b>MFA</b> = Multi-Factor Authentication · <b>S3</b> = Simple Storage Service · <b>EC2</b> = Elastic Compute Cloud · <b>AZ</b> = Availability Zone · <b>IAM</b> = Identity and Access Management</span><span class="num">28 / 74</span></div>
+    <div class="chrome-bot"><span>Trusted Advisor</span><span class="gloss"><b>MFA</b> = Multi-Factor Authentication · <b>S3</b> = Simple Storage Service · <b>EC2</b> = Elastic Compute Cloud · <b>AZ</b> = Availability Zone · <b>IAM</b> = Identity and Access Management</span><span class="num">28 / 77</span></div>
   </section>
 
   <!-- SLIDE 29 · MONITOREO Y AUDITORÍA -->
@@ -1339,7 +1342,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Monitoreo y auditoría</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud</span><span class="num">29 / 74</span></div>
+    <div class="chrome-bot"><span>Monitoreo y auditoría</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud</span><span class="num">29 / 77</span></div>
   </section>
 
   <!-- SLIDE 30 · RECURSOS DE SEGURIDAD -->
@@ -1370,7 +1373,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Recursos de seguridad</span><span class="gloss"><b>DDoS</b> = Distributed Denial of Service</span><span class="num">30 / 74</span></div>
+    <div class="chrome-bot"><span>Recursos de seguridad</span><span class="gloss"><b>DDoS</b> = Distributed Denial of Service</span><span class="num">30 / 77</span></div>
   </section>
 
   <!-- SLIDE 31 · TABLA FINAL D2 -->
@@ -1398,7 +1401,7 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final D2</span><span class="gloss"><b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>WAF</b> = Web Application Firewall · <b>IAM</b> = Identity and Access Management</span><span class="num">31 / 74</span></div>
+    <div class="chrome-bot"><span>Tabla final D2</span><span class="gloss"><b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>WAF</b> = Web Application Firewall · <b>IAM</b> = Identity and Access Management</span><span class="num">31 / 77</span></div>
   </section>
 
   <!-- SLIDE 32 · PORTADA -->
@@ -1446,7 +1449,7 @@
       <div class="agenda-row"><span class="num">05</span><div><div class="title">Analítica, IA y gestión</div><div class="desc">Athena, Kinesis, servicios de IA, Systems Manager y otros.</div></div><span class="tag">Servicios</span></div>
     </div>
 
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>VPN</b> = Virtual Private Network · <b>EC2</b> = Elastic Compute Cloud · <b>S3</b> = Simple Storage Service · <b>EBS</b> = Elastic Block Store · <b>EFS</b> = Elastic File System · <b>RDS</b> = Relational Database Service</span><span class="num">33 / 74</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>VPN</b> = Virtual Private Network · <b>EC2</b> = Elastic Compute Cloud · <b>S3</b> = Simple Storage Service · <b>EBS</b> = Elastic Block Store · <b>EFS</b> = Elastic File System · <b>RDS</b> = Relational Database Service</span><span class="num">33 / 77</span></div>
   </section>
 
   <!-- SLIDE 34 · DESPLEGAR Y OPERAR -->
@@ -1479,7 +1482,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Desplegar y operar</span><span class="gloss"><b>CLI</b> = Command Line Interface · <b>SDK</b> = Software Development Kit · <b>IaC</b> = Infrastructure as Code</span><span class="num">34 / 74</span></div>
+    <div class="chrome-bot"><span>Desplegar y operar</span><span class="gloss"><b>CLI</b> = Command Line Interface · <b>SDK</b> = Software Development Kit · <b>IaC</b> = Infrastructure as Code</span><span class="num">34 / 77</span></div>
   </section>
 
   <!-- SLIDE 35 · INFRAESTRUCTURA GLOBAL -->
@@ -1511,7 +1514,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Infraestructura global</span><span class="gloss"><b>AZ</b> = Availability Zone</span><span class="num">35 / 74</span></div>
+    <div class="chrome-bot"><span>Infraestructura global</span><span class="gloss"><b>AZ</b> = Availability Zone</span><span class="num">35 / 77</span></div>
   </section>
 
   <!-- SLIDE 36 · ELEGIR UNA REGION -->
@@ -1536,7 +1539,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Elegir una Region</span><span class="num">36 / 74</span></div>
+    <div class="chrome-bot"><span>Elegir una Region</span><span class="num">36 / 77</span></div>
   </section>
 
   <!-- SLIDE 37 · AZ, REGIONS Y BORDE -->
@@ -1568,7 +1571,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>AZ, Regions y borde</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>S3</b> = Simple Storage Service · <b>DNS</b> = Domain Name System</span><span class="num">37 / 74</span></div>
+    <div class="chrome-bot"><span>AZ, Regions y borde</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>S3</b> = Simple Storage Service · <b>DNS</b> = Domain Name System</span><span class="num">37 / 77</span></div>
   </section>
 
   <!-- SLIDE 38 · CONECTIVIDAD -->
@@ -1599,7 +1602,7 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Conectividad</span><span class="gloss"><b>VPN</b> = Virtual Private Network · <b>VPC</b> = Virtual Private Cloud</span><span class="num">38 / 74</span></div>
+    <div class="chrome-bot"><span>Conectividad</span><span class="gloss"><b>VPN</b> = Virtual Private Network · <b>VPC</b> = Virtual Private Cloud</span><span class="num">38 / 77</span></div>
   </section>
 
   <!-- SLIDE 39 · SERVICIOS DE CÓMPUTO -->
@@ -1632,11 +1635,93 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Servicios de cómputo</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>ECS</b> = Elastic Container Service · <b>EKS</b> = Elastic Kubernetes Service · <b>PaaS</b> = Platform as a Service</span><span class="num">39 / 74</span></div>
+    <div class="chrome-bot"><span>Servicios de cómputo</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>ECS</b> = Elastic Container Service · <b>EKS</b> = Elastic Kubernetes Service · <b>PaaS</b> = Platform as a Service</span><span class="num">39 / 77</span></div>
   </section>
 
-  <!-- SLIDE 40 · TIPOS DE INSTANCIA EC2 -->
-  <section class="slide" data-label="40 D3 · Tipos de instancia EC2">
+  <!-- SLIDE 40 · AWS LAMBDA -->
+  <section class="slide" data-label="40 D3 · AWS Lambda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Cómputo · AWS Lambda</div>
+    <h1 class="slide-title">Qué es <em>AWS Lambda</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">1 · Un evento lo dispara</div><div class="desc">Un archivo nuevo en S3, un mensaje en SQS, una llamada a API Gateway o un horario de EventBridge.</div></div>
+      <div class="stat-box"><div class="lbl">2 · Tu función corre</div><div class="desc">Subes el código (Python, Node.js, Java…) y AWS lo ejecuta, hasta 15 minutos por ejecución.</div></div>
+      <div class="stat-box"><div class="lbl">3 · Escala sola</div><div class="desc">Pasa de cero a miles de ejecuciones en paralelo. Sin eventos, no hay servidores encendidos ni costo.</div></div>
+      <div class="stat-box"><div class="lbl">4 · Casos típicos</div><div class="desc">Miniaturas al subir una imagen, backend de una API, automatizaciones y procesar datos al llegar.</div></div>
+    </div>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Código corto en respuesta a un evento, sin administrar servidores y pagando por uso: Lambda.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>AWS Lambda</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>SQS</b> = Simple Queue Service · <b>API</b> = Application Programming Interface</span><span class="num">40 / 77</span></div>
+  </section>
+
+  <!-- SLIDE 41 · PRECIO DE LAMBDA -->
+  <section class="slide bg-alt" data-label="41 D3 · Precio de Lambda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Cómputo · Precio de Lambda</div>
+    <h1 class="slide-title">Cómo se <em>cobra</em> Lambda</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table dense">
+      <thead>
+        <tr><th style="width:20%">Concepto</th><th style="width:52%">Cómo se factura</th><th>Referencia (us-east-1)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Solicitudes</td><td>Cada vez que se invoca la función</td><td>0,20 USD por millón</td></tr>
+        <tr><td class="name">Duración</td><td>Milisegundos de ejecución × memoria asignada (GB-segundo)</td><td>≈ 0,0000167 USD por GB-s</td></tr>
+        <tr><td class="name">Memoria</td><td>Eliges de 128 MB a 10 GB; la CPU crece con la memoria</td><td>Más memoria = más costo por ms</td></tr>
+        <tr><td class="name">Nivel gratuito</td><td>Se renueva cada mes, sin vencimiento</td><td>1 M solicitudes y 400 000 GB-s</td></tr>
+        <tr><td class="name">Sin ejecuciones</td><td>No pagas nada por tenerla creada</td><td>Salvo Provisioned Concurrency</td></tr>
+        <tr><td class="name">Ahorro</td><td>Compute Savings Plans y procesadores Graviton (Arm)</td><td>Menor precio por GB-s</td></tr>
+      </tbody>
+    </table>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Lambda se cobra por número de solicitudes y por duración × memoria. No pagas por capacidad inactiva.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Precio de Lambda</span><span class="num">41 / 77</span></div>
+  </section>
+
+  <!-- SLIDE 42 · MÁS O MENOS TIEMPO -->
+  <section class="slide" data-label="42 D3 · Más o menos tiempo">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
+    </div>
+    <div class="eyebrow"><span class="bar"></span>Cómputo · Lambda: más o menos tiempo</div>
+    <h1 class="slide-title">Si la función <em>demora más o menos</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="stat-grid-2">
+      <div class="stat-box"><div class="lbl">Base · 1 s a 512 MB</div><div class="desc">1 millón de ejecuciones = 500 000 GB-s. Cuesta unos 8,33 USD de duración más 0,20 USD de solicitudes: ≈ 8,5 USD.</div></div>
+      <div class="stat-box"><div class="lbl">Demora más · 2 s</div><div class="desc">La duración se duplica: 1 000 000 GB-s, ≈ 16,9 USD. Pagas en proporción al tiempo usado.</div></div>
+      <div class="stat-box"><div class="lbl">Demora menos · 0,5 s</div><div class="desc">La duración se reduce a la mitad: ≈ 4,4 USD. Se factura por milisegundo, sin mínimo.</div></div>
+      <div class="stat-box"><div class="lbl">Llega al límite · 15 min</div><div class="desc">Lambda corta la ejecución por timeout y cobra el tiempo consumido. Si hace falta más, usa otro servicio.</div></div>
+    </div>
+    <div class="big-comment">
+      <span class="marker">→ Regla de examen</span>
+      <p>Más tiempo de ejecución = más costo, en proporción. Menos tiempo = menos costo; se factura por milisegundo.</p>
+    </div>
+
+
+    <div class="chrome-bot"><span>Más o menos tiempo</span><span class="num">42 / 77</span></div>
+  </section>
+
+  <!-- SLIDE 43 · TIPOS DE INSTANCIA EC2 -->
+  <section class="slide bg-alt" data-label="43 D3 · Tipos de instancia EC2">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1663,11 +1748,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Tipos de instancia EC2</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud</span><span class="num">40 / 74</span></div>
+    <div class="chrome-bot"><span>Tipos de instancia EC2</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud</span><span class="num">43 / 77</span></div>
   </section>
 
-  <!-- SLIDE 41 · ELB Y AUTO SCALING -->
-  <section class="slide bg-alt" data-label="41 D3 · ELB y Auto Scaling">
+  <!-- SLIDE 44 · ELB Y AUTO SCALING -->
+  <section class="slide" data-label="44 D3 · ELB y Auto Scaling">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1695,11 +1780,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>ELB y Auto Scaling</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">41 / 74</span></div>
+    <div class="chrome-bot"><span>ELB y Auto Scaling</span><span class="gloss"><b>AZ</b> = Availability Zone · <b>EC2</b> = Elastic Compute Cloud</span><span class="num">44 / 77</span></div>
   </section>
 
-  <!-- SLIDE 42 · SERVICIOS DE ALMACENAMIENTO -->
-  <section class="slide" data-label="42 D3 · Servicios de almacenamiento">
+  <!-- SLIDE 45 · SERVICIOS DE ALMACENAMIENTO -->
+  <section class="slide bg-alt" data-label="45 D3 · Servicios de almacenamiento">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1728,11 +1813,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Servicios de almacenamiento</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>EBS</b> = Elastic Block Store · <b>EC2</b> = Elastic Compute Cloud · <b>AZ</b> = Availability Zone · <b>EFS</b> = Elastic File System · <b>FSx</b> = File System (managed)</span><span class="num">42 / 74</span></div>
+    <div class="chrome-bot"><span>Servicios de almacenamiento</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>EBS</b> = Elastic Block Store · <b>EC2</b> = Elastic Compute Cloud · <b>AZ</b> = Availability Zone · <b>EFS</b> = Elastic File System · <b>FSx</b> = File System (managed)</span><span class="num">45 / 77</span></div>
   </section>
 
-  <!-- SLIDE 43 · EBS, EFS Y S3 -->
-  <section class="slide bg-alt" data-label="43 D3 · EBS, EFS y S3">
+  <!-- SLIDE 46 · EBS, EFS Y S3 -->
+  <section class="slide" data-label="46 D3 · EBS, EFS y S3">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1753,11 +1838,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>EBS, EFS y S3</span><span class="gloss"><b>EBS</b> = Elastic Block Store · <b>EFS</b> = Elastic File System · <b>S3</b> = Simple Storage Service · <b>EC2</b> = Elastic Compute Cloud · <b>AZ</b> = Availability Zone</span><span class="num">43 / 74</span></div>
+    <div class="chrome-bot"><span>EBS, EFS y S3</span><span class="gloss"><b>EBS</b> = Elastic Block Store · <b>EFS</b> = Elastic File System · <b>S3</b> = Simple Storage Service · <b>EC2</b> = Elastic Compute Cloud · <b>AZ</b> = Availability Zone</span><span class="num">46 / 77</span></div>
   </section>
 
-  <!-- SLIDE 44 · CARACTERÍSTICAS DE S3 -->
-  <section class="slide" data-label="44 D3 · Características de S3">
+  <!-- SLIDE 47 · CARACTERÍSTICAS DE S3 -->
+  <section class="slide bg-alt" data-label="47 D3 · Características de S3">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1778,11 +1863,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Características de S3</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>API</b> = Application Programming Interface · <b>AZ</b> = Availability Zone</span><span class="num">44 / 74</span></div>
+    <div class="chrome-bot"><span>Características de S3</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>API</b> = Application Programming Interface · <b>AZ</b> = Availability Zone</span><span class="num">47 / 77</span></div>
   </section>
 
-  <!-- SLIDE 45 · CLASES DE S3 -->
-  <section class="slide bg-alt" data-label="45 D3 · Clases de S3">
+  <!-- SLIDE 48 · CLASES DE S3 -->
+  <section class="slide" data-label="48 D3 · Clases de S3">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1811,11 +1896,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Clases de S3</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>IA</b> = Infrequent Access · <b>AZ</b> = Availability Zone</span><span class="num">45 / 74</span></div>
+    <div class="chrome-bot"><span>Clases de S3</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>IA</b> = Infrequent Access · <b>AZ</b> = Availability Zone</span><span class="num">48 / 77</span></div>
   </section>
 
-  <!-- SLIDE 46 · BASES DE DATOS RELACIONALES -->
-  <section class="slide" data-label="46 D3 · Bases de datos relacionales">
+  <!-- SLIDE 49 · BASES DE DATOS RELACIONALES -->
+  <section class="slide bg-alt" data-label="49 D3 · Bases de datos relacionales">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1843,11 +1928,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Bases de datos relacionales</span><span class="gloss"><b>RDS</b> = Relational Database Service · <b>AZ</b> = Availability Zone · <b>DMS</b> = Database Migration Service</span><span class="num">46 / 74</span></div>
+    <div class="chrome-bot"><span>Bases de datos relacionales</span><span class="gloss"><b>RDS</b> = Relational Database Service · <b>AZ</b> = Availability Zone · <b>DMS</b> = Database Migration Service</span><span class="num">49 / 77</span></div>
   </section>
 
-  <!-- SLIDE 47 · NOSQL Y ESPECIALIZADAS -->
-  <section class="slide bg-alt" data-label="47 D3 · NoSQL y especializadas">
+  <!-- SLIDE 50 · NOSQL Y ESPECIALIZADAS -->
+  <section class="slide" data-label="50 D3 · NoSQL y especializadas">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1876,11 +1961,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>NoSQL y especializadas</span><span class="gloss"><b>IoT</b> = Internet of Things</span><span class="num">47 / 74</span></div>
+    <div class="chrome-bot"><span>NoSQL y especializadas</span><span class="gloss"><b>IoT</b> = Internet of Things</span><span class="num">50 / 77</span></div>
   </section>
 
-  <!-- SLIDE 48 · ELEGIR UNA BASE DE DATOS -->
-  <section class="slide" data-label="48 D3 · Elegir una base de datos">
+  <!-- SLIDE 51 · ELEGIR UNA BASE DE DATOS -->
+  <section class="slide bg-alt" data-label="51 D3 · Elegir una base de datos">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1909,11 +1994,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Elegir una base de datos</span><span class="gloss"><b>RDS</b> = Relational Database Service · <b>EBS</b> = Elastic Block Store · <b>IoT</b> = Internet of Things · <b>S3</b> = Simple Storage Service</span><span class="num">48 / 74</span></div>
+    <div class="chrome-bot"><span>Elegir una base de datos</span><span class="gloss"><b>RDS</b> = Relational Database Service · <b>EBS</b> = Elastic Block Store · <b>IoT</b> = Internet of Things · <b>S3</b> = Simple Storage Service</span><span class="num">51 / 77</span></div>
   </section>
 
-  <!-- SLIDE 49 · AMAZON VPC -->
-  <section class="slide bg-alt" data-label="49 D3 · Amazon VPC">
+  <!-- SLIDE 52 · AMAZON VPC -->
+  <section class="slide" data-label="52 D3 · Amazon VPC">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1941,11 +2026,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Amazon VPC</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud · <b>AZ</b> = Availability Zone · <b>NAT</b> = Network Address Translation</span><span class="num">49 / 74</span></div>
+    <div class="chrome-bot"><span>Amazon VPC</span><span class="gloss"><b>VPC</b> = Virtual Private Cloud · <b>AZ</b> = Availability Zone · <b>NAT</b> = Network Address Translation</span><span class="num">52 / 77</span></div>
   </section>
 
-  <!-- SLIDE 50 · ROUTE 53 Y CLOUDFRONT -->
-  <section class="slide" data-label="50 D3 · Route 53 y CloudFront">
+  <!-- SLIDE 53 · ROUTE 53 Y CLOUDFRONT -->
+  <section class="slide bg-alt" data-label="53 D3 · Route 53 y CloudFront">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -1972,11 +2057,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Route 53 y CloudFront</span><span class="gloss"><b>DNS</b> = Domain Name System · <b>API</b> = Application Programming Interface · <b>CDN</b> = Content Delivery Network</span><span class="num">50 / 74</span></div>
+    <div class="chrome-bot"><span>Route 53 y CloudFront</span><span class="gloss"><b>DNS</b> = Domain Name System · <b>API</b> = Application Programming Interface · <b>CDN</b> = Content Delivery Network</span><span class="num">53 / 77</span></div>
   </section>
 
-  <!-- SLIDE 51 · MENSAJERÍA E INTEGRACIÓN -->
-  <section class="slide bg-alt" data-label="51 D3 · Mensajería e integración">
+  <!-- SLIDE 54 · MENSAJERÍA E INTEGRACIÓN -->
+  <section class="slide" data-label="54 D3 · Mensajería e integración">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2004,11 +2089,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Mensajería e integración</span><span class="gloss"><b>SQS</b> = Simple Queue Service · <b>SNS</b> = Simple Notification Service · <b>SaaS</b> = Software as a Service</span><span class="num">51 / 74</span></div>
+    <div class="chrome-bot"><span>Mensajería e integración</span><span class="gloss"><b>SQS</b> = Simple Queue Service · <b>SNS</b> = Simple Notification Service · <b>SaaS</b> = Software as a Service</span><span class="num">54 / 77</span></div>
   </section>
 
-  <!-- SLIDE 52 · SERVICIOS DE ANALÍTICA -->
-  <section class="slide" data-label="52 D3 · Servicios de analítica">
+  <!-- SLIDE 55 · SERVICIOS DE ANALÍTICA -->
+  <section class="slide bg-alt" data-label="55 D3 · Servicios de analítica">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2037,11 +2122,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Servicios de analítica</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>ETL</b> = Extract, Transform, Load</span><span class="num">52 / 74</span></div>
+    <div class="chrome-bot"><span>Servicios de analítica</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>ETL</b> = Extract, Transform, Load</span><span class="num">55 / 77</span></div>
   </section>
 
-  <!-- SLIDE 53 · IA Y MACHINE LEARNING -->
-  <section class="slide bg-alt" data-label="53 D3 · IA y machine learning">
+  <!-- SLIDE 56 · IA Y MACHINE LEARNING -->
+  <section class="slide" data-label="56 D3 · IA y machine learning">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2070,11 +2155,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>IA y machine learning</span><span class="gloss"><b>IA</b> = Infrequent Access · <b>API</b> = Application Programming Interface</span><span class="num">53 / 74</span></div>
+    <div class="chrome-bot"><span>IA y machine learning</span><span class="gloss"><b>IA</b> = Infrequent Access · <b>API</b> = Application Programming Interface</span><span class="num">56 / 77</span></div>
   </section>
 
-  <!-- SLIDE 54 · SERVICIOS PARA DESARROLLADORES -->
-  <section class="slide" data-label="54 D3 · Servicios para desarrolladores">
+  <!-- SLIDE 57 · SERVICIOS PARA DESARROLLADORES -->
+  <section class="slide bg-alt" data-label="57 D3 · Servicios para desarrolladores">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2102,11 +2187,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Servicios para desarrolladores</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud</span><span class="num">54 / 74</span></div>
+    <div class="chrome-bot"><span>Servicios para desarrolladores</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud</span><span class="num">57 / 77</span></div>
   </section>
 
-  <!-- SLIDE 55 · GESTIÓN Y OPERACIONES -->
-  <section class="slide bg-alt" data-label="55 D3 · Gestión y operaciones">
+  <!-- SLIDE 58 · GESTIÓN Y OPERACIONES -->
+  <section class="slide" data-label="58 D3 · Gestión y operaciones">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2134,11 +2219,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Gestión y operaciones</span><span class="num">55 / 74</span></div>
+    <div class="chrome-bot"><span>Gestión y operaciones</span><span class="num">58 / 77</span></div>
   </section>
 
-  <!-- SLIDE 56 · OTROS SERVICIOS -->
-  <section class="slide" data-label="56 D3 · Otros servicios">
+  <!-- SLIDE 59 · OTROS SERVICIOS -->
+  <section class="slide bg-alt" data-label="59 D3 · Otros servicios">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2167,11 +2252,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Otros servicios</span><span class="gloss"><b>IoT</b> = Internet of Things</span><span class="num">56 / 74</span></div>
+    <div class="chrome-bot"><span>Otros servicios</span><span class="gloss"><b>IoT</b> = Internet of Things</span><span class="num">59 / 77</span></div>
   </section>
 
-  <!-- SLIDE 57 · TABLA FINAL D3 (1/2) -->
-  <section class="slide bg-alt" data-label="57 D3 · Tabla final D3 (1/2)">
+  <!-- SLIDE 60 · TABLA FINAL D3 (1/2) -->
+  <section class="slide" data-label="60 D3 · Tabla final D3 (1/2)">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2195,11 +2280,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final D3 (1/2)</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>EBS</b> = Elastic Block Store · <b>EFS</b> = Elastic File System · <b>S3</b> = Simple Storage Service · <b>SQS</b> = Simple Queue Service</span><span class="num">57 / 74</span></div>
+    <div class="chrome-bot"><span>Tabla final D3 (1/2)</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>EBS</b> = Elastic Block Store · <b>EFS</b> = Elastic File System · <b>S3</b> = Simple Storage Service · <b>SQS</b> = Simple Queue Service</span><span class="num">60 / 77</span></div>
   </section>
 
-  <!-- SLIDE 58 · TABLA FINAL D3 (2/2) -->
-  <section class="slide" data-label="58 D3 · Tabla final D3 (2/2)">
+  <!-- SLIDE 61 · TABLA FINAL D3 (2/2) -->
+  <section class="slide bg-alt" data-label="61 D3 · Tabla final D3 (2/2)">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2223,11 +2308,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final D3 (2/2)</span><span class="gloss"><b>DNS</b> = Domain Name System · <b>S3</b> = Simple Storage Service · <b>SNS</b> = Simple Notification Service · <b>VPC</b> = Virtual Private Cloud</span><span class="num">58 / 74</span></div>
+    <div class="chrome-bot"><span>Tabla final D3 (2/2)</span><span class="gloss"><b>DNS</b> = Domain Name System · <b>S3</b> = Simple Storage Service · <b>SNS</b> = Simple Notification Service · <b>VPC</b> = Virtual Private Cloud</span><span class="num">61 / 77</span></div>
   </section>
 
-  <!-- SLIDE 59 · PORTADA -->
-  <section class="slide portada no-chrome" data-label="59 D4 · Portada">
+  <!-- SLIDE 62 · PORTADA -->
+  <section class="slide portada no-chrome" data-label="62 D4 · Portada">
     <div class="portada-head">
       <div class="brand-block">
         <span class="brand-mark">HG</span>
@@ -2253,8 +2338,8 @@
     </div>
   </section>
 
-  <!-- SLIDE 60 · AGENDA -->
-  <section class="slide" data-label="60 D4 · Agenda">
+  <!-- SLIDE 63 · AGENDA -->
+  <section class="slide" data-label="63 D4 · Agenda">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2271,11 +2356,11 @@
       <div class="agenda-row"><span class="num">05</span><div><div class="title">Memorización</div><div class="desc">Tabla final con las asociaciones clave.</div></div><span class="tag">Cierre</span></div>
     </div>
 
-    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>CUR</b> = Cost and Usage Report</span><span class="num">60 / 74</span></div>
+    <div class="chrome-bot"><span>Agenda</span><span class="gloss"><b>CUR</b> = Cost and Usage Report</span><span class="num">63 / 77</span></div>
   </section>
 
-  <!-- SLIDE 61 · MODELOS DE PRECIO EC2 -->
-  <section class="slide bg-alt" data-label="61 D4 · Modelos de precio EC2">
+  <!-- SLIDE 64 · MODELOS DE PRECIO EC2 -->
+  <section class="slide" data-label="64 D4 · Modelos de precio EC2">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2303,11 +2388,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Modelos de precio EC2</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>AZ</b> = Availability Zone</span><span class="num">61 / 74</span></div>
+    <div class="chrome-bot"><span>Modelos de precio EC2</span><span class="gloss"><b>EC2</b> = Elastic Compute Cloud · <b>AZ</b> = Availability Zone</span><span class="num">64 / 77</span></div>
   </section>
 
-  <!-- SLIDE 62 · CÓMO SE COBRA AWS -->
-  <section class="slide" data-label="62 D4 · Cómo se cobra AWS">
+  <!-- SLIDE 65 · CÓMO SE COBRA AWS -->
+  <section class="slide bg-alt" data-label="65 D4 · Cómo se cobra AWS">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2328,11 +2413,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Cómo se cobra AWS</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>AZ</b> = Availability Zone</span><span class="num">62 / 74</span></div>
+    <div class="chrome-bot"><span>Cómo se cobra AWS</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>AZ</b> = Availability Zone</span><span class="num">65 / 77</span></div>
   </section>
 
-  <!-- SLIDE 63 · HERRAMIENTAS DE COSTOS -->
-  <section class="slide bg-alt" data-label="63 D4 · Herramientas de costos">
+  <!-- SLIDE 66 · HERRAMIENTAS DE COSTOS -->
+  <section class="slide" data-label="66 D4 · Herramientas de costos">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2361,11 +2446,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Herramientas de costos</span><span class="gloss"><b>CUR</b> = Cost and Usage Report</span><span class="num">63 / 74</span></div>
+    <div class="chrome-bot"><span>Herramientas de costos</span><span class="gloss"><b>CUR</b> = Cost and Usage Report</span><span class="num">66 / 77</span></div>
   </section>
 
-  <!-- SLIDE 64 · ETIQUETAS Y COSTOS -->
-  <section class="slide" data-label="64 D4 · Etiquetas y costos">
+  <!-- SLIDE 67 · ETIQUETAS Y COSTOS -->
+  <section class="slide bg-alt" data-label="67 D4 · Etiquetas y costos">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2386,11 +2471,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Etiquetas y costos</span><span class="num">64 / 74</span></div>
+    <div class="chrome-bot"><span>Etiquetas y costos</span><span class="num">67 / 77</span></div>
   </section>
 
-  <!-- SLIDE 65 · ORGANIZATIONS Y FACTURACIÓN -->
-  <section class="slide bg-alt" data-label="65 D4 · Organizations y facturación">
+  <!-- SLIDE 68 · ORGANIZATIONS Y FACTURACIÓN -->
+  <section class="slide" data-label="68 D4 · Organizations y facturación">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2417,11 +2502,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Organizations y facturación</span><span class="gloss"><b>OU</b> = Organizational Unit · <b>SCP</b> = Service Control Policy</span><span class="num">65 / 74</span></div>
+    <div class="chrome-bot"><span>Organizations y facturación</span><span class="gloss"><b>OU</b> = Organizational Unit · <b>SCP</b> = Service Control Policy</span><span class="num">68 / 77</span></div>
   </section>
 
-  <!-- SLIDE 66 · PLANES DE SOPORTE -->
-  <section class="slide" data-label="66 D4 · Planes de soporte">
+  <!-- SLIDE 69 · PLANES DE SOPORTE -->
+  <section class="slide bg-alt" data-label="69 D4 · Planes de soporte">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2449,11 +2534,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Planes de soporte</span><span class="gloss"><b>TAM</b> = Technical Account Manager</span><span class="num">66 / 74</span></div>
+    <div class="chrome-bot"><span>Planes de soporte</span><span class="gloss"><b>TAM</b> = Technical Account Manager</span><span class="num">69 / 77</span></div>
   </section>
 
-  <!-- SLIDE 67 · CARACTERÍSTICAS DEL SOPORTE -->
-  <section class="slide bg-alt" data-label="67 D4 · Características del soporte">
+  <!-- SLIDE 70 · CARACTERÍSTICAS DEL SOPORTE -->
+  <section class="slide" data-label="70 D4 · Características del soporte">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2481,11 +2566,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Características del soporte</span><span class="gloss"><b>TAM</b> = Technical Account Manager</span><span class="num">67 / 74</span></div>
+    <div class="chrome-bot"><span>Características del soporte</span><span class="gloss"><b>TAM</b> = Technical Account Manager</span><span class="num">70 / 77</span></div>
   </section>
 
-  <!-- SLIDE 68 · RECURSOS DE AYUDA -->
-  <section class="slide" data-label="68 D4 · Recursos de ayuda">
+  <!-- SLIDE 71 · RECURSOS DE AYUDA -->
+  <section class="slide bg-alt" data-label="71 D4 · Recursos de ayuda">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2514,11 +2599,11 @@
     </div>
 
 
-    <div class="chrome-bot"><span>Recursos de ayuda</span><span class="gloss"><b>APN</b> = AWS Partner Network</span><span class="num">68 / 74</span></div>
+    <div class="chrome-bot"><span>Recursos de ayuda</span><span class="gloss"><b>APN</b> = AWS Partner Network</span><span class="num">71 / 77</span></div>
   </section>
 
-  <!-- SLIDE 69 · TABLA FINAL D4 -->
-  <section class="slide bg-alt" data-label="69 D4 · Tabla final D4">
+  <!-- SLIDE 72 · TABLA FINAL D4 -->
+  <section class="slide" data-label="72 D4 · Tabla final D4">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2542,11 +2627,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Tabla final D4</span><span class="gloss"><b>TAM</b> = Technical Account Manager</span><span class="num">69 / 74</span></div>
+    <div class="chrome-bot"><span>Tabla final D4</span><span class="gloss"><b>TAM</b> = Technical Account Manager</span><span class="num">72 / 77</span></div>
   </section>
 
-  <!-- SLIDE 70 · CONFUSIONES FRECUENTES (1/2) -->
-  <section class="slide" data-label="70 Confusiones frecuentes (1/2)">
+  <!-- SLIDE 73 · CONFUSIONES FRECUENTES (1/2) -->
+  <section class="slide bg-alt" data-label="73 Confusiones frecuentes (1/2)">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2570,11 +2655,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Confusiones frecuentes (1/2)</span><span class="gloss"><b>API</b> = Application Programming Interface · <b>EC2</b> = Elastic Compute Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>KMS</b> = Key Management Service · <b>WAF</b> = Web Application Firewall</span><span class="num">70 / 74</span></div>
+    <div class="chrome-bot"><span>Confusiones frecuentes (1/2)</span><span class="gloss"><b>API</b> = Application Programming Interface · <b>EC2</b> = Elastic Compute Cloud · <b>PII</b> = Personally Identifiable Information · <b>S3</b> = Simple Storage Service · <b>KMS</b> = Key Management Service · <b>WAF</b> = Web Application Firewall</span><span class="num">73 / 77</span></div>
   </section>
 
-  <!-- SLIDE 71 · CONFUSIONES FRECUENTES (2/2) -->
-  <section class="slide bg-alt" data-label="71 Confusiones frecuentes (2/2)">
+  <!-- SLIDE 74 · CONFUSIONES FRECUENTES (2/2) -->
+  <section class="slide" data-label="74 Confusiones frecuentes (2/2)">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2598,11 +2683,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Confusiones frecuentes (2/2)</span><span class="gloss"><b>SQS</b> = Simple Queue Service · <b>SNS</b> = Simple Notification Service · <b>EC2</b> = Elastic Compute Cloud · <b>EFS</b> = Elastic File System · <b>EBS</b> = Elastic Block Store · <b>AZ</b> = Availability Zone · <b>RDS</b> = Relational Database Service</span><span class="num">71 / 74</span></div>
+    <div class="chrome-bot"><span>Confusiones frecuentes (2/2)</span><span class="gloss"><b>SQS</b> = Simple Queue Service · <b>SNS</b> = Simple Notification Service · <b>EC2</b> = Elastic Compute Cloud · <b>EFS</b> = Elastic File System · <b>EBS</b> = Elastic Block Store · <b>AZ</b> = Availability Zone · <b>RDS</b> = Relational Database Service</span><span class="num">74 / 77</span></div>
   </section>
 
-  <!-- SLIDE 72 · TRAMPAS FRECUENTES -->
-  <section class="slide" data-label="72 Trampas frecuentes">
+  <!-- SLIDE 75 · TRAMPAS FRECUENTES -->
+  <section class="slide bg-alt" data-label="75 Trampas frecuentes">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2626,11 +2711,11 @@
       </tbody>
     </table>
 
-    <div class="chrome-bot"><span>Trampas frecuentes</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>IAM</b> = Identity and Access Management · <b>EC2</b> = Elastic Compute Cloud · <b>DMS</b> = Database Migration Service · <b>VPN</b> = Virtual Private Network · <b>AZ</b> = Availability Zone</span><span class="num">72 / 74</span></div>
+    <div class="chrome-bot"><span>Trampas frecuentes</span><span class="gloss"><b>S3</b> = Simple Storage Service · <b>IAM</b> = Identity and Access Management · <b>EC2</b> = Elastic Compute Cloud · <b>DMS</b> = Database Migration Service · <b>VPN</b> = Virtual Private Network · <b>AZ</b> = Availability Zone</span><span class="num">75 / 77</span></div>
   </section>
 
-  <!-- SLIDE 73 · SIMULACROS Y RUTA DE ESTUDIO -->
-  <section class="slide bg-alt" data-label="73 Simulacros y ruta de estudio">
+  <!-- SLIDE 76 · SIMULACROS Y RUTA DE ESTUDIO -->
+  <section class="slide" data-label="76 Simulacros y ruta de estudio">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS AIF-C01 · AI Practitioner</span>
@@ -2646,11 +2731,11 @@
       <div class="stat-box"><div class="lbl">Ruta sugerida</div><div class="desc">Diagnóstico oficial, repaso de D3 y D2 (64 % del examen), simulacros 1 a 4 y, al final, el Official Practice Exam.</div></div>
     </div>
 
-    <div class="chrome-bot"><span>Simulacros y ruta de estudio</span><span class="gloss"><b>VPN</b> = Virtual Private Network · <b>MGN</b> = Application Migration Service</span><span class="num">73 / 74</span></div>
+    <div class="chrome-bot"><span>Simulacros y ruta de estudio</span><span class="gloss"><b>VPN</b> = Virtual Private Network · <b>MGN</b> = Application Migration Service</span><span class="num">76 / 77</span></div>
   </section>
 
-  <!-- SLIDE 74 · CIERRE -->
-  <section class="slide cierre bg-ink" data-label="74 Cierre">
+  <!-- SLIDE 77 · CIERRE -->
+  <section class="slide cierre bg-ink" data-label="77 Cierre">
     <div class="chrome-top">
       <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
       <span class="course-tag"><span class="dot"></span> AWS CLF-C02 · Cloud Practitioner</span>
@@ -2666,7 +2751,7 @@
       </div>
     </div>
 
-    <div class="chrome-bot"><span>Cierre</span><span class="num">74 / 74</span></div>
+    <div class="chrome-bot"><span>Cierre</span><span class="num">77 / 77</span></div>
   </section>
 
 </deck-stage>

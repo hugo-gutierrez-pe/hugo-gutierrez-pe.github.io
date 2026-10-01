@@ -28,7 +28,7 @@ Hugo Gutierrez trabaja en modelamiento financiero corporativo, valorización de 
 
 - [Recursos](https://hgfincorp.com/recursos/): guías, investigación y material de certificaciones.
 - [AWS Certified AI Practitioner (AIF-C01)](https://hgfincorp.com/recursos/aws-ai-practitioner/): deck de 110 slides, decks por dominio y cuatro simulacros.
-- [AWS Certified Cloud Practitioner (CLF-C02)](https://hgfincorp.com/recursos/cloud-practitioner/): deck de 74 slides, decks por dominio y cuatro simulacros.
+- [AWS Certified Cloud Practitioner (CLF-C02)](https://hgfincorp.com/recursos/cloud-practitioner/): deck de 77 slides, decks por dominio y cuatro simulacros.
 
 ## Proyectos y demos
 
