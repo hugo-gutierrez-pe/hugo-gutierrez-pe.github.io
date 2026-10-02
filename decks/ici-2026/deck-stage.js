@@ -632,14 +632,15 @@
       // for presenter-popup thumbnail iframes (up to 9 per view).
       if (this._railEnabled || this.hasAttribute('no-rail')) return;
       this._railEnabled = true;
-      // Per-viewer preference — restored alongside rail width. Default on
-      // for desktop, off on phones (narrow or touch); a stored value wins.
-      this._railVisible = !(this._touch || window.innerWidth < 900);
-      try {
-        const v = localStorage.getItem('deck-stage.railVisible');
-        if (v === '0') this._railVisible = false;
-        else if (v === '1') this._railVisible = true;
-      } catch (e) {}
+      // Phones (touch or narrow) always open with the rail hidden. Desktop
+      // defaults on and restores the stored per-viewer preference.
+      const phone = this._touch || window.innerWidth < 900;
+      this._railVisible = !phone;
+      if (!phone) {
+        try {
+          if (localStorage.getItem('deck-stage.railVisible') === '0') this._railVisible = false;
+        } catch (e) {}
+      }
       // Live thumbnail updates: watch the light-DOM slides for content
       // edits and re-clone just the affected thumb(s), debounced. Ignore
       // the data-deck-* / data-screen-label / data-om-validate attributes
