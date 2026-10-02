@@ -160,6 +160,13 @@
     @media (hover: hover) and (pointer: fine) {
       .tapzones { display: none; }
     }
+    /* Touch: leave the bottom strip to the pinned toolbars (this one and
+       the page's .deck-controls) so a tap on a button never falls through
+       to a back/forward zone. */
+    :host([data-touch]) .tapzones { bottom: 120px; }
+    :host([data-touch]) .btn { height: 36px; min-width: 36px; }
+    :host([data-touch]) .btn svg { width: 16px; height: 16px; }
+    :host([data-touch]) .btn.reset .kbd { display: none; }
 
     .overlay {
       position: fixed;
@@ -558,6 +565,7 @@
       this._hideTimer = null;
       this._mouseIdleTimer = null;
       this._menuIndex = -1;
+      this._touch = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 
       this._onKey = this._onKey.bind(this);
       this._onResize = this._onResize.bind(this);
@@ -588,7 +596,9 @@
       // next thumbnails — the rail has no business rendering inside those
       // (wrong scale, and it offsets the stage so the thumb shows a gutter).
       if (/[?&]_snthumb=/.test(location.search)) this.setAttribute('no-rail', '');
+      if (this._touch) this.setAttribute('data-touch', '');
       this._render();
+      if (this._touch) this._flashOverlay();
       this._loadNotes();
       this._syncPrintPageRule();
       window.addEventListener('keydown', this._onKey);
@@ -622,11 +632,13 @@
       // for presenter-popup thumbnail iframes (up to 9 per view).
       if (this._railEnabled || this.hasAttribute('no-rail')) return;
       this._railEnabled = true;
-      // Per-viewer preference — restored alongside rail width. Default on;
-      // only a stored '0' (from the TweaksPanel toggle) hides it.
-      this._railVisible = true;
+      // Per-viewer preference — restored alongside rail width. Default on
+      // for desktop, off on phones (narrow or touch); a stored value wins.
+      this._railVisible = !(this._touch || window.innerWidth < 900);
       try {
-        if (localStorage.getItem('deck-stage.railVisible') === '0') this._railVisible = false;
+        const v = localStorage.getItem('deck-stage.railVisible');
+        if (v === '0') this._railVisible = false;
+        else if (v === '1') this._railVisible = true;
       } catch (e) {}
       // Live thumbnail updates: watch the light-DOM slides for content
       // edits and re-clone just the affected thumb(s), debounced. Ignore
@@ -1140,6 +1152,8 @@
       if (!this._overlay || this._presenting) return;
       this._overlay.setAttribute('data-visible', '');
       if (this._hideTimer) clearTimeout(this._hideTimer);
+      // Touch devices have no hover to summon it back — keep it pinned.
+      if (this._touch) return;
       this._hideTimer = setTimeout(() => {
         this._overlay.removeAttribute('data-visible');
       }, OVERLAY_HIDE_MS);
@@ -1221,20 +1235,28 @@
       // whether the Tweaks panel itself is open — closing the panel
       // doesn't change rail visibility. Persists alongside rail width.
       if (d && d.type === '__deck_rail_visible' && typeof d.on === 'boolean') {
-        if (d.on === this._railVisible) return;
-        this._railVisible = d.on;
-        try { localStorage.setItem('deck-stage.railVisible', d.on ? '1' : '0'); } catch (e) {}
-        // Arm the transition, commit it, then flip state — otherwise the
-        // browser coalesces both writes and nothing animates on show.
-        this.setAttribute('data-rail-anim', '');
-        void (this._rail && this._rail.offsetHeight);
-        this._syncRailHidden();
-        this._fit();
-        this._scaleThumbs();
-        clearTimeout(this._railAnimTimer);
-        this._railAnimTimer = setTimeout(() => this.removeAttribute('data-rail-anim'), 220);
+        this._setRailVisible(d.on);
       }
       if (d && d.type === '__omelette_rail_enabled') this._enableRail();
+    }
+
+    get railVisible() { return !!this._railVisible; }
+
+    toggleRail() { this._setRailVisible(!this._railVisible); }
+
+    _setRailVisible(on) {
+      if (on === this._railVisible) return;
+      this._railVisible = on;
+      try { localStorage.setItem('deck-stage.railVisible', on ? '1' : '0'); } catch (e) {}
+      // Arm the transition, commit it, then flip state — otherwise the
+      // browser coalesces both writes and nothing animates on show.
+      this.setAttribute('data-rail-anim', '');
+      void (this._rail && this._rail.offsetHeight);
+      this._syncRailHidden();
+      this._fit();
+      this._scaleThumbs();
+      clearTimeout(this._railAnimTimer);
+      this._railAnimTimer = setTimeout(() => this.removeAttribute('data-rail-anim'), 220);
     }
 
     _syncRailHidden() {

@@ -1989,6 +1989,7 @@ document.addEventListener('keydown', (e) => {
   .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
   .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
   .deck-btn.active{background:rgba(24,95,165,.85);border-color:rgba(24,95,165,.6);color:#fff}
+  @media (pointer:coarse){.deck-controls{opacity:1;right:50%;transform:translateX(50%);bottom:68px}}
 </style>
 <div class="deck-controls" id="deck-controls">
   <button class="deck-btn" id="btn-tweaks"      title="Tweaks — T"><i class="ti ti-adjustments-horizontal"></i></button>
@@ -2015,14 +2016,18 @@ document.addEventListener('keydown', (e) => {
       window.postMessage({type:'__activate_edit_mode'},'*');
     });
 
+    function syncRailBtn(){
+      const stage = document.querySelector('deck-stage');
+      if(stage) railBtn.classList.toggle('active', !stage.railVisible);
+    }
     function toggleRail(){
       const stage = document.querySelector('deck-stage');
       if(!stage) return;
-      const hidden = stage.hasAttribute('no-rail');
-      if(hidden){ stage.removeAttribute('no-rail'); railBtn.classList.remove('active'); }
-      else      { stage.setAttribute('no-rail','');  railBtn.classList.add('active');    }
+      stage.toggleRail();
+      syncRailBtn();
     }
     railBtn.addEventListener('click', toggleRail);
+    customElements.whenDefined('deck-stage').then(syncRailBtn);
 
     document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
 
