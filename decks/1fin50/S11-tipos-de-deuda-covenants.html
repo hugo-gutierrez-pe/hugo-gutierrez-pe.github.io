@@ -1,0 +1,3074 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="corp">
+<head>
+<meta charset="UTF-8" />
+<title>S11 · Tipos de deuda y covenants — 1FIN50</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    /* Type scale (1920×1080 — projection sizes, not web density) */
+    --type-mega:      140px;  /* section dividers */
+    --type-title:      80px;  /* portada */
+    --type-h1:         64px;  /* slide titles */
+    --type-h2:         44px;  /* sub-titles */
+    --type-quote:      60px;  /* citas */
+    --type-body:       26px;  /* párrafos */
+    --type-body-lg:    30px;  /* énfasis en cuerpo */
+    --type-small:      22px;  /* notas */
+    --type-mono-lg:    20px;  /* eyebrows grandes */
+    --type-mono:       16px;  /* eyebrows / chrome */
+    --type-mono-sm:    14px;  /* footer */
+
+    /* Spacing */
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    /* Surface */
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    /* Accent — overridden per course below */
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+
+    /* Course meta — set by tweaks / data-course */
+    --course-code:    '1FIN39';
+    --course-name:    'Bloomberg Terminal';
+    --course-short:   'Bloomberg';
+  }
+
+  /* Course themes — change accent + meta */
+  html[data-course="bloomberg"] {
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+  }
+  html[data-course="corp"] {
+    --accent:       #2A4A6B;
+    --accent-deep:  #16314A;
+    --accent-tint:  rgba(42,74,107,0.07);
+    --accent-tint-2:rgba(42,74,107,0.18);
+  }
+  html[data-course="analisis"] {
+    --accent:       #1F6B5E;
+    --accent-deep:  #11463D;
+    --accent-tint:  rgba(31,107,94,0.07);
+    --accent-tint-2:rgba(31,107,94,0.18);
+  }
+
+  /* Background mode — white (default) vs beige (low-contrast paper).
+     Beige values matched to Hugo's website palette. */
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  /* Dark mode — inspired by the "S1 · Leer el mercado" section slide.
+     Deep neutral background + radial blue glow on every slide.
+     bg-ink slides go a notch deeper so the hierarchy survives. */
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  /* Dark-mode-only tweaks for elements with hardcoded light/dark assumptions */
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(24,95,165,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #9CC4EE; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(24,95,165,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    /* extra top/bottom padding reserves space for chrome bars */
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  /* Italic accent — the website's signature */
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .slide.bg-ink em { color: #9CC4EE; }
+
+  /* ── CHROME: shared header / footer on every slide ───── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  /* Bloomberg-only subtle orange easter egg */
+  html[data-course="bloomberg"] .bloomberg-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #FA8C16;
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  html:not([data-course="bloomberg"]) .bloomberg-dot { display: none; }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+
+  .chrome-bot .num {
+    font-feature-settings: "tnum" 1;
+    color: var(--ink-2);
+  }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  /* hide chrome on portada (slide 1) */
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #9CC4EE; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  .sec-num {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .slide-lede {
+    font-size: var(--type-body-lg);
+    color: var(--ink-2);
+    line-height: 1.45;
+    max-width: 50ch;
+    margin-top: var(--gap-item);
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── 1 · PORTADA DEL CURSO ───────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--ink);
+  }
+  .portada-head .brand-block .brand-mark {
+    width: 44px; height: 44px; border-radius: 9px;
+    font-size: 18px;
+  }
+  .portada-head .brand-name {
+    font-family: var(--font-sans);
+    font-size: 26px; font-weight: 600; letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: var(--ink);
+    max-width: 18ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    max-width: 28ch;
+  }
+
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+
+  /* ── 2 · PORTADA DE SECCIÓN ──────────────────────────── */
+  .seccion {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 180px;
+    padding-bottom: 160px;
+    isolation: isolate;
+  }
+  .seccion::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(60% 80% at 80% 50%, rgba(24,95,165,0.28), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .seccion .sec-mega {
+    font-family: var(--font-mono);
+    font-size: var(--type-mega);
+    font-weight: 500;
+    color: rgba(255,255,255,0.12);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+  .seccion .sec-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9CC4EE;
+    margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .seccion .sec-label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .seccion h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: #fff;
+    max-width: 22ch;
+  }
+  .seccion .sec-lede {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.7);
+    margin-top: 32px;
+    max-width: 50ch;
+    line-height: 1.45;
+  }
+
+  /* ── 3 · AGENDA ──────────────────────────────────────── */
+  .agenda-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 12px;
+  }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num {
+    font-family: var(--font-mono);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .agenda-row .title {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .agenda-row .desc {
+    font-size: 20px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .agenda-row .tag {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 14px;
+    border: 0.5px solid var(--rule-2);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* ── 4 · TÍTULO + 2 COLUMNAS DE TEXTO ────────────────── */
+  .two-col-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-col);
+    margin-top: 0;
+  }
+  .text-col h3 {
+    font-size: var(--type-h2);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  .text-col .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 10px;
+    white-space: nowrap;
+  }
+  .text-col .col-eyebrow .num { color: var(--ink-3); }
+  .text-col p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .text-col ul {
+    list-style: none;
+    padding: 0;
+  }
+  .text-col ul li {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    padding: 10px 0 10px 26px;
+    position: relative;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .text-col ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 22px;
+    width: 12px; height: 1px;
+    background: var(--accent);
+  }
+  .text-col ul li:last-child { border-bottom: none; }
+  .text-col ul li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── 5 · TÍTULO + IMAGEN (2 COL) + COMENTARIO ─────────── */
+  .img-comment {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--gap-col);
+  }
+  .img-comment .img-slot {
+    background: #EEF1F5;
+    border: 1px dashed rgba(10,13,18,0.18);
+    border-radius: 14px;
+    aspect-ratio: 16 / 10;
+    position: relative;
+    overflow: hidden;
+    background-image:
+      repeating-linear-gradient(135deg,
+        transparent 0, transparent 18px,
+        rgba(10,13,18,0.05) 18px, rgba(10,13,18,0.05) 19px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--ink-3);
+    text-align: center;
+    padding: 32px;
+  }
+  .img-slot .ph-icon {
+    font-size: 64px;
+    color: var(--accent);
+    opacity: 0.6;
+    margin-bottom: 18px;
+    line-height: 1;
+  }
+  .img-slot .ph-label {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--ink-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .img-slot .ph-caption {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    margin-top: 6px;
+    white-space: nowrap;
+  }
+
+  .comment-block .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .comment-block h3 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .comment-block p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .comment-block .source {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 0.5px solid var(--rule);
+  }
+
+  /* ── 6 · TÍTULO + IMAGEN GRANDE + COMENTARIO ABAJO ───── */
+  .big-img-block {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    flex: 1;
+  }
+  .big-img-block .img-slot.big {
+    aspect-ratio: auto;
+    flex: 1;
+    min-height: 520px;
+    border-radius: 14px;
+  }
+  .big-img-block .img-slot.big .ph-icon { font-size: 72px; }
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding-top: 4px;
+    white-space: nowrap;
+  }
+  .big-comment p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    max-width: 90ch;
+  }
+
+  /* ── 7 · IDEA CLAVE / CITA ───────────────────────────── */
+  .idea-clave {
+    background: var(--bg-alt);
+    justify-content: center;
+    padding-top: 140px;
+    padding-bottom: 140px;
+  }
+  .idea-clave .quote-mark {
+    font-family: var(--font-mono);
+    font-size: 140px;
+    color: var(--accent);
+    line-height: 0.6;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .idea-clave blockquote {
+    font-size: var(--type-quote);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    max-width: 28ch;
+    text-wrap: balance;
+  }
+  .idea-clave blockquote em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .idea-clave .attrib {
+    margin-top: 48px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .idea-clave .attrib .avatar-ph {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--bg-deep);
+    border: 0.5px solid var(--rule-2);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .idea-clave .attrib .who {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .idea-clave .attrib .role {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── 8 · TABLA COMPARATIVA ───────────────────────────── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-size: var(--type-body);
+  }
+  .cmp-table thead th {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    text-align: left;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px;
+    border-bottom: 0.5px solid var(--rule);
+    color: var(--ink-2);
+    font-size: var(--type-body);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .cmp-table tbody td.name {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+  .cmp-table tbody td.code {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 20px;
+    white-space: nowrap;
+  }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+
+  /* ── 9 · FÓRMULA ─────────────────────────────────────── */
+  .formula-block {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    justify-content: center;
+    flex: 1;
+  }
+  .formula {
+    background: var(--bg);
+    border: 0.5px solid var(--rule);
+    border-radius: 16px;
+    padding: 56px 48px;
+    font-family: var(--font-mono);
+    font-size: 56px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    text-align: center;
+    font-weight: 400;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .formula .frac {
+    display: inline-grid;
+    vertical-align: middle;
+    margin: 0 8px;
+    justify-items: center;
+  }
+  .formula .frac .num {
+    padding: 0 18px 8px;
+    border-bottom: 2px solid currentColor;
+    white-space: nowrap;
+  }
+  .formula .frac .den {
+    padding: 8px 18px 0;
+    white-space: nowrap;
+  }
+  .formula .acc-var { color: var(--accent); font-weight: 500; }
+  .formula sub { font-size: 0.5em; vertical-align: sub; }
+  .formula sup { font-size: 0.55em; vertical-align: super; }
+  .formula-legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .legend-item .var {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .legend-item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 10 · CÓDIGO / TERMINAL ──────────────────────────────
+     For Excel formulas, Python snippets, Bloomberg commands.
+     Self-contained shell so it reads on light/beige/dark. */
+  .code-shell {
+    background: #0A0D12;
+    color: #E6EAF2;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(10,13,18,0.08);
+  }
+  .code-shell .code-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: rgba(230,234,242,0.55);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .code-shell .code-head .traffic {
+    display: inline-flex; gap: 7px;
+  }
+  .code-shell .code-head .traffic span {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: rgba(255,255,255,0.14);
+  }
+  .code-shell .code-head .file { color: rgba(230,234,242,0.85); text-transform: none; letter-spacing: 0; }
+  .code-shell .code-head .lang {
+    margin-left: auto;
+    padding: 4px 10px;
+    border: 0.5px solid rgba(255,255,255,0.16);
+    border-radius: 999px;
+    font-size: 12px;
+  }
+  .code-shell pre.code-body {
+    margin: 0;
+    padding: 28px 32px;
+    font-family: var(--font-mono);
+    font-size: 22px;
+    line-height: 1.6;
+    overflow: auto;
+    flex: 1;
+    color: #E6EAF2;
+    counter-reset: codeline;
+  }
+  .code-shell pre.code-body .ln {
+    display: block;
+    padding-left: 56px;
+    position: relative;
+    white-space: pre;
+    min-height: 1.6em;
+  }
+  .code-shell pre.code-body .ln:empty::after {
+    content: "\200B";
+  }
+  .code-shell pre.code-body .ln::before {
+    counter-increment: codeline;
+    content: counter(codeline, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    color: rgba(230,234,242,0.28);
+    font-size: 14px;
+    top: 0.45em;
+    width: 40px;
+    text-align: right;
+  }
+  .code-shell .tok-key   { color: #9CC4EE; }
+  .code-shell .tok-fn    { color: #FFB66C; }
+  .code-shell .tok-str   { color: #B8E6A0; }
+  .code-shell .tok-num   { color: #E6B0FF; }
+  .code-shell .tok-com   { color: rgba(230,234,242,0.40); font-style: italic; }
+  .code-shell .tok-op    { color: #9CC4EE; }
+
+  .code-legend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 28px;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .code-legend .item .var {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .code-legend .item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 11 · ANTES / DESPUÉS ────────────────────────────────
+     Two image slots side-by-side. Made for market-crash visuals. */
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    flex: 1;
+  }
+  .before-after .pane {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .before-after .pane-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .before-after .pane-label .tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--ink-3);
+  }
+  .before-after .pane-label .tag .badge {
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 0.5px solid var(--rule-2);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+  }
+  .before-after .pane.before .badge { color: var(--ink-2); }
+  .before-after .pane.after  .badge { color: var(--accent); border-color: var(--accent-tint-2); background: var(--accent-tint); }
+  .before-after .pane-label .stat {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .before-after .pane.after .stat { color: #C0392B; }
+  .before-after .pane .img-slot {
+    flex: 1;
+    border-radius: 14px;
+    background: #EEF1F5;
+    border: 1px dashed rgba(10,13,18,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px;
+    overflow: hidden;
+  }
+  .before-after .pane .img-slot > span {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+  html[data-bg="beige"] .before-after .pane .img-slot {
+    background: var(--bg-deep);
+    border-color: var(--rule-2);
+  }
+  html[data-bg="dark"] .before-after .pane .img-slot {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.18);
+  }
+  .ba-caption {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    align-items: start;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .ba-caption .marker {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .ba-caption p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    max-width: 80ch;
+  }
+
+  /* ── 12 · PREGUNTA INTERACTIVA ───────────────────────────
+     4 cards, click → reveal correct answer.
+     Uses inline JS via onclick, no React needed. */
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    flex: 1;
+    align-content: start;
+    margin-top: 24px;
+  }
+  .quiz-opt {
+    background: var(--bg);
+    border: 1px solid var(--rule-2);
+    border-radius: 14px;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    align-items: start;
+    cursor: pointer;
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    text-align: left;
+    width: 100%;
+    font-family: var(--font-sans);
+    color: var(--ink);
+  }
+  .quiz-opt:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .quiz-opt .letter {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    background: var(--bg-alt);
+    border: 0.5px solid var(--rule);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink-2);
+    transition: background .15s ease, color .15s ease;
+  }
+  .quiz-opt .opt-text {
+    font-size: var(--type-body);
+    color: var(--ink);
+    line-height: 1.4;
+    padding-top: 6px;
+  }
+  .quiz-opt .opt-note {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    margin-top: 10px;
+    display: none;
+  }
+
+  /* Reveal states — set on the whole .quiz when a button is clicked */
+  .quiz.revealed .quiz-opt { cursor: default; pointer-events: none; }
+  .quiz.revealed .quiz-opt:not([data-correct="true"]) {
+    opacity: 0.45;
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] {
+    border-color: #1F8A5B;
+    background: rgba(31,138,91,0.05);
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] .letter {
+    background: #1F8A5B;
+    color: #fff;
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] .opt-note { display: block; color: #1F8A5B; }
+  .quiz.revealed .quiz-opt[data-chosen="true"]:not([data-correct="true"]) {
+    border-color: #C0392B;
+    background: rgba(192,57,43,0.05);
+    opacity: 1;
+  }
+  .quiz.revealed .quiz-opt[data-chosen="true"]:not([data-correct="true"]) .letter {
+    background: #C0392B;
+    color: #fff;
+  }
+
+  .quiz-prompt {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .quiz.revealed .quiz-prompt .pre { display: none; }
+  .quiz-prompt .post { display: none; }
+  .quiz.revealed .quiz-prompt .post { display: inline-flex; gap: 10px; align-items: center; color: var(--accent); }
+
+  /* ── 13 · TAREA PARA CASA ────────────────────────────────
+     "Yo expliqué" + "Tu turno" formato.
+     Bottom row: deliverables / formulario / deadline. */
+  .tarea {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    flex: 1;
+    align-content: start;
+  }
+  .tarea .col {
+    border: 1px solid var(--rule-2);
+    border-radius: 18px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: var(--bg);
+  }
+  .tarea .col.mine {
+    background: var(--bg-alt);
+  }
+  .tarea .col.yours {
+    border-color: var(--accent);
+    background: var(--accent-tint);
+  }
+  .tarea .col-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .tarea .col.yours .col-head { color: var(--accent); }
+  .tarea .col-head .num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .tarea .col.yours .col-head .num { background: var(--accent); color: #fff; }
+  .tarea .col h3 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .tarea .col h3 .ticker {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-left: 10px;
+    vertical-align: middle;
+    letter-spacing: 0.04em;
+  }
+  .tarea .col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tarea .col ul li {
+    font-size: 20px;
+    color: var(--ink-2);
+    line-height: 1.45;
+    padding-left: 28px;
+    position: relative;
+  }
+  .tarea .col ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+  .tarea-foot {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .tarea-foot .item {
+    padding-right: 28px;
+    border-right: 0.5px solid var(--rule);
+  }
+  .tarea-foot .item:last-child { border-right: none; }
+  .tarea-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+  .tarea-foot .val {
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .tarea-foot .val .acc { color: var(--accent); }
+
+  /* ── 14 · NOTICIA ──────────────────────────────────────
+     Headline-driven layout. Source pill + date stamp on top,
+     big headline, dek, image + bullets, "why it matters" pull.
+     Diseñado para noticias de prensa (Bloomberg, FT, Reuters, El Comercio).
+     ════════════════════════════════════════════════════════ */
+  .noticia-meta {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--ink-3);
+  }
+  .noticia-meta .source {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px 7px 12px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .noticia-meta .source .badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #FA8C16;
+  }
+  .noticia-meta .stamp {
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .noticia-meta .stamp .sep {
+    width: 4px; height: 4px; border-radius: 50%; background: var(--ink-3);
+  }
+  .noticia-meta .live {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 8px;
+    color: #C0392B;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .noticia-meta .live::before {
+    content: "";
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #C0392B;
+    box-shadow: 0 0 0 4px rgba(192,57,43,0.18);
+    animation: pulse-live 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+  }
+
+  .noticia-headline {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 48px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-weight: 600;
+    max-width: 36ch;
+    margin-bottom: 14px;
+  }
+  .noticia-headline em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .noticia-dek {
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    max-width: 80ch;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+
+  .noticia-body {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  .noticia-body .news-img {
+    background: var(--bg-alt);
+    border: 0.5px solid var(--rule);
+    border-radius: 14px;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .noticia-body .news-img > span {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    line-height: 1.5;
+  }
+  .noticia-body .news-img-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .noticia-body .news-img-wrap .caption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  html[data-bg="dark"] .noticia-body .news-img {
+    background: rgba(255,255,255,0.04);
+  }
+
+  .noticia-body .bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .noticia-body .bullets .b {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: baseline;
+    padding-bottom: 12px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .noticia-body .bullets .b:last-child { border-bottom: none; padding-bottom: 0; }
+  .noticia-body .bullets .b .key {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    min-width: 100px;
+  }
+  .noticia-body .bullets .b .val {
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.35;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .noticia-body .bullets .b .val .big {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .noticia-pull {
+    margin-top: 16px;
+    padding: 14px 22px;
+    background: var(--accent-tint);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .noticia-pull .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    padding-top: 2px;
+  }
+  .noticia-pull p {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.45;
+    margin: 0;
+  }
+  .noticia-disclaimer {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .noticia-disclaimer::before {
+    content: "⚠";
+    color: #FA8C16;
+    font-size: 16px;
+  }
+
+  /* ── 15 · ARTÍCULO ACADÉMICO ─────────────────────────────
+     Paper-like layout: journal masthead, serif title,
+     authors + affiliations, abstract or 3 takeaways,
+     full citation footer.
+     ════════════════════════════════════════════════════════ */
+  .paper-mast {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .paper-mast .journal {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .paper-mast .sep {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--ink-3);
+  }
+  .paper-mast .doi {
+    margin-left: auto;
+    color: var(--ink-3);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 13px;
+  }
+
+  .paper-title {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 50px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    font-weight: 600;
+    max-width: 30ch;
+    margin-bottom: 18px;
+  }
+  .paper-title em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .paper-authors {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 0.5px solid var(--rule);
+    font-size: 19px;
+    color: var(--ink-2);
+  }
+  .paper-authors .author {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .paper-authors .aff {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: super;
+  }
+
+  .paper-body {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    flex: 1;
+  }
+  .paper-abstract h4,
+  .paper-takeaways h4 {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .paper-abstract p {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0;
+    max-width: 60ch;
+    text-align: justify;
+  }
+  .paper-abstract p::first-letter {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .paper-takeaways {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .paper-takeaways .item {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .paper-takeaways .item:last-child { border-bottom: none; }
+  .paper-takeaways .item .n {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .paper-takeaways .item .t {
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.4;
+    padding-top: 4px;
+  }
+  .paper-takeaways .item .t .acc {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .paper-cite {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: var(--bg-alt);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+  }
+  .paper-cite .lbl {
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  /* ── 16 · CIERRE / Q&A ───────────────────────────────── */
+  .cierre {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 160px;
+    padding-bottom: 140px;
+    isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(24,95,165,0.30), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: #9CC4EE;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    max-width: 18ch;
+  }
+  .cierre h2 em { color: #9CC4EE; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 96px;
+    align-items: end;
+    margin-top: 48px;
+  }
+  .cierre .pregunta {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.45;
+    max-width: 50ch;
+  }
+  .cierre .contact-card {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #9CC4EE; }
+  .cierre .contact-row .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+  }
+  .cierre .contact-row .val {
+    font-size: 18px; color: #fff; font-weight: 500;
+    margin-top: 2px;
+  }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  ""
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- ═══ SLIDE 1 · PORTADA ═══ -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">PUCP · Lima, Perú</div>
+        <div class="val">Finanzas · 2026—2</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag"><span>1FIN50</span></div>
+      <h1 class="course-title">Tipos de <em>deuda</em> y covenants</h1>
+      <p class="course-sub">Cómo se financia una empresa, a quién le prestan y qué le exigen. Caso: Papelera Santa Rosa.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item"><div class="lbl">Sesión</div><div class="val">Módulo de deuda · 2 horas</div></div>
+      <div class="item"><div class="lbl">Curso</div><div class="val">Finanzas Corporativas 1</div></div>
+      <div class="item"><div class="lbl">Caso</div><div class="val">Papelera Santa Rosa</div></div>
+      <div class="item"><div class="lbl">Instructor</div><div class="val">Hugo Gutierrez</div></div>
+    </div>
+
+  </section>
+
+  <!-- ═══ SLIDE 2 · AGENDA ═══ -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Módulo de deuda · Agenda</div>
+    <h1 class="slide-title">Qué cubrimos <em>hoy</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="agenda-list">
+      <div class="agenda-row">
+        <span class="num">01</span>
+        <div><div class="title">Instrumentos de deuda</div><div class="desc">Bancarios, bonos, relacionadas y mezzanine; quién puede usar cada uno.</div></div>
+        <span class="tag">30 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">02</span>
+        <div><div class="title">Capital de trabajo</div><div class="desc">Descuento de letras, factoring con y sin recurso, confirming.</div></div>
+        <span class="tag">15 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">03</span>
+        <div><div class="title">Plazo y moneda</div><div class="desc">Corto frente a largo; soles frente a dólares.</div></div>
+        <span class="tag">10 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">04</span>
+        <div><div class="title">Covenants</div><div class="desc">Tipos, ratios, definiciones, medición y qué pasa si se incumplen.</div></div>
+        <span class="tag">15 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">05</span>
+        <div><div class="title">Caso Santa Rosa</div><div class="desc">Elegir financiamiento cuidando los covenants.</div></div>
+        <span class="tag">50 min</span>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">02 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 3 · SECCIÓN 1 ═══ -->
+  <section class="slide seccion bg-ink" data-label="03 Sección 1">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="sec-mega">S1</div>
+    <div class="sec-label"><span class="bar"></span>Bloque 01 · 30 min</div>
+    <h2>Instrumentos<br/>de <em>deuda</em></h2>
+    <p class="sec-lede">Qué es deuda depende de quién la mire. Antes de ver los instrumentos, veamos las miradas.</p>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">03 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 4 · CUATRO MIRADAS ═══ -->
+  <section class="slide bg-alt" data-label="04 Cuatro miradas">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.1 · Panorama</div>
+    <h1 class="slide-title">Cuatro miradas a la <em>misma deuda</em></h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:34%">Quién mira</th><th style="width:36%">Qué cuenta como deuda</th><th>Para qué</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Balance (NIIF)</td><td>Pasivos con obligación de pago e intereses, incluido leasing</td><td>Mostrar la posición financiera</td></tr>
+        <tr><td class="name">Contrato de crédito</td><td>Solo lo que define el contrato; suele excluir descuento, factoring y relacionadas</td><td>Medir covenants</td></tr>
+        <tr><td class="name">Banco (riesgo crediticio)</td><td>Todo lo que consume caja o líneas, incluso lo que el contrato excluye</td><td>Decidir si presta más</td></tr>
+        <tr><td class="name">Analista o agencia</td><td>Deuda ajustada: bancaria más descuento, confirming y relacionadas</td><td>Comparar empresas</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">04 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 5 · TAXONOMÍA ═══ -->
+  <section class="slide" data-label="05 Taxonomía">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.1 · Panorama</div>
+    <h1 class="slide-title">Cuatro familias de <em>financiamiento</em></h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:24%">Familia</th><th style="width:46%">Instrumentos</th><th>Quién presta</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Bancario</td><td>Pagaré, préstamo de mediano plazo, leasing y leaseback</td><td>Bancos comerciales</td></tr>
+        <tr><td class="name">Mercado de capitales</td><td>Bonos corporativos, papeles comerciales</td><td>Inversionistas institucionales: AFP, aseguradoras, fondos</td></tr>
+        <tr><td class="name">Capital de trabajo</td><td>Descuento de letras y facturas, factoring, confirming</td><td>Bancos y empresas de factoring</td></tr>
+        <tr><td class="name">Cuasi capital</td><td>Préstamos de accionistas y relacionadas, mezzanine</td><td>Accionistas, fondos especializados</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">05 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 6 · INSTRUMENTOS BANCARIOS ═══ -->
+  <section class="slide bg-alt" data-label="06 Instrumentos bancarios">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.1 · Bancarios</div>
+    <h1 class="slide-title">Pagaré, préstamo y <em>leasing</em></h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:26%">Instrumento</th><th style="width:12%">Plazo</th><th style="width:20%">Garantía</th><th style="width:14%">TEA en el caso</th><th>Uso típico</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Pagaré bancario</td><td>Hasta 12 meses</td><td>Firma de la empresa</td><td class="code">5.9%</td><td>Capital de trabajo; se renueva</td></tr>
+        <tr><td class="name">Préstamo de mediano plazo</td><td>3 a 7 años</td><td>Garantías o covenants</td><td class="code">7.0%</td><td>Reperfilar deuda, inversión</td></tr>
+        <tr><td class="name">Leasing</td><td>5 a 8 años</td><td>El bien arrendado</td><td class="code">7.8%</td><td>Maquinaria y equipos</td></tr>
+        <tr><td class="name">Leaseback</td><td>5 a 8 años</td><td>El bien vendido y arrendado</td><td class="code">7.8% a 8.4%</td><td>Liberar caja de activos que ya se tienen</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">06 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 7 · BONOS QUIÉN PUEDE ═══ -->
+  <section class="slide" data-label="07 Bonos quién puede">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.1 · Mercado de capitales</div>
+    <h1 class="slide-title">Bonos: ¿quién puede <em>emitir</em>?</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Perú</div>
+        <h3>Mercado local</h3>
+        <ul>
+          <li>Requiere estados auditados, registro ante la SMV y clasificación de riesgo.</li>
+          <li>Hay costos fijos de estructuración, abogados y calificadoras.</li>
+          <li>Compradores típicos: AFP, aseguradoras y fondos.</li>
+          <li>Emisores habituales: empresas grandes, bancos y financieras.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · EE. UU.</div>
+        <h3>Mercado internacional</h3>
+        <ul>
+          <li>Grado de inversión frente a <strong>high yield</strong> según la calificación.</li>
+          <li>Las empresas extranjeras suelen usar 144A o Reg S.</li>
+          <li>Mercado profundo: plazos largos y montos grandes.</li>
+          <li>Las empresas peruanas más grandes emiten en dólares en el exterior.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">07 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 8 · BONOS PARA QUÉ ═══ -->
+  <section class="slide bg-alt" data-label="08 Bonos para qué">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.1 · Mercado de capitales</div>
+    <h1 class="slide-title">¿Para qué se usan los <em>bonos</em>?</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · A favor</div>
+        <h3>Qué ganan los emisores</h3>
+        <ul>
+          <li><strong>Plazo largo</strong>: 7, 10 años o más, sin amortizar antes.</li>
+          <li><strong>Diversificar</strong> las fuentes y depender menos de los bancos.</li>
+          <li><strong>Mejor precio</strong> para emisores con buena calificación.</li>
+          <li>Covenants distintos de los del banco, a menudo más ligeros.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · En contra</div>
+        <h3>Qué cuesta emitirlos</h3>
+        <ul>
+          <li>Costos fijos de estructuración, calificación y auditoría.</li>
+          <li>Se necesita un tamaño mínimo para que valga la pena.</li>
+          <li>Exposición pública: información, calificación y escrutinio.</li>
+          <li>Menos flexibilidad que un banco para renegociar.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">08 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 9 · QUIZ BONOS ═══ -->
+  <section class="slide" data-label="09 Quiz bonos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Quiz · Pregunta 01</div>
+    <h1 class="slide-title">¿Quién puede <em>emitir</em> un bono corporativo?</h1>
+    <div class="title-rule"></div>
+
+    <div class="quiz" onclick="window._quizClick && window._quizClick(event)">
+      <div class="quiz-grid">
+        <button type="button" class="quiz-opt" data-correct="false">
+          <span class="letter">A</span>
+          <span><span class="opt-text">Una microempresa con ventas de S/ 2 millones</span>
+          <span class="opt-note">— Sin escala: los costos fijos de emitir superarían el beneficio.</span></span>
+        </button>
+        <button type="button" class="quiz-opt" data-correct="false">
+          <span class="letter">B</span>
+          <span><span class="opt-text">Una papelera privada que necesita S/ 25 millones</span>
+          <span class="opt-note">— Es el caso: monto bajo, sin calificación de riesgo.</span></span>
+        </button>
+        <button type="button" class="quiz-opt" data-correct="true">
+          <span class="letter">C</span>
+          <span><span class="opt-text">Una empresa grande, auditada y con calificación, que necesita S/ 200 millones</span>
+          <span class="opt-note">— Correcto. Tiene escala, información y calificación; el monto absorbe los costos fijos.</span></span>
+        </button>
+        <button type="button" class="quiz-opt" data-correct="false">
+          <span class="letter">D</span>
+          <span><span class="opt-text">Cualquier empresa que lo pida a su banco</span>
+          <span class="opt-note">— Los bonos se colocan entre inversionistas, no se piden al banco.</span></span>
+        </button>
+      </div>
+      <div class="quiz-prompt">
+        <span class="pre">↻ Click en la opción que creas correcta · se revela al elegir</span>
+        <span class="post"><i class="ti ti-check"></i> Pulsa Esc para reiniciar</span>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Quiz 01</span>
+      <span class="num">09 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 10 · RELACIONADAS Y MEZZANINE ═══ -->
+  <section class="slide bg-alt" data-label="10 Relacionadas y mezzanine">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.1 · Cuasi capital</div>
+    <h1 class="slide-title">Relacionadas y <em>mezzanine</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Relacionadas</div>
+        <h3>Préstamo de accionistas y afiliadas</h3>
+        <ul>
+          <li>Es deuda con partes vinculadas: tasa de mercado y contrato escrito.</li>
+          <li>Suele ser <strong>subordinada</strong>: se paga después de los bancos.</li>
+          <li>Los contratos de crédito la <strong>excluyen</strong> del covenant, pero la restringen.</li>
+          <li>El analista la cuenta como deuda.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Mezzanine</div>
+        <h3>Entre la deuda y el patrimonio</h3>
+        <ul>
+          <li>Deuda <strong>subordinada</strong>, a menudo con warrants (opción de comprar acciones).</li>
+          <li>Tasa alta: del orden de 10% a 15% en el caso, 12.5%.</li>
+          <li>Aparece cuando la deuda senior ya está al límite y el capital es caro.</li>
+          <li>Su tratamiento en los covenants se negocia: el contrato no lo define.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">10 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 11 · SECCIÓN 2 ═══ -->
+  <section class="slide seccion bg-ink" data-label="11 Sección 2">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="sec-mega">S2</div>
+    <div class="sec-label"><span class="bar"></span>Bloque 02 · 15 min</div>
+    <h2>Capital de<br/><em>trabajo</em></h2>
+    <p class="sec-lede">Cómo se financia el ciclo de caja: letras, facturas, factoring y confirming. Misma factura, cuatro tratamientos.</p>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">11 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 12 · DESCUENTO FACTORING CONFIRMING ═══ -->
+  <section class="slide bg-alt" data-label="12 Descuento factoring confirming">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.2 · Capital de trabajo</div>
+    <h1 class="slide-title">Descuento, factoring y <em>confirming</em></h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:30%">Instrumento</th><th style="width:26%">¿Quién asume el impago?</th><th style="width:22%">¿Es pasivo?</th><th>Línea que consume</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Descuento de letras y facturas</td><td>La empresa (con recurso)</td><td>Sí</td><td>Propia</td></tr>
+        <tr><td class="name">Factoring con recurso</td><td>La empresa</td><td>Sí</td><td>Propia o del cliente</td></tr>
+        <tr><td class="name">Factoring sin recurso</td><td>El banco o factor</td><td>No: sale la cuenta por cobrar</td><td>Del cliente</td></tr>
+        <tr><td class="name">Confirming</td><td>El comprador paga al vencimiento</td><td>No genera interés para el comprador</td><td>Del comprador</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">12 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 13 · COSTO DEL DESCUENTO ═══ -->
+  <section class="slide" data-label="13 Costo del descuento">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.2 · Capital de trabajo</div>
+    <h1 class="slide-title">Costo del descuento: <em>valor racional</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block">
+      <div class="formula">
+        <span class="acc-var">Costo</span> &nbsp;=&nbsp; <span class="acc-var">VN</span> &nbsp;−&nbsp;
+        <span class="frac">
+          <span class="num"><span class="acc-var">VN</span></span>
+          <span class="den">(1 + <span class="acc-var">TEA</span>)<sup>n / 360</sup></span>
+        </span>
+      </div>
+      <div class="formula-legend">
+        <div class="legend-item"><div class="var">Descuento</div><div class="desc">VN 2,000 · 60 días · TEA 5.25% → costo <strong>17.0</strong></div></div>
+        <div class="legend-item"><div class="var">Confirming</div><div class="desc">VN 2,000 · 60 días · TEA 6.75% → costo <strong>21.7</strong></div></div>
+        <div class="legend-item"><div class="var">Ahorro</div><div class="desc">4.7 por factura: el descuento es más barato</div></div>
+        <div class="legend-item"><div class="var">Pero</div><div class="desc">Consume la línea propia y suma a la deuda ajustada</div></div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">13 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 14 · QUIZ DESCUENTO ═══ -->
+  <section class="slide" data-label="14 Quiz descuento">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Quiz · Pregunta 02</div>
+    <h1 class="slide-title">Descuentas una letra <em>con recurso</em>. ¿Qué pasa?</h1>
+    <div class="title-rule"></div>
+
+    <div class="quiz" onclick="window._quizClick && window._quizClick(event)">
+      <div class="quiz-grid">
+        <button type="button" class="quiz-opt" data-correct="false">
+          <span class="letter">A</span>
+          <span><span class="opt-text">La cuenta por cobrar sale del balance y no hay deuda</span>
+          <span class="opt-note">— Eso ocurre en el factoring sin recurso, no con recurso.</span></span>
+        </button>
+        <button type="button" class="quiz-opt" data-correct="true">
+          <span class="letter">B</span>
+          <span><span class="opt-text">Queda una obligación en el balance y consumes tu línea</span>
+          <span class="opt-note">— Correcto. Si el cliente no paga, el banco te reclama a ti.</span></span>
+        </button>
+        <button type="button" class="quiz-opt" data-correct="false">
+          <span class="letter">C</span>
+          <span><span class="opt-text">Aumenta el patrimonio</span>
+          <span class="opt-note">— No: recibes caja a cambio de una obligación.</span></span>
+        </button>
+        <button type="button" class="quiz-opt" data-correct="false">
+          <span class="letter">D</span>
+          <span><span class="opt-text">Se convierte en deuda de largo plazo</span>
+          <span class="opt-note">— Vence cuando vence la letra, normalmente en pocos meses.</span></span>
+        </button>
+      </div>
+      <div class="quiz-prompt">
+        <span class="pre">↻ Click en la opción que creas correcta · se revela al elegir</span>
+        <span class="post"><i class="ti ti-check"></i> Pulsa Esc para reiniciar</span>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Quiz 02</span>
+      <span class="num">14 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 15 · CUATRO CRITERIOS ═══ -->
+  <section class="slide bg-alt" data-label="15 Cuatro criterios">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.2 · Capital de trabajo</div>
+    <h1 class="slide-title">Descuento o confirming: <em>cuatro criterios</em></h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:24%">Criterio</th><th style="width:38%">Descuento</th><th>Confirming del cliente</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Costo</td><td>TEA 5.25%</td><td>TEA 6.75%</td></tr>
+        <tr><td class="name">Línea</td><td>Consume la línea propia</td><td>Usa la línea del cliente</td></tr>
+        <tr><td class="name">Balance</td><td>Obligación con recurso</td><td>Se da de baja la cuenta por cobrar</td></tr>
+        <tr><td class="name">Riesgo de impago</td><td>Lo asume la empresa</td><td>Lo asume el banco</td></tr>
+        <tr><td class="name">Covenants</td><td>Fuera de la deuda del contrato; la analista la cuenta</td><td>Baja las cuentas por cobrar y afecta el capital de trabajo</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">15 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 16 · ESTRATEGIA DE CIERRE ═══ -->
+  <section class="slide" data-label="16 Estrategia de cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.2 · Reflexión</div>
+    <h1 class="slide-title">Descontar hasta 60 días antes <em>del cierre</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Lo que se hace</div>
+        <h3>Estrategia de tesorería</h3>
+        <ul>
+          <li>Se descuentan facturas hasta ~noviembre.</li>
+          <li>En noviembre y diciembre se financia con confirming.</li>
+          <li>Así, a diciembre <strong>no queda saldo descontado</strong>.</li>
+          <li>Ahorro del caso: unos S/ 75 mil al año.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Lo que ven los otros</div>
+        <h3>Bancos y analistas</h3>
+        <ul>
+          <li>Miran saldos promedio y notas a los estados financieros.</li>
+          <li>Las NIIF exigen revelar acuerdos de financiamiento de proveedores.</li>
+          <li>El analista ajusta la deuda aunque no esté en la fecha de corte.</li>
+          <li>¿Es gestión de tesorería o maquillaje?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">16 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 17 · SECCIÓN 3 ═══ -->
+  <section class="slide seccion bg-ink" data-label="17 Sección 3">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="sec-mega">S3</div>
+    <div class="sec-label"><span class="bar"></span>Bloque 03 · 10 min</div>
+    <h2>Plazo y<br/><em>moneda</em></h2>
+    <p class="sec-lede">Dos decisiones que no se ven en la tasa nominal: cuándo hay que pagar y en qué moneda.</p>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">17 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 18 · CORTO FRENTE A LARGO ═══ -->
+  <section class="slide bg-alt" data-label="18 Corto frente a largo">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.3 · Plazo</div>
+    <h1 class="slide-title">Corto plazo: más barato, <em>más frágil</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Corto plazo</div>
+        <h3>Pagarés, descuento</h3>
+        <ul>
+          <li>Tasa más baja: 5.9% frente a 7.0% a 7.8%.</li>
+          <li>Hay que <strong>renovar</strong>: riesgo de refinanciamiento.</li>
+          <li>Sube la deuda corriente y baja el ratio de capital de trabajo.</li>
+          <li>Si el banco no renueva, la empresa se queda sin liquidez.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Largo plazo</div>
+        <h3>Leasing, préstamo de mediano plazo, bonos</h3>
+        <ul>
+          <li>Más caro, pero estable.</li>
+          <li>Calza con los activos que financia, como maquinaria.</li>
+          <li>La amortización sube el servicio de la deuda y baja el DSCR.</li>
+          <li>Regla: <strong>deuda larga para activos largos</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">18 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 19 · MONEDA ═══ -->
+  <section class="slide" data-label="19 Moneda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.3 · Moneda</div>
+    <h1 class="slide-title">Soles frente a <em>dólares</em></h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:40%">Devaluación del sol</th><th style="width:20%">0%</th><th style="width:20%">3%</th><th>6%</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Pagaré en dólares, TEA 4.7%, sin cobertura</td><td class="code">4.7%</td><td class="code">7.8%</td><td class="code">11.0%</td></tr>
+        <tr><td class="name">Pagaré en dólares con cobertura (+1.5%)</td><td class="code">6.2%</td><td class="code">6.2%</td><td class="code">6.2%</td></tr>
+        <tr><td class="name">Pagaré en soles, TEA 6.0%</td><td class="code">6.0%</td><td class="code">6.0%</td><td class="code">6.0%</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:28px">
+      Costo en soles = (1 + TEA US$) × (1 + devaluación) − 1. La devaluación de equilibrio es <em style="color:var(--accent)">1.24%</em>:
+      si el sol se devalúa menos, el dólar sale más barato.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">19 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 20 · SECCIÓN 4 ═══ -->
+  <section class="slide seccion bg-ink" data-label="20 Sección 4">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="sec-mega">S4</div>
+    <div class="sec-label"><span class="bar"></span>Bloque 04 · 15 min</div>
+    <h2>Los<br/><em>covenants</em></h2>
+    <p class="sec-lede">Qué exige el acreedor mientras la deuda está vigente: cómo se definen, cada cuánto se miden y qué pasa si se incumplen.</p>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">20 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 21 · QUÉ ES UN COVENANT ═══ -->
+  <section class="slide bg-alt" data-label="21 Qué es un covenant">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.4 · Covenants</div>
+    <h1 class="slide-title">Qué es un <em>covenant</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Financieros</div>
+        <h3>Ratios que hay que cumplir</h3>
+        <ul>
+          <li>De <strong>mantenimiento</strong>: se miden en cada fecha de corte.</li>
+          <li>De <strong>incurrencia</strong>: se miden al tomar nueva deuda.</li>
+          <li>Ejemplos: deuda/EBITDA, cobertura del servicio de la deuda, capital de trabajo.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · No financieros</div>
+        <h3>Obligaciones de hacer y no hacer</h3>
+        <ul>
+          <li>Información: estados financieros auditados, plazos de entrega.</li>
+          <li>Seguros y mantenimiento de activos.</li>
+          <li>Sin cambio de control ni disposición de activos sin consentimiento.</li>
+          <li>Restricción de dividendos; <strong>cash sweep</strong> hacia la deuda.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">21 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 22 · RATIOS TÍPICOS ═══ -->
+  <section class="slide" data-label="22 Ratios típicos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.4 · Covenants</div>
+    <h1 class="slide-title">Los ratios <em>típicos</em></h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:24%">Ratio</th><th style="width:36%">Fórmula</th><th style="width:16%">Umbral del caso</th><th>Qué protege</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Deuda financiera / EBITDA</td><td>Deuda financiera ÷ EBITDA</td><td class="code">≤ 4.5x</td><td>Capacidad de pago</td></tr>
+        <tr><td class="name">Cobertura del servicio de la deuda</td><td>EBITDA ÷ (amortización 12 meses + gastos financieros)</td><td class="code">≥ 1.20x</td><td>Flujo para pagar cuotas</td></tr>
+        <tr><td class="name">Capital de trabajo</td><td>(Efectivo + cuentas por cobrar + inventarios) ÷ (deuda corriente + cuentas por pagar + anticipos)</td><td class="code">≥ 1.00x</td><td>Liquidez</td></tr>
+        <tr><td class="name">EBITDA / gastos financieros</td><td>EBITDA ÷ gastos financieros</td><td class="code">Otros contratos</td><td>Cobertura de intereses</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">22 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 23 · DEFINICIONES ═══ -->
+  <section class="slide bg-alt" data-label="23 Definiciones">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.4 · Covenants</div>
+    <h1 class="slide-title">La definición <em>manda</em></h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:28%">Partida</th><th style="width:30%">Cómo se trata</th><th>Por qué se discute</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">EBITDA del contrato</td><td>Ingresos totales − costo de ventas − gastos, sin depreciación</td><td>No es el EBITDA del analista</td></tr>
+        <tr><td class="name">Dividendos de asociadas</td><td>Caja real; la empresa propone incluirlos</td><td>El banco puede no reconocerlos</td></tr>
+        <tr><td class="name">Participación en resultados de asociadas</td><td>No es caja; difícil de sustentar</td><td>Mejora la utilidad, no el flujo</td></tr>
+        <tr><td class="name">Valor razonable de propiedades</td><td>Se excluye: no es flujo de caja</td><td>Ruido contable</td></tr>
+        <tr><td class="name">Deuda financiera</td><td>Excluye descuento, factoring, relacionadas y proveedores</td><td>El analista la ajusta</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">23 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 24 · FRECUENCIA ═══ -->
+  <section class="slide" data-label="24 Frecuencia">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.4 · Covenants</div>
+    <h1 class="slide-title">¿Cada cuánto se <em>mide</em>?</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · El contrato</div>
+        <h3>Una vez al año</h3>
+        <ul>
+          <li>Con estados financieros <strong>auditados</strong> al 31 de diciembre.</li>
+          <li>Información semestral para seguimiento.</li>
+          <li>EBITDA de los últimos 12 meses.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · El banco</div>
+        <h3>Cortes intermedios con otras convenciones</h3>
+        <ul>
+          <li>EBITDA de junio anualizado × 2, año de 360 días.</li>
+          <li>Los ajustes de diciembre <strong>no siempre se repiten</strong> en junio.</li>
+          <li>Un ratio puede salir bien en el contrato y mal en el reporte del banco.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">24 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 25 · INCUMPLIMIENTO ═══ -->
+  <section class="slide bg-alt" data-label="25 Incumplimiento">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.4 · Covenants</div>
+    <h1 class="slide-title">Si se <em>incumple</em></h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:22%">Paso</th><th style="width:44%">Qué ocurre</th><th>En el caso</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Alerta</td><td>La empresa proyecta que no cumplirá</td><td>Revisión trimestral de ratios</td></tr>
+        <tr><td class="name">Waiver (dispensa)</td><td>El banco renuncia al incumplimiento por escrito</td><td>Se pide antes del cierre</td></tr>
+        <tr><td class="name">Subsanación</td><td>Plazo para corregir</td><td>30 días calendario</td></tr>
+        <tr><td class="name">Penalidad</td><td>Comisión sobre el saldo capital, por cada incumplimiento</td><td>0.25% del saldo</td></tr>
+        <tr><td class="name">Vencimiento anticipado</td><td>El banco puede exigir el pago de toda la deuda</td><td>Último recurso</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">25 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 26 · GESTIÓN DE COVENANTS ═══ -->
+  <section class="slide" data-label="26 Gestión de covenants">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S11.4 · Covenants</div>
+    <h1 class="slide-title">Cómo se <em>gestionan</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Antes del cierre</div>
+        <h3>Prácticas</h3>
+        <ul>
+          <li>Proyectar los ratios cada trimestre, con una <strong>holgura interna</strong>.</li>
+          <li>Pedir el waiver antes de que ocurra el incumplimiento.</li>
+          <li>Negociar las definiciones: qué cuenta como EBITDA.</li>
+          <li>Reperfilar la deuda para bajar la amortización.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Errores comunes</div>
+        <h3>Qué revisar al firmar</h3>
+        <ul>
+          <li>Un borrador traía el umbral de otro contrato: <strong>6.0x en vez de 4.5x</strong> acordado.</li>
+          <li>Definiciones copiadas con el nombre de otra parte, 'LA ARRENDATARIA'.</li>
+          <li>Cumplir el contrato pero no la medición del banco.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">26 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 27 · SECCIÓN 5 ═══ -->
+  <section class="slide seccion bg-ink" data-label="27 Sección 5">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="sec-mega">S5</div>
+    <div class="sec-label"><span class="bar"></span>Bloque 05 · 25 min</div>
+    <h2>Caso<br/><em>Santa Rosa</em></h2>
+    <p class="sec-lede">Una papelera peruana necesita S/ 25 millones. Debe elegir cuidando el costo, el plazo y los covenants.</p>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">27 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 28 · CASO PLANTEAMIENTO ═══ -->
+  <section class="slide bg-alt" data-label="28 Caso planteamiento">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Caso · Santa Rosa</div>
+    <h1 class="slide-title">Papelera <em>Santa Rosa</em> S.A.</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · El negocio</div>
+        <h3>Papel higiénico, cuadernos y cartones</h3>
+        <ul>
+          <li>Empresa privada peruana: ventas de <strong>S/ 300 millones</strong> en 2025.</li>
+          <li>EBITDA de S/ 42 millones, margen de 14%.</li>
+          <li>Debe cumplir tres covenants con sus bancos.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · La necesidad</div>
+        <h3>S/ 25 millones</h3>
+        <ul>
+          <li><strong>S/ 15 millones</strong> para una nueva línea de producción (capex).</li>
+          <li><strong>S/ 10 millones</strong> de capital de trabajo por un cliente nuevo.</li>
+          <li>Siete alternativas de financiamiento; elegir una estructura.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">28 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 29 · DEUDA DEL CASO ═══ -->
+  <section class="slide" data-label="29 Deuda del caso">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Caso · Santa Rosa</div>
+    <h1 class="slide-title">La deuda <em>al 31/12/2025</em></h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:38%">Instrumento</th><th style="width:12%">Saldo</th><th style="width:12%">Corriente</th><th style="width:10%">TEA</th><th>Notas</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Pagarés bancarios</td><td class="code">40,000</td><td class="code">40,000</td><td class="code">5.9%</td><td>Se renuevan cada año</td></tr>
+        <tr><td class="name">Leasing y leaseback</td><td class="code">92,000</td><td class="code">9,000</td><td class="code">7.8%</td><td>Hasta 2032, en dólares</td></tr>
+        <tr><td class="name">Préstamo de mediano plazo</td><td class="code">30,000</td><td class="code">4,000</td><td class="code">7.0%</td><td>Amortizable en 7 años</td></tr>
+        <tr><td class="name">Descuento de letras y facturas</td><td class="code">30,000</td><td class="code">30,000</td><td class="code">6.2%</td><td>Con recurso</td></tr>
+        <tr><td class="name">Confirming con proveedores</td><td class="code">36,000</td><td class="code">36,000</td><td class="code">0.0%</td><td>Costo lo asume el proveedor</td></tr>
+        <tr><td class="name">Accionista y relacionadas</td><td class="code">6,000</td><td class="code">0</td><td class="code">5.2%</td><td>Subordinado</td></tr>
+        <tr><td class="name">Total</td><td class="code">234,000</td><td class="code">119,000</td><td class="code">—</td><td>Gastos financieros 13,808</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">29 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 30 · COVENANTS DEL CASO ═══ -->
+  <section class="slide bg-alt" data-label="30 Covenants del caso">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Caso · Santa Rosa</div>
+    <h1 class="slide-title">Los <em>covenants</em> del contrato</h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:32%">Covenant</th><th style="width:48%">Definición</th><th>Umbral</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Deuda financiera / EBITDA</td><td>Excluye descuento, factoring, relacionadas y proveedores</td><td class="code">≤ 4.5x</td></tr>
+        <tr><td class="name">Cobertura del servicio de la deuda</td><td>EBITDA ÷ (amortización de deuda estructural a 12 meses + gastos financieros)</td><td class="code">≥ 1.20x</td></tr>
+        <tr><td class="name">Capital de trabajo</td><td>(Efectivo + cuentas por cobrar + inventarios) ÷ (deuda corriente del contrato + cuentas por pagar + anticipos)</td><td class="code">≥ 1.00x</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:28px">
+      Medición con estados auditados al 31/12. Penalidad de <em style="color:var(--accent)">0.25%</em> del saldo capital por incumplimiento
+      y subsanación de 30 días.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">30 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 31 · ALTERNATIVAS ═══ -->
+  <section class="slide" data-label="31 Alternativas">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Caso · Santa Rosa</div>
+    <h1 class="slide-title">Siete <em>alternativas</em></h1>
+    <div class="title-rule"></div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:44%">Alternativa</th><th style="width:12%">TEA</th><th style="width:16%">Plazo</th><th>Recurso</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">A. Pagaré bancario</td><td class="code">6.0%</td><td class="code">12 meses</td><td>Sí</td></tr>
+        <tr><td class="name">B. Préstamo amortizable</td><td class="code">7.5%</td><td class="code">5 años</td><td>Sí</td></tr>
+        <tr><td class="name">C. Bono corporativo</td><td class="code">8.2%</td><td class="code">7 años</td><td>No elegible</td></tr>
+        <tr><td class="name">D. Descuento de letras y facturas</td><td class="code">6.2%</td><td class="code">60 días</td><td>Con recurso</td></tr>
+        <tr><td class="name">E. Confirming del cliente</td><td class="code">6.75%</td><td class="code">60 días</td><td>Sin recurso</td></tr>
+        <tr><td class="name">F. Préstamo de relacionada</td><td class="code">5.2%</td><td class="code">3 años</td><td>Subordinado</td></tr>
+        <tr><td class="name">G. Mezzanine</td><td class="code">12.5%</td><td class="code">5 años</td><td>Subordinado</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">31 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 32 · CONSIGNA ═══ -->
+  <section class="slide bg-alt" data-label="32 Consigna">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Caso · Grupos de 3</div>
+    <h1 class="slide-title">Resuelve el <em>caso</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="tarea">
+      <div class="col mine">
+        <div class="col-head"><span><span class="num">DATOS</span> &nbsp;Tienes</span><span>Excel</span></div>
+        <h3>1FIN50 Deuda · Plantilla alumnos</h3>
+        <ul>
+          <li>Estados financieros, deuda por instrumento y definiciones del contrato.</li>
+          <li>Siete alternativas con TEA, plazo y recurso.</li>
+          <li>Celdas amarillas por completar y diez preguntas.</li>
+        </ul>
+      </div>
+      <div class="col yours">
+        <div class="col-head"><span><span class="num">TÚ</span> &nbsp;Entregas</span><span>Formulario</span></div>
+        <h3>Copia del Excel con tus respuestas</h3>
+        <ul>
+          <li>Clasificar deuda y calcular los tres covenants hoy.</li>
+          <li>Pro forma de cada alternativa y recomendación de estructura.</li>
+          <li>Responder plazo, moneda, bonos, mezzanine y waiver.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tarea-foot">
+      <div class="item"><div class="lbl">En clase</div><div class="val">25 minutos en grupo</div></div>
+      <div class="item"><div class="lbl">Entrega</div><div class="val">Formulario del curso · link de tu copia</div></div>
+      <div class="item"><div class="lbl">Criterio</div><div class="val">Números correctos · decisión justificada</div></div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">32 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 33 · DISCUSIÓN ═══ -->
+  <section class="slide bg-alt" data-label="33 Discusión">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Reflexión</div>
+    <h1 class="slide-title">Para <em>discutir</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · En el caso</div>
+        <h3>Decisiones</h3>
+        <ul>
+          <li>Si el EBITDA cae 20%, ¿qué covenant se rompe primero?</li>
+          <li>¿Cambia la recomendación si el 60% de las ventas fueran en dólares?</li>
+          <li>¿Conviene pedir al banco que trate el mezzanine como capital?</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · En general</div>
+        <h3>Preguntas de fondo</h3>
+        <ul>
+          <li>¿Cuándo es legítimo gestionar la deuda para el cierre?</li>
+          <li>¿Quién se beneficia de una definición de EBITDA más amplia?</li>
+          <li>¿Qué empresa peruana creen que debería emitir un bono y por qué?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S11 · Deuda</span>
+      <span class="num">33 / 34</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 34 · CIERRE ═══ -->
+  <section class="slide cierre bg-ink" data-label="34 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+
+    <div class="label"><span class="bar"></span>Cierre · Módulo de deuda</div>
+    <h2>Misma deuda, <em>cuatro definiciones</em></h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">
+        Para la próxima clase: <em>estructura de capital</em> — cuánta deuda conviene
+        tomar, Modigliani-Miller y el costo de las dificultades financieras.
+      </p>
+
+      <div class="contact-card">
+        <div class="contact-row">
+          <i class="ti ti-mail"></i>
+          <div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div>
+        </div>
+        <div class="contact-row">
+          <i class="ti ti-world"></i>
+          <div><div class="lbl">Web</div><div class="val">hugogutierrez.pe</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Cierre · Q&amp;A</span>
+      <span class="num">34 / 34</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+<!-- ════════════════════════════════════════════════════════════════
+     DOWNLOAD PDF — botón flotante. Usa window.print() + el
+     @media print de deck-stage (una slide por página a 1920×1080).
+     Se oculta en modo presentación y en el propio PDF.
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .pdf-fab {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12;
+    color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover {
+    background: #185FA5;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(24,95,165,0.35), 0 1px 0 rgba(255,255,255,0.06) inset;
+  }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot {
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: #FA8C16;
+    box-shadow: 0 0 0 3px rgba(250,140,22,0.18);
+  }
+  .pdf-fab i {
+    font-size: 16px;
+    line-height: 1;
+  }
+  .pdf-fab .hint {
+    opacity: 0.55;
+    font-size: 11px;
+    margin-left: 4px;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+
+  /* Oculto durante impresión / presentación / preview del host */
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<!-- ════════════════════════════════════════════════════════════════
+     AUDIO POR SLIDE — para versión futura "slides + audio del profesor".
+     Para activar en una slide: añade data-audio="audio/mi-clip.mp3"
+     en el <section>. El player aparece abajo-derecha SOLO cuando la
+     slide actual tiene audio. Se pausa al cambiar de slide.
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .audio-fab {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: none; /* visible only when current slide has data-audio */
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    background: #0A0D12;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18);
+  }
+  .audio-fab.active { display: inline-flex; }
+  .audio-fab .play-btn {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #185FA5;
+    color: #fff;
+    cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 14px;
+  }
+  .audio-fab .play-btn:hover { background: #2A7BC8; }
+  .audio-fab .label {
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .audio-fab .time {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.55;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+  @media print { .audio-fab { display: none !important; } }
+</style>
+
+<div class="audio-fab" id="audio-fab">
+  <button type="button" class="play-btn" id="audio-toggle" aria-label="Reproducir clase">
+    <i class="ti ti-player-play-filled"></i>
+  </button>
+  <span class="label">Clase grabada</span>
+  <span class="time" id="audio-time">0:00</span>
+  <audio id="audio-el" preload="metadata"></audio>
+</div>
+
+<script src="deck-stage.js?v=20261002b"></script>
+
+<script>
+/* ── QUIZ click handler — reveal correct/incorrect ─────────────────── */
+window._quizClick = function(e) {
+  const opt = e.target.closest('.quiz-opt');
+  if (!opt) return;
+  const quiz = opt.closest('.quiz');
+  if (!quiz || quiz.classList.contains('revealed')) return;
+  opt.setAttribute('data-chosen', 'true');
+  quiz.classList.add('revealed');
+};
+/* Esc to reset any revealed quiz on the current slide */
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  document.querySelectorAll('.quiz.revealed').forEach((q) => {
+    q.classList.remove('revealed');
+    q.querySelectorAll('[data-chosen]').forEach(o => o.removeAttribute('data-chosen'));
+  });
+});
+
+/* ── AUDIO per-slide — listens to deck-stage's `slidechange` event ──── */
+(function () {
+  const fab = document.getElementById('audio-fab');
+  const audio = document.getElementById('audio-el');
+  const toggle = document.getElementById('audio-toggle');
+  const timeLabel = document.getElementById('audio-time');
+  const playIcon = '<i class="ti ti-player-play-filled"></i>';
+  const pauseIcon = '<i class="ti ti-player-pause-filled"></i>';
+
+  function fmt(s) {
+    if (!isFinite(s)) return '0:00';
+    s = Math.floor(s);
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  audio.addEventListener('timeupdate', () => {
+    timeLabel.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  });
+  audio.addEventListener('ended', () => { toggle.innerHTML = playIcon; });
+  toggle.addEventListener('click', () => {
+    if (audio.paused) { audio.play(); toggle.innerHTML = pauseIcon; }
+    else { audio.pause(); toggle.innerHTML = playIcon; }
+  });
+
+  const stage = document.querySelector('deck-stage');
+  if (!stage) return;
+  stage.addEventListener('slidechange', (e) => {
+    const slide = e.detail && e.detail.slide;
+    audio.pause();
+    toggle.innerHTML = playIcon;
+    const src = slide && slide.getAttribute('data-audio');
+    if (src) {
+      if (audio.getAttribute('src') !== src) audio.setAttribute('src', src);
+      fab.classList.add('active');
+      timeLabel.textContent = '0:00';
+    } else {
+      audio.removeAttribute('src');
+      audio.load();
+      fab.classList.remove('active');
+    }
+  });
+})();
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TWEAKS — switch course, color tone
+     ════════════════════════════════════════════════════════════════ -->
+
+<!-- ── CONTROLES FLOTANTES: T Tweaks · R Rail · P PDF · F Fullscreen ── -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(24,95,165,.85);border-color:rgba(24,95,165,.6);color:#fff}
+  @media (pointer:coarse){.deck-controls{opacity:1;right:50%;transform:translateX(50%);bottom:68px}}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-rail"         title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf"          title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen"   title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+
+    function syncRailBtn(){
+      const stage = document.querySelector('deck-stage');
+      if(stage) railBtn.classList.toggle('active', !stage.railVisible);
+    }
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      stage.toggleRail();
+      syncRailBtn();
+    }
+    railBtn.addEventListener('click', toggleRail);
+    customElements.whenDefined('deck-stage').then(syncRailBtn);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>
