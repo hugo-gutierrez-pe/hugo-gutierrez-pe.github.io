@@ -1,0 +1,2567 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="corp">
+<head>
+<meta charset="UTF-8" />
+<title>S12 · Estructura de capital MM — 1FIN50</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    /* Type scale (1920×1080 — projection sizes, not web density) */
+    --type-mega:      140px;  /* section dividers */
+    --type-title:      80px;  /* portada */
+    --type-h1:         64px;  /* slide titles */
+    --type-h2:         44px;  /* sub-titles */
+    --type-quote:      60px;  /* citas */
+    --type-body:       26px;  /* párrafos */
+    --type-body-lg:    30px;  /* énfasis en cuerpo */
+    --type-small:      22px;  /* notas */
+    --type-mono-lg:    20px;  /* eyebrows grandes */
+    --type-mono:       16px;  /* eyebrows / chrome */
+    --type-mono-sm:    14px;  /* footer */
+
+    /* Spacing */
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    /* Surface */
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    /* Accent — overridden per course below */
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+
+    /* Course meta — set by tweaks / data-course */
+    --course-code:    '1FIN39';
+    --course-name:    'Bloomberg Terminal';
+    --course-short:   'Bloomberg';
+  }
+
+  /* Course themes — change accent + meta */
+  html[data-course="bloomberg"] {
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+  }
+  html[data-course="corp"] {
+    --accent:       #2A4A6B;
+    --accent-deep:  #16314A;
+    --accent-tint:  rgba(42,74,107,0.07);
+    --accent-tint-2:rgba(42,74,107,0.18);
+  }
+  html[data-course="analisis"] {
+    --accent:       #1F6B5E;
+    --accent-deep:  #11463D;
+    --accent-tint:  rgba(31,107,94,0.07);
+    --accent-tint-2:rgba(31,107,94,0.18);
+  }
+
+  /* Background mode — white (default) vs beige (low-contrast paper).
+     Beige values matched to Hugo's website palette. */
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  /* Dark mode — inspired by the "S1 · Leer el mercado" section slide.
+     Deep neutral background + radial blue glow on every slide.
+     bg-ink slides go a notch deeper so the hierarchy survives. */
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  /* Dark-mode-only tweaks for elements with hardcoded light/dark assumptions */
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(24,95,165,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #9CC4EE; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(24,95,165,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    /* extra top/bottom padding reserves space for chrome bars */
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  /* Italic accent — the website's signature */
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .slide.bg-ink em { color: #9CC4EE; }
+
+  /* ── CHROME: shared header / footer on every slide ───── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  /* Bloomberg-only subtle orange easter egg */
+  html[data-course="bloomberg"] .bloomberg-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #FA8C16;
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  html:not([data-course="bloomberg"]) .bloomberg-dot { display: none; }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+
+  .chrome-bot .num {
+    font-feature-settings: "tnum" 1;
+    color: var(--ink-2);
+  }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  /* hide chrome on portada (slide 1) */
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #9CC4EE; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  .sec-num {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .slide-lede {
+    font-size: var(--type-body-lg);
+    color: var(--ink-2);
+    line-height: 1.45;
+    max-width: 50ch;
+    margin-top: var(--gap-item);
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── 1 · PORTADA DEL CURSO ───────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--ink);
+  }
+  .portada-head .brand-block .brand-mark {
+    width: 44px; height: 44px; border-radius: 9px;
+    font-size: 18px;
+  }
+  .portada-head .brand-name {
+    font-family: var(--font-sans);
+    font-size: 26px; font-weight: 600; letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: var(--ink);
+    max-width: 18ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    max-width: 28ch;
+  }
+
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+
+  /* ── 2 · PORTADA DE SECCIÓN ──────────────────────────── */
+  .seccion {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 180px;
+    padding-bottom: 160px;
+    isolation: isolate;
+  }
+  .seccion::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(60% 80% at 80% 50%, rgba(24,95,165,0.28), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .seccion .sec-mega {
+    font-family: var(--font-mono);
+    font-size: var(--type-mega);
+    font-weight: 500;
+    color: rgba(255,255,255,0.12);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+  .seccion .sec-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9CC4EE;
+    margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .seccion .sec-label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .seccion h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: #fff;
+    max-width: 22ch;
+  }
+  .seccion .sec-lede {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.7);
+    margin-top: 32px;
+    max-width: 50ch;
+    line-height: 1.45;
+  }
+
+  /* ── 3 · AGENDA ──────────────────────────────────────── */
+  .agenda-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 12px;
+  }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num {
+    font-family: var(--font-mono);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .agenda-row .title {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .agenda-row .desc {
+    font-size: 20px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .agenda-row .tag {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 14px;
+    border: 0.5px solid var(--rule-2);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* ── 4 · TÍTULO + 2 COLUMNAS DE TEXTO ────────────────── */
+  .two-col-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-col);
+    margin-top: 0;
+  }
+  .text-col h3 {
+    font-size: var(--type-h2);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  .text-col .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 10px;
+    white-space: nowrap;
+  }
+  .text-col .col-eyebrow .num { color: var(--ink-3); }
+  .text-col p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .text-col ul {
+    list-style: none;
+    padding: 0;
+  }
+  .text-col ul li {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    padding: 10px 0 10px 26px;
+    position: relative;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .text-col ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 22px;
+    width: 12px; height: 1px;
+    background: var(--accent);
+  }
+  .text-col ul li:last-child { border-bottom: none; }
+  .text-col ul li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── 5 · TÍTULO + IMAGEN (2 COL) + COMENTARIO ─────────── */
+  .img-comment {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--gap-col);
+  }
+  .img-comment .img-slot {
+    background: #EEF1F5;
+    border: 1px dashed rgba(10,13,18,0.18);
+    border-radius: 14px;
+    aspect-ratio: 16 / 10;
+    position: relative;
+    overflow: hidden;
+    background-image:
+      repeating-linear-gradient(135deg,
+        transparent 0, transparent 18px,
+        rgba(10,13,18,0.05) 18px, rgba(10,13,18,0.05) 19px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--ink-3);
+    text-align: center;
+    padding: 32px;
+  }
+  .img-slot .ph-icon {
+    font-size: 64px;
+    color: var(--accent);
+    opacity: 0.6;
+    margin-bottom: 18px;
+    line-height: 1;
+  }
+  .img-slot .ph-label {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--ink-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .img-slot .ph-caption {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    margin-top: 6px;
+    white-space: nowrap;
+  }
+
+  .comment-block .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .comment-block h3 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .comment-block p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .comment-block .source {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 0.5px solid var(--rule);
+  }
+
+  /* ── 6 · TÍTULO + IMAGEN GRANDE + COMENTARIO ABAJO ───── */
+  .big-img-block {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    flex: 1;
+  }
+  .big-img-block .img-slot.big {
+    aspect-ratio: auto;
+    flex: 1;
+    min-height: 520px;
+    border-radius: 14px;
+  }
+  .big-img-block .img-slot.big .ph-icon { font-size: 72px; }
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding-top: 4px;
+    white-space: nowrap;
+  }
+  .big-comment p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    max-width: 90ch;
+  }
+
+  /* ── 7 · IDEA CLAVE / CITA ───────────────────────────── */
+  .idea-clave {
+    background: var(--bg-alt);
+    justify-content: center;
+    padding-top: 140px;
+    padding-bottom: 140px;
+  }
+  .idea-clave .quote-mark {
+    font-family: var(--font-mono);
+    font-size: 140px;
+    color: var(--accent);
+    line-height: 0.6;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .idea-clave blockquote {
+    font-size: var(--type-quote);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    max-width: 28ch;
+    text-wrap: balance;
+  }
+  .idea-clave blockquote em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .idea-clave .attrib {
+    margin-top: 48px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .idea-clave .attrib .avatar-ph {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--bg-deep);
+    border: 0.5px solid var(--rule-2);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .idea-clave .attrib .who {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .idea-clave .attrib .role {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── 8 · TABLA COMPARATIVA ───────────────────────────── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-size: var(--type-body);
+  }
+  .cmp-table thead th {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    text-align: left;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px;
+    border-bottom: 0.5px solid var(--rule);
+    color: var(--ink-2);
+    font-size: var(--type-body);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .cmp-table tbody td.name {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+  .cmp-table tbody td.code {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 20px;
+    white-space: nowrap;
+  }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+
+  /* ── 9 · FÓRMULA ─────────────────────────────────────── */
+  .formula-block {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    justify-content: center;
+    flex: 1;
+  }
+  .formula {
+    background: var(--bg);
+    border: 0.5px solid var(--rule);
+    border-radius: 16px;
+    padding: 56px 48px;
+    font-family: var(--font-mono);
+    font-size: 56px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    text-align: center;
+    font-weight: 400;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .formula .frac {
+    display: inline-grid;
+    vertical-align: middle;
+    margin: 0 8px;
+    justify-items: center;
+  }
+  .formula .frac .num {
+    padding: 0 18px 8px;
+    border-bottom: 2px solid currentColor;
+    white-space: nowrap;
+  }
+  .formula .frac .den {
+    padding: 8px 18px 0;
+    white-space: nowrap;
+  }
+  .formula .acc-var { color: var(--accent); font-weight: 500; }
+  .formula sub { font-size: 0.5em; vertical-align: sub; }
+  .formula sup { font-size: 0.55em; vertical-align: super; }
+  .formula-legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .legend-item .var {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .legend-item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 10 · CÓDIGO / TERMINAL ──────────────────────────────
+     For Excel formulas, Python snippets, Bloomberg commands.
+     Self-contained shell so it reads on light/beige/dark. */
+  .code-shell {
+    background: #0A0D12;
+    color: #E6EAF2;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(10,13,18,0.08);
+  }
+  .code-shell .code-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: rgba(230,234,242,0.55);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .code-shell .code-head .traffic {
+    display: inline-flex; gap: 7px;
+  }
+  .code-shell .code-head .traffic span {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: rgba(255,255,255,0.14);
+  }
+  .code-shell .code-head .file { color: rgba(230,234,242,0.85); text-transform: none; letter-spacing: 0; }
+  .code-shell .code-head .lang {
+    margin-left: auto;
+    padding: 4px 10px;
+    border: 0.5px solid rgba(255,255,255,0.16);
+    border-radius: 999px;
+    font-size: 12px;
+  }
+  .code-shell pre.code-body {
+    margin: 0;
+    padding: 28px 32px;
+    font-family: var(--font-mono);
+    font-size: 22px;
+    line-height: 1.6;
+    overflow: auto;
+    flex: 1;
+    color: #E6EAF2;
+    counter-reset: codeline;
+  }
+  .code-shell pre.code-body .ln {
+    display: block;
+    padding-left: 56px;
+    position: relative;
+    white-space: pre;
+    min-height: 1.6em;
+  }
+  .code-shell pre.code-body .ln:empty::after {
+    content: "\200B";
+  }
+  .code-shell pre.code-body .ln::before {
+    counter-increment: codeline;
+    content: counter(codeline, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    color: rgba(230,234,242,0.28);
+    font-size: 14px;
+    top: 0.45em;
+    width: 40px;
+    text-align: right;
+  }
+  .code-shell .tok-key   { color: #9CC4EE; }
+  .code-shell .tok-fn    { color: #FFB66C; }
+  .code-shell .tok-str   { color: #B8E6A0; }
+  .code-shell .tok-num   { color: #E6B0FF; }
+  .code-shell .tok-com   { color: rgba(230,234,242,0.40); font-style: italic; }
+  .code-shell .tok-op    { color: #9CC4EE; }
+
+  .code-legend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 28px;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .code-legend .item .var {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .code-legend .item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 11 · ANTES / DESPUÉS ────────────────────────────────
+     Two image slots side-by-side. Made for market-crash visuals. */
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    flex: 1;
+  }
+  .before-after .pane {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .before-after .pane-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .before-after .pane-label .tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--ink-3);
+  }
+  .before-after .pane-label .tag .badge {
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 0.5px solid var(--rule-2);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+  }
+  .before-after .pane.before .badge { color: var(--ink-2); }
+  .before-after .pane.after  .badge { color: var(--accent); border-color: var(--accent-tint-2); background: var(--accent-tint); }
+  .before-after .pane-label .stat {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .before-after .pane.after .stat { color: #C0392B; }
+  .before-after .pane .img-slot {
+    flex: 1;
+    border-radius: 14px;
+    background: #EEF1F5;
+    border: 1px dashed rgba(10,13,18,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px;
+    overflow: hidden;
+  }
+  .before-after .pane .img-slot > span {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+  html[data-bg="beige"] .before-after .pane .img-slot {
+    background: var(--bg-deep);
+    border-color: var(--rule-2);
+  }
+  html[data-bg="dark"] .before-after .pane .img-slot {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.18);
+  }
+  .ba-caption {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    align-items: start;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .ba-caption .marker {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .ba-caption p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    max-width: 80ch;
+  }
+
+  /* ── 12 · PREGUNTA INTERACTIVA ───────────────────────────
+     4 cards, click → reveal correct answer.
+     Uses inline JS via onclick, no React needed. */
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    flex: 1;
+    align-content: start;
+    margin-top: 24px;
+  }
+  .quiz-opt {
+    background: var(--bg);
+    border: 1px solid var(--rule-2);
+    border-radius: 14px;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    align-items: start;
+    cursor: pointer;
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    text-align: left;
+    width: 100%;
+    font-family: var(--font-sans);
+    color: var(--ink);
+  }
+  .quiz-opt:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .quiz-opt .letter {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    background: var(--bg-alt);
+    border: 0.5px solid var(--rule);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink-2);
+    transition: background .15s ease, color .15s ease;
+  }
+  .quiz-opt .opt-text {
+    font-size: var(--type-body);
+    color: var(--ink);
+    line-height: 1.4;
+    padding-top: 6px;
+  }
+  .quiz-opt .opt-note {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    margin-top: 10px;
+    display: none;
+  }
+
+  /* Reveal states — set on the whole .quiz when a button is clicked */
+  .quiz.revealed .quiz-opt { cursor: default; pointer-events: none; }
+  .quiz.revealed .quiz-opt:not([data-correct="true"]) {
+    opacity: 0.45;
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] {
+    border-color: #1F8A5B;
+    background: rgba(31,138,91,0.05);
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] .letter {
+    background: #1F8A5B;
+    color: #fff;
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] .opt-note { display: block; color: #1F8A5B; }
+  .quiz.revealed .quiz-opt[data-chosen="true"]:not([data-correct="true"]) {
+    border-color: #C0392B;
+    background: rgba(192,57,43,0.05);
+    opacity: 1;
+  }
+  .quiz.revealed .quiz-opt[data-chosen="true"]:not([data-correct="true"]) .letter {
+    background: #C0392B;
+    color: #fff;
+  }
+
+  .quiz-prompt {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .quiz.revealed .quiz-prompt .pre { display: none; }
+  .quiz-prompt .post { display: none; }
+  .quiz.revealed .quiz-prompt .post { display: inline-flex; gap: 10px; align-items: center; color: var(--accent); }
+
+  /* ── 13 · TAREA PARA CASA ────────────────────────────────
+     "Yo expliqué" + "Tu turno" formato.
+     Bottom row: deliverables / formulario / deadline. */
+  .tarea {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    flex: 1;
+    align-content: start;
+  }
+  .tarea .col {
+    border: 1px solid var(--rule-2);
+    border-radius: 18px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: var(--bg);
+  }
+  .tarea .col.mine {
+    background: var(--bg-alt);
+  }
+  .tarea .col.yours {
+    border-color: var(--accent);
+    background: var(--accent-tint);
+  }
+  .tarea .col-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .tarea .col.yours .col-head { color: var(--accent); }
+  .tarea .col-head .num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .tarea .col.yours .col-head .num { background: var(--accent); color: #fff; }
+  .tarea .col h3 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .tarea .col h3 .ticker {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-left: 10px;
+    vertical-align: middle;
+    letter-spacing: 0.04em;
+  }
+  .tarea .col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tarea .col ul li {
+    font-size: 20px;
+    color: var(--ink-2);
+    line-height: 1.45;
+    padding-left: 28px;
+    position: relative;
+  }
+  .tarea .col ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+  .tarea-foot {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .tarea-foot .item {
+    padding-right: 28px;
+    border-right: 0.5px solid var(--rule);
+  }
+  .tarea-foot .item:last-child { border-right: none; }
+  .tarea-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+  .tarea-foot .val {
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .tarea-foot .val .acc { color: var(--accent); }
+
+  /* ── 14 · NOTICIA ──────────────────────────────────────
+     Headline-driven layout. Source pill + date stamp on top,
+     big headline, dek, image + bullets, "why it matters" pull.
+     Diseñado para noticias de prensa (Bloomberg, FT, Reuters, El Comercio).
+     ════════════════════════════════════════════════════════ */
+  .noticia-meta {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--ink-3);
+  }
+  .noticia-meta .source {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px 7px 12px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .noticia-meta .source .badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #FA8C16;
+  }
+  .noticia-meta .stamp {
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .noticia-meta .stamp .sep {
+    width: 4px; height: 4px; border-radius: 50%; background: var(--ink-3);
+  }
+  .noticia-meta .live {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 8px;
+    color: #C0392B;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .noticia-meta .live::before {
+    content: "";
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #C0392B;
+    box-shadow: 0 0 0 4px rgba(192,57,43,0.18);
+    animation: pulse-live 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+  }
+
+  .noticia-headline {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 48px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-weight: 600;
+    max-width: 36ch;
+    margin-bottom: 14px;
+  }
+  .noticia-headline em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .noticia-dek {
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    max-width: 80ch;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+
+  .noticia-body {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  .noticia-body .news-img {
+    background: var(--bg-alt);
+    border: 0.5px solid var(--rule);
+    border-radius: 14px;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .noticia-body .news-img > span {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    line-height: 1.5;
+  }
+  .noticia-body .news-img-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .noticia-body .news-img-wrap .caption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  html[data-bg="dark"] .noticia-body .news-img {
+    background: rgba(255,255,255,0.04);
+  }
+
+  .noticia-body .bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .noticia-body .bullets .b {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: baseline;
+    padding-bottom: 12px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .noticia-body .bullets .b:last-child { border-bottom: none; padding-bottom: 0; }
+  .noticia-body .bullets .b .key {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    min-width: 100px;
+  }
+  .noticia-body .bullets .b .val {
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.35;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .noticia-body .bullets .b .val .big {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .noticia-pull {
+    margin-top: 16px;
+    padding: 14px 22px;
+    background: var(--accent-tint);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .noticia-pull .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    padding-top: 2px;
+  }
+  .noticia-pull p {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.45;
+    margin: 0;
+  }
+  .noticia-disclaimer {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .noticia-disclaimer::before {
+    content: "⚠";
+    color: #FA8C16;
+    font-size: 16px;
+  }
+
+  /* ── 15 · ARTÍCULO ACADÉMICO ─────────────────────────────
+     Paper-like layout: journal masthead, serif title,
+     authors + affiliations, abstract or 3 takeaways,
+     full citation footer.
+     ════════════════════════════════════════════════════════ */
+  .paper-mast {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .paper-mast .journal {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .paper-mast .sep {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--ink-3);
+  }
+  .paper-mast .doi {
+    margin-left: auto;
+    color: var(--ink-3);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 13px;
+  }
+
+  .paper-title {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 50px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    font-weight: 600;
+    max-width: 30ch;
+    margin-bottom: 18px;
+  }
+  .paper-title em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .paper-authors {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 0.5px solid var(--rule);
+    font-size: 19px;
+    color: var(--ink-2);
+  }
+  .paper-authors .author {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .paper-authors .aff {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: super;
+  }
+
+  .paper-body {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    flex: 1;
+  }
+  .paper-abstract h4,
+  .paper-takeaways h4 {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .paper-abstract p {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0;
+    max-width: 60ch;
+    text-align: justify;
+  }
+  .paper-abstract p::first-letter {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .paper-takeaways {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .paper-takeaways .item {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .paper-takeaways .item:last-child { border-bottom: none; }
+  .paper-takeaways .item .n {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .paper-takeaways .item .t {
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.4;
+    padding-top: 4px;
+  }
+  .paper-takeaways .item .t .acc {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .paper-cite {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: var(--bg-alt);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+  }
+  .paper-cite .lbl {
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  /* ── 16 · CIERRE / Q&A ───────────────────────────────── */
+  .cierre {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 160px;
+    padding-bottom: 140px;
+    isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(24,95,165,0.30), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: #9CC4EE;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    max-width: 18ch;
+  }
+  .cierre h2 em { color: #9CC4EE; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 96px;
+    align-items: end;
+    margin-top: 48px;
+  }
+  .cierre .pregunta {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.45;
+    max-width: 50ch;
+  }
+  .cierre .contact-card {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #9CC4EE; }
+  .cierre .contact-row .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+  }
+  .cierre .contact-row .val {
+    font-size: 18px; color: #fff; font-weight: 500;
+    margin-top: 2px;
+  }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">
+[
+  "Abrir recordando la pregunta que quedó abierta en S10: el WACC baja cuando sube la deuda, pero ¿hasta dónde y por qué? Modigliani-Miller es el marco que responde. Avisar que hoy son cuatro bloques y que el quiz del final se resuelve con las fórmulas de la tabla resumen.",
+  "Recorrer los tiempos: 25 minutos sin fricciones, 25 con impuestos, 20 con dificultades financieras y 20 para beta y quiz. Si el grupo viene lento, el bloque 04 se comprime a 10 minutos y el quiz queda como tarea.",
+  "Insistir en que MM no es una recomendación de política: es un benchmark. Cada supuesto que se relaja produce un modelo distinto. Preguntar cuál de los seis supuestos les parece más irreal en una empresa peruana; la respuesta suele ser información simétrica y costo de quiebra.",
+  "La derivación por arbitraje es la que hay que saber explicar, no memorizar. Recorrer las dos estrategias y mostrar que el inversionista puede replicar la deuda de la empresa. Pregunta: ¿qué pasa si el inversionista se endeuda más caro que la empresa? Ahí se cae el supuesto y aparece una razón para que la deuda corporativa valga algo.",
+  "Derivar en pizarra junto con la slide. El paso clave es que el WACC no cambia: si la deuda es más barata, el Ke sube exactamente lo necesario. Verificar la intuición: el accionista no regala el riesgo financiero, lo cobra.",
+  "Hacer una fila en vivo. Con D/E igual a 1: Ke = 12 + 6 = 18%; WACC = 0.5 × 18 + 0.5 × 6 = 12%. Preguntar qué pasaría si el WACC bajara: habría arbitraje, y eso es lo que MM descarta.",
+  "El escudo es la primera fricción y la única que crea valor en el modelo. Derivar tD como perpetuidad descontada a Kd y aclarar el supuesto de deuda perpetua. Verificar VU: 100 × 0.705 / 0.12 = 587.5. Si alguien pregunta por deuda finita, el escudo es menor y depende del repago.",
+  "El factor (1 − t) es el corazón de la segunda proposición con impuestos. Mostrar de dónde sale: el accionista paga impuestos sobre EBIT menos intereses, así que parte del riesgo de la deuda lo absorbe el Estado. Verificar con D/E = 1: 12 + 6 × 0.705 = 16.23%.",
+  "Con impuestos el WACC baja de forma monotónica y el modelo dice 100% de deuda. Ese resultado absurdo es el gancho para el siguiente bloque. Verificar una fila: 0.5 × 16.23 + 0.5 × 6 × 0.705 = 10.23%.",
+  "Separar costos directos de indirectos con ejemplos locales: una minera que pierde permisos, un retail que pierde proveedores. Aclarar que Damodaran usa 25% a 30% del valor como costo de quiebra en sus valoraciones y que la probabilidad se estima con ratings o con el modelo propio.",
+  "La tabla es ilustrativa y así hay que decirla: las probabilidades son supuestas, lo que importa es la forma de U. Escribir en pizarra la condición marginal: el óptimo está donde el escudo adicional iguala el costo esperado adicional de quiebra.",
+  "Esta es la slide que se llevan. Pedir que la copien y que la usen como checklist cuando armen el WACC de una empresa con deuda. Cada fila es un supuesto distinto, no una teoría distinta.",
+  "Conectar con S10: el beta reapalancado es la versión en riesgo de MM II. Verificar el ejemplo: 0.90 × [1 + 0.705 × 0.80] = 1.41. Preguntar qué pasa con el Ke si se usa el beta sin apalancar de un comparable: queda subestimado.",
+  "Dar 60 segundos y pedir mano alzada. Si la mayoría elige 18%, recordar el factor (1 − t). Si eligen 10.2%, están calculando el WACC. Cerrar con la lógica: el Ke es el retorno del accionista, no el costo promedio.",
+  "No leer todas las referencias. Señalar las dos primarias y el capítulo de Berk y DeMarzo para la derivación completa. Damodaran queda para la parte de trade-off y costos de quiebra. Aclarar que los papers originales son de 1958 y 1963 y que la notación cambia entre textos.",
+  "Cerrar con las tres ideas en una frase cada una. Anunciar fusiones y adquisiciones para la próxima sesión: sinergias, due diligence y cómo se reparte el valor. Dejar el quiz como autoevaluación y recordar que la tabla resumen está en la slide 12."
+]
+</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+  <!-- ═══ SLIDE 1 · PORTADA ═══ -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">PUCP · Lima, Perú</div>
+        <div class="val">Finanzas · 2026—2</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag"><span>1FIN50</span></div>
+      <h1 class="course-title">Estructura de capital:<br/><em>Modigliani-Miller</em></h1>
+      <p class="course-sub">De la irrelevancia al trade-off: las dos proposiciones, con y sin fricciones, con las ecuaciones de la derivación.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item"><div class="lbl">Sesión</div><div class="val">Estructura de capital</div></div>
+      <div class="item"><div class="lbl">Curso</div><div class="val">Finanzas Corporativas 1</div></div>
+      <div class="item"><div class="lbl">Caso</div><div class="val">Alicorp · D/E y WACC</div></div>
+      <div class="item"><div class="lbl">Instructor</div><div class="val">Hugo Gutierrez</div></div>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 2 · AGENDA ═══ -->
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Sesión 12 · Agenda</div>
+    <h1 class="slide-title">De la irrelevancia al <em>trade-off</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="agenda-list">
+      <div class="agenda-row">
+        <span class="num">01</span>
+        <div><div class="title">Sin fricciones: MM I y II</div><div class="desc">Supuestos, prueba por arbitraje y la derivación del Ke.</div></div>
+        <span class="tag">25 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">02</span>
+        <div><div class="title">Con impuestos: el escudo fiscal</div><div class="desc">VL = VU + tD y la segunda proposición con (1 − t).</div></div>
+        <span class="tag">25 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">03</span>
+        <div><div class="title">Con dificultades financieras</div><div class="desc">PV de los costos de quiebra y estructura óptima.</div></div>
+        <span class="tag">20 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">04</span>
+        <div><div class="title">Del modelo al beta</div><div class="desc">Hamada, reapalancamiento y los errores que ya vimos en S10.</div></div>
+        <span class="tag">20 min</span>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S12 · Agenda</span>
+      <span class="num">02 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 3 · SUPUESTOS ═══ -->
+  <section class="slide bg-alt" data-label="03 Supuestos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12.1 · Sin fricciones</div>
+    <h1 class="slide-title">Qué tiene que ser <em>cierto</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Supuestos de MM</div>
+        <h3>Mercado perfecto</h3>
+        <ul>
+          <li>Sin impuestos, sin costos de transacción ni de emisión.</li>
+          <li>Sin costos de dificultades financieras: la quiebra no cuesta.</li>
+          <li>Información simétrica: todos valoran igual los flujos.</li>
+          <li>Empresa e inversionista se endeudan a la misma tasa.</li>
+          <li>Flujos perpetuos y conocidos: EBIT constante, sin crecimiento.</li>
+          <li>La decisión de inversión está dada; solo cambia el financiamiento.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Al relajar</div>
+        <h3>Cada fricción tiene su modelo</h3>
+        <ul>
+          <li><strong>Impuestos</strong> → escudo fiscal: VL = VU + tD.</li>
+          <li><strong>Costos de quiebra</strong> → trade-off: VL = VU + tD − PV(CFD).</li>
+          <li><strong>Asimetrías de información</strong> → pecking order (no lo cubrimos hoy).</li>
+        </ul>
+        <p>La teoría no dice que la estructura no importe: dice <em>por qué</em> importa. Importa porque estos supuestos fallan.</p>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S12 · Supuestos</span>
+      <span class="num">03 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 4 · MM I SIN IMPUESTOS ═══ -->
+  <section class="slide" data-label="04 MM I sin impuestos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12.1 · Proposición I</div>
+    <h1 class="slide-title">El valor no sale del <em>pasivo</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:32px">
+        <span class="acc-var">V</span><sub>L</sub> &nbsp;=&nbsp; <span class="acc-var">V</span><sub>U</sub>
+      </div>
+    </div>
+
+    <div class="two-col-text" style="margin-top:32px">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · La idea</div>
+        <h3>Mismos activos, mismo valor</h3>
+        <p>Dos empresas idénticas en operación, una sin deuda (U) y otra con deuda (L). El flujo que generan los activos es el mismo; cambia solo cómo se reparte entre acreedores y accionistas.</p>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Prueba por arbitraje</div>
+        <h3>Deuda casera</h3>
+        <ul>
+          <li>Compro 10% de L: pago 0.10·E y recibo 0.10·(EBIT − Kd·D).</li>
+          <li>Alternativa: presto 0.10·D y compro 10% de U. Invierto 0.10·(VU − D) y recibo lo mismo.</li>
+          <li>Igual flujo e igual riesgo → 0.10·E = 0.10·(VU − D).</li>
+          <li>Como VL = D + E, se cumple <strong>VL = VU</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S12 · MM I</span>
+      <span class="num">04 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 5 · MM II SIN IMPUESTOS ═══ -->
+  <section class="slide bg-alt" data-label="05 MM II sin impuestos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12.1 · Proposición II</div>
+    <h1 class="slide-title">El Ke sube con la <em>deuda</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Derivación</div>
+        <h3>Tres pasos desde el WACC</h3>
+        <ul>
+          <li>WACC = (D/V)·Kd + (E/V)·Ke.</li>
+          <li>Sin impuestos, el WACC no cambia con la estructura: WACC = Ku.</li>
+          <li>Multiplico ambos lados por V/E: (D/E)·Kd + Ke = Ku·(1 + D/E).</li>
+          <li>Despejo Ke y agrupo: Ke = Ku + (Ku − Kd)·(D/E).</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Resultado</div>
+        <h3>Prima por riesgo financiero</h3>
+        <div class="formula" style="font-size:34px; padding:28px; white-space:normal; line-height:1.5">
+          <span class="acc-var">K</span><sub>e</sub> = <span class="acc-var">K</span><sub>u</sub> + (<span class="acc-var">K</span><sub>u</sub> − <span class="acc-var">K</span><sub>d</sub>) ·
+          <span class="frac"><span class="num">D</span><span class="den">E</span></span>
+        </div>
+        <p style="margin-top:20px">Ku es el retorno que exige el activo. La diferencia (Ku − Kd) es la prima que se lleva el accionista por apalancarse.</p>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S12 · MM II</span>
+      <span class="num">05 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 6 · WACC CONSTANTE ═══ -->
+  <section class="slide" data-label="06 WACC constante">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12.1 · Chequeo numérico</div>
+    <h1 class="slide-title">La deuda barata <em>no baja</em> el WACC</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:20%">D/E</th><th style="width:20%">Ke</th><th style="width:20%">WACC</th><th>Cómo se lee</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="code">0.0</td><td class="code">12.0%</td><td class="code">12.0%</td><td>Empresa sin deuda: Ke = Ku.</td></tr>
+        <tr><td class="code">0.5</td><td class="code">15.0%</td><td class="code">12.0%</td><td>Más deuda: el Ke sube 3 pp.</td></tr>
+        <tr><td class="code">1.0</td><td class="code">18.0%</td><td class="code">12.0%</td><td>El Ke sube justo lo que baja el peso de la deuda.</td></tr>
+        <tr><td class="code">2.0</td><td class="code">24.0%</td><td class="code">12.0%</td><td>Dos tercios de deuda: sigue igual.</td></tr>
+        <tr><td class="code">3.0</td><td class="code">30.0%</td><td class="code">12.0%</td><td>El WACC es plano en D/E.</td></tr>
+      </tbody>
+    </table>
+
+    <p class="slide-lede" style="margin-top:28px">Supuestos: Ku 12%, Kd 6%, sin impuestos. El Ke se calcula con MM II: Ke = 12% + 6% · D/E.</p>
+
+    <div class="chrome-bot">
+      <span>S12 · WACC constante</span>
+      <span class="num">06 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 7 · IMPUESTOS: ESCUDO ═══ -->
+  <section class="slide bg-alt" data-label="07 Escudo fiscal">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12.2 · Con impuestos</div>
+    <h1 class="slide-title">El escudo fiscal <em>sí crea valor</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px">
+        <span class="acc-var">V</span><sub>L</sub> = <span class="acc-var">V</span><sub>U</sub> + <span class="acc-var">t</span> · <span class="acc-var">D</span>
+      </div>
+    </div>
+
+    <div class="two-col-text" style="margin-top:32px">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · De dónde sale el escudo</div>
+        <h3>Perpetuidad del ahorro</h3>
+        <ul>
+          <li>Interés anual = Kd · D.</li>
+          <li>Ahorro de impuestos = t · Kd · D.</li>
+          <li>Descuento la perpetuidad a Kd: (t · Kd · D) / Kd = <strong>t · D</strong>.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Ejemplo</div>
+        <h3>EBIT 100, t 29.5%, Ku 12%</h3>
+        <ul>
+          <li>VU = 100 · (1 − 0.295) / 0.12 = <strong>587.5</strong>.</li>
+          <li>Deuda D = 200 → escudo = 0.295 · 200 = <strong>59.0</strong>.</li>
+          <li>VL = 587.5 + 59.0 = <strong>646.5</strong> (+10.0%).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S12 · Escudo fiscal</span>
+      <span class="num">07 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 8 · MM II CON IMPUESTOS ═══ -->
+  <section class="slide" data-label="08 MM II con impuestos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12.2 · Proposición II con impuestos</div>
+    <h1 class="slide-title">El Ke sube, pero <em>menos</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Derivación</div>
+        <h3>Desde el flujo al accionista</h3>
+        <ul>
+          <li>FCFE = (EBIT − Kd·D) · (1 − t).</li>
+          <li>VL = E + D = VU + tD → E = VU − (1 − t)·D.</li>
+          <li>Ke = FCFE / E, con VU = E + (1 − t)·D.</li>
+          <li>Ke = [Ku·VU − Kd·(1 − t)·D] / E.</li>
+          <li>Reemplazo VU y agrupo: queda el factor (1 − t).</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Resultado</div>
+        <h3>Dos ecuaciones de bolsillo</h3>
+        <div class="formula" style="font-size:30px; padding:24px; white-space:normal; line-height:1.5">
+          <span class="acc-var">K</span><sub>e</sub> = <span class="acc-var">K</span><sub>u</sub> + (<span class="acc-var">K</span><sub>u</sub> − <span class="acc-var">K</span><sub>d</sub>)(1 − <span class="acc-var">t</span>) ·
+          <span class="frac"><span class="num">D</span><span class="den">E</span></span>
+        </div>
+        <div class="formula" style="font-size:30px; padding:24px; margin-top:16px; white-space:normal; line-height:1.5">
+          <span class="acc-var">WACC</span> = <span class="acc-var">K</span><sub>u</sub> · (1 − <span class="acc-var">t</span> · <span class="frac"><span class="num">D</span><span class="den">V</span></span>)
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S12 · MM II con impuestos</span>
+      <span class="num">08 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 9 · WACC CON IMPUESTOS ═══ -->
+  <section class="slide bg-alt" data-label="09 WACC con impuestos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12.2 · Chequeo numérico</div>
+    <h1 class="slide-title">El WACC ahora <em>sí baja</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:20%">D/E</th><th style="width:20%">Ke</th><th style="width:20%">WACC</th><th>Cómo se lee</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="code">0.0</td><td class="code">12.0%</td><td class="code">12.0%</td><td>Sin deuda no hay escudo.</td></tr>
+        <tr><td class="code">0.5</td><td class="code">14.1%</td><td class="code">10.8%</td><td>El escudo empieza a ganar.</td></tr>
+        <tr><td class="code">1.0</td><td class="code">16.2%</td><td class="code">10.2%</td><td>Mitad deuda: WACC 1.8 pp menor.</td></tr>
+        <tr><td class="code">2.0</td><td class="code">20.5%</td><td class="code">9.6%</td><td>El Ke sube más lento que antes.</td></tr>
+        <tr><td class="code">3.0</td><td class="code">24.7%</td><td class="code">9.3%</td><td>Monotónicamente menor.</td></tr>
+      </tbody>
+    </table>
+
+    <p class="slide-lede" style="margin-top:28px">Ku 12%, Kd 6%, t 29.5%. Con este modelo el óptimo es 100% deuda: el WACC sigue bajando. Algo falta.</p>
+
+    <div class="chrome-bot">
+      <span>S12 · WACC con impuestos</span>
+      <span class="num">09 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 10 · DIFICULTADES FINANCIERAS ═══ -->
+  <section class="slide" data-label="10 Dificultades financieras">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12.3 · Con restricciones reales</div>
+    <h1 class="slide-title">La deuda también <em>cuesta</em> cuando aprieta</h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px">
+        <span class="acc-var">V</span><sub>L</sub> = <span class="acc-var">V</span><sub>U</sub> + <span class="acc-var">t</span> · <span class="acc-var">D</span> − <span class="acc-var">PV</span>(<span class="acc-var">CFD</span>)
+      </div>
+    </div>
+
+    <div class="two-col-text" style="margin-top:32px">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Qué se pierde</div>
+        <h3>Costos directos e indirectos</h3>
+        <ul>
+          <li><strong>Directos</strong>: abogados, administración, liquidación.</li>
+          <li><strong>Indirectos</strong>: clientes que se van, proveedores que cortan crédito, talento que renuncia, CAPEX que se frena.</li>
+          <li>Damodaran usa 25%–30% del valor de la empresa como costo de quiebra en sus valoraciones.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Cómo se mide</div>
+        <h3>Costo esperado, no certeza</h3>
+        <ul>
+          <li>PV(CFD) = probabilidad de default × costo dado el default.</li>
+          <li>La probabilidad sube con D y con la volatilidad del EBIT.</li>
+          <li>No es lineal: pasada cierta deuda, el spread y la probabilidad se disparan.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S12 · Dificultades financieras</span>
+      <span class="num">10 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 11 · TRADE-OFF ═══ -->
+  <section class="slide bg-alt" data-label="11 Trade-off">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12.3 · Estructura óptima</div>
+    <h1 class="slide-title">Dónde se cruzan <em>beneficio y costo</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none; margin-bottom:16px">
+      <div class="formula" style="padding:20px; font-size:38px">
+        Δ(<span class="acc-var">t</span> · <span class="acc-var">D</span>) = Δ<span class="acc-var">PV</span>(<span class="acc-var">CFD</span>)
+      </div>
+    </div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:14%">D</th><th style="width:18%">Escudo tD</th><th style="width:20%">PV(CFD)*</th><th style="width:18%">VL</th><th>Qué domina</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="code">0</td><td class="code">0.0</td><td class="code">0.0</td><td class="code">587.5</td><td>Sin deuda.</td></tr>
+        <tr><td class="code">100</td><td class="code">29.5</td><td class="code">0.9</td><td class="code">616.1</td><td>Escudo.</td></tr>
+        <tr><td class="code">200</td><td class="code">59.0</td><td class="code">17.6</td><td class="code">628.9</td><td>Escudo.</td></tr>
+        <tr><td class="code">300</td><td class="code">88.5</td><td class="code">44.1</td><td class="code">631.9</td><td>Óptimo: se igualan.</td></tr>
+        <tr><td class="code">400</td><td class="code">118.0</td><td class="code">88.1</td><td class="code">617.4</td><td>Distress.</td></tr>
+      </tbody>
+    </table>
+
+    <p class="slide-lede" style="margin-top:10px; font-size:18px">*Ejemplo ilustrativo: VU 587.5, costo de quiebra 30% de VU y probabilidades supuestas (0.5% a 50%). Lo que importa es la forma de U.</p>
+
+    <div class="chrome-bot">
+      <span>S12 · Trade-off</span>
+      <span class="num">11 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 12 · RESUMEN TRES MUNDOS ═══ -->
+  <section class="slide" data-label="12 Resumen tres mundos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12 · El cuadro completo</div>
+    <h1 class="slide-title">Tres mundos, <em>tres respuestas</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:22%">Mundo</th><th style="width:24%">Valor de la empresa</th><th style="width:30%">Costo del equity</th><th>WACC</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Sin impuestos<br/><span style="font-size:18px;color:var(--ink-3)">MM 1958</span></td>
+          <td class="code">VL = VU</td>
+          <td class="code">Ke = Ku + (Ku − Kd)·D/E</td>
+          <td class="code">Ku, constante</td>
+        </tr>
+        <tr>
+          <td class="name">Con impuestos<br/><span style="font-size:18px;color:var(--ink-3)">MM 1963</span></td>
+          <td class="code">VL = VU + t·D</td>
+          <td class="code">Ke = Ku + (Ku − Kd)(1 − t)·D/E</td>
+          <td class="code">Ku·(1 − t·D/V), baja con D</td>
+        </tr>
+        <tr>
+          <td class="name">Con impuestos y quiebra<br/><span style="font-size:18px;color:var(--ink-3)">trade-off</span></td>
+          <td class="code">VL = VU + tD − PV(CFD)</td>
+          <td>Sube más rápido: el spread también sube</td>
+          <td class="code">Forma de U: mínimo en D*</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="slide-lede" style="margin-top:28px">Esta tabla es la que se lleva al Excel: cada supuesto que se relaja cambia una celda, no todo el modelo.</p>
+
+    <div class="chrome-bot">
+      <span>S12 · Resumen</span>
+      <span class="num">12 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 13 · BETA Y APALANCAMIENTO ═══ -->
+  <section class="slide bg-alt" data-label="13 Beta y apalancamiento">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12.4 · Del modelo al CAPM</div>
+    <h1 class="slide-title">El beta también <em>se apalanca</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px">
+        <span class="acc-var">β</span><sub>L</sub> = <span class="acc-var">β</span><sub>U</sub> · [1 + (1 − <span class="acc-var">t</span>) ·
+        <span class="frac"><span class="num">D</span><span class="den">E</span></span>]
+      </div>
+    </div>
+
+    <div class="two-col-text" style="margin-top:32px">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Hamada</div>
+        <h3>La misma prima, en unidades de riesgo</h3>
+        <ul>
+          <li>βU mide el riesgo del negocio; βL agrega el riesgo financiero.</li>
+          <li>Con βU 0.90, D/E 0.80 y t 29.5%: βL = 0.90 × 1.564 = <strong>1.41</strong>.</li>
+          <li>Ese βL va al CAPM y produce el Ke de MM II.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Por qué importa</div>
+        <h3>El error de S10</h3>
+        <p>Usar el beta de una empresa sin deuda para una apalancada subestima el Ke y el WACC. Y al revés: desapalancar con la tasa equivocada infla el beta del comparable.</p>
+        <p>MM II y Hamada son la misma ecuación vista desde el retorno y desde el riesgo.</p>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S12 · Beta</span>
+      <span class="num">13 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 14 · QUIZ ═══ -->
+  <section class="slide" data-label="14 Quiz">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Quiz · Pregunta 01</div>
+    <h1 class="slide-title">Ku 12%, Kd 6%, t 29.5%, D/E = 1. <em>¿Ke?</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="quiz" onclick="window._quizClick && window._quizClick(event)">
+      <div class="quiz-grid">
+        <button type="button" class="quiz-opt" data-correct="false">
+          <span class="letter">A</span>
+          <span><span class="opt-text">18.0%</span>
+          <span class="opt-note">— Es el Ke sin impuestos: te faltó el factor (1 − t).</span></span>
+        </button>
+        <button type="button" class="quiz-opt" data-correct="true">
+          <span class="letter">B</span>
+          <span><span class="opt-text">16.2%</span>
+          <span class="opt-note">— Correcto: 12 + 6 × (1 − 0.295) × 1 = 16.23%.</span></span>
+        </button>
+        <button type="button" class="quiz-opt" data-correct="false">
+          <span class="letter">C</span>
+          <span><span class="opt-text">12.0%</span>
+          <span class="opt-note">— Ese es Ku, el costo del activo sin deuda.</span></span>
+        </button>
+        <button type="button" class="quiz-opt" data-correct="false">
+          <span class="letter">D</span>
+          <span><span class="opt-text">10.2%</span>
+          <span class="opt-note">— Ese es el WACC con esa estructura, no el Ke.</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S12 · Quiz</span>
+      <span class="num">14 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 15 · FUENTES ═══ -->
+  <section class="slide bg-alt" data-label="15 Fuentes">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S12 · Fuentes</div>
+    <h1 class="slide-title">De dónde sale <em>cada fórmula</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Primarias</div>
+        <h3>Los papers</h3>
+        <ul style="font-size:21px">
+          <li><strong>Modigliani &amp; Miller (1958)</strong>, “The Cost of Capital, Corporation Finance and the Theory of Investment”, <em>American Economic Review</em> 48(3), 261–297. Proposiciones sin impuestos.</li>
+          <li><strong>Modigliani &amp; Miller (1963)</strong>, “Corporate Income Taxes and the Cost of Capital: A Correction”, <em>AER</em> 53(3), 433–443. El escudo tD.</li>
+          <li><strong>Miller (1977)</strong>, “Debt and Taxes”, <em>Journal of Finance</em> 32(2). Extensión con impuestos personales.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Texto y práctica</div>
+        <h3>Para estudiar y aplicar</h3>
+        <ul style="font-size:21px">
+          <li><strong>Berk &amp; DeMarzo (2019)</strong>, <em>Corporate Finance</em>, 5.ª ed., caps. 14–15. Derivación completa y casos; es el texto del curso.</li>
+          <li><strong>Damodaran (2015)</strong>, <em>Applied Corporate Finance</em>, 4.ª ed., cap. 7, y “Finding the Right Financing Mix” (capstru.pdf): trade-off y costos de quiebra.</li>
+          <li><strong>Brealey, Myers &amp; Allen (2019)</strong>, <em>Principles of Corporate Finance</em>, 13.ª ed., caps. 17–18.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S12 · Fuentes</span>
+      <span class="num">15 / 16</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 16 · CIERRE ═══ -->
+  <section class="slide cierre bg-ink" data-label="16 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="label"><span class="bar"></span>Cierre · Sesión 12</div>
+    <h2>Tres ideas para <em>llevarse</em></h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">
+        Sin fricciones, la deuda no crea valor.<br/>
+        Con impuestos, el escudo sí: <em>tD</em>.<br/>
+        Con quiebra, el límite es <em>PV(CFD)</em>.<br/><br/>
+        Para la próxima clase: <em>fusiones y adquisiciones</em> — sinergias, due diligence y precio.
+      </p>
+
+      <div class="contact-card">
+        <div class="contact-row">
+          <i class="ti ti-mail"></i>
+          <div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div>
+        </div>
+        <div class="contact-row">
+          <i class="ti ti-world"></i>
+          <div><div class="lbl">Web</div><div class="val">hugogutierrez.pe</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Cierre · Q&amp;A</span>
+      <span class="num">16 / 16</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+<!-- ════════════════════════════════════════════════════════════════
+     DOWNLOAD PDF — botón flotante. Usa window.print() + el
+     @media print de deck-stage (una slide por página a 1920×1080).
+     Se oculta en modo presentación y en el propio PDF.
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .pdf-fab {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12;
+    color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover {
+    background: #185FA5;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(24,95,165,0.35), 0 1px 0 rgba(255,255,255,0.06) inset;
+  }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot {
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: #FA8C16;
+    box-shadow: 0 0 0 3px rgba(250,140,22,0.18);
+  }
+  .pdf-fab i {
+    font-size: 16px;
+    line-height: 1;
+  }
+  .pdf-fab .hint {
+    opacity: 0.55;
+    font-size: 11px;
+    margin-left: 4px;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+
+  /* Oculto durante impresión / presentación / preview del host */
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<!-- ════════════════════════════════════════════════════════════════
+     AUDIO POR SLIDE — para versión futura "slides + audio del profesor".
+     Para activar en una slide: añade data-audio="audio/mi-clip.mp3"
+     en el <section>. El player aparece abajo-derecha SOLO cuando la
+     slide actual tiene audio. Se pausa al cambiar de slide.
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .audio-fab {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: none; /* visible only when current slide has data-audio */
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    background: #0A0D12;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18);
+  }
+  .audio-fab.active { display: inline-flex; }
+  .audio-fab .play-btn {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #185FA5;
+    color: #fff;
+    cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 14px;
+  }
+  .audio-fab .play-btn:hover { background: #2A7BC8; }
+  .audio-fab .label {
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .audio-fab .time {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.55;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+  @media print { .audio-fab { display: none !important; } }
+</style>
+
+<div class="audio-fab" id="audio-fab">
+  <button type="button" class="play-btn" id="audio-toggle" aria-label="Reproducir clase">
+    <i class="ti ti-player-play-filled"></i>
+  </button>
+  <span class="label">Clase grabada</span>
+  <span class="time" id="audio-time">0:00</span>
+  <audio id="audio-el" preload="metadata"></audio>
+</div>
+
+<script src="deck-stage.js?v=20261002b"></script>
+
+<script>
+/* ── QUIZ click handler — reveal correct/incorrect ─────────────────── */
+window._quizClick = function(e) {
+  const opt = e.target.closest('.quiz-opt');
+  if (!opt) return;
+  const quiz = opt.closest('.quiz');
+  if (!quiz || quiz.classList.contains('revealed')) return;
+  opt.setAttribute('data-chosen', 'true');
+  quiz.classList.add('revealed');
+};
+/* Esc to reset any revealed quiz on the current slide */
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  document.querySelectorAll('.quiz.revealed').forEach((q) => {
+    q.classList.remove('revealed');
+    q.querySelectorAll('[data-chosen]').forEach(o => o.removeAttribute('data-chosen'));
+  });
+});
+
+/* ── AUDIO per-slide — listens to deck-stage's `slidechange` event ──── */
+(function () {
+  const fab = document.getElementById('audio-fab');
+  const audio = document.getElementById('audio-el');
+  const toggle = document.getElementById('audio-toggle');
+  const timeLabel = document.getElementById('audio-time');
+  const playIcon = '<i class="ti ti-player-play-filled"></i>';
+  const pauseIcon = '<i class="ti ti-player-pause-filled"></i>';
+
+  function fmt(s) {
+    if (!isFinite(s)) return '0:00';
+    s = Math.floor(s);
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  audio.addEventListener('timeupdate', () => {
+    timeLabel.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  });
+  audio.addEventListener('ended', () => { toggle.innerHTML = playIcon; });
+  toggle.addEventListener('click', () => {
+    if (audio.paused) { audio.play(); toggle.innerHTML = pauseIcon; }
+    else { audio.pause(); toggle.innerHTML = playIcon; }
+  });
+
+  const stage = document.querySelector('deck-stage');
+  if (!stage) return;
+  stage.addEventListener('slidechange', (e) => {
+    const slide = e.detail && e.detail.slide;
+    audio.pause();
+    toggle.innerHTML = playIcon;
+    const src = slide && slide.getAttribute('data-audio');
+    if (src) {
+      if (audio.getAttribute('src') !== src) audio.setAttribute('src', src);
+      fab.classList.add('active');
+      timeLabel.textContent = '0:00';
+    } else {
+      audio.removeAttribute('src');
+      audio.load();
+      fab.classList.remove('active');
+    }
+  });
+})();
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TWEAKS — switch course, color tone
+     ════════════════════════════════════════════════════════════════ -->
+
+<!-- ── CONTROLES FLOTANTES: T Tweaks · R Rail · P PDF · F Fullscreen ── -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(24,95,165,.85);border-color:rgba(24,95,165,.6);color:#fff}
+  @media (pointer:coarse){.deck-controls{opacity:1;right:50%;transform:translateX(50%);bottom:68px}}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-rail"         title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf"          title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen"   title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+
+    function syncRailBtn(){
+      const stage = document.querySelector('deck-stage');
+      if(stage) railBtn.classList.toggle('active', !stage.railVisible);
+    }
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      stage.toggleRail();
+      syncRailBtn();
+    }
+    railBtn.addEventListener('click', toggleRail);
+    customElements.whenDefined('deck-stage').then(syncRailBtn);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>
