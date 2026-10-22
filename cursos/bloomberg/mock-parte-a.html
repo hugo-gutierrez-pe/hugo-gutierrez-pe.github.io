@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Mock Parte A A4 · Medtronic</title>
+<style>
+@page{size:A4 landscape;margin:0}
+*{box-sizing:border-box}
+body{margin:0;background:#cfd3da;font-family:Calibri,Arial,sans-serif;color:#1d2433}
+.page{width:297mm;height:210mm;margin:8mm auto;background:#fff;padding:8mm 10mm;box-shadow:0 2px 10px #0004;display:flex;flex-direction:column;gap:3mm;overflow:hidden}
+@media print{body{background:#fff}.page{margin:0;box-shadow:none;page-break-after:always}}
+.top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #0f2a5c;padding-bottom:1.5mm}
+h1{margin:0;font-size:19px;color:#0f2a5c}
+.sub{font-size:10px;color:#6b7280}
+.meta{font-size:10px;text-align:right;color:#374151}
+h2{margin:0 0 1mm;font-size:11.5px;color:#fff;background:#0f2a5c;padding:1px 6px}
+table{border-collapse:collapse;width:100%;font-size:10.5px;font-variant-numeric:tabular-nums}
+th,td{padding:3.2px 5px;text-align:right;border-bottom:.5px solid #d9dde4;white-space:nowrap}
+th{background:#e8edf7;color:#0f2a5c;font-weight:700}
+th:first-child,td:first-child,td.l,th.l{text-align:left}
+tr.obj td{background:#eef3ff;font-weight:700}
+tr.st td{background:#f7f8fa;font-weight:600}
+td.w{white-space:normal;text-align:left;font-size:8.5px;color:#4b5563}
+.cols{display:grid;grid-template-columns:1.05fr 1fr;gap:4mm;flex:1;min-height:0}
+.col{display:flex;flex-direction:column;gap:2mm}
+.blue{color:#1f4fd8;font-weight:700}
+.up{color:#0f8a4b;font-weight:700}.dn{color:#c0392b;font-weight:700}
+.rec{display:flex;gap:6mm;align-items:center;background:#eef3ff;border:1px solid #1f4fd8;padding:2mm 3mm;border-radius:2mm}
+.big{font-size:18px;font-weight:700;color:#0f2a5c}
+.lab{font-size:9px;color:#6b7280;display:block}
+.tag{display:inline-block;padding:1px 10px;border-radius:99px;color:#fff;font-weight:700;font-size:12px}
+.bar{display:grid;grid-template-columns:96px 1fr 48px;gap:4px;align-items:center;font-size:10.5px;margin:3px 0}
+.tr{position:relative;height:15px;background:#eef3ff}
+.fl{height:100%;background:#1f4fd8}
+.ln{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:#c0392b}
+.foot{font-size:8.5px;color:#6b7280;border-top:.5px solid #d9dde4;padding-top:1mm;line-height:1.3}
+.warn{font-size:9px;color:#9a3412;background:#fff7ed;border:.5px solid #fdba74;padding:.8mm 2mm}
+</style>
+</head>
+<body>
+<div class="page">
+ <div class="top">
+  <div><h1>Parte A · Comparables y valorización por múltiplos — Medtronic plc (NYSE:MDT)</h1>
+  <div class="sub">1FIN39 · Actividades en Finanzas 1: Bloomberg · Examen parcial 2026-2 · Fuente: S&amp;P Capital IQ Pro (plug-in de Excel)</div></div>
+  <div class="meta">Equipo: [Apellido, Nombre — código PUCP] · Supervisado por: Hugo Gutierrez<br>Ticker (celda única): <span class="blue">NYSE:MDT</span> · Precio al: [dd/mm/aaaa] · USD millones</div>
+ </div>
+ <div class="warn">EJEMPLO ILUSTRATIVO. Cifras aproximadas y plausibles, NO extraídas de Capital IQ y no actualizadas. Sirven solo para ver el formato; cada grupo debe usar sus propios datos del plug-in.</div>
+
+ <div>
+  <h2>1 · Comparables (LTM / NTM)</h2>
+  <table id="t1"></table>
+ </div>
+
+ <div class="cols">
+  <div class="col">
+   <div>
+    <h2>2 · Valorización: mediana de los pares aplicada a MDT</h2>
+    <table id="t2"></table>
+   </div>
+   <div class="foot" id="bridge"></div>
+  </div>
+  <div class="col">
+   <div>
+    <h2>3 · Resultado y recomendación</h2>
+    <div class="rec" id="rec"></div>
+   </div>
+   <div>
+    <h2>4 · Precio implícito vs. precio actual (USD por acción)</h2>
+    <div id="bars"></div>
+    <div class="foot">Línea roja = precio actual.</div>
+   </div>
+  </div>
+ </div>
+
+ <div class="foot">
+  Notas: (1) Fórmulas <b>=SPG(ticker; campo; período; SPGOptions("Curr";"USD";"Mag";"Millions";"NA";"--"))</b> referidas a la celda de ticker; estadísticos de los pares sin MDT. (2) Campos: SP_PRICE_CLOSE, SP_MARKETCAP, IQ_TEV, IQ_TOTAL_REV, IQ_EBITDA, IQ_NI, IQ_TEV_EBITDA, IQ_PE_BEFORE, IQ_PBV_X (LTM); SP_TEV_EBITDA_FWD, SP_PE_FWD (NTM). Si un campo cambió, anotarlo aquí. (3) Deuda neta y otros = TEV − market cap. En P/E no se resta deuda. (4) Umbral de recomendación: Comprar si upside &gt; +15%, Vender si &lt; −15%, Mantener en medio. Ejercicio académico, no es recomendación de inversión.
+ </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const n=(v,d=0)=>v.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const x=v=>n(v,1)+'x', pc=v=>n(v*100,1)+'%';
+const D=[
+ {t:'NYSE:MDT',nm:'Medtronic',p:90,mc:115000,tev:134000,s:34000,e:9200,ni:4500,pb:2.9,tn:13.0,pn:16.4,why:'Empresa objetivo'},
+ {t:'NYSE:ABT',nm:'Abbott Laboratories',p:115,mc:200000,tev:207000,s:44500,e:12800,ni:7200,pb:5.0,tn:15.0,pn:23.5,why:'Dispositivos médicos diversificados, escala global'},
+ {t:'NYSE:SYK',nm:'Stryker',p:380,mc:145000,tev:156000,s:24500,e:6300,ni:3300,pb:7.0,tn:20.5,pn:30.0,why:'Ortopedia y cirugía; cartera de dispositivos'},
+ {t:'NYSE:BDX',nm:'Becton Dickinson',p:190,mc:55000,tev:73000,s:21500,e:4800,ni:1700,pb:2.1,tn:12.5,pn:14.5,why:'Insumos médicos y diagnóstico; tamaño medio'},
+ {t:'NYSE:ZBH',nm:'Zimmer Biomet',p:100,mc:20000,tev:25500,s:7700,e:1900,ni:1000,pb:1.8,tn:9.0,pn:11.5,why:'Dispositivos ortopédicos; ciclo y margen similares'},
+ {t:'NYSE:BSX',nm:'Boston Scientific',p:100,mc:148000,tev:156000,s:19500,e:4700,ni:2800,pb:5.8,tn:24.0,pn:33.0,why:'Cardiovascular, competidor directo de MDT'}
+];
+D.forEach(d=>{d.tl=d.tev/d.e;d.pl=d.mc/d.ni;d.mg=d.e/d.s});
+const P=D.slice(1);
+const st=(f,k)=>{const a=P.map(d=>d[k]).sort((a,b)=>a-b);const m=a.length;return f==='med'?(m%2?a[(m-1)/2]:(a[m/2-1]+a[m/2])/2):f==='avg'?a.reduce((s,v)=>s+v,0)/m:f==='max'?a[m-1]:a[0]};
+const C=[['p','Precio',v=>n(v,2)],['mc','Market cap',n],['tev','TEV',n],['s','Ventas',n],['e','EBITDA',n],['ni','Util. neta',n],['mg','Mg. EBITDA',pc],['tl','TEV/EBITDA LTM',x],['tn','TEV/EBITDA NTM',x],['pl','P/E LTM',x],['pn','P/E NTM',x],['pb','P/B',x]];
+const mult=['mg','tl','tn','pl','pn','pb'];
+let h='<thead><tr><th>Ticker</th><th class="l">Empresa</th>'+C.map(c=>'<th>'+c[1]+'</th>').join('')+'<th class="l">¿Por qué es comparable?</th></tr></thead><tbody>';
+D.forEach((d,i)=>h+='<tr class="'+(i?'':'obj')+'"><td>'+d.t+'</td><td class="l">'+d.nm+'</td>'+C.map(c=>'<td>'+c[2](d[c[0]])+'</td>').join('')+'<td class="w">'+d.why+'</td></tr>');
+[['Mediana','med'],['Promedio','avg'],['Máximo','max'],['Mínimo','min']].forEach(([l,f])=>h+='<tr class="st"><td colspan="2" class="l">'+l+' pares</td>'+C.map(c=>'<td>'+(mult.includes(c[0])?c[2](st(f,c[0])):'')+'</td>').join('')+'<td></td></tr>');
+$('t1').innerHTML=h+'</tbody>';
+
+const o=D[0],sh=o.mc/o.p,nd=o.tev-o.mc,ebN=o.tev/o.tn,niN=o.mc/o.pn;
+const M=[['TEV / EBITDA LTM','tl',o.e,1],['TEV / EBITDA NTM','tn',ebN,1],['P/E LTM','pl',o.ni,0],['P/E NTM','pn',niN,0]];
+const R=M.map(m=>{const mu=st('med',m[1]),ev=mu*m[2],eq=m[3]?ev-nd:ev,pr=eq/sh;return{l:m[0],mu,b:m[2],ev,d:m[3]?nd:0,eq,pr,up:pr/o.p-1}});
+$('t2').innerHTML='<thead><tr><th class="l">Método</th><th>Múltiplo</th><th>Métrica MDT</th><th>Valor impl.</th><th>(−) Deuda neta</th><th>Equity</th><th>Precio impl.</th><th>Upside</th></tr></thead><tbody>'+R.map(r=>'<tr><td class="l">'+r.l+'</td><td>'+x(r.mu)+'</td><td>'+n(r.b)+'</td><td>'+n(r.ev)+'</td><td>'+n(r.d)+'</td><td>'+n(r.eq)+'</td><td>'+n(r.pr,2)+'</td><td class="'+(r.up>=0?'up':'dn')+'">'+pc(r.up)+'</td></tr>').join('')+'</tbody>';
+$('bridge').innerHTML='Acciones (mill.) = Market cap / Precio = '+n(sh,1)+' · Deuda neta y otros = TEV − Market cap = '+n(nd)+' · EBITDA NTM = TEV / múltiplo NTM = '+n(ebN)+' · Util. neta NTM = Market cap / P/E NTM = '+n(niN);
+const vo=R.reduce((s,r)=>s+r.pr,0)/4,up=vo/o.p-1,rec=up>.15?'Comprar':up<-.15?'Vender':'Mantener',col=up>.15?'#0f8a4b':up<-.15?'#c0392b':'#b7791f';
+$('rec').innerHTML='<div><span class="lab">Valor objetivo (promedio 4 métodos)</span><span class="big">USD '+n(vo,2)+'</span></div><div><span class="lab">Precio actual</span><span class="big">USD '+n(o.p,2)+'</span></div><div><span class="lab">Upside</span><span class="big '+(up>=0?'up':'dn')+'">'+pc(up)+'</span></div><div><span class="lab">Recomendación (umbral ±15%)</span><span class="tag" style="background:'+col+'">'+rec+'</span></div>';
+const mx=Math.max(o.p,...R.map(r=>r.pr))*1.1;
+$('bars').innerHTML=R.map(r=>({l:r.l,v:r.pr})).concat([{l:'Valor objetivo',v:vo},{l:'Precio actual',v:o.p}]).map(r=>'<div class="bar"><span>'+r.l+'</span><div class="tr"><div class="fl" style="width:'+r.v/mx*100+'%;'+(r.l==='Precio actual'?'background:#6b7280':r.l==='Valor objetivo'?'background:#0f2a5c':'')+'"></div><div class="ln" style="left:'+o.p/mx*100+'%"></div></div><b>'+n(r.v,2)+'</b></div>').join('');
+</script>
+</body>
+</html>
