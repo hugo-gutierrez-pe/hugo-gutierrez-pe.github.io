@@ -1,0 +1,3324 @@
+<!DOCTYPE html>
+<html lang="es-PE" data-course="corp">
+<head>
+<meta charset="UTF-8" />
+<title>S13 · MM y capacidad de endeudamiento — 1FIN50</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  /* ── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+    /* Type scale (1920×1080 — projection sizes, not web density) */
+    --type-mega:      140px;  /* section dividers */
+    --type-title:      80px;  /* portada */
+    --type-h1:         64px;  /* slide titles */
+    --type-h2:         44px;  /* sub-titles */
+    --type-quote:      60px;  /* citas */
+    --type-body:       26px;  /* párrafos */
+    --type-body-lg:    30px;  /* énfasis en cuerpo */
+    --type-small:      22px;  /* notas */
+    --type-mono-lg:    20px;  /* eyebrows grandes */
+    --type-mono:       16px;  /* eyebrows / chrome */
+    --type-mono-sm:    14px;  /* footer */
+
+    /* Spacing */
+    --pad-top:         88px;
+    --pad-bottom:      72px;
+    --pad-x:           96px;
+    --gap-title:       48px;
+    --gap-item:        28px;
+    --gap-col:         64px;
+
+    /* Surface */
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F8FA;
+    --bg-deep:      #F1F3F5;
+    --ink:          #0A0D12;
+    --ink-2:        #3D4351;
+    --ink-3:        #7C8597;
+    --rule:         rgba(10,13,18,0.10);
+    --rule-2:       rgba(10,13,18,0.20);
+
+    /* Accent — overridden per course below */
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+
+    /* Course meta — set by tweaks / data-course */
+    --course-code:    '1FIN39';
+    --course-name:    'Bloomberg Terminal';
+    --course-short:   'Bloomberg';
+  }
+
+  /* Course themes — change accent + meta */
+  html[data-course="bloomberg"] {
+    --accent:       #185FA5;
+    --accent-deep:  #0C3E70;
+    --accent-tint:  rgba(24,95,165,0.07);
+    --accent-tint-2:rgba(24,95,165,0.18);
+  }
+  html[data-course="corp"] {
+    --accent:       #2A4A6B;
+    --accent-deep:  #16314A;
+    --accent-tint:  rgba(42,74,107,0.07);
+    --accent-tint-2:rgba(42,74,107,0.18);
+  }
+  html[data-course="analisis"] {
+    --accent:       #1F6B5E;
+    --accent-deep:  #11463D;
+    --accent-tint:  rgba(31,107,94,0.07);
+    --accent-tint-2:rgba(31,107,94,0.18);
+  }
+
+  /* Background mode — white (default) vs beige (low-contrast paper).
+     Beige values matched to Hugo's website palette. */
+  html[data-bg="beige"] {
+    --bg:           #FAF8F4;
+    --bg-alt:       #F2EDE5;
+    --bg-deep:      #EAE3D8;
+    --ink-2:        #5C5248;
+    --ink-3:        #8A7F74;
+    --rule:         rgba(100,80,40,0.10);
+    --rule-2:       rgba(100,80,40,0.16);
+  }
+
+  /* Dark mode — inspired by the "S1 · Leer el mercado" section slide.
+     Deep neutral background + radial blue glow on every slide.
+     bg-ink slides go a notch deeper so the hierarchy survives. */
+  html[data-bg="dark"] {
+    --bg:           #0A0D12;
+    --bg-alt:       #131820;
+    --bg-deep:      #1B2230;
+    --ink:          #F3F5F8;
+    --ink-2:        #C4CBD6;
+    --ink-3:        #7C8597;
+    --rule:         rgba(255,255,255,0.10);
+    --rule-2:       rgba(255,255,255,0.18);
+  }
+  /* Dark-mode-only tweaks for elements with hardcoded light/dark assumptions */
+  html[data-bg="dark"] body,
+  html[data-bg="dark"] deck-stage { background: #000; }
+  html[data-bg="dark"] section.slide {
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  html[data-bg="dark"] section.slide::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(55% 75% at 85% 50%, rgba(24,95,165,0.14), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bg="dark"] section.slide.bg-ink {
+    background: #05080C;
+  }
+  html[data-bg="dark"] em { color: #9CC4EE; }
+  html[data-bg="dark"] .brand-mark { background: var(--ink); color: #0A0D12; }
+  html[data-bg="dark"] .slide.bg-ink .brand-mark { background: #fff; color: #0A0D12; }
+  html[data-bg="dark"] .title-rule { background: rgba(255,255,255,0.18); }
+  html[data-bg="dark"] .formula { background: rgba(255,255,255,0.03); }
+  html[data-bg="dark"] .img-slot { background: rgba(255,255,255,0.04); }
+  html[data-bg="dark"] .cmp-table tbody tr:hover td { background: rgba(24,95,165,0.10); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: #0a0d12; }
+
+  deck-stage { background: #0a0d12; }
+
+  /* ── SLIDE BASE ────────────────────────────────────────── */
+  section.slide {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--bg);
+    /* extra top/bottom padding reserves space for chrome bars */
+    padding: 116px var(--pad-x) 104px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.slide.bg-alt    { background: var(--bg-alt); }
+  section.slide.bg-deep   { background: var(--bg-deep); }
+  section.slide.bg-ink    { background: var(--ink); color: #fff; }
+
+  /* Italic accent — the website's signature */
+  .slide em, em.acc {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .slide.bg-ink em { color: #9CC4EE; }
+
+  /* ── CHROME: shared header / footer on every slide ───── */
+  .chrome-top {
+    position: absolute;
+    top: 44px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .chrome-top .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: 0;
+  }
+  .slide.bg-ink .brand-mark { background: #fff; color: var(--ink); }
+  .chrome-top .course-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .chrome-top .course-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  /* Bloomberg-only subtle orange easter egg */
+  html[data-course="bloomberg"] .bloomberg-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #FA8C16;
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  html:not([data-course="bloomberg"]) .bloomberg-dot { display: none; }
+
+  .chrome-bot {
+    position: absolute;
+    bottom: 40px; left: var(--pad-x); right: var(--pad-x);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .slide.bg-ink .chrome-top, .slide.bg-ink .chrome-bot { color: rgba(255,255,255,0.55); }
+
+  .chrome-bot .num {
+    font-feature-settings: "tnum" 1;
+    color: var(--ink-2);
+  }
+  .slide.bg-ink .chrome-bot .num { color: rgba(255,255,255,0.8); }
+
+  /* hide chrome on portada (slide 1) */
+  .slide.no-chrome .chrome-top,
+  .slide.no-chrome .chrome-bot { display: none; }
+
+  /* ── COMMON BUILDING BLOCKS ───────────────────────────── */
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--gap-item);
+  }
+  .eyebrow .bar { width: 28px; height: 1px; background: var(--accent); opacity: 0.4; }
+  .slide.bg-ink .eyebrow { color: #9CC4EE; }
+  .slide.bg-ink .eyebrow .bar { background: rgba(255,255,255,0.3); }
+
+  .sec-num {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  h1.slide-title, .slide-title {
+    font-size: var(--type-h1);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .slide-lede {
+    font-size: var(--type-body-lg);
+    color: var(--ink-2);
+    line-height: 1.45;
+    max-width: 50ch;
+    margin-top: var(--gap-item);
+  }
+
+  .title-rule {
+    width: 64px; height: 2px; background: var(--accent);
+    margin-top: 28px;
+    margin-bottom: var(--gap-title);
+  }
+
+  /* ── 1 · PORTADA DEL CURSO ───────────────────────────── */
+  .portada {
+    justify-content: space-between;
+    background: var(--bg);
+    position: relative;
+    isolation: isolate;
+  }
+  .portada::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,13,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,13,18,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(60% 70% at 30% 60%, #000 30%, transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .portada-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-lg);
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .portada-head .brand-block {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--ink);
+  }
+  .portada-head .brand-block .brand-mark {
+    width: 44px; height: 44px; border-radius: 9px;
+    font-size: 18px;
+  }
+  .portada-head .brand-name {
+    font-family: var(--font-sans);
+    font-size: 26px; font-weight: 600; letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .portada-head .meta { text-align: right; line-height: 1.5; white-space: nowrap; }
+  .portada-head .meta .label { color: var(--ink-3); font-size: 18px; }
+  .portada-head .meta .val { color: var(--ink); font-size: 24px; font-weight: 500; }
+
+  .portada-body { max-width: 1400px; }
+  .portada .course-code-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border: 0.5px solid var(--accent-tint-2);
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 36px;
+    letter-spacing: 0.06em;
+  }
+  .portada h1.course-title {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: var(--ink);
+    max-width: 18ch;
+  }
+  .portada .course-sub {
+    margin-top: 32px;
+    font-size: var(--type-h2);
+    font-weight: 400;
+    color: var(--ink-2);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    max-width: 28ch;
+  }
+
+  .portada-foot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 28px;
+  }
+  .portada-foot .item { padding-right: 28px; border-right: 0.5px solid var(--rule); }
+  .portada-foot .item:last-child { border-right: none; }
+  .portada-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .portada-foot .val {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+
+  /* ── 2 · PORTADA DE SECCIÓN ──────────────────────────── */
+  .seccion {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 180px;
+    padding-bottom: 160px;
+    isolation: isolate;
+  }
+  .seccion::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(60% 80% at 80% 50%, rgba(24,95,165,0.28), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .seccion .sec-mega {
+    font-family: var(--font-mono);
+    font-size: var(--type-mega);
+    font-weight: 500;
+    color: rgba(255,255,255,0.12);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+  .seccion .sec-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9CC4EE;
+    margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .seccion .sec-label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .seccion h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: #fff;
+    max-width: 22ch;
+  }
+  .seccion .sec-lede {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.7);
+    margin-top: 32px;
+    max-width: 50ch;
+    line-height: 1.45;
+  }
+
+  /* ── 3 · AGENDA ──────────────────────────────────────── */
+  .agenda-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 12px;
+  }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .num {
+    font-family: var(--font-mono);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .agenda-row .title {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .agenda-row .desc {
+    font-size: 20px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .agenda-row .tag {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 14px;
+    border: 0.5px solid var(--rule-2);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* ── 4 · TÍTULO + 2 COLUMNAS DE TEXTO ────────────────── */
+  .two-col-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-col);
+    margin-top: 0;
+  }
+  .text-col h3 {
+    font-size: var(--type-h2);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  .text-col .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 10px;
+    white-space: nowrap;
+  }
+  .text-col .col-eyebrow .num { color: var(--ink-3); }
+  .text-col p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .text-col ul {
+    list-style: none;
+    padding: 0;
+  }
+  .text-col ul li {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    padding: 10px 0 10px 26px;
+    position: relative;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .text-col ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 22px;
+    width: 12px; height: 1px;
+    background: var(--accent);
+  }
+  .text-col ul li:last-child { border-bottom: none; }
+  .text-col ul li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── 5 · TÍTULO + IMAGEN (2 COL) + COMENTARIO ─────────── */
+  .img-comment {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--gap-col);
+  }
+  .img-comment .img-slot {
+    background: #EEF1F5;
+    border: 1px dashed rgba(10,13,18,0.18);
+    border-radius: 14px;
+    aspect-ratio: 16 / 10;
+    position: relative;
+    overflow: hidden;
+    background-image:
+      repeating-linear-gradient(135deg,
+        transparent 0, transparent 18px,
+        rgba(10,13,18,0.05) 18px, rgba(10,13,18,0.05) 19px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--ink-3);
+    text-align: center;
+    padding: 32px;
+  }
+  .img-slot .ph-icon {
+    font-size: 64px;
+    color: var(--accent);
+    opacity: 0.6;
+    margin-bottom: 18px;
+    line-height: 1;
+  }
+  .img-slot .ph-label {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--ink-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .img-slot .ph-caption {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    margin-top: 6px;
+    white-space: nowrap;
+  }
+
+  .comment-block .col-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .comment-block h3 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .comment-block p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .comment-block .source {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 0.5px solid var(--rule);
+  }
+
+  /* ── 6 · TÍTULO + IMAGEN GRANDE + COMENTARIO ABAJO ───── */
+  .big-img-block {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    flex: 1;
+  }
+  .big-img-block .img-slot.big {
+    aspect-ratio: auto;
+    flex: 1;
+    min-height: 520px;
+    border-radius: 14px;
+  }
+  .big-img-block .img-slot.big .ph-icon { font-size: 72px; }
+  .big-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .big-comment .marker {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding-top: 4px;
+    white-space: nowrap;
+  }
+  .big-comment p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    max-width: 90ch;
+  }
+
+  /* ── 7 · IDEA CLAVE / CITA ───────────────────────────── */
+  .idea-clave {
+    background: var(--bg-alt);
+    justify-content: center;
+    padding-top: 140px;
+    padding-bottom: 140px;
+  }
+  .idea-clave .quote-mark {
+    font-family: var(--font-mono);
+    font-size: 140px;
+    color: var(--accent);
+    line-height: 0.6;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .idea-clave blockquote {
+    font-size: var(--type-quote);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    max-width: 28ch;
+    text-wrap: balance;
+  }
+  .idea-clave blockquote em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .idea-clave .attrib {
+    margin-top: 48px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .idea-clave .attrib .avatar-ph {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--bg-deep);
+    border: 0.5px solid var(--rule-2);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .idea-clave .attrib .who {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .idea-clave .attrib .role {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── 8 · TABLA COMPARATIVA ───────────────────────────── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-size: var(--type-body);
+  }
+  .cmp-table thead th {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    text-align: left;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid var(--rule-2);
+  }
+  .cmp-table tbody td {
+    padding: 22px;
+    border-bottom: 0.5px solid var(--rule);
+    color: var(--ink-2);
+    font-size: var(--type-body);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .cmp-table tbody td.name {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+  .cmp-table tbody td.code {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 20px;
+    white-space: nowrap;
+  }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table tbody tr:hover td { background: var(--accent-tint); }
+
+  /* ── 9 · FÓRMULA ─────────────────────────────────────── */
+  .formula-block {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    justify-content: center;
+    flex: 1;
+  }
+  .formula {
+    background: var(--bg);
+    border: 0.5px solid var(--rule);
+    border-radius: 16px;
+    padding: 56px 48px;
+    font-family: var(--font-mono);
+    font-size: 56px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    text-align: center;
+    font-weight: 400;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .formula .frac {
+    display: inline-grid;
+    vertical-align: middle;
+    margin: 0 8px;
+    justify-items: center;
+  }
+  .formula .frac .num {
+    padding: 0 18px 8px;
+    border-bottom: 2px solid currentColor;
+    white-space: nowrap;
+  }
+  .formula .frac .den {
+    padding: 8px 18px 0;
+    white-space: nowrap;
+  }
+  .formula .acc-var { color: var(--accent); font-weight: 500; }
+  .formula sub { font-size: 0.5em; vertical-align: sub; }
+  .formula sup { font-size: 0.55em; vertical-align: super; }
+  .formula-legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .legend-item .var {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .legend-item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 10 · CÓDIGO / TERMINAL ──────────────────────────────
+     For Excel formulas, Python snippets, Bloomberg commands.
+     Self-contained shell so it reads on light/beige/dark. */
+  .code-shell {
+    background: #0A0D12;
+    color: #E6EAF2;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(10,13,18,0.08);
+  }
+  .code-shell .code-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: rgba(230,234,242,0.55);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .code-shell .code-head .traffic {
+    display: inline-flex; gap: 7px;
+  }
+  .code-shell .code-head .traffic span {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: rgba(255,255,255,0.14);
+  }
+  .code-shell .code-head .file { color: rgba(230,234,242,0.85); text-transform: none; letter-spacing: 0; }
+  .code-shell .code-head .lang {
+    margin-left: auto;
+    padding: 4px 10px;
+    border: 0.5px solid rgba(255,255,255,0.16);
+    border-radius: 999px;
+    font-size: 12px;
+  }
+  .code-shell pre.code-body {
+    margin: 0;
+    padding: 28px 32px;
+    font-family: var(--font-mono);
+    font-size: 22px;
+    line-height: 1.6;
+    overflow: auto;
+    flex: 1;
+    color: #E6EAF2;
+    counter-reset: codeline;
+  }
+  .code-shell pre.code-body .ln {
+    display: block;
+    padding-left: 56px;
+    position: relative;
+    white-space: pre;
+    min-height: 1.6em;
+  }
+  .code-shell pre.code-body .ln:empty::after {
+    content: "\200B";
+  }
+  .code-shell pre.code-body .ln::before {
+    counter-increment: codeline;
+    content: counter(codeline, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    color: rgba(230,234,242,0.28);
+    font-size: 14px;
+    top: 0.45em;
+    width: 40px;
+    text-align: right;
+  }
+  .code-shell .tok-key   { color: #9CC4EE; }
+  .code-shell .tok-fn    { color: #FFB66C; }
+  .code-shell .tok-str   { color: #B8E6A0; }
+  .code-shell .tok-num   { color: #E6B0FF; }
+  .code-shell .tok-com   { color: rgba(230,234,242,0.40); font-style: italic; }
+  .code-shell .tok-op    { color: #9CC4EE; }
+
+  .code-legend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 28px;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .code-legend .item .var {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .code-legend .item .desc {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ── 11 · ANTES / DESPUÉS ────────────────────────────────
+     Two image slots side-by-side. Made for market-crash visuals. */
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    flex: 1;
+  }
+  .before-after .pane {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .before-after .pane-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .before-after .pane-label .tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--ink-3);
+  }
+  .before-after .pane-label .tag .badge {
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 0.5px solid var(--rule-2);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+  }
+  .before-after .pane.before .badge { color: var(--ink-2); }
+  .before-after .pane.after  .badge { color: var(--accent); border-color: var(--accent-tint-2); background: var(--accent-tint); }
+  .before-after .pane-label .stat {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .before-after .pane.after .stat { color: #C0392B; }
+  .before-after .pane .img-slot {
+    flex: 1;
+    border-radius: 14px;
+    background: #EEF1F5;
+    border: 1px dashed rgba(10,13,18,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px;
+    overflow: hidden;
+  }
+  .before-after .pane .img-slot > span {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+  html[data-bg="beige"] .before-after .pane .img-slot {
+    background: var(--bg-deep);
+    border-color: var(--rule-2);
+  }
+  html[data-bg="dark"] .before-after .pane .img-slot {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.18);
+  }
+  .ba-caption {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    align-items: start;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--rule);
+  }
+  .ba-caption .marker {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .ba-caption p {
+    font-size: var(--type-body);
+    color: var(--ink-2);
+    line-height: 1.5;
+    max-width: 80ch;
+  }
+
+  /* ── 12 · PREGUNTA INTERACTIVA ───────────────────────────
+     4 cards, click → reveal correct answer.
+     Uses inline JS via onclick, no React needed. */
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    flex: 1;
+    align-content: start;
+    margin-top: 24px;
+  }
+  .quiz-opt {
+    background: var(--bg);
+    border: 1px solid var(--rule-2);
+    border-radius: 14px;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    align-items: start;
+    cursor: pointer;
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    text-align: left;
+    width: 100%;
+    font-family: var(--font-sans);
+    color: var(--ink);
+  }
+  .quiz-opt:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .quiz-opt .letter {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    background: var(--bg-alt);
+    border: 0.5px solid var(--rule);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink-2);
+    transition: background .15s ease, color .15s ease;
+  }
+  .quiz-opt .opt-text {
+    font-size: var(--type-body);
+    color: var(--ink);
+    line-height: 1.4;
+    padding-top: 6px;
+  }
+  .quiz-opt .opt-note {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-3);
+    margin-top: 10px;
+    display: none;
+  }
+
+  /* Reveal states — set on the whole .quiz when a button is clicked */
+  .quiz.revealed .quiz-opt { cursor: default; pointer-events: none; }
+  .quiz.revealed .quiz-opt:not([data-correct="true"]) {
+    opacity: 0.45;
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] {
+    border-color: #1F8A5B;
+    background: rgba(31,138,91,0.05);
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] .letter {
+    background: #1F8A5B;
+    color: #fff;
+  }
+  .quiz.revealed .quiz-opt[data-correct="true"] .opt-note { display: block; color: #1F8A5B; }
+  .quiz.revealed .quiz-opt[data-chosen="true"]:not([data-correct="true"]) {
+    border-color: #C0392B;
+    background: rgba(192,57,43,0.05);
+    opacity: 1;
+  }
+  .quiz.revealed .quiz-opt[data-chosen="true"]:not([data-correct="true"]) .letter {
+    background: #C0392B;
+    color: #fff;
+  }
+
+  .quiz-prompt {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .quiz.revealed .quiz-prompt .pre { display: none; }
+  .quiz-prompt .post { display: none; }
+  .quiz.revealed .quiz-prompt .post { display: inline-flex; gap: 10px; align-items: center; color: var(--accent); }
+
+  /* ── 13 · TAREA PARA CASA ────────────────────────────────
+     "Yo expliqué" + "Tu turno" formato.
+     Bottom row: deliverables / formulario / deadline. */
+  .tarea {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    flex: 1;
+    align-content: start;
+  }
+  .tarea .col {
+    border: 1px solid var(--rule-2);
+    border-radius: 18px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: var(--bg);
+  }
+  .tarea .col.mine {
+    background: var(--bg-alt);
+  }
+  .tarea .col.yours {
+    border-color: var(--accent);
+    background: var(--accent-tint);
+  }
+  .tarea .col-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .tarea .col.yours .col-head { color: var(--accent); }
+  .tarea .col-head .num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .tarea .col.yours .col-head .num { background: var(--accent); color: #fff; }
+  .tarea .col h3 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .tarea .col h3 .ticker {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-left: 10px;
+    vertical-align: middle;
+    letter-spacing: 0.04em;
+  }
+  .tarea .col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tarea .col ul li {
+    font-size: 20px;
+    color: var(--ink-2);
+    line-height: 1.45;
+    padding-left: 28px;
+    position: relative;
+  }
+  .tarea .col ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+  .tarea-foot {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 0.5px solid var(--rule);
+    padding-top: 22px;
+  }
+  .tarea-foot .item {
+    padding-right: 28px;
+    border-right: 0.5px solid var(--rule);
+  }
+  .tarea-foot .item:last-child { border-right: none; }
+  .tarea-foot .lbl {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+  .tarea-foot .val {
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .tarea-foot .val .acc { color: var(--accent); }
+
+  /* ── 14 · NOTICIA ──────────────────────────────────────
+     Headline-driven layout. Source pill + date stamp on top,
+     big headline, dek, image + bullets, "why it matters" pull.
+     Diseñado para noticias de prensa (Bloomberg, FT, Reuters, El Comercio).
+     ════════════════════════════════════════════════════════ */
+  .noticia-meta {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--ink-3);
+  }
+  .noticia-meta .source {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px 7px 12px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .noticia-meta .source .badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #FA8C16;
+  }
+  .noticia-meta .stamp {
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .noticia-meta .stamp .sep {
+    width: 4px; height: 4px; border-radius: 50%; background: var(--ink-3);
+  }
+  .noticia-meta .live {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 8px;
+    color: #C0392B;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .noticia-meta .live::before {
+    content: "";
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #C0392B;
+    box-shadow: 0 0 0 4px rgba(192,57,43,0.18);
+    animation: pulse-live 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+  }
+
+  .noticia-headline {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 48px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-weight: 600;
+    max-width: 36ch;
+    margin-bottom: 14px;
+  }
+  .noticia-headline em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .noticia-dek {
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    max-width: 80ch;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+
+  .noticia-body {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  .noticia-body .news-img {
+    background: var(--bg-alt);
+    border: 0.5px solid var(--rule);
+    border-radius: 14px;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .noticia-body .news-img > span {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--ink-3);
+    line-height: 1.5;
+  }
+  .noticia-body .news-img-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .noticia-body .news-img-wrap .caption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  html[data-bg="dark"] .noticia-body .news-img {
+    background: rgba(255,255,255,0.04);
+  }
+
+  .noticia-body .bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .noticia-body .bullets .b {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: baseline;
+    padding-bottom: 12px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .noticia-body .bullets .b:last-child { border-bottom: none; padding-bottom: 0; }
+  .noticia-body .bullets .b .key {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    min-width: 100px;
+  }
+  .noticia-body .bullets .b .val {
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.35;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .noticia-body .bullets .b .val .big {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .noticia-pull {
+    margin-top: 16px;
+    padding: 14px 22px;
+    background: var(--accent-tint);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .noticia-pull .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    padding-top: 2px;
+  }
+  .noticia-pull p {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.45;
+    margin: 0;
+  }
+  .noticia-disclaimer {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .noticia-disclaimer::before {
+    content: "⚠";
+    color: #FA8C16;
+    font-size: 16px;
+  }
+
+  /* ── 15 · ARTÍCULO ACADÉMICO ─────────────────────────────
+     Paper-like layout: journal masthead, serif title,
+     authors + affiliations, abstract or 3 takeaways,
+     full citation footer.
+     ════════════════════════════════════════════════════════ */
+  .paper-mast {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .paper-mast .journal {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .paper-mast .sep {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--ink-3);
+  }
+  .paper-mast .doi {
+    margin-left: auto;
+    color: var(--ink-3);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 13px;
+  }
+
+  .paper-title {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 50px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    font-weight: 600;
+    max-width: 30ch;
+    margin-bottom: 18px;
+  }
+  .paper-title em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .paper-authors {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 0.5px solid var(--rule);
+    font-size: 19px;
+    color: var(--ink-2);
+  }
+  .paper-authors .author {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .paper-authors .aff {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: super;
+  }
+
+  .paper-body {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    flex: 1;
+  }
+  .paper-abstract h4,
+  .paper-takeaways h4 {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .paper-abstract p {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0;
+    max-width: 60ch;
+    text-align: justify;
+  }
+  .paper-abstract p::first-letter {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .paper-takeaways {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .paper-takeaways .item {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .paper-takeaways .item:last-child { border-bottom: none; }
+  .paper-takeaways .item .n {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .paper-takeaways .item .t {
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.4;
+    padding-top: 4px;
+  }
+  .paper-takeaways .item .t .acc {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .paper-cite {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: var(--bg-alt);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+  }
+  .paper-cite .lbl {
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  /* ── 16 · CIERRE / Q&A ───────────────────────────────── */
+  .cierre {
+    background: var(--ink);
+    color: #fff;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 160px;
+    padding-bottom: 140px;
+    isolation: isolate;
+  }
+  .cierre::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(50% 70% at 20% 50%, rgba(24,95,165,0.30), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .cierre .label {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: #9CC4EE;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .cierre .label .bar { width: 32px; height: 1px; background: rgba(255,255,255,0.3); }
+  .cierre h2 {
+    font-size: var(--type-title);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    max-width: 18ch;
+  }
+  .cierre h2 em { color: #9CC4EE; font-weight: 500; font-style: italic; }
+  .cierre .closing-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 96px;
+    align-items: end;
+    margin-top: 48px;
+  }
+  .cierre .pregunta {
+    font-size: var(--type-body-lg);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.45;
+    max-width: 50ch;
+  }
+  .cierre .contact-card {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .cierre .contact-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px;
+    border: 0.5px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+  }
+  .cierre .contact-row i { font-size: 22px; color: #9CC4EE; }
+  .cierre .contact-row .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+  }
+  .cierre .contact-row .val {
+    font-size: 18px; color: #fff; font-weight: 500;
+    margin-top: 2px;
+  }
+</style>
+
+<!-- Speaker notes (per-slide) -->
+<script type="application/json" id="speaker-notes">[
+ "Dos horas: cincuenta minutos de Modigliani-Miller con un ejemplo sencillo, veinticinco de capacidad máxima de endeudamiento y cuarenta para el ejercicio guiado en equipos de tres. El resto es pausa y cierre.",
+ "Recorrer los tres bloques. Avisar que hoy el ejemplo de Modigliani-Miller es a propósito sencillo y que el ejercicio de los estudiantes es más largo: suma crecimiento, impuestos, quiebra y covenants.",
+ "Conectar con la clase anterior: el WACC baja con la deuda por el escudo fiscal pero sube el Ke. Hoy se ordena eso con Modigliani-Miller y se separa la capacidad de la conveniencia.",
+ "Marcar que MM no dice que la estructura de capital no importe. Dice cuándo no importa; por eso sirve para encontrar qué sí la hace importar.",
+ "Usar la imagen de la pizza. Lo importante es que el valor lo fija el flujo de los activos y su riesgo, no la forma de financiarlos.",
+ "Idea de la gravedad: el valor de MM está en señalar qué fricciones hacen que la decisión de deuda importe. Anunciar que hoy se relajan impuestos y costos de quiebra.",
+ "Definir las tres tasas antes del ejemplo. Ku es lo que exigen los activos del negocio, sin importar cómo se financian. Kd es el costo de la deuda, lo que se paga al banco. Ke es lo que exige el accionista y cambia con la deuda. Cuando no hay deuda, Ke es igual a Ku; cuando no hay impuestos, el WACC es igual a Ku.",
+ "Partir de la fórmula que los estudiantes ya conocen. Insistir en que no hay una sola tasa en la empresa: los activos, la deuda y el patrimonio son tres inversiones distintas y cada una tiene su beta. La prima de mercado P es la misma para todas.",
+ "No presentar esto como una fórmula nueva sino como una identidad: el riesgo total del activo es la suma de lo que carga cada financista. El beta de un portafolio es el promedio de los betas ponderado por valor. Aquí se parte de esa identidad para despejar el beta del accionista en la lámina siguiente, que es lo que los estudiantes esperan: el beta del negocio más apalancamiento.",
+ "Responder a la pregunta de si la fórmula 2 es una definición: no lo es. Se deriva de dos hechos. Primero, el flujo de los activos se reparte entre los dos financistas, así que la rentabilidad del activo es el promedio ponderado de las otras dos. Segundo, el beta es una covarianza dividida entre una varianza, y la covarianza es lineal, así que el beta del portafolio es el promedio ponderado de los betas. Supuestos: sin impuestos y pesos a valor de mercado al inicio del periodo. Es la misma identidad del WACC sin impuestos.",
+ "Preguntarán si el beta apalancado es siempre mayor que el desapalancado, como en Hamada: sí, mientras la deuda sea menos riesgosa que los activos (Kd menor que Ku). Si Kd fuera igual a Ku, la deuda cargaría el mismo riesgo que el negocio y el beta del accionista no cambiaría. Aquí aparece exactamente la intuición de los estudiantes: el beta del accionista es el beta del negocio más un término de apalancamiento. Ese término sale de despejar la ponderación de la lámina anterior. Hacer el álgebra en la pizarra.",
+ "Los estudiantes conocen Hamada y la reconocerán: es la misma estructura. Hamada supone que la deuda no tiene riesgo (beta cero) y que el escudo fiscal se descuenta a la tasa de la deuda con deuda perpetua; por eso aparece el factor (1 − t). La fórmula 3 es más general porque deja que la deuda tenga beta. Por eso Hamada tiende a sobrestimar el beta del accionista cuando la deuda es riesgosa.",
+ "Mencionar con claridad la incoherencia. Hamada supone beta de deuda cero pero sabemos que la deuda paga un spread sobre la tasa libre de riesgo. Se usa igual por simplicidad, porque el beta de la deuda es difícil de estimar y porque el error es pequeño con deuda de buena calificación. El caso Alicorp de S10 mezcla ambas cosas: desapalanca con Hamada y usa rf más un spread de 2.0% para el Kd del WACC.",
+ "Cálculo del comparable: βE 1.2 con D/E 0.5. Con Hamada sin impuestos, βU = 1.2 / 1.5 = 0.80. Con la fórmula 3 y βD 0.30, βU = (1.2 + 0.30 x 0.5) / 1.5 = 0.90. Al reapalancar al mismo D/E ambos dan 1.20. A D/E de 1.0, Hamada da 0.80 x 2 = 1.60 y la fórmula 3 da 0.90 + 0.60 x 1 = 1.50. Conclusión: Hamada funciona mejor cuando los comparables se parecen a la empresa en apalancamiento.",
+ "Cerrar la derivación. Subrayar que rf desaparece al restar Ku y Kd, y que el resultado es la proposición II de MM. No hay nueva teoría: solo CAPM más la suma de betas.",
+ "Confirmar lo que dijo el profesor: en el mundo de MM no hay banco cobrando un margen; el costo de la deuda para la empresa es igual a la rentabilidad que exige quien presta. El prestamista sí asume algo de riesgo de mercado (βD), que puede ser cero si la deuda es libre de riesgo. Mostrar los dos casos particulares y avisar que Hamada se ve en la lámina del beta de S12.",
+ "Poner todas las fórmulas juntas antes del ejemplo, para que los estudiantes vean qué se va a usar y por qué. Cada paso del ejemplo aplica una de estas fórmulas.",
+ "Este es el ejemplo del Word. Leer los datos con calma y pedir a los estudiantes que digan en voz alta cuál es el flujo que reciben juntos acreedores y accionistas.",
+ "Paso a paso. Pedir que alguien calcule el FCFF antes de mostrarlo.",
+ "Mostrar que el Ke sube. Preguntar por qué: porque el accionista cobra después del banco y su utilidad es más volátil.",
+ "Se eligieron rf 4% y prima 8% para que Ku sea 12% con βU 1; con Kd 7% resulta βD 0.375. Muestra que la fórmula en tasas y la fórmula en betas dan el mismo 13.48%. Los números son ilustrativos.",
+ "El punto central: el WACC no baja aunque la deuda sea más barata que el patrimonio, porque el Ke sube justo lo necesario.",
+ "Mostrar que el modelo cierra por dos caminos. Si algo no coincide, el error está en el cálculo, no en MM.",
+ "Esta es la pregunta que suele confundir. Insistir en que el valor lo da el flujo total.",
+ "Si hay tiempo, dejar que los estudiantes calculen la columna de 3,000 antes de mostrarla.",
+ "Transición: preguntar a la clase por qué creen que las empresas sí se endeudan. Llegar a impuestos.",
+ "Este es el paso 8 opcional del Word. Mostrar que la invariancia es un resultado sin impuestos.",
+ "Anunciar que el ejercicio de hoy pone números a esta idea: una probabilidad que crece con el cuadrado de la deuda sobre EBITDA.",
+ "Cerrar el bloque. Esta tabla es la que los estudiantes llevan al Excel.",
+ "Repetir el análisis de endeudamiento máximo de la clase del 21/10, ahora ligado a MM.",
+ "Separar claramente las dos preguntas. La capacidad es un límite; el óptimo es un objetivo.",
+ "Recordar que la definición completa de cada ratio viene en el enunciado y que cambia por contrato.",
+ "Escribir las tres fórmulas en la pizarra. Insistir en el DSCR: la holgura se multiplica por el servicio de la deuda, no por el EBITDA.",
+ "Repaso del caso de la clase del 21/10 con las cifras del solucionario. El ratio de capital de trabajo es 1.10x porque las cuentas por pagar son 70,000 (proveedores 34,000 más confirming 36,000).",
+ "Esta es la regla que se aplica en el ejercicio de hoy.",
+ "Formar equipos de 3 al azar y compartir la carpeta con la plantilla.",
+ "Explicar que es un ejercicio guiado: cada celda amarilla trae una pista. No reciben el resultado. Pasar por los equipos.",
+ "Sugerir que no pasen al paso siguiente hasta ver el chequeo de MM en cero.",
+ "Cerrar con las tres ideas. Recordar la fecha límite de entrega del ejercicio. "
+]</script>
+</head>
+
+<body>
+
+<deck-stage width="1920" height="1080">
+  <!-- ═══ SLIDE 1 · PORTADA ═══ -->
+  <section class="slide portada no-chrome" data-label="01 Portada">
+    <div class="portada-head">
+      <div class="brand-block">
+        <span class="brand-mark">HG</span>
+        <span class="brand-name">Hugo Gutierrez</span>
+      </div>
+      <div class="meta">
+        <div class="label">PUCP · Lima, Perú</div>
+        <div class="val">Finanzas · 2026—2</div>
+      </div>
+    </div>
+
+    <div class="portada-body">
+      <div class="course-code-tag"><span>1FIN50</span></div>
+      <h1 class="course-title">Modigliani-Miller y<br/><em>capacidad de endeudamiento</em></h1>
+      <p class="course-sub">Por qué la deuda no crea valor en un mundo ideal, cuánta deuda cabe en el mundo real y un ejercicio guiado para resolver en equipo.</p>
+    </div>
+
+    <div class="portada-foot">
+      <div class="item"><div class="lbl">Sesión</div><div class="val">Estructura de capital</div></div>
+      <div class="item"><div class="lbl">Curso</div><div class="val">Finanzas Corporativas 1</div></div>
+      <div class="item"><div class="lbl">Práctica</div><div class="val">Ejercicio guiado en Excel</div></div>
+      <div class="item"><div class="lbl">Instructor</div><div class="val">Hugo Gutierrez</div></div>
+    </div>
+  </section>
+
+  <section class="slide" data-label="02 Agenda">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Sesión 13 · Agenda</div>
+    <h1 class="slide-title">Qué <em>hacemos</em> hoy</h1>
+    <div class="title-rule"></div>
+
+    <div class="agenda-list">
+      <div class="agenda-row">
+        <span class="num">01</span>
+        <div><div class="title">Modigliani-Miller</div><div class="desc">Un ejemplo de punta a punta: sin impuestos, con impuestos y con quiebra.</div></div>
+        <span class="tag">50 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">02</span>
+        <div><div class="title">Capacidad máxima de endeudamiento</div><div class="desc">Lo que el banco tolera frente a lo que conviene; el caso Santa Rosa.</div></div>
+        <span class="tag">25 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="num">03</span>
+        <div><div class="title">Ejercicio guiado</div><div class="desc">Equipos de 3, una sola hoja de Excel y entrega por formulario.</div></div>
+        <span class="tag">40 min</span>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · Agenda</span>
+      <span class="num">02 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="03 Dónde quedamos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13 · Recap</div>
+    <h1 class="slide-title">Dónde <em>quedamos</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Ya vimos</div>
+        <h3>Piezas del WACC y de la deuda</h3>
+        <ul>
+          <li>Los pesos del WACC van a valor de mercado.</li>
+          <li>Más deuda sube el beta y el Ke del accionista.</li>
+          <li>En el módulo de deuda: instrumentos, covenants y qué es deuda según quién la mire.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Hoy respondemos</div>
+        <h3>Tres preguntas</h3>
+        <ul>
+          <li>¿Por qué el WACC <strong>no</strong> debería bajar solo por usar deuda más barata?</li>
+          <li>¿Cuánta deuda <strong>puede</strong> tomar una empresa?</li>
+          <li>¿Cuánta deuda le <strong>conviene</strong>?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">03 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide seccion bg-ink" data-label="04 Sección 1">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="sec-mega">S1</div>
+    <div class="sec-label"><span class="bar"></span>Bloque 01 · 50 min</div>
+    <h2>Modigliani-<br/><em>Miller</em></h2>
+    <p class="sec-lede">Primero el mundo ideal. Si la deuda no crea valor ahí, cada fricción que se agrega explica por qué sí importa en la vida real.</p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">04 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="05 La idea">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Proposición I</div>
+    <h1 class="slide-title">El valor sale del <em>activo</em>, no del pasivo</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · La pizza</div>
+        <h3>Se reparte distinto, mide lo mismo</h3>
+        <ul>
+          <li>La empresa genera un flujo con sus activos: el FCFF.</li>
+          <li>Ese flujo se reparte entre acreedores y accionistas.</li>
+          <li>Cambiar el reparto entre deuda y patrimonio no cambia el tamaño de la pizza.</li>
+          <li>En el balance: lo que pasa a la derecha no mueve el lado izquierdo.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · El resultado</div>
+        <h3>Dos proposiciones</h3>
+        <ul>
+          <li><strong>I:</strong> el valor de la empresa con deuda es igual al de la empresa sin deuda: VL = VU.</li>
+          <li><strong>II:</strong> el Ke sube con el D/E, justo lo que compensa la deuda más barata.</li>
+          <li>El WACC se queda en Ku.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">05 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="06 Supuestos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Qué tiene que ser cierto</div>
+    <h1 class="slide-title">Un mercado <em>perfecto</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Supuestos</div>
+        <h3>Sin fricciones</h3>
+        <ul>
+          <li>Sin impuestos.</li>
+          <li>Sin costos de transacción ni de emisión.</li>
+          <li>Sin costos de quiebra ni de agencia.</li>
+          <li>Información simétrica; empresa e inversionista se endeudan a la misma tasa.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Para qué sirve</div>
+        <h3>La ley de la gravedad</h3>
+        <ul>
+          <li>Que el mundo no sea ideal no vuelve inútil al modelo, igual que los aviones no anulan la gravedad.</li>
+          <li>Cada supuesto que se rompe explica una razón por la que la deuda <strong>sí</strong> importa.</li>
+          <li>Hoy rompemos dos: impuestos y quiebra.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">06 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="07 Tres tasas">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Notación</div>
+    <h1 class="slide-title">Tres tasas: <em>Ku</em>, <em>Kd</em> y <em>Ke</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:12%">Tasa</th><th style="width:34%">Qué es</th><th style="width:30%">Quién la exige</th><th>En el ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Ku</td><td>Rentabilidad exigida a los <strong>activos</strong> de la empresa si no tuviera deuda</td><td>Todos los que financian, sin deuda de por medio</td><td>12%</td></tr>
+        <tr><td class="name">Kd</td><td><strong>Costo de la deuda</strong>: la tasa de interés que paga a los acreedores</td><td>Acreedores (bancos, bonistas)</td><td>7%</td></tr>
+        <tr><td class="name">Ke</td><td>Rentabilidad exigida al <strong>patrimonio</strong> de la empresa con deuda</td><td>Accionistas</td><td>13.48% con D = 2,000</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:24px">
+      Ku mide el riesgo del negocio. Sin deuda, Ke = Ku. Con deuda, Ke sube sobre Ku por el riesgo financiero, y Kd queda por debajo de Ku porque el acreedor cobra primero.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">07 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="08 Derivación 1">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · De dónde sale Ke · Paso 0</div>
+    <h1 class="slide-title">Punto de partida: el <em>CAPM</em> de cada pieza</h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative; font-size:36px">
+        <span style="position:absolute; top:10px; left:18px; font-size:24px; color:var(--accent); font-family:var(--font-mono)">Fórmula 1</span><span class="acc-var">K</span><sub>e</sub> = <span class="acc-var">r</span><sub>f</sub> + <span class="acc-var">β</span><sub>E</sub> · (<span class="acc-var">R</span><sub>m</sub> − <span class="acc-var">r</span><sub>f</sub>)
+      </div>
+    </div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:12%">Tasa</th><th style="width:34%">CAPM</th><th style="width:26%">Pieza de la empresa</th><th>Beta</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Ku</td><td>rf + βU × P</td><td>Los activos, sin deuda</td><td>βU</td></tr>
+        <tr><td class="name">Kd</td><td>rf + βD × P</td><td>La deuda</td><td>βD</td></tr>
+        <tr><td class="name">Ke</td><td>rf + βE × P</td><td>El patrimonio</td><td>βE</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:20px">
+      P = Rm − rf es la prima de mercado. Es la fórmula que ya conocen, aplicada tres veces: cada pieza que financia la empresa tiene su propio beta.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">08 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="09 Derivación 2">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · De dónde sale Ke · Paso 1</div>
+    <h1 class="slide-title">El riesgo del negocio se <em>reparte</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative; font-size:36px">
+        <span style="position:absolute; top:10px; left:18px; font-size:24px; color:var(--accent); font-family:var(--font-mono)">Fórmula 2</span><span class="acc-var">β</span><sub>U</sub> = <span class="frac"><span class="num">D</span><span class="den">V</span></span> · <span class="acc-var">β</span><sub>D</sub> + <span class="frac"><span class="num">E</span><span class="den">V</span></span> · <span class="acc-var">β</span><sub>E</sub>
+      </div>
+    </div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · La idea</div>
+        <h3>La suma de las porciones</h3>
+        <ul>
+          <li>βU es el riesgo del <strong>negocio</strong>: lo fijan los activos, no cómo se financian.</li>
+          <li>Ese riesgo no desaparece al pedir deuda: se reparte entre el acreedor y el accionista.</li>
+          <li>Cada uno aporta su beta por la porción del valor que financia: esa es la ponderación (a valor de mercado).</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Con números</div>
+        <h3>Ejemplo: D = 2,000 y E = 6,750</h3>
+        <ul>
+          <li>Deuda: 22.9% del valor × βD 0.375 = <strong>0.086</strong> de riesgo.</li>
+          <li>Patrimonio: 77.1% del valor × βE 1.185 = <strong>0.914</strong> de riesgo.</li>
+          <li>Suma: <strong>1.000</strong> = βU. El negocio tiene el mismo riesgo; solo cambió quién lo carga.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">09 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="10 Origen fórmula 2">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · De dónde sale Ke · Origen de la fórmula 2</div>
+    <h1 class="slide-title">La fórmula 2 <em>no es una definición</em>: sale de dos hechos</h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative; font-size:36px">
+        <span class="acc-var">R</span><sub>A</sub> = <span class="frac"><span class="num">D</span><span class="den">V</span></span> · <span class="acc-var">R</span><sub>D</sub> + <span class="frac"><span class="num">E</span><span class="den">V</span></span> · <span class="acc-var">R</span><sub>E</sub>
+      </div>
+    </div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Hecho 1</div>
+        <h3>El flujo de los activos se reparte</h3>
+        <ul>
+          <li>Los activos generan un flujo que va a los acreedores y a los accionistas; sin impuestos no hay otro reclamante.</li>
+          <li>Por eso la rentabilidad de los activos es el promedio de la rentabilidad de la deuda y del patrimonio, ponderado por valor de mercado.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Hecho 2</div>
+        <h3>El beta es lineal</h3>
+        <ul>
+          <li>β = Cov(R, Rm) / Var(Rm), y la covarianza es lineal en R.</li>
+          <li>Aplicado a la identidad de arriba: βU = (D/V) βD + (E/V) βE, que es la <strong>fórmula 2</strong>.</li>
+          <li>Multiplicando por P y sumando rf se obtiene Ku = (D/V) Kd + (E/V) Ke: la misma identidad en tasas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">10 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="11 Derivación 3">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · De dónde sale Ke · Paso 2</div>
+    <h1 class="slide-title">Despejar: βE = βU + <em>apalancamiento</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative; font-size:36px">
+        <span style="position:absolute; top:10px; left:18px; font-size:24px; color:var(--accent); font-family:var(--font-mono)">Fórmula 3</span><span class="acc-var">β</span><sub>E</sub> = <span class="acc-var">β</span><sub>U</sub> + (<span class="acc-var">β</span><sub>U</sub> − <span class="acc-var">β</span><sub>D</sub>) · <span class="frac"><span class="num">D</span><span class="den">E</span></span>
+      </div>
+    </div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Álgebra</div>
+        <h3>Cuatro líneas</h3>
+        <ul>
+          <li>Parto de la fórmula 2: βU = (D/V) βD + (E/V) βE.</li>
+          <li>Multiplico por V/E = 1 + D/E: βU (1 + D/E) = (D/E) βD + βE.</li>
+          <li>Despejo: βE = βU (1 + D/E) − (D/E) βD.</li>
+          <li>Agrupo: βE = βU + (βU − βD) · D/E.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Cómo se lee</div>
+        <h3>Beta del negocio más apalancamiento</h3>
+        <ul>
+          <li>βU es el riesgo del negocio; (βU − βD) · D/E es el <strong>apalancamiento</strong>: lo que el acreedor no toma y el accionista sí.</li>
+          <li>Como en Hamada, <strong>βE ≥ βU</strong>: se cumple mientras Kd &lt; Ku, o sea βD &lt; βU. Sin deuda son iguales.</li>
+          <li>Hamada es el caso βD = 0: lo vemos en la lámina siguiente.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">11 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="12 Relación con Hamada">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · De dónde sale Ke · Hamada</div>
+    <h1 class="slide-title">La fórmula de <em>Hamada</em> es un caso particular</h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative; font-size:36px">
+        <span style="position:absolute; top:10px; left:18px; font-size:24px; color:var(--accent); font-family:var(--font-mono)">Fórmula 5</span><span class="acc-var">β</span><sub>L</sub> = <span class="acc-var">β</span><sub>U</sub> · [1 + (1 − <span class="acc-var">t</span>) · <span class="frac"><span class="num">D</span><span class="den">E</span></span>]
+      </div>
+    </div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:34%">Caso</th><th style="width:34%">Supuesto sobre la deuda</th><th>Resultado</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Fórmula 3 (general)</td><td>Deuda con riesgo propio (βD), sin impuestos</td><td>βE = βU + (βU − βD) · D/E</td></tr>
+        <tr><td class="name">βD = 0, sin impuestos</td><td>Deuda libre de riesgo</td><td>βE = βU · (1 + D/E)</td></tr>
+        <tr><td class="name">βD = 0, con impuestos</td><td>Libre de riesgo, deuda fija perpetua</td><td>βL = βU · [1 + (1 − t) · D/E]</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:20px">
+      Hamada (fórmula 5) es la fórmula 3 con βD = 0 más el efecto fiscal. Con βD &gt; 0 el beta sube menos: con βU = 1 y D/E = 0.2963, Hamada sin impuestos da 1.296 y la fórmula 3 con βD = 0.375 da 1.185.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">12 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="13 Hamada en la práctica">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Hamada · En la práctica</div>
+    <h1 class="slide-title">Hamada <em>supone</em> algo que sabemos que no ocurre</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Lo que sabemos</div>
+        <h3>La deuda sí tiene beta</h3>
+        <ul>
+          <li>En nuestro ejercicio la deuda tiene beta propio: con rf 4% y Kd 7%, βD = 0.375, no cero.</li>
+          <li>Hamada supone βD = 0, o sea Kd = rf. En la realidad Kd = rf + spread.</li>
+          <li>Si usamos Hamada para el beta y rf + spread para el Kd del WACC, el modelo se contradice.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Por qué se usa igual</div>
+        <h3>Tres razones</h3>
+        <ul>
+          <li><strong>Es simple:</strong> solo necesita D/E y t. βD casi no se puede estimar: la deuda no cotiza ni tiene serie de retornos confiable.</li>
+          <li><strong>El error suele ser pequeño:</strong> con deuda de buena calificación y poco apalancamiento βD es bajo. Crece con deuda muy apalancada o de calificación baja.</li>
+          <li><strong>Los errores se compensan en parte</strong> en el método bottom-up (lámina siguiente).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">13 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="14 Errores se compensan">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Hamada · Método bottom-up</div>
+    <h1 class="slide-title">Al desapalancar y reapalancar los errores se <em>compensan</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:34%">Método</th><th style="width:16%">βU</th><th style="width:24%">βE con D/E = 0.5</th><th>βE con D/E = 1.0</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Hamada (βD = 0)</td><td class="code">0.80</td><td class="code">1.20</td><td class="code">1.60</td></tr>
+        <tr><td class="name">Fórmula 3 (βD = 0.30)</td><td class="code">0.90</td><td class="code">1.20</td><td class="code">1.50</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:24px">
+      Comparable con βE = 1.2 y D/E = 0.5, sin impuestos. Hamada subestima βU (0.80 frente a 0.90). Si la empresa objetivo tiene el mismo D/E, el error se cancela: 1.20 en ambos. Si tiene D/E = 1.0, Hamada sobrestima βE en 0.10.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">14 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="15 Derivación 4">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · De dónde sale Ke · Paso 3</div>
+    <h1 class="slide-title">Volver a <em>tasas</em>: llega la fórmula (1)</h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative; font-size:36px">
+        <span style="position:absolute; top:10px; left:18px; font-size:24px; color:var(--accent); font-family:var(--font-mono)">Fórmula 4</span><span class="acc-var">K</span><sub>e</sub> = <span class="acc-var">K</span><sub>u</sub> + (<span class="acc-var">K</span><sub>u</sub> − <span class="acc-var">K</span><sub>d</sub>) · <span class="frac"><span class="num">D</span><span class="den">E</span></span>
+      </div>
+    </div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Multiplico por P</div>
+        <h3>Beta a tasa</h3>
+        <ul>
+          <li>Con la fórmula 1: Ke = rf + βE × P; reemplazo βE de la fórmula 3: rf + βU × P + (βU − βD) × P × D/E.</li>
+          <li>rf + βU × P es exactamente <strong>Ku</strong>.</li>
+          <li>(βU − βD) × P = (rf + βU P) − (rf + βD P) = <strong>Ku − Kd</strong>; rf se cancela.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Lectura</div>
+        <h3>Prima por riesgo financiero</h3>
+        <ul>
+          <li>Ke = Ku + (Ku − Kd) × D/E.</li>
+          <li>(Ku − Kd) es lo que se gana por asumir el riesgo que el acreedor no toma.</li>
+          <li>No hizo falta nada nuevo: es el CAPM ordenado.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">15 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="16 Supuestos derivación">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · De dónde sale Ke · Supuestos</div>
+    <h1 class="slide-title">Qué hay <em>detrás</em> de la fórmula</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Supuestos</div>
+        <h3>Lo que tiene que ser cierto</h3>
+        <ul>
+          <li>El CAPM vale para los activos, la deuda y el patrimonio.</li>
+          <li>Sin impuestos: V = D + E y no hay escudo fiscal.</li>
+          <li><strong>Sin bancos que intermedien</strong>: Kd es la rentabilidad que exige el prestamista; costo de fondeo y rentabilidad son lo mismo.</li>
+          <li>Sin costos de quiebra ni de agencia; D/E a valor de mercado.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Casos particulares</div>
+        <h3>Qué cambia si relajo</h3>
+        <ul>
+          <li>Deuda libre de riesgo (Kd = rf, βD = 0): Ke = Ku + (Ku − rf) × D/E.</li>
+          <li>Con impuestos y deuda fija perpetua: Ke = Ku + (Ku − Kd)(1 − t) D/E, que es Hamada: βE = βU [1 + (1 − t) D/E].</li>
+          <li>Con spreads de banco o quiebra, Kd ya no es solo rentabilidad exigida.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">16 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="17 Formulario">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Las fórmulas que usaremos</div>
+    <h1 class="slide-title">Las <em>fórmulas</em> antes del ejemplo</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:22%">Fórmula</th><th style="width:38%">Expresión</th><th>Para qué sirve</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">F6 · FCFF (F)</td><td>EBIT × (1 − t) + d − capex</td><td>Flujo de los activos para todos los que financian</td></tr>
+        <tr><td class="name">F7 · Valor sin deuda</td><td>VU = F / Ku</td><td>Perpetuidad sin crecimiento</td></tr>
+        <tr><td class="name">F4 · Ke (MM II)</td><td>Ke = Ku + (Ku − Kd) × D/E</td><td>Costo del patrimonio con deuda</td></tr>
+        <tr><td class="name">F8 · WACC</td><td>(E/V) × Ke + (D/V) × Kd</td><td>Tasa promedio de la empresa con deuda</td></tr>
+        <tr><td class="name">F9 · Valor con deuda</td><td>VL = F / WACC</td><td>Se compara con VU</td></tr>
+        <tr><td class="name">F10 · FCFE</td><td>F − Kd × D; E = FCFE / Ke</td><td>Flujo del accionista y chequeo</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">17 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="18 Ejemplo enunciado">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Ejemplo</div>
+    <h1 class="slide-title">Una empresa <em>sin crecimiento</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:46%">Dato</th><th style="width:24%">Valor</th><th>Nota</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">EBITDA (c)</td><td class="code">1,300</td><td>Constante para siempre</td></tr>
+        <tr><td class="name">Depreciación y amortización (d)</td><td class="code">250</td><td>EBIT = 1,300 − 250 = 1,050</td></tr>
+        <tr><td class="name">Capex y capital de trabajo</td><td class="code">capex = d; ΔKT = 0</td><td>No crece ni reinvierte de más</td></tr>
+        <tr><td class="name">Ku · Kd · impuestos</td><td class="code">12% · 7% · 0</td><td>Ku rentabilidad de activos; Kd costo de la deuda</td></tr>
+        <tr><td class="name">Deuda perpetua (D)</td><td class="code">2,000</td><td>Solo intereses Kd × D; después probamos 3,000</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">18 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="19 Paso 1 y 2">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Pasos 1 y 2</div>
+    <h1 class="slide-title">Flujo de caja libre y <em>valor sin deuda</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative">
+        <span style="position:absolute; top:10px; left:18px; font-size:24px; color:var(--accent); font-family:var(--font-mono)">Fórmula 7</span><span class="acc-var">V</span><sub>U</sub> = <span class="frac"><span class="num"><span class="acc-var">F</span></span><span class="den"><span class="acc-var">K</span><sub>u</sub></span></span> = <span class="frac"><span class="num">1,050</span><span class="den">0.12</span></span> = 8,750
+      </div>
+    </div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Paso 1</div>
+        <h3>El flujo de los activos</h3>
+        <ul>
+          <li>FCFF = EBIT × (1 − t) + d − capex.</li>
+          <li>Con t = 0 y capex = d: FCFF = EBIT = 1,300 − 250 = <strong>1,050</strong>.</li>
+          <li>Es constante y perpetuo: lo llamamos F.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Paso 2</div>
+        <h3>Valor de la empresa sin deuda</h3>
+        <ul>
+          <li>Fórmula 7: VU = F / Ku = 1,050 / 0.12 = <strong>8,750</strong>.</li>
+          <li>Es el valor de la pizza entera.</li>
+          <li>A partir de aquí solo cambiamos cómo se reparte.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">19 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="20 Paso 3">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Paso 3</div>
+    <h1 class="slide-title">Patrimonio, D/E y <em>Ke</em> con D = 2,000</h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative; font-size:34px">
+        <span style="position:absolute; top:10px; left:18px; font-size:24px; color:var(--accent); font-family:var(--font-mono)">Fórmula 4</span><span class="acc-var">K</span><sub>e</sub> = <span class="acc-var">K</span><sub>u</sub> + (<span class="acc-var">K</span><sub>u</sub> − <span class="acc-var">K</span><sub>d</sub>) · <span class="frac"><span class="num">D</span><span class="den">E</span></span>
+      </div>
+    </div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Reparto</div>
+        <h3>Lo que queda para el accionista</h3>
+        <ul>
+          <li>E = VU − D = 8,750 − 2,000 = <strong>6,750</strong>.</li>
+          <li>D/E = 2,000 / 6,750 = <strong>0.2963</strong>.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Costo del patrimonio</div>
+        <h3>MM proposición II: fórmula (1)</h3>
+        <ul>
+          <li>Fórmula 4: Ke = 12% + (12% − 7%) × 0.2963 = <strong>13.48%</strong>.</li>
+          <li>El accionista exige más porque su flujo es más riesgoso con deuda delante.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">20 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="21 Comprobación beta">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · De dónde sale Ke · Comprobación</div>
+    <h1 class="slide-title">Comprobación con el <em>ejemplo</em> del Word</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:26%">Pieza</th><th style="width:22%">Beta</th><th style="width:20%">Tasa (rf 4%, P 8%)</th><th>Cómo sale</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Activos (Ku)</td><td class="code">βU = 1.000</td><td class="code">12.00%</td><td>4% + 1.000 × 8%</td></tr>
+        <tr><td class="name">Deuda (Kd)</td><td class="code">βD = 0.375</td><td class="code">7.00%</td><td>4% + 0.375 × 8%</td></tr>
+        <tr><td class="name">Patrimonio (Ke)</td><td class="code">βE = 1.185</td><td class="code">13.48%</td><td>βE = 1 + (1 − 0.375) × 0.2963</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:24px">
+      Chequeo de la suma de betas: 22.86% × 0.375 + 77.14% × 1.185 = 1.000 = βU. El Ke de 13.48% es el mismo que salió con la fórmula (1).
+    </p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">21 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="22 Paso 4">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Paso 4</div>
+    <h1 class="slide-title">El WACC vuelve a <em>Ku</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative; font-size:34px">
+        <span style="position:absolute; top:10px; left:18px; font-size:24px; color:var(--accent); font-family:var(--font-mono)">Fórmula 8</span>WACC = <span class="frac"><span class="num">E</span><span class="den">V</span></span> · <span class="acc-var">K</span><sub>e</sub> + <span class="frac"><span class="num">D</span><span class="den">V</span></span> · <span class="acc-var">K</span><sub>d</sub> = 10.40% + 1.60% = 12.00%
+      </div>
+    </div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Valor con deuda</div>
+        <h3>VL = F / WACC</h3>
+        <ul>
+          <li>Fórmula 9: VL = 1,050 / 0.12 = <strong>8,750</strong>.</li>
+          <li>Es igual a VU: la deuda no creó valor.</li>
+          <li>El mayor Ke compensa exactamente el peso de la deuda más barata.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Chequeo</div>
+        <h3>Pesos</h3>
+        <ul>
+          <li>E/V = 6,750 / 8,750 = 77.1%.</li>
+          <li>D/V = 2,000 / 8,750 = 22.9%.</li>
+          <li>77.1% × 13.48% + 22.9% × 7% = 12.00%.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">22 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="23 Paso 5">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Paso 5</div>
+    <h1 class="slide-title">El FCFE <em>confirma</em> el patrimonio</h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative; font-size:34px">
+        <span style="position:absolute; top:10px; left:18px; font-size:24px; color:var(--accent); font-family:var(--font-mono)">Fórmula 10</span><span class="acc-var">E</span> = <span class="frac"><span class="num">FCFE</span><span class="den"><span class="acc-var">K</span><sub>e</sub></span></span> = <span class="frac"><span class="num">910</span><span class="den">0.1348</span></span> = 6,750
+      </div>
+    </div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · FCFE</div>
+        <h3>Lo que recibe el accionista</h3>
+        <ul>
+          <li>Fórmula 10: FCFE = F − Kd × D = 1,050 − 0.07 × 2,000 = <strong>910</strong>.</li>
+          <li>Los intereses de 140 van al acreedor.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Verificación</div>
+        <h3>Dos caminos, el mismo número</h3>
+        <ul>
+          <li>Por diferencia: E = VU − D = 6,750.</li>
+          <li>Por flujo: E = FCFE / Ke = 910 / 0.1348 = 6,750.</li>
+          <li>Coinciden: el modelo cierra.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">23 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="24 Utilidad neta">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Pregunta típica</div>
+    <h1 class="slide-title">Si la utilidad neta cae, ¿por qué el valor <em>no</em>?</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Utilidad neta</div>
+        <h3>Baja de 1,050 a 910</h3>
+        <ul>
+          <li>Utilidad neta = 1,050 − 0.07 × 2,000 = <strong>910</strong>.</li>
+          <li>Los intereses se descuentan antes del accionista.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Valor de la empresa</div>
+        <h3>Sigue en 8,750</h3>
+        <ul>
+          <li>Los 140 no desaparecen: se los lleva el acreedor.</li>
+          <li>El flujo de la operación sigue siendo 1,050.</li>
+          <li>El FCFF es el flujo para <strong>todos</strong> los que financian; los intereses son un pago entre ellos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">24 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="25 Tabla resultados">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Segundo nivel de deuda</div>
+    <h1 class="slide-title">Más deuda, <em>mismo valor</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:34%">Concepto</th><th style="width:22%">D = 0</th><th style="width:22%">D = 2,000</th><th>D = 3,000</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Patrimonio (E)</td><td class="code">8,750</td><td class="code">6,750</td><td class="code">5,750</td></tr>
+        <tr><td class="name">D/E</td><td class="code">0.00</td><td class="code">0.30</td><td class="code">0.52</td></tr>
+        <tr><td class="name">Ke</td><td class="code">12.00%</td><td class="code">13.48%</td><td class="code">14.61%</td></tr>
+        <tr><td class="name">WACC</td><td class="code">12.00%</td><td class="code">12.00%</td><td class="code">12.00%</td></tr>
+        <tr><td class="name">Valor de la empresa</td><td class="code">8,750</td><td class="code">8,750</td><td class="code">8,750</td></tr>
+        <tr><td class="name">FCFE</td><td class="code">1,050</td><td class="code">910</td><td class="code">840</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:24px">
+      El Ke sube con el D/E, el patrimonio baja, pero el WACC y el valor no se mueven.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">25 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="26 Si MM fuera cierto">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.1 · Entonces…</div>
+    <h1 class="slide-title">Si MM fuera cierto, nadie <em>se endeudaría</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · En el mundo ideal</div>
+        <h3>Deuda indiferente</h3>
+        <ul>
+          <li>Pedir deuda o emitir acciones da lo mismo.</li>
+          <li>No habría decisión de estructura de capital.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · En el mundo real</div>
+        <h3>Las empresas sí se endeudan</h3>
+        <ul>
+          <li>Los intereses <strong>reducen impuestos</strong>.</li>
+          <li>Pero demasiada deuda trae <strong>costos de quiebra</strong>.</li>
+          <li>Relajamos esas dos fricciones, una por una.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">26 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="27 Con impuestos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.2 · Con impuestos</div>
+    <h1 class="slide-title">El escudo fiscal <em>sí crea valor</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative">
+        <span style="position:absolute; top:10px; left:18px; font-size:24px; color:var(--accent); font-family:var(--font-mono)">Fórmula 11</span><span class="acc-var">V</span><sub>L</sub> = <span class="acc-var">V</span><sub>U</sub> + <span class="acc-var">t</span> · <span class="acc-var">D</span>
+      </div>
+    </div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Ejemplo con t = 29.5%</div>
+        <h3>Mismo caso, con impuestos</h3>
+        <ul>
+          <li>FCFF = 1,050 × (1 − 0.295) = <strong>740.25</strong>.</li>
+          <li>VU = 740.25 / 0.12 = <strong>6,168.75</strong>.</li>
+          <li>Escudo = 0.295 × 2,000 = <strong>590</strong>.</li>
+          <li>VL = 6,168.75 + 590 = <strong>6,758.75</strong>.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Lectura</div>
+        <h3>La deuda ahora sí suma</h3>
+        <ul>
+          <li>Los intereses se deducen del impuesto; los dividendos no.</li>
+          <li>El WACC baja a 10.95%: WACC = Ku × (1 − t × D/V).</li>
+          <li>Con solo este efecto, el óptimo sería 100% deuda. Algo falta.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">27 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="28 Con quiebra">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.3 · Con quiebra</div>
+    <h1 class="slide-title">La deuda también <em>cuesta</em> cuando aprieta</h1>
+    <div class="title-rule"></div>
+
+    <div class="formula-block" style="flex:none">
+      <div class="formula" style="padding:34px; position:relative; font-size:38px">
+        <span style="position:absolute; top:10px; left:18px; font-size:24px; color:var(--accent); font-family:var(--font-mono)">Fórmula 12</span><span class="acc-var">V</span><sub>L</sub> = <span class="acc-var">V</span><sub>U</sub> + <span class="acc-var">t</span> · <span class="acc-var">D</span> − PV(CFD)
+      </div>
+    </div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Qué se pierde</div>
+        <h3>Costos directos e indirectos</h3>
+        <ul>
+          <li>Directos: abogados, administración, liquidación.</li>
+          <li>Indirectos: clientes que se van, proveedores que cortan crédito, talento que renuncia.</li>
+          <li>El banco sube la tasa cuando el riesgo crece.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Cómo se mide</div>
+        <h3>Costo esperado</h3>
+        <ul>
+          <li>PV(CFD) = probabilidad de dificultades × costo si ocurren.</li>
+          <li>Crece más rápido que la deuda.</li>
+          <li>El valor sube con el escudo, llega a un máximo y luego baja: forma de U.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">28 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="29 Resumen tres mundos">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13 · El cuadro completo</div>
+    <h1 class="slide-title">Tres mundos, tres <em>respuestas</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:24%">Mundo</th><th style="width:26%">Valor</th><th style="width:30%">Ke</th><th>WACC</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Sin impuestos</td><td>VL = VU</td><td>Ku + (Ku − Kd) · D/E</td><td>Ku, constante</td></tr>
+        <tr><td class="name">Con impuestos</td><td>VU + t · D</td><td>Sube, pero menos</td><td>Baja con D</td></tr>
+        <tr><td class="name">Con impuestos y quiebra</td><td>VU + t · D − PV(CFD)</td><td>Sube más rápido</td><td>Forma de U</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:24px">
+      Cada fricción que se agrega cambia una pieza del modelo, no todo el modelo. El ejercicio de hoy los junta en una sola hoja.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">29 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide seccion bg-ink" data-label="30 Sección 2">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="sec-mega">S2</div>
+    <div class="sec-label"><span class="bar"></span>Bloque 02 · 25 min</div>
+    <h2>Capacidad <em>máxima</em><br/>de endeudamiento</h2>
+    <p class="sec-lede">Cuánta deuda se puede tomar no es lo mismo que cuánta conviene. Primero lo que el banco tolera.</p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">30 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="31 Óptima frente a máxima">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.4 · Dos preguntas</div>
+    <h1 class="slide-title">Lo que <em>conviene</em> y lo que <em>se puede</em></h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Deuda óptima</div>
+        <h3>La que maximiza el valor</h3>
+        <ul>
+          <li>Sale del trade-off: escudo fiscal menos costo de quiebra.</li>
+          <li>Depende de la empresa, no de un contrato.</li>
+          <li>No existe una cifra única.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Capacidad máxima</div>
+        <h3>La que el banco tolera</h3>
+        <ul>
+          <li>Sale de los covenants del contrato.</li>
+          <li>Se mide con holguras: cuánta deuda más, cuánto EBITDA menos.</li>
+          <li>Aunque no haya contrato, el banco recomienda ratios y guía a la empresa.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">31 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="32 Tres preguntas">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.4 · Covenants</div>
+    <h1 class="slide-title">Tres ratios, tres <em>preguntas</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:30%">Ratio</th><th style="width:36%">Pregunta</th><th>Límite del caso</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Deuda financiera / EBITDA</td><td>¿En cuántos años pago todo con el EBITDA de un año?</td><td class="code">≤ 4.5x</td></tr>
+        <tr><td class="name">Cobertura del servicio (DSCR)</td><td>¿El EBITDA alcanza para cuotas e intereses, con margen?</td><td class="code">≥ 1.20x</td></tr>
+        <tr><td class="name">Capital de trabajo</td><td>¿Lo que cobro y vendo cubre lo que debo en un año?</td><td class="code">≥ 1.00x</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:24px">
+      No hay fórmula estándar: la definición de deuda y de EBITDA está en el contrato.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">32 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="33 Fórmulas de holgura">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.4 · Cómo se calcula</div>
+    <h1 class="slide-title">De cada covenant sale una <em>holgura</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:28%">Covenant</th><th style="width:40%">Holgura</th><th>Se lee como</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Deuda / EBITDA ≤ L</td><td>L × EBITDA − deuda financiera</td><td>Deuda adicional que cabe</td></tr>
+        <tr><td class="name">DSCR ≥ m</td><td>EBITDA − m × (amortización 12 meses + intereses)</td><td>EBITDA que puedo perder</td></tr>
+        <tr><td class="name">Capital de trabajo ≥ m</td><td>Activo corriente − m × pasivo corriente del contrato</td><td>Activo corriente que puedo perder</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:24px">
+      Con los tres números se ve qué covenant se rompe primero. El menor tope es el que manda.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">33 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="34 Santa Rosa resultado">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.4 · Caso Santa Rosa</div>
+    <h1 class="slide-title">Papelera Santa Rosa: tres covenants, <em>holgura</em> desigual</h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:34%">Covenant</th><th style="width:16%">Resultado</th><th style="width:16%">Límite</th><th>Holgura</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Deuda financiera / EBITDA</td><td class="code">3.86x</td><td class="code">≤ 4.50x</td><td>S/ 27,000 de deuda adicional</td></tr>
+        <tr><td class="name">DSCR</td><td class="code">1.57x</td><td class="code">≥ 1.20x</td><td>S/ 9,830 de EBITDA que se puede perder</td></tr>
+        <tr><td class="name">Capital de trabajo</td><td class="code">1.10x</td><td class="code">≥ 1.00x</td><td>S/ 13,000 de activo corriente</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:26px;color:var(--ink-2);margin-top:24px">
+      EBITDA 42,000 y deuda financiera del contrato 162,000 (S/ miles). Un proyecto de 25,000 cabe en deuda; el DSCR y el capital de trabajo dicen cómo conviene financiarlo.
+    </p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">34 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="35 Regla de decisión">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>S13.4 · Regla</div>
+    <h1 class="slide-title">Capacidad es el <em>menor</em> tope; se recomienda el menor entre óptimo y capacidad</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Capacidad máxima</div>
+        <h3>El menor de los topes</h3>
+        <ul>
+          <li>Un tope por cada covenant.</li>
+          <li>Manda el menor; ese covenant es el que limita.</li>
+          <li>Holgura = capacidad − deuda propuesta.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Deuda recomendada</div>
+        <h3>Mínimo entre óptimo y capacidad</h3>
+        <ul>
+          <li>Si el óptimo cae dentro de la capacidad, se toma el óptimo.</li>
+          <li>Si la capacidad es menor, manda el banco.</li>
+          <li>Nunca más deuda de la que permite el covenant, ni de la que conviene.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">35 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide seccion bg-ink" data-label="36 Sección 3">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="sec-mega">S3</div>
+    <div class="sec-label"><span class="bar"></span>Bloque 03 · 40 min</div>
+    <h2>Ejercicio<br/><em>guiado</em></h2>
+    <p class="sec-lede">Una sola hoja de Excel junta MM, impuestos, quiebra y capacidad de endeudamiento.</p>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">36 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide bg-alt" data-label="37 Consigna">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Ejercicio · Equipos de 3</div>
+    <h1 class="slide-title">Resuelve la hoja del ejercicio</h1>
+    <div class="title-rule"></div>
+
+    <div class="two-col-text">
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">01</span> · Datos</div>
+        <h3>Archivo 1FIN50 MM Capacidad 2026-2</h3>
+        <ul>
+          <li>Plantilla alumnos, una sola hoja: haz una copia (Archivo → Hacer una copia).</li>
+          <li>Empresa con EBITDA 30,000 que crece 2% para siempre.</li>
+          <li>Deuda propuesta: 60,000. Celdas azules son datos; amarillas las completas tú.</li>
+          <li>Cada fila trae una pista de cómo calcularla.</li>
+        </ul>
+      </div>
+      <div class="text-col">
+        <div class="col-eyebrow"><span class="num">02</span> · Entrega</div>
+        <h3>Qué y cómo</h3>
+        <ul>
+          <li>Mundos 1, 2 y 3; deuda óptima; capacidad máxima y deuda recomendada.</li>
+          <li>Cuatro preguntas de lectura al final de la hoja.</li>
+          <li>En clase: 40 minutos.</li>
+          <li>Entrega por el formulario del curso con el link de tu copia (permiso de lectura).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">37 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide" data-label="38 Pasos del ejercicio">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="eyebrow"><span class="bar"></span>Ejercicio · Orden sugerido</div>
+    <h1 class="slide-title">Seis pasos, de arriba hacia <em>abajo</em></h1>
+    <div class="title-rule"></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th style="width:10%">Paso</th><th style="width:46%">Qué haces</th><th>Dónde</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">1</td><td>Mundo 1: FCFF, VU, Ke y WACC sin impuestos; verifica con MM II</td><td>Sección 2, columna B</td></tr>
+        <tr><td class="name">2</td><td>Mundo 2: suma el escudo fiscal y mira cómo cambia el WACC</td><td>Sección 2, columna C</td></tr>
+        <tr><td class="name">3</td><td>Mundo 3: resta el costo esperado de quiebra</td><td>Sección 2, columna D</td></tr>
+        <tr><td class="name">4</td><td>Prueba varios niveles de deuda y busca el máximo valor</td><td>Sección 3</td></tr>
+        <tr><td class="name">5</td><td>Calcula los dos topes de covenants y la capacidad máxima</td><td>Sección 4</td></tr>
+        <tr><td class="name">6</td><td>Recomienda una deuda y responde las preguntas</td><td>Secciones 4 y 5</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chrome-bot">
+      <span>S13 · MM y capacidad</span>
+      <span class="num">38 / 39</span>
+    </div>
+  </section>
+
+  <section class="slide cierre bg-ink" data-label="39 Cierre">
+    <div class="chrome-top">
+      <span class="brand"><span class="brand-mark">HG</span> Hugo Gutierrez</span>
+      <span class="course-tag"><span class="dot"></span> 1FIN50 · Finanzas Corp.<span class="bloomberg-dot"></span></span>
+    </div>
+
+    <div class="label"><span class="bar"></span>Cierre · Sesión 13</div>
+    <h2>Tres ideas para <em>llevarse</em></h2>
+
+    <div class="closing-grid">
+      <p class="pregunta">
+        Sin fricciones, la deuda no crea valor: el Ke sube y el WACC se queda en <em>Ku</em>.<br/>
+        La capacidad es lo que el banco tolera; el óptimo, lo que conviene.<br/>
+        Se recomienda el <em>menor</em> de los dos.
+      </p>
+
+      <div class="contact-card">
+        <div class="contact-row">
+          <i class="ti ti-mail"></i>
+          <div><div class="lbl">Correo</div><div class="val">dhgutierrezcu@gmail.com</div></div>
+        </div>
+        <div class="contact-row">
+          <i class="ti ti-world"></i>
+          <div><div class="lbl">Web</div><div class="val">hugogutierrez.pe</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Cierre · Q&amp;A</span>
+      <span class="num">39 / 39</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+<!-- ════════════════════════════════════════════════════════════════
+     DOWNLOAD PDF — botón flotante. Usa window.print() + el
+     @media print de deck-stage (una slide por página a 1920×1080).
+     Se oculta en modo presentación y en el propio PDF.
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .pdf-fab {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px 10px 12px;
+    background: #0A0D12;
+    color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .pdf-fab:hover {
+    background: #185FA5;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(24,95,165,0.35), 0 1px 0 rgba(255,255,255,0.06) inset;
+  }
+  .pdf-fab:active { transform: translateY(0); }
+  .pdf-fab .dot {
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: #FA8C16;
+    box-shadow: 0 0 0 3px rgba(250,140,22,0.18);
+  }
+  .pdf-fab i {
+    font-size: 16px;
+    line-height: 1;
+  }
+  .pdf-fab .hint {
+    opacity: 0.55;
+    font-size: 11px;
+    margin-left: 4px;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+
+  /* Oculto durante impresión / presentación / preview del host */
+  @media print { .pdf-fab { display: none !important; } }
+  body.deck-presenting .pdf-fab,
+  deck-stage[presenting] ~ .pdf-fab { display: none !important; }
+</style>
+
+<button class="pdf-fab" type="button" onclick="window.print()" title="Descargar PDF (Cmd/Ctrl + P)">
+  <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+  <span>Descargar PDF</span>
+  <span class="hint">⌘P</span>
+</button>
+
+<!-- ════════════════════════════════════════════════════════════════
+     AUDIO POR SLIDE — para versión futura "slides + audio del profesor".
+     Para activar en una slide: añade data-audio="audio/mi-clip.mp3"
+     en el <section>. El player aparece abajo-derecha SOLO cuando la
+     slide actual tiene audio. Se pausa al cambiar de slide.
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  .audio-fab {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: none; /* visible only when current slide has data-audio */
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    background: #0A0D12;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 6px 24px rgba(10,13,18,0.18);
+  }
+  .audio-fab.active { display: inline-flex; }
+  .audio-fab .play-btn {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #185FA5;
+    color: #fff;
+    cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 14px;
+  }
+  .audio-fab .play-btn:hover { background: #2A7BC8; }
+  .audio-fab .label {
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .audio-fab .time {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.55;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.18);
+  }
+  @media print { .audio-fab { display: none !important; } }
+</style>
+
+<div class="audio-fab" id="audio-fab">
+  <button type="button" class="play-btn" id="audio-toggle" aria-label="Reproducir clase">
+    <i class="ti ti-player-play-filled"></i>
+  </button>
+  <span class="label">Clase grabada</span>
+  <span class="time" id="audio-time">0:00</span>
+  <audio id="audio-el" preload="metadata"></audio>
+</div>
+
+<script src="../../deck-stage.js?v=20261002b"></script>
+
+<script>
+/* ── QUIZ click handler — reveal correct/incorrect ─────────────────── */
+window._quizClick = function(e) {
+  const opt = e.target.closest('.quiz-opt');
+  if (!opt) return;
+  const quiz = opt.closest('.quiz');
+  if (!quiz || quiz.classList.contains('revealed')) return;
+  opt.setAttribute('data-chosen', 'true');
+  quiz.classList.add('revealed');
+};
+/* Esc to reset any revealed quiz on the current slide */
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  document.querySelectorAll('.quiz.revealed').forEach((q) => {
+    q.classList.remove('revealed');
+    q.querySelectorAll('[data-chosen]').forEach(o => o.removeAttribute('data-chosen'));
+  });
+});
+
+/* ── AUDIO per-slide — listens to deck-stage's `slidechange` event ──── */
+(function () {
+  const fab = document.getElementById('audio-fab');
+  const audio = document.getElementById('audio-el');
+  const toggle = document.getElementById('audio-toggle');
+  const timeLabel = document.getElementById('audio-time');
+  const playIcon = '<i class="ti ti-player-play-filled"></i>';
+  const pauseIcon = '<i class="ti ti-player-pause-filled"></i>';
+
+  function fmt(s) {
+    if (!isFinite(s)) return '0:00';
+    s = Math.floor(s);
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  audio.addEventListener('timeupdate', () => {
+    timeLabel.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  });
+  audio.addEventListener('ended', () => { toggle.innerHTML = playIcon; });
+  toggle.addEventListener('click', () => {
+    if (audio.paused) { audio.play(); toggle.innerHTML = pauseIcon; }
+    else { audio.pause(); toggle.innerHTML = playIcon; }
+  });
+
+  const stage = document.querySelector('deck-stage');
+  if (!stage) return;
+  stage.addEventListener('slidechange', (e) => {
+    const slide = e.detail && e.detail.slide;
+    audio.pause();
+    toggle.innerHTML = playIcon;
+    const src = slide && slide.getAttribute('data-audio');
+    if (src) {
+      if (audio.getAttribute('src') !== src) audio.setAttribute('src', src);
+      fab.classList.add('active');
+      timeLabel.textContent = '0:00';
+    } else {
+      audio.removeAttribute('src');
+      audio.load();
+      fab.classList.remove('active');
+    }
+  });
+})();
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TWEAKS — switch course, color tone
+     ════════════════════════════════════════════════════════════════ -->
+
+<!-- ── CONTROLES FLOTANTES: T Tweaks · R Rail · P PDF · F Fullscreen ── -->
+<style>
+  .deck-controls{position:fixed;bottom:18px;right:18px;display:flex;gap:8px;z-index:9998;opacity:0;transition:opacity .25s}
+  .deck-controls.visible{opacity:1}
+  .deck-btn{width:36px;height:36px;border-radius:10px;border:.5px solid rgba(255,255,255,.18);background:rgba(10,13,18,.72);backdrop-filter:blur(10px);color:rgba(255,255,255,.78);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:all .15s;padding:0}
+  .deck-btn:hover{background:rgba(10,13,18,.92);color:#fff;border-color:rgba(255,255,255,.35)}
+  .deck-btn.active{background:rgba(24,95,165,.85);border-color:rgba(24,95,165,.6);color:#fff}
+  @media (pointer:coarse){.deck-controls{opacity:1;right:50%;transform:translateX(50%);bottom:68px}}
+</style>
+<div class="deck-controls" id="deck-controls">
+  <button class="deck-btn" id="btn-rail"         title="Ocultar/mostrar panel — R"><i class="ti ti-layout-sidebar" id="rail-icon"></i></button>
+  <button class="deck-btn" id="btn-pdf"          title="Descargar PDF — P"><i class="ti ti-file-download"></i></button>
+  <button class="deck-btn" id="btn-fullscreen"   title="Pantalla completa — F"><i class="ti ti-maximize" id="fs-icon"></i></button>
+</div>
+<script>
+  (function(){
+    const controls = document.getElementById('deck-controls');
+    const fsIcon   = document.getElementById('fs-icon');
+    const railBtn  = document.getElementById('btn-rail');
+    let hideTimer;
+
+    function showControls(){
+      controls.classList.add('visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>controls.classList.remove('visible'), 2500);
+    }
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('keydown',   showControls);
+
+
+    function syncRailBtn(){
+      const stage = document.querySelector('deck-stage');
+      if(stage) railBtn.classList.toggle('active', !stage.railVisible);
+    }
+    function toggleRail(){
+      const stage = document.querySelector('deck-stage');
+      if(!stage) return;
+      stage.toggleRail();
+      syncRailBtn();
+    }
+    railBtn.addEventListener('click', toggleRail);
+    customElements.whenDefined('deck-stage').then(syncRailBtn);
+
+    document.getElementById('btn-pdf').addEventListener('click', ()=> window.print());
+
+    function toggleFS(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    document.addEventListener('fullscreenchange',()=>{
+      fsIcon.className = document.fullscreenElement ? 'ti ti-minimize' : 'ti ti-maximize';
+    });
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFS);
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+      if(e.key==='r'||e.key==='R') toggleRail();
+      if(e.key==='p'||e.key==='P') window.print();
+      if(e.key==='f'||e.key==='F') toggleFS();
+    });
+  })();
+</script>
+
+</body>
+</html>
